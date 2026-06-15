@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.playwright-mcp/
+
+*.log
+.DS_Store
+
+*-check.png
+home-*.png
+header-*.png
+recommend-*.png
+stamp-*.png
+tool-detail-*.png
