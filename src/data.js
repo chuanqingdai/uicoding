@@ -927,6 +927,32 @@ export const learningPathSteps = [
 
 export const lessons = [
   {
+    id: 'uicoding-skill-coding-process',
+    title: '我如何用 Codex 和 Skill 做出 Uicoding.ai',
+    originalTitle: '',
+    description:
+      '复盘 Uicoding.ai 的真实搭建过程：如何安装和使用设计 Skill，如何拆任务、控范围、验证页面，并逐步提升网站质感。',
+    sourceType: '站内原创',
+    sourceName: 'UIcoding 编辑部',
+    sourceUrl: '',
+    author: 'UIcoding 编辑部',
+    license: '原创内容',
+    translationMode: 'original',
+    collectedAt: '2026-06-16',
+    audience: '零基础学习者',
+    duration: '16 分钟',
+    category: 'Workflow',
+    tools: ['Codex'],
+    tags: ['Codex', 'Skill', '实战复盘'],
+    href: '/learn/uicoding-skill-coding-process',
+    publishedAt: '2026-06-16',
+    viewCount: 860,
+    likeCount: 68,
+    featured: true,
+    external: false,
+    keyTakeaways: ['安装并调用设计 Skill', '把大需求拆成小任务', '用构建和截图验证结果'],
+  },
+  {
     id: 'datacamp-codex-cli-beginner',
     title: 'Codex CLI 新手入门：从安装到生成页面',
     originalTitle: 'OpenAI Codex CLI Tutorial',

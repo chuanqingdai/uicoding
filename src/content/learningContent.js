@@ -3,6 +3,82 @@ const guidedNotice =
 
 export const learningContent = [
   {
+    id: 'uicoding-skill-coding-process',
+    sourceUrl: '',
+    translationMode: 'original',
+    title: '我如何用 Codex 和 Skill 做出 Uicoding.ai',
+    originalTitle: '',
+    notice:
+      '本文是 UIcoding 的站内原创复盘，记录这个网站从空项目到多页面内容站的 AI Coding 过程。文中的代码块可以直接复制到 Codex 输入框中使用，再根据你的项目名称和目标做少量替换。',
+    sections: [
+      {
+        heading: '为什么要给 Codex 配一个设计 Skill',
+        content:
+          '只用 Codex 写代码时，它很擅长完成明确的工程任务：创建页面、补数据、修构建错误、调整组件。但当目标变成“更高级”“更像编辑精选站”“减少组件库感”时，问题就不再只是代码，而是设计判断。Uicoding.ai 的搭建过程里，我把 Codex 当成工程执行者，把设计 Skill 当成视觉审稿人：它负责提醒我哪里像模板、哪里层级太乱、哪里按钮过重、哪里图片和文字关系不舒服。',
+      },
+      {
+        heading: '第一步：让 Codex 安装或调用设计 Skill',
+        content:
+          '如果你的 Codex 环境已经有设计 Skill，可以直接在任务里点名使用。如果没有，可以先让 Codex 检查是否存在，再安装或启用对应 Skill。对零基础用户来说，重点不是记住命令，而是把意图说清楚：我需要一个能帮助走查页面视觉、排版、颜色、组件细节和响应式问题的前端设计 Skill。',
+        code: {
+          label: '复制到 Codex 输入框',
+          content:
+            '请检查当前 Codex 环境是否已经有用于前端视觉走查和界面优化的设计 Skill。\n如果有，请告诉我如何调用。\n如果没有，请帮我安装或启用一个适合网页产品设计走查的 Skill。\n我的目标是：提升网站的视觉品质、排版、颜色、卡片、按钮、响应式和整体质感，而不是只修代码报错。',
+        },
+      },
+      {
+        heading: '第二步：先建立项目，不要一开始就追求完美',
+        content:
+          'Uicoding.ai 一开始不是一次性做成完整网站，而是先创建 React + Vite 首页：Header、Hero、案例、学习资料、工具和 Footer。这个阶段最重要的是可运行、结构清晰、文件不要拆太碎。先让项目跑起来，后面才有真实页面可以截图、走查和迭代。',
+        code: {
+          label: '创建首页的提示词模板',
+          content:
+            '从零开始创建一个 React + Vite 前端项目。\n技术栈：React、Vite、npm、普通 CSS、静态数据。\n当前只做首页，不做后端、不做登录、不做数据库。\n文件结构保持简单：src/main.jsx、src/App.jsx、src/data.js、src/components、src/styles.css。\n首页包含：Header、Hero、精选案例、学习资料、常用工具、Footer。\n完成后运行 npm install 和 npm run build，构建成功后停止。',
+        },
+      },
+      {
+        heading: '第三步：把大任务拆成小任务',
+        content:
+          'AI Coding 最容易失控的地方，是一次性要求它“做完整站点”。Uicoding.ai 的做法是每次只让 Codex 完成一个清晰模块：案例页、学习页、工具页、详情页、登录页、提交页。每个任务都写清楚允许新增什么文件、允许修改什么文件、禁止做什么、最终需要运行什么命令。这样 Codex 的修改范围更小，也更容易在出错时定位问题。',
+        code: {
+          label: '单页开发提示词模板',
+          content:
+            '继续开发当前项目。\n本次任务只实现一个页面：/cases。\n不要创建后端、不要创建登录、不要重构目录、不要拆分 CSS、不要引入复杂路由。\n允许新增：src/pages/CasesPage.jsx。\n允许修改：src/App.jsx、src/data.js、src/components/Cards.jsx、src/styles.css。\n页面必须复用已有 Container、Section、Button、Badge、Card、CaseCard。\n完成后运行 npm run build，如果构建成功就停止。',
+        },
+      },
+      {
+        heading: '第四步：用 Skill 做视觉走查，而不是凭感觉说高级',
+        content:
+          '当首页能跑起来之后，我开始让设计 Skill 走查网站。它给出的反馈不是“好看一点”这种模糊建议，而是更具体的判断：按钮颜色太重、卡片信息太挤、标签视觉过强、灰色占位图像默认组件、Hero 边缘白线像渲染瑕疵、详情页正文不应该用背景块。每次只挑最重要的几个问题改，网站质感会比一次性大改稳定很多。',
+        code: {
+          label: '视觉走查提示词模板',
+          content:
+            '请使用前端设计 Skill 走查当前首页。\n目标：高级、编辑感、可信，像高端杂志 / 编辑精选站，但保持简洁。\n不要重构项目，不要新增页面，不要改数据结构。\n只指出最影响质感的 3 个问题，并给出可以直接落地的 CSS / 组件优化方向。\n如果需要修改代码，请保持页面结构不变，只优化颜色、字体、间距、卡片、按钮和图片占位。',
+        },
+      },
+      {
+        heading: '第五步：每次修改后都要验证',
+        content:
+          '这个网站的很多问题不是靠读代码发现的，而是在浏览器里看到的：图标白底太大、卡片底边有白线、详情页图片被裁剪、下拉控件像系统默认样式。我的经验是，每次完成一轮修改，都让 Codex 运行构建；如果是视觉相关改动，再打开本地页面检查关键 DOM、图片加载和横向溢出。这样可以避免页面“代码没报错但视觉坏了”。',
+        code: {
+          label: '验证提示词模板',
+          content:
+            '修改完成后请执行以下验证：\n1. 运行 npm run build。\n2. 打开 http://localhost:3000 对应页面。\n3. 检查是否有横向溢出。\n4. 如果页面包含图片，检查图片是否加载成功、是否被裁剪。\n5. 如果页面包含卡片，检查 hover、按钮、标签、标题和描述是否对齐。\n只汇报验证结果，不要继续扩展新功能。',
+        },
+      },
+      {
+        heading: '这个 Skill 真正帮到我的地方',
+        content:
+          '设计 Skill 最大的价值不是替你生成一个“高级风格”，而是持续提醒你不要掉进 AI 页面常见陷阱：卡片太多、按钮太黑、标签太抢眼、阴影太模板、渐变太重、排版没有节奏。Uicoding.ai 后来的方向逐渐清晰：品牌色从纯黑转向更有温度的棕色，字体改成更有编辑感的组合，卡片 hover 保持轻微，学习详情页改成更像文章阅读，工具图标统一真实产品标识。它像一个严格的设计同事，不一定每次都给最终答案，但能把问题说得更准。',
+      },
+      {
+        heading: '给零基础用户的建议',
+        content:
+          '不要把 AI Coding 理解成一次性生成网站。更好的方式是：先做一个能运行的版本，再不断截图、描述问题、限制范围、让 Codex 修改、重新构建验证。Skill 适合用在每一轮“看起来不对，但说不清哪里不对”的时候。你可以先让它走查，再让 Codex 只改前三个问题。这样做慢一点，但更稳，也更接近真实产品的工作方式。',
+      },
+    ],
+  },
+  {
     id: 'datacamp-codex-cli-beginner',
     sourceUrl: 'https://www.datacamp.com/tutorial/open-ai-codex-cli-tutorial',
     translationMode: 'guidedTranslation',
