@@ -5,6 +5,7 @@ import { learningContent } from '../content/learningContent.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge } from '../components/UI.jsx';
 import { LearningCard, isDefaultLearningCover } from '../components/Cards.jsx';
+import { trackEvent } from '../lib/analytics.js';
 
 function buildFallbackContent(lesson) {
   return {
@@ -37,6 +38,10 @@ function LearnCodeBlock({ code }) {
     try {
       await navigator.clipboard.writeText(code.content);
       setCopied(true);
+      trackEvent('code_copy', {
+        label: code.label || '代码片段',
+        code_length: code.content.length,
+      });
       window.setTimeout(() => setCopied(false), 1400);
     } catch {
       setCopied(false);
@@ -144,7 +149,18 @@ function LearnSourceNotice({ content, lesson }) {
     <aside className="learn-source-notice">
       {content.notice && <p>{content.notice}</p>}
       {sourceUrl && (
-        <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+        <a
+          href={sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            trackEvent('outbound_link_click', {
+              label: '查看英文原文',
+              link_url: sourceUrl,
+              content_type: 'lesson',
+            })
+          }
+        >
           查看英文原文
           <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
         </a>
@@ -223,6 +239,15 @@ export default function LearnDetailPage({ slug }) {
                     href={lesson.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent('outbound_link_click', {
+                        label: '来源',
+                        content_type: 'lesson',
+                        item_id: lesson.id,
+                        item_name: lesson.title,
+                        link_url: lesson.sourceUrl,
+                      })
+                    }
                   >
                     来源 <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                   </a>

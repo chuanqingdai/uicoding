@@ -4,6 +4,7 @@ import { caseToolFilters, caseTypeFilters, cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
+import { trackEvent } from '../lib/analytics.js';
 
 const pinnedCaseIds = new Set(['freemake-ai-image-maker']);
 
@@ -72,6 +73,11 @@ function FilterSelect({
               className={`cases-select-option ${value === option ? 'is-active' : ''}`}
               key={option}
               onClick={() => {
+                trackEvent('filter_select', {
+                  filter_name: id,
+                  filter_value: option,
+                  page: 'cases',
+                });
                 onChange(option);
                 onClose();
               }}
@@ -128,6 +134,11 @@ export default function CasesPage() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          trackEvent('content_autoload', {
+            page: 'cases',
+            visible_count: visibleCount,
+            total_count: visibleCases.length,
+          });
           setVisibleCount((count) =>
             Math.min(count + loadMoreCount, visibleCases.length),
           );
@@ -139,9 +150,10 @@ export default function CasesPage() {
     observer.observe(target);
 
     return () => observer.disconnect();
-  }, [hasMoreCases, visibleCases.length]);
+  }, [hasMoreCases, visibleCount, visibleCases.length]);
 
   const resetFilters = () => {
+    trackEvent('filter_reset', { page: 'cases' });
     setActiveTool('全部工具');
     setActiveType('全部类型');
     setSortMode('latest');
@@ -164,7 +176,10 @@ export default function CasesPage() {
             <Button
               type="button"
               variant={sortMode === 'latest' ? 'primary' : 'secondary'}
-              onClick={() => setSortMode('latest')}
+              onClick={() => {
+                trackEvent('sort_select', { page: 'cases', sort_mode: 'latest' });
+                setSortMode('latest');
+              }}
               aria-pressed={sortMode === 'latest'}
             >
               最新
@@ -172,7 +187,10 @@ export default function CasesPage() {
             <Button
               type="button"
               variant={sortMode === 'hot' ? 'primary' : 'secondary'}
-              onClick={() => setSortMode('hot')}
+              onClick={() => {
+                trackEvent('sort_select', { page: 'cases', sort_mode: 'hot' });
+                setSortMode('hot');
+              }}
               aria-pressed={sortMode === 'hot'}
             >
               最热

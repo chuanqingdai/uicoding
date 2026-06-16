@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { tools } from '../data.js';
 import { Container, Section } from '../components/Layout.jsx';
 import { ToolPill } from '../components/Cards.jsx';
+import { trackEvent } from '../lib/analytics.js';
 
 const initialVisibleCount = 8;
 const loadMoreCount = 4;
@@ -31,6 +32,11 @@ export default function ToolsPage() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          trackEvent('content_autoload', {
+            page: 'tools',
+            visible_count: visibleCount,
+            total_count: tools.length,
+          });
           setVisibleCount((count) =>
             Math.min(count + loadMoreCount, tools.length),
           );
@@ -42,7 +48,7 @@ export default function ToolsPage() {
     observer.observe(target);
 
     return () => observer.disconnect();
-  }, [hasMoreTools]);
+  }, [hasMoreTools, visibleCount]);
 
   return (
     <div className="tools-page">

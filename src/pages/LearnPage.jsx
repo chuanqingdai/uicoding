@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { lessons } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { LearningCard } from '../components/Cards.jsx';
+import { trackEvent } from '../lib/analytics.js';
 
 const pinnedLessonIds = [
   'uicoding-skill-coding-process',
@@ -46,6 +47,11 @@ export default function LearnPage() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          trackEvent('content_autoload', {
+            page: 'learn',
+            visible_count: visibleCount,
+            total_count: visibleLessons.length,
+          });
           setVisibleCount((count) =>
             Math.min(count + loadMoreCount, visibleLessons.length),
           );
@@ -57,7 +63,7 @@ export default function LearnPage() {
     observer.observe(target);
 
     return () => observer.disconnect();
-  }, [hasMoreLessons, visibleLessons.length]);
+  }, [hasMoreLessons, visibleCount, visibleLessons.length]);
 
   return (
     <div className="learn-page">

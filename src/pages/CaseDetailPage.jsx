@@ -4,6 +4,7 @@ import { cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge, Card } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
+import { trackEvent } from '../lib/analytics.js';
 
 function isRecentCase(item) {
   return Boolean(item.sourceType);
@@ -20,6 +21,10 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
     try {
       await navigator.clipboard?.writeText(submitter.wechat);
       setCopied(true);
+      trackEvent('contact_copy', {
+        contact_type: 'wechat',
+        submitter_name: submitter.name,
+      });
       window.setTimeout(() => setCopied(false), 1200);
     } catch {
       setCopied(false);
@@ -184,7 +189,17 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   );
 
   const toggleLike = () => {
-    setLiked((current) => !current);
+    setLiked((current) => {
+      const next = !current;
+      trackEvent('content_like_toggle', {
+        content_type: 'case',
+        item_id: caseItem.id,
+        item_name: caseItem.title,
+        liked: next,
+      });
+
+      return next;
+    });
   };
 
   return (
@@ -211,6 +226,16 @@ export default function CaseDetailPage({ categorySlug, slug }) {
                     icon={ExternalLink}
                     target="_blank"
                     rel="noopener noreferrer"
+                    analyticsEvent={{
+                      name: 'outbound_link_click',
+                      params: {
+                        label: '访问网站',
+                        content_type: 'case',
+                        item_id: caseItem.id,
+                        item_name: caseItem.title,
+                        link_url: caseItem.websiteUrl,
+                      },
+                    }}
                   >
                     访问网站
                   </Button>

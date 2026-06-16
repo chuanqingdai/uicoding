@@ -83,7 +83,20 @@ export function CaseCard({ item }) {
   const primaryTool = item.tools?.find((tool) => tool && tool !== 'AI 生成证据待补充');
 
   return (
-    <Card className="case-card" href={item.href ?? '/cases'}>
+    <Card
+      className="case-card"
+      href={item.href ?? '/cases'}
+      analyticsEvent={{
+        name: 'content_card_click',
+        params: {
+          content_type: 'case',
+          item_id: item.id,
+          item_name: item.title,
+          category: item.category,
+          link_url: item.href ?? '/cases',
+        },
+      }}
+    >
       <div className="case-card-visual">
         {visualImage ? (
           <img src={visualImage} alt={item.imageAlt ?? `${item.title} 截图`} loading="lazy" />
@@ -117,6 +130,16 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
     <Card
       className={`learning-card ${hasImage ? 'has-image' : 'is-text-only'}`}
       href={item.href ?? '/learn'}
+      analyticsEvent={{
+        name: 'content_card_click',
+        params: {
+          content_type: 'lesson',
+          item_id: item.id,
+          item_name: item.title,
+          category: item.category,
+          link_url: item.href ?? '/learn',
+        },
+      }}
     >
       {hasImage && (
         <div className="learning-card-image">
@@ -158,6 +181,16 @@ export function ToolPill({ id, name, description, officialUrl }) {
       href={officialUrl ?? '/tools'}
       rel={officialUrl ? 'noreferrer' : undefined}
       target={officialUrl ? '_blank' : undefined}
+      analyticsEvent={{
+        name: officialUrl ? 'outbound_link_click' : 'content_card_click',
+        params: {
+          content_type: 'tool',
+          item_id: id,
+          item_name: name,
+          label: name,
+          link_url: officialUrl ?? '/tools',
+        },
+      }}
     >
       <div className="tool-icon" aria-hidden="true">
         {Icon ? <Icon size={28} /> : null}

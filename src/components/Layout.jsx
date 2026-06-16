@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 import { footerGroups, navItems } from '../data.js';
 import { Button } from './UI.jsx';
+import { trackClick } from '../lib/analytics.js';
 
 export function Container({ children, className = '' }) {
   return <div className={`container ${className}`}>{children}</div>;
@@ -27,7 +28,11 @@ export function Section({
               {description && <p>{description}</p>}
             </div>
             {actionHref && (
-              <a className="section-more" href={actionHref}>
+              <a
+                className="section-more"
+                href={actionHref}
+                onClick={() => trackClick('section_more', actionLabel, { link_url: actionHref })}
+              >
                 {actionLabel} →
               </a>
             )}
@@ -99,7 +104,12 @@ export function Header() {
     <>
       <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
         <Container className="header-inner">
-          <a className="brand" href="/" aria-label="Uicoding.ai 首页">
+          <a
+            className="brand"
+            href="/"
+            aria-label="Uicoding.ai 首页"
+            onClick={() => trackClick('header_brand', 'Uicoding.ai', { link_url: '/' })}
+          >
             <img className="brand-icon" src="/site-icon.png" alt="" aria-hidden="true" />
             Uicoding.ai
           </a>
@@ -113,6 +123,7 @@ export function Header() {
                   className={isActive ? 'is-active' : ''}
                   href={item.href}
                   key={item.href}
+                  onClick={() => trackClick('header_nav', item.label, { link_url: item.href })}
                 >
                   {item.label}
                 </a>
@@ -120,7 +131,14 @@ export function Header() {
             })}
           </nav>
           <div className="header-actions">
-            <Button href="/submit" icon={Send}>
+            <Button
+              href="/submit"
+              icon={Send}
+              analyticsEvent={{
+                name: 'cta_click',
+                params: { area: 'header', label: '提交作品', link_url: '/submit' },
+              }}
+            >
               提交作品
             </Button>
           </div>
@@ -136,7 +154,11 @@ export function Footer() {
     <footer className="site-footer">
       <Container className="footer-inner">
         <div className="footer-brand">
-          <a className="brand" href="/">
+          <a
+            className="brand"
+            href="/"
+            onClick={() => trackClick('footer_brand', 'Uicoding.ai', { link_url: '/' })}
+          >
             <img className="brand-icon" src="/site-icon.png" alt="" aria-hidden="true" />
             Uicoding.ai
           </a>
@@ -149,7 +171,16 @@ export function Footer() {
             <div className="footer-group" key={group.title}>
               <h3>{group.title}</h3>
               {group.links.map((link) => (
-                <a href={link.href} key={link.label}>
+                <a
+                  href={link.href}
+                  key={link.label}
+                  onClick={() =>
+                    trackClick('footer_link', link.label, {
+                      group: group.title,
+                      link_url: link.href,
+                    })
+                  }
+                >
                   {link.label}
                 </a>
               ))}

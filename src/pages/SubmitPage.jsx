@@ -44,7 +44,15 @@ export default function SubmitPage() {
             </div>
 
             <div className="submit-actions">
-              <Button href="/cases">浏览案例</Button>
+              <Button
+                href="/cases"
+                analyticsEvent={{
+                  name: 'cta_click',
+                  params: { area: 'submit_page', label: '浏览案例', link_url: '/cases' },
+                }}
+              >
+                浏览案例
+              </Button>
             </div>
           </Card>
         </div>

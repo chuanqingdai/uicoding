@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Header, Footer } from './components/Layout.jsx';
 import {
   CommonTools,
@@ -15,6 +16,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import PrivacyPage from './pages/PrivacyPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import SubmitPage from './pages/SubmitPage.jsx';
+import { trackPageView } from './lib/analytics.js';
 
 function Home() {
   return (
@@ -37,6 +39,10 @@ function App() {
   const isLearnDetail = parts[0] === 'learn' && parts.length === 2;
   const isToolsPath = parts[0] === 'tools';
   const knownPaths = ['/cases', '/learn', '/tools', '/about', '/privacy', '/login', '/submit'];
+
+  useEffect(() => {
+    trackPageView();
+  }, [pathname]);
 
   return (
     <div className={`site-shell ${isHome ? 'site-shell-home' : ''} ${isLogin ? 'site-shell-auth' : ''}`}>

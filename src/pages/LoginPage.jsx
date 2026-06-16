@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container } from '../components/Layout.jsx';
 import { Button, Card } from '../components/UI.jsx';
+import { trackEvent } from '../lib/analytics.js';
 
 const mockUser = {
   name: 'Google 用户',
@@ -24,6 +25,7 @@ export default function LoginPage() {
   const handleGoogleLogin = () => {
     localStorage.setItem('uicoding_mock_user', JSON.stringify(mockUser));
     setIsLoggedIn(true);
+    trackEvent('login_mock_success', { provider: 'google' });
   };
 
   return (

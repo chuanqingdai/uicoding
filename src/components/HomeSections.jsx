@@ -20,12 +20,25 @@ export function HomeHero() {
             面向设计师和产品经理等代码零基础人群的交流社区，一起学习工具使用技巧、界面设计和上线经验。
           </p>
           <div className="hero-actions">
-            <Button href="/cases" icon={LayoutGrid}>浏览案例</Button>
+            <Button
+              href="/cases"
+              icon={LayoutGrid}
+              analyticsEvent={{
+                name: 'cta_click',
+                params: { area: 'home_hero', label: '浏览案例', link_url: '/cases' },
+              }}
+            >
+              浏览案例
+            </Button>
             <Button
               className="hero-submit-button"
               href="/submit"
               icon={Send}
               variant="secondary"
+              analyticsEvent={{
+                name: 'cta_click',
+                params: { area: 'home_hero', label: '提交作品', link_url: '/submit' },
+              }}
             >
               提交作品
             </Button>
@@ -44,7 +57,18 @@ export function HeroRecommendation() {
   );
 
   return (
-    <Card className="recommend-card" href={heroRecommendation.href}>
+    <Card
+      className="recommend-card"
+      href={heroRecommendation.href}
+      analyticsEvent={{
+        name: 'hero_recommendation_click',
+        params: {
+          item_id: heroRecommendation.id,
+          item_name: heroRecommendation.title,
+          link_url: heroRecommendation.href,
+        },
+      }}
+    >
       <div className="recommend-stamp" aria-label="今日推荐">
         <span>今日推荐</span>
       </div>
@@ -143,7 +167,15 @@ export function SubmitInvite() {
               如果你用 AI 做出了一个真实项目，欢迎提交给更多人学习和拆解。
             </p>
           </div>
-          <Button className="submit-invite-button" href="/submit" icon={Send}>
+          <Button
+            className="submit-invite-button"
+            href="/submit"
+            icon={Send}
+            analyticsEvent={{
+              name: 'cta_click',
+              params: { area: 'submit_invite', label: '提交作品', link_url: '/submit' },
+            }}
+          >
             提交作品
           </Button>
         </div>
