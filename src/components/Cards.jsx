@@ -77,10 +77,10 @@ export function isDefaultLearningCover(image = '') {
   return image.startsWith('/learn-covers/');
 }
 
-export function CaseCard({ item, showStats = true }) {
+export function CaseCard({ item }) {
   const accent = item.accent ?? visualAccent[item.visualType] ?? 'slate';
   const visualImage = item.image ?? item.screenshotUrl;
-  const hasStats = false;
+  const primaryTool = item.tools?.find((tool) => tool && tool !== 'AI 生成证据待补充');
 
   return (
     <Card className="case-card" href={item.href ?? '/cases'}>
@@ -96,25 +96,9 @@ export function CaseCard({ item, showStats = true }) {
         <p>{item.description}</p>
         <div className="tag-row">
           <Badge>{item.category}</Badge>
-          {item.tools?.[0] && <Badge>{item.tools[0]}</Badge>}
+          {primaryTool && <Badge>{primaryTool}</Badge>}
         </div>
-        <div
-          className={`card-footer-row case-card-footer ${
-            hasStats ? '' : 'is-link-only'
-          }`}
-        >
-          {hasStats && (
-            <div className="case-stats">
-              <span>
-                <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
-                {numberFormatter.format(item.viewCount)}
-              </span>
-              <span>
-                <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
-                {numberFormatter.format(item.likeCount)}
-              </span>
-            </div>
-          )}
+        <div className="card-footer-row case-card-footer is-link-only">
           <span className="card-link">
             查看案例 →
           </span>

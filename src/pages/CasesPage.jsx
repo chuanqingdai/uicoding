@@ -5,12 +5,18 @@ import { Container } from '../components/Layout.jsx';
 import { Button } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
 
+const pinnedCaseIds = new Set(['freemake-ai-image-maker']);
+
+function byPinnedFirst(a, b) {
+  return Number(pinnedCaseIds.has(b.id)) - Number(pinnedCaseIds.has(a.id));
+}
+
 function byLatest(a, b) {
-  return new Date(b.publishedAt) - new Date(a.publishedAt);
+  return byPinnedFirst(a, b) || new Date(b.publishedAt) - new Date(a.publishedAt);
 }
 
 function byHot(a, b) {
-  return b.likeCount - a.likeCount || b.viewCount - a.viewCount;
+  return byPinnedFirst(a, b) || b.likeCount - a.likeCount || b.viewCount - a.viewCount;
 }
 
 const initialVisibleCount = 9;

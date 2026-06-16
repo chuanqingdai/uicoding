@@ -3,7 +3,7 @@ import { Copy, ExternalLink, Heart, Mail, UserPlus } from 'lucide-react';
 import { cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge, Card } from '../components/UI.jsx';
-import { CaseCard, ProductMockup } from '../components/Cards.jsx';
+import { CaseCard } from '../components/Cards.jsx';
 
 function isRecentCase(item) {
   return Boolean(item.sourceType);
@@ -90,16 +90,16 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
   );
 }
 
-function DetailBlock({ section, visualType }) {
+function DetailBlock({ section }) {
+  const hasImage = Boolean(section.image);
+
   return (
-    <article className="detail-block">
-      <div className="detail-image">
-        {section.image ? (
+    <article className={`detail-block ${hasImage ? 'has-image' : 'is-text-only'}`}>
+      {hasImage && (
+        <div className="detail-image">
           <img src={section.image} alt={section.imageAlt} />
-        ) : (
-          <ProductMockup featured type={visualType} />
-        )}
-      </div>
+        </div>
+      )}
       <div className="detail-copy">
         <h2>{section.title}</h2>
         <p>{section.description}</p>
@@ -141,7 +141,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
     [categorySlug, slug],
   );
   const [liked, setLiked] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
 
   const relatedCases = useMemo(() => {
     if (!caseItem) {
@@ -177,14 +176,15 @@ export default function CaseDetailPage({ categorySlug, slug }) {
     caseItem.category,
     ...(caseItem.tools ?? []),
     ...(caseItem.tags ?? []),
-  ].filter((item, index, list) => item && list.indexOf(item) === index);
+  ].filter(
+    (item, index, list) =>
+      item &&
+      item !== 'AI 生成证据待补充' &&
+      list.indexOf(item) === index,
+  );
 
   const toggleLike = () => {
     setLiked((current) => !current);
-  };
-
-  const toggleFollow = () => {
-    setIsFollowing((current) => !current);
   };
 
   return (
@@ -233,21 +233,12 @@ export default function CaseDetailPage({ categorySlug, slug }) {
                   <DetailBlock
                     key={section.id}
                     section={section}
-                    visualType={caseItem.visualType}
                   />
                 ))}
               </div>
             </div>
 
           </article>
-
-          <aside className="blog-sidebar">
-            <SubmitterCard
-              submitter={caseItem.submitter}
-              isFollowing={isFollowing}
-              onFollowToggle={toggleFollow}
-            />
-          </aside>
         </div>
 
         <RelatedCaseSection

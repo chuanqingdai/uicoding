@@ -339,6 +339,8 @@ export const learningContent = [
     "title": "我如何用 Codex + Impeccable Skill 做出 UIcoding.ai",
     "originalTitle": "",
     "notice": "本文为 Uicoding.ai 站内原创经验稿，记录这个网站使用 Codex 和 Impeccable Skill 搭建与设计走查的过程。",
+    "image": "/learn-images/uicoding-skill-coding-process-hero.png",
+    "imageAlt": "Uicoding.ai 从真实作品学习 AI 编程头图",
     "hideLead": true,
     "sections": parseLearningMarkdown(uicodingSkillArticleMarkdown)
   },

@@ -1295,7 +1295,7 @@ const caseDrafts = [
     description: 'FreeMake.cc 是一个浏览器里的 AI 图片生成工作台，主打免费使用 GPT Image 2、Gemini、Qwen、Seedream 等模型生成图片。',
     category: '内容工具',
     categorySlug: 'content-tool',
-    tools: ['AI 生成证据待补充'],
+    tools: [],
     tags: ['AI 图片生成', 'GPT Image 2', 'Gemini', 'Qwen', 'Seedream'],
     websiteUrl: 'https://freemake.cc/',
     sourceType: '外部精选',
@@ -1347,6 +1347,7 @@ const caseDrafts = [
 ];
 
 const visibleCaseIds = [
+  'freemake-ai-image-maker',
   'knowlens-ai-infographic-generator',
   'maieutic-programming-education',
   'blacklight-agentic-defense',
@@ -1355,13 +1356,12 @@ const visibleCaseIds = [
   'masterborder-trade-compliance',
   'poneglyph-knowledge-tool',
   'nerium-ai-workspace',
-  'freemake-ai-image-maker',
 ];
 
 export const cases = caseDrafts.filter((item) => visibleCaseIds.includes(item.id));
 
 export const homeFeaturedIds = [
-  'knowlens-ai-infographic-generator',
+  'freemake-ai-image-maker',
   'maieutic-programming-education',
   'blacklight-agentic-defense',
   'medkit-clinical-guide',
@@ -1369,7 +1369,6 @@ export const homeFeaturedIds = [
   'masterborder-trade-compliance',
   'poneglyph-knowledge-tool',
   'nerium-ai-workspace',
-  'freemake-ai-image-maker',
 ];
 
 const knowLensCase = cases.find((item) => item.id === 'knowlens-ai-infographic-generator');
@@ -1476,6 +1475,8 @@ export const lessons = [
       "真实经验"
     ],
     "href": "/learn/uicoding-skill-coding-process",
+    "image": "/learn-images/uicoding-skill-coding-process-hero.png",
+    "imageAlt": "Uicoding.ai 从真实作品学习 AI 编程头图",
     "publishedAt": "2026-06-16",
     "viewCount": 640,
     "likeCount": 52,

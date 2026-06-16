@@ -39,6 +39,9 @@ export function HomeHero() {
 
 export function HeroRecommendation() {
   const visualImage = heroRecommendation.image ?? heroRecommendation.screenshotUrl;
+  const primaryTool = heroRecommendation.tools?.find(
+    (tool) => tool && tool !== 'AI 生成证据待补充',
+  );
 
   return (
     <Card className="recommend-card" href={heroRecommendation.href}>
@@ -58,7 +61,7 @@ export function HeroRecommendation() {
         <div className="recommend-overlay">
           <div className="recommend-overlay-tags">
             <Badge>{heroRecommendation.category}</Badge>
-            {heroRecommendation.tools?.[0] && <Badge>{heroRecommendation.tools[0]}</Badge>}
+            {primaryTool && <Badge>{primaryTool}</Badge>}
           </div>
           <div className="recommend-overlay-copy">
             <h2>{heroRecommendation.title}</h2>

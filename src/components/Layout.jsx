@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 import { footerGroups, navItems } from '../data.js';
 import { Button } from './UI.jsx';
@@ -41,49 +41,93 @@ export function Section({
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const scrollTimer = useRef(null);
   const pathname = window.location.pathname;
 
   useEffect(() => {
+    const root = document.documentElement;
+
+    const updateScrollIndicator = () => {
+      const viewportHeight = window.innerHeight;
+      const pageHeight = Math.max(root.scrollHeight, document.body.scrollHeight);
+      const scrollable = Math.max(0, pageHeight - viewportHeight);
+      const thumbHeight = scrollable
+        ? Math.max(42, Math.round((viewportHeight / pageHeight) * viewportHeight))
+        : 0;
+      const maxTop = Math.max(4, viewportHeight - thumbHeight - 4);
+      const top = scrollable ? Math.round((window.scrollY / scrollable) * maxTop) + 4 : 4;
+
+      root.style.setProperty('--scrollbar-height', `${thumbHeight}px`);
+      root.style.setProperty('--scrollbar-top', `${top}px`);
+    };
+
     const updateScrolled = () => {
       setIsScrolled(window.scrollY > 12);
     };
 
     updateScrolled();
-    window.addEventListener('scroll', updateScrolled, { passive: true });
+    updateScrollIndicator();
 
-    return () => window.removeEventListener('scroll', updateScrolled);
+    const handleScroll = () => {
+      updateScrolled();
+      updateScrollIndicator();
+      root.classList.add('is-page-scrolling');
+
+      if (scrollTimer.current) {
+        window.clearTimeout(scrollTimer.current);
+      }
+
+      scrollTimer.current = window.setTimeout(() => {
+        root.classList.remove('is-page-scrolling');
+      }, 520);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateScrollIndicator);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateScrollIndicator);
+      if (scrollTimer.current) {
+        window.clearTimeout(scrollTimer.current);
+      }
+      root.classList.remove('is-page-scrolling');
+    };
   }, []);
 
   return (
-    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
-      <Container className="header-inner">
-        <a className="brand" href="/" aria-label="Uicoding.ai 首页">
-          <img className="brand-icon" src="/site-icon.png" alt="" aria-hidden="true" />
-          Uicoding.ai
-        </a>
-        <nav className="main-nav" aria-label="主导航">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+    <>
+      <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
+        <Container className="header-inner">
+          <a className="brand" href="/" aria-label="Uicoding.ai 首页">
+            <img className="brand-icon" src="/site-icon.png" alt="" aria-hidden="true" />
+            Uicoding.ai
+          </a>
+          <nav className="main-nav" aria-label="主导航">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-            return (
-              <a
-                aria-current={isActive ? 'page' : undefined}
-                className={isActive ? 'is-active' : ''}
-                href={item.href}
-                key={item.href}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </nav>
-        <div className="header-actions">
-          <Button href="/submit" icon={Send}>
-            提交作品
-          </Button>
-        </div>
-      </Container>
-    </header>
+              return (
+                <a
+                  aria-current={isActive ? 'page' : undefined}
+                  className={isActive ? 'is-active' : ''}
+                  href={item.href}
+                  key={item.href}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </nav>
+          <div className="header-actions">
+            <Button href="/submit" icon={Send}>
+              提交作品
+            </Button>
+          </div>
+        </Container>
+      </header>
+      <span aria-hidden="true" className="page-scrollbar" />
+    </>
   );
 }
 
