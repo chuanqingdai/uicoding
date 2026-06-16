@@ -1,244 +1,56 @@
-import { useState } from 'react';
+import { MessageCircle } from 'lucide-react';
 import { Container } from '../components/Layout.jsx';
 import { Button, Card } from '../components/UI.jsx';
 
-const initialFormData = {
-  title: '',
-  websiteUrl: '',
-  category: '',
-  tools: [],
-  description: '',
-  buildProcess: '',
-  learningPoints: '',
-  screenshotUrl: '',
-  submitterName: '',
-  role: '',
-  email: '',
-  wechat: '',
-  douyin: '',
-  xiaohongshu: '',
-};
-
-const categories = ['Dashboard', 'Landing Page', 'CRM', 'Prompt Tool', 'SaaS'];
-const toolOptions = ['Codex', 'Cursor', 'Claude Code', 'Lovable', 'v0', 'Bolt', 'Replit', 'Trae'];
+const submitTips = [
+  '作品名称和访问链接',
+  '使用的 AI Coding 工具',
+  '你希望别人学习到的构建经验',
+  '1-3 张作品截图或页面链接',
+];
 
 export default function SubmitPage() {
-  const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const updateField = (name, value) => {
-    setFormData((current) => ({ ...current, [name]: value }));
-    setError('');
-  };
-
-  const toggleTool = (tool) => {
-    setFormData((current) => {
-      const hasTool = current.tools.includes(tool);
-      const tools = hasTool
-        ? current.tools.filter((item) => item !== tool)
-        : [...current.tools, tool];
-
-      return { ...current, tools };
-    });
-    setError('');
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (!formData.title.trim()) {
-      setError('请填写作品名称。');
-      return;
-    }
-
-    if (!formData.category) {
-      setError('请选择作品类型。');
-      return;
-    }
-
-    if (formData.tools.length === 0) {
-      setError('请选择至少一个使用工具。');
-      return;
-    }
-
-    if (!formData.description.trim()) {
-      setError('请填写作品简介。');
-      return;
-    }
-
-    if (!formData.submitterName.trim()) {
-      setError('请填写你的名称。');
-      return;
-    }
-
-    localStorage.setItem('uicoding_submit_draft', JSON.stringify(formData));
-    setIsSubmitted(true);
-  };
-
-  if (isSubmitted) {
-    return (
-      <div className="submit-page">
-        <Container>
-          <div className="submit-shell">
-            <Card className="submit-success">
-              <h1>已收到你的作品信息</h1>
-              <p>当前为前端演示版本，真实提交功能将在后续开放。</p>
-              <Button href="/">返回首页</Button>
-            </Card>
-          </div>
-        </Container>
-      </div>
-    );
-  }
-
   return (
     <div className="submit-page">
       <Container>
-        <div className="submit-shell">
+        <div className="submit-shell submit-shell-simple">
           <div className="submit-copy">
-            <h1>提交你的 AI Coding 作品</h1>
+            <h1>提交你的 AI 编程作品</h1>
             <p>
-              分享你用 Codex、Cursor、Claude Code、Lovable、v0 等工具完成的作品，帮助更多人学习真实的 AI Coding 构建过程。
+              提交功能正在开发中。现阶段如果你有作品想展示，可以先加我的微信，我会手动帮你整理并发布到 Uicoding.ai。
             </p>
-            <p>当前为前端演示版本，提交内容暂不会发送到服务器。</p>
           </div>
 
-          <Card className="submit-card">
-            <form className="submit-form" onSubmit={handleSubmit}>
-              <section className="submit-group">
-                <h2>作品信息</h2>
-                <div className="submit-grid">
-                  <label className="submit-field">
-                    <span>作品名称</span>
-                    <input
-                      name="title"
-                      onChange={(event) => updateField('title', event.target.value)}
-                      placeholder="例如：FlowPilot 数据看板"
-                      required
-                      type="text"
-                      value={formData.title}
-                    />
-                  </label>
-                  <label className="submit-field">
-                    <span>作品链接</span>
-                    <input
-                      name="websiteUrl"
-                      onChange={(event) => updateField('websiteUrl', event.target.value)}
-                      placeholder="https://example.com/"
-                      type="url"
-                      value={formData.websiteUrl}
-                    />
-                  </label>
-                  <label className="submit-field">
-                    <span>作品类型</span>
-                    <select
-                      name="category"
-                      onChange={(event) => updateField('category', event.target.value)}
-                      required
-                      value={formData.category}
-                    >
-                      <option value="">请选择作品类型</option>
-                      {categories.map((category) => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <div className="submit-field">
-                    <span>使用工具</span>
-                    <div className="submit-checkboxes">
-                      {toolOptions.map((tool) => (
-                        <label key={tool}>
-                          <input
-                            checked={formData.tools.includes(tool)}
-                            onChange={() => toggleTool(tool)}
-                            type="checkbox"
-                          />
-                          <span>{tool}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <label className="submit-field">
-                    <span>作品简介</span>
-                    <textarea
-                      maxLength={200}
-                      name="description"
-                      onChange={(event) => updateField('description', event.target.value)}
-                      placeholder="简单介绍这个作品解决什么问题、主要功能是什么"
-                      required
-                      value={formData.description}
-                    />
-                  </label>
-                </div>
-              </section>
+          <Card className="submit-card submit-dev-card">
+            <div className="submit-status">
+              <span>正在开发中</span>
+              <h2>先通过微信手动提交</h2>
+              <p>
+                后续会开放正式提交页面，支持填写作品信息、上传截图和补充构建过程。当前阶段我会先人工收集作品，保证内容质量和展示效果。
+              </p>
+            </div>
 
-              <section className="submit-group">
-                <h2>案例说明</h2>
-                <div className="submit-grid">
-                  <label className="submit-field">
-                    <span>构建过程</span>
-                    <textarea
-                      name="buildProcess"
-                      onChange={(event) => updateField('buildProcess', event.target.value)}
-                      placeholder="简单描述你如何用 AI Coding 完成这个作品"
-                      value={formData.buildProcess}
-                    />
-                  </label>
-                  <label className="submit-field">
-                    <span>可以学习什么</span>
-                    <textarea
-                      name="learningPoints"
-                      onChange={(event) => updateField('learningPoints', event.target.value)}
-                      placeholder="例如：组件拆分、提示词设计、页面结构、视觉优化"
-                      value={formData.learningPoints}
-                    />
-                  </label>
-                  <label className="submit-field">
-                    <span>截图链接</span>
-                    <input
-                      name="screenshotUrl"
-                      onChange={(event) => updateField('screenshotUrl', event.target.value)}
-                      placeholder="可填写作品截图链接，后续会支持上传"
-                      type="url"
-                      value={formData.screenshotUrl}
-                    />
-                  </label>
-                </div>
-                <p className="submit-note">当前不要实现真实图片上传，只保留截图链接输入框。</p>
-              </section>
+            <div className="submit-contact-card">
+              <MessageCircle size={20} strokeWidth={1.8} aria-hidden="true" />
+              <div>
+                <strong>微信：AI_ChuanQing</strong>
+                <p>也可以邮件联系：chuanqingdai@gmail.com</p>
+              </div>
+            </div>
 
-              <section className="submit-group">
-                <h2>提交者信息</h2>
-                <div className="submit-grid">
-                  {[
-                    ['submitterName', '你的名称', '例如：David', 'text', true],
-                    ['role', '身份介绍', '例如：独立开发者 / 设计师 / 产品经理', 'text', false],
-                    ['email', '邮箱', 'hello@example.com', 'email', false],
-                    ['wechat', '微信', '可选', 'text', false],
-                    ['douyin', '抖音账号', '可选', 'text', false],
-                    ['xiaohongshu', '小红书账号', '可选', 'text', false],
-                  ].map(([name, label, placeholder, type, required]) => (
-                    <label className="submit-field" key={name}>
-                      <span>{label}</span>
-                      <input
-                        name={name}
-                        onChange={(event) => updateField(name, event.target.value)}
-                        placeholder={placeholder}
-                        required={required}
-                        type={type}
-                        value={formData[name]}
-                      />
-                    </label>
-                  ))}
-                </div>
-              </section>
+            <div className="submit-tips">
+              <h3>发送时可以附上</h3>
+              <ul>
+                {submitTips.map((tip) => (
+                  <li key={tip}>{tip}</li>
+                ))}
+              </ul>
+            </div>
 
-              {error && <p className="submit-error">{error}</p>}
-              <Button type="submit">提交作品</Button>
-            </form>
+            <div className="submit-actions">
+              <Button href="/cases">浏览案例</Button>
+              <Button href="/" variant="ghost">返回首页</Button>
+            </div>
           </Card>
         </div>
       </Container>

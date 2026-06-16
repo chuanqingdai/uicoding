@@ -1,43 +1,315 @@
 const guidedNotice = "本文为 Uicoding 基于外部资料整理的中文学习笔记，不是原文全文翻译。请访问原始来源查看完整内容。";
 
+function parseLearningMarkdown(markdown) {
+  const sections = [];
+  let current = { heading: '', blocks: [] };
+  let paragraphLines = [];
+  let codeLines = [];
+  let codeLanguage = '';
+  let inCodeBlock = false;
+
+  const commitParagraph = () => {
+    if (paragraphLines.length === 0) {
+      return;
+    }
+
+    current.blocks.push({
+      type: 'paragraph',
+      content: paragraphLines.join('\n'),
+    });
+    paragraphLines = [];
+  };
+
+  const commitSection = () => {
+    commitParagraph();
+    if (current.heading || current.blocks.length > 0) {
+      sections.push(current);
+    }
+  };
+
+  markdown.split(/\r?\n/).forEach((line) => {
+    if (line.startsWith('```')) {
+      if (inCodeBlock) {
+        current.blocks.push({
+          type: 'code',
+          label: codeLanguage ? `${codeLanguage} prompt` : '可复制内容',
+          content: codeLines.join('\n').trimEnd(),
+        });
+        codeLines = [];
+        codeLanguage = '';
+        inCodeBlock = false;
+        return;
+      }
+
+      commitParagraph();
+      codeLanguage = line.slice(3).trim();
+      inCodeBlock = true;
+      return;
+    }
+
+    if (inCodeBlock) {
+      codeLines.push(line);
+      return;
+    }
+
+    if (line.startsWith('# ')) {
+      commitParagraph();
+      return;
+    }
+
+    if (line.startsWith('## ')) {
+      commitSection();
+      current = { heading: line.replace(/^##\s+/, '').trim(), blocks: [] };
+      return;
+    }
+
+    if (!line.trim() || line.trim() === '---') {
+      commitParagraph();
+      return;
+    }
+
+    paragraphLines.push(line);
+  });
+
+  if (inCodeBlock) {
+    current.blocks.push({
+      type: 'code',
+      label: codeLanguage ? `${codeLanguage} prompt` : '可复制内容',
+      content: codeLines.join('\n').trimEnd(),
+    });
+  }
+
+  commitSection();
+
+  return sections;
+}
+
+const uicodingSkillArticleMarkdown = "# 我如何用 Codex + Impeccable Skill 做出 UIcoding.ai\n\n最近我用 Codex 搭了一个新站：UIcoding.ai。\n\n这个网站的定位很简单：整理 AI Coding 案例、学习资料、工具介绍，帮助设计师、产品经理、独立开发者更快学会用 Codex、Claude Code、Cursor 这类工具做真实产品。\n\n但真正做下来，我发现一个问题：\n\nCodex 写代码很快，但默认设计能力不稳定。\n\n它可以很快创建页面、组件、路由、数据结构，也能修构建错误。但当我说“页面更高级一点”“更像编辑精选站”“减少模板感”的时候，Codex 经常会走偏。\n\n比如它会加很多卡片。\n加很多背景块。\n加很重的阴影。\n加渐变。\n加发光边框。\n按钮越来越黑。\n标签越来越抢眼。\n最后页面不是更高级，而是更像 AI 自动生成的网站。\n\n后面我开始配合使用一个前端设计 Skill：Impeccable。\n\n我自己的理解是：\n\nCodex 负责写代码。\nImpeccable 负责做设计审查。\n\n它不是直接替你变出一个完美网站，而是帮你发现页面为什么不高级、哪里像模板、哪里排版不舒服、哪里组件太重、哪里视觉层级混乱。\n\n这篇文章复盘一下，我是怎么用 Codex + Impeccable Skill 搭建 UIcoding.ai 的。\n\n文中的代码块都可以直接复制到 Codex 输入框里，根据你的项目名称做少量替换就能用。\n\n---\n\n## 1. 为什么要给 Codex 配 Impeccable\n\n只用 Codex 写代码时，它非常适合完成明确的工程任务。\n\n比如：\n\n创建页面。\n新增组件。\n调整路由。\n补静态数据。\n修构建错误。\n优化移动端。\n整理页面结构。\n\n这些事情只要你描述清楚，Codex 基本都能完成。\n\n但设计不一样。\n\n设计不是简单地“多写几行样式”。\n\n很多时候页面不高级，不是因为缺少效果，而是因为东西太多了。\n\n我在做 UIcoding.ai 的时候，遇到过很多这种问题：\n\n首页 Hero 区域信息太满。\n案例卡片像普通组件库默认样式。\n学习资料页面没有文章阅读感。\n工具页 icon 白底太突兀。\n按钮颜色太重，抢了内容注意力。\n标签太多，视觉上比标题还突出。\n卡片 hover 太夸张，页面像模板站。\n灰色占位图太默认，没有编辑感。\n\n如果我只对 Codex 说：\n\n```text\n页面不够高级，帮我优化一下。\n```\n\n它很容易继续堆效果。\n\n但 Impeccable 更适合做“设计审查”。\n\n我会让它先审查页面，再只挑最影响质感的几个问题改。\n\n这样比一次性大改稳定很多。\n\n---\n\n## 2. 一键安装 Impeccable：直接复制给 Codex\n\n如果你想在 Codex 项目里使用 Impeccable，最简单的方式不是自己去研究一堆命令，而是直接让 Codex 帮你检查、安装、初始化。\n\n我会把安装任务也写得很明确。\n\n不要让 Codex 一边安装，一边顺手改项目代码。\n\n可以直接复制这段：\n\n```text\n请帮我在当前项目中一键安装并初始化 Impeccable Skill。\n\n要求：\n1. 先确认当前目录是否是项目根目录。\n2. 检查 package.json 是否存在。\n3. 不要修改业务代码。\n4. 不要修改页面组件。\n5. 不要修改 CSS 文件。\n6. 只执行 Impeccable 的安装和初始化相关步骤。\n7. 如果需要执行命令，请先说明命令用途，然后再执行。\n8. 安装完成后，告诉我如何在 Codex 中调用 Impeccable。\n\n请执行：\n- npx impeccable install\n- 按项目级安装优先\n- 安装后提示我重启 Codex 或重新加载技能\n- 然后指导我运行 /impeccable init\n\n如果 Codex 中看不到 /impeccable，请告诉我如何通过 /skills 或 $ 检查技能是否已加载。\n```\n\n这段的重点是：\n\n只安装 Skill。\n不要改页面。\n不要改 CSS。\n不要顺手优化 UI。\n\n安装工具和修改项目要分开。\n\n这是我踩过的坑。\n\n有时候你只是想安装一个 Skill，Codex 会顺手开始“优化项目结构”。这种非常没必要。\n\n所以安装阶段一定要写清楚：只安装，不改业务代码。\n\n---\n\n## 3. 初始化 Impeccable：先告诉它 UIcoding.ai 是什么\n\n安装之后，不要马上让它改页面。\n\n先初始化项目上下文。\n\nImpeccable 需要知道这个网站是什么类型、面向谁、视觉方向是什么、不要像什么。\n\nUIcoding.ai 不是一个传统 SaaS 工具站。\n\n它更像一个 AI Coding 案例和学习内容站。\n\n所以我不会只说“现代、简洁、高级”。\n\n这种词太泛了。\n\n我会这样描述：\n\n```text\n请使用 /impeccable init 初始化当前项目的设计上下文。\n\n这是 UIcoding.ai，一个 AI Coding 案例和学习内容站。\n\n项目定位：\n- 面向设计师、产品经理、独立开发者、一人公司\n- 帮助用户学习如何使用 Codex、Claude Code、Cursor 等 AI Coding 工具\n- 展示优秀 AI Coding 案例、教程、工具和实战经验\n\n网站气质：\n- 编辑感\n- 可信\n- 简洁\n- 有审美\n- 像高质量内容精选站\n- 不要像普通 SaaS 模板\n- 不要像组件库 demo\n- 不要像自动生成的 AI 工具站\n\n视觉参考：\n- 高质量编辑型内容站\n- 设计案例精选站\n- 干净的产品手册页面\n- 有留白、有节奏、有明确层级\n\n反向要求：\n- 不要重渐变\n- 不要重阴影\n- 不要发光边框\n- 不要多层卡片嵌套\n- 不要满屏黑色按钮\n- 不要让标签比标题更抢眼\n- 不要把所有内容都放进背景块\n\n初始化完成后，请总结 Impeccable 记录了哪些项目上下文。\n不要修改页面代码。\n```\n\n这一步很重要。\n\n因为如果没有项目上下文，Impeccable 也只能给出比较通用的设计建议。\n\n我希望它理解：\n\nUIcoding.ai 是内容站，不是后台系统。\n是编辑精选站，不是普通工具站。\n是给 AI Coding 学习者看的，不是给企业采购看的。\n\n上下文越清楚，后面的设计审查越准确。\n\n---\n\n## 4. 先做能跑起来的项目，不要一开始追求完美\n\nUIcoding.ai 一开始不是直接做完整网站。\n\n我先让 Codex 创建一个最小可运行版本。\n\n技术上也没有搞复杂：\n\nReact。\nVite。\nnpm。\n普通 CSS。\n静态数据。\n\n页面也先只做首页：\n\nHeader。\nHero。\n精选案例。\n学习资料。\n常用工具。\nFooter。\n\n这个阶段最重要的不是设计多漂亮，而是项目能跑、结构清晰、文件不要拆太碎。\n\n可以直接复制：\n\n```text\n从零开始创建一个 React + Vite 前端项目。\n\n技术栈：\n- React\n- Vite\n- npm\n- 普通 CSS\n- 静态数据\n\n当前只做首页。\n不要做后端。\n不要做登录。\n不要做数据库。\n不要接 API。\n不要引入复杂组件库。\n\n文件结构保持简单：\n- src/main.jsx\n- src/App.jsx\n- src/data.js\n- src/components/\n- src/styles/\n\n样式文件可以按规范拆分，但不要过度复杂：\n- tokens\n- base\n- layout\n- components\n- pages\n\n首页包含：\n1. Header\n2. Hero\n3. 精选案例\n4. 学习资料\n5. 常用工具\n6. Footer\n\n完成后运行：\nnpm install\nnpm run build\n\n构建成功后停止，不要继续扩展新功能。\n```\n\n这里有个坑。\n\n如果一开始就说“帮我做完整网站”，Codex 很容易把项目拆得很复杂。\n\n路由、状态、组件、样式文件、数据文件全部一起上。\n\n看起来很专业，但后面非常难控。\n\n我现在更倾向于：\n\n先简单跑起来。\n再逐页迭代。\n再用 Impeccable 审查。\n最后把规范沉淀到固定样式文件里。\n\n---\n\n## 5. 设计规范不要只写进 MD，要沉淀成固定 CSS 规范\n\n这里我后来也调整过一次。\n\n一开始我以为，把设计规则写进 AGENTS.md 或 DESIGN.md 就够了。\n\n比如告诉 Codex：\n\n页面要高级。\n按钮不要太重。\n卡片不要太模板。\n不要使用重渐变。\n标签不要太抢眼。\n\n但实际开发下来发现，只写在 MD 文件里不够。\n\nMD 文件更适合做上下文说明和工作规则。\n\n真正决定网站质感的，是固定的 CSS 规范。\n\n我的理解是：\n\nAGENTS.md 管 Codex 的行为。\nPRODUCT.md / DESIGN.md 管设计上下文。\n固定 CSS 文件管真正的视觉系统。\nImpeccable 负责审查页面有没有偏离规范。\n\n所以 UIcoding.ai 的样式不应该散落在每个页面里，也不应该每次让 Codex 重新写一套样式。\n\n更合理的方式是建立固定样式结构：\n\n```text\nsrc/styles/\n  tokens.css\n  base.css\n  layout.css\n  components.css\n  pages.css\n```\n\n这里不展开 CSS 代码，只说每个文件的作用。\n\ntokens.css：放颜色、字体、字号、间距、圆角、阴影、容器宽度。\nbase.css：放 body、标题、段落、链接、图片等基础样式。\nlayout.css：放 Container、Section、Grid、页面宽度、响应式布局。\ncomponents.css：放 Button、Card、Badge、Nav、Footer 等通用组件样式。\npages.css：放首页、案例页、详情页等页面级样式。\n\n这样做的好处是：\n\n颜色不会每个页面乱写。\n按钮不会每个页面长得不一样。\n卡片圆角和间距会统一。\n页面布局有固定节奏。\nCodex 不会每次重新发明一套视觉系统。\n\n可以直接复制这个 prompt：\n\n```text\n请为当前项目建立一套固定 CSS 设计规范，但不要输出具体 CSS 代码给我解释。\n\n目标：\n把 UIcoding.ai 的视觉规范沉淀到固定样式文件中，而不是只写进 AGENTS.md 或 DESIGN.md。\n\n请整理或创建这些文件：\n- src/styles/tokens.css\n- src/styles/base.css\n- src/styles/layout.css\n- src/styles/components.css\n- src/styles/pages.css\n\n要求：\n1. tokens.css 只负责设计变量，比如颜色、字体、字号、间距、圆角、阴影、容器宽度。\n2. base.css 只负责全站基础样式，比如 body、标题、段落、链接、图片。\n3. layout.css 只负责布局规则，比如 Container、Section、Grid、响应式。\n4. components.css 只负责通用组件，比如 Button、Card、Badge、Nav、Footer。\n5. pages.css 只负责页面级样式，比如首页、案例页、详情页。\n6. 不要把页面专属样式写进 tokens。\n7. 不要在页面文件里随机新增颜色、阴影、圆角和间距。\n8. 不要引入新的 UI 组件库。\n9. 不要重构业务逻辑。\n10. 不要修改页面内容结构，除非样式引用必须调整。\n\n视觉方向：\n- 编辑感\n- 干净\n- 高级\n- 可信\n- 不要像默认组件库\n- 不要重渐变\n- 不要重阴影\n- 不要多层卡片嵌套\n- 标签不要抢过标题\n- 按钮不要太重\n\n完成后运行 npm run build，并总结：\n1. 创建或修改了哪些样式文件\n2. 每个样式文件负责什么\n3. 哪些页面或组件引用了这些样式\n4. 是否存在需要后续清理的重复样式\n```\n\n这个比“把设计规则写进 AGENTS.md”更有效。\n\nAGENTS.md 可以提醒 Codex 不要乱改设计系统。\n\n但真正的设计系统，必须落到固定 CSS 文件里。\n\n---\n\n## 6. 把大任务拆成单页任务\n\nAI Coding 最容易失控的地方，就是一次性要求它做完整站点。\n\nUIcoding.ai 我后面拆成了几个页面：\n\n首页。\n案例列表页。\n案例详情页。\n学习资料页。\n工具索引页。\n工具详情页。\n提交作品页。\n登录页。\n404 页面。\n\n每次只做一个页面。\n\n比如做案例页，我不会说“把案例系统做完整”。\n\n我会这样写：\n\n```text\n继续开发当前项目。\n\n本次任务只实现一个页面：/cases。\n\n不要创建后端。\n不要创建登录。\n不要接数据库。\n不要重构目录。\n不要引入复杂路由方案。\n不要修改首页视觉风格。\n不要修改设计 tokens。\n\n允许新增：\n- src/pages/CasesPage.jsx\n\n允许修改：\n- src/App.jsx\n- src/data.js\n- src/components/\n- src/styles/pages.css\n\n页面必须复用已有组件和样式规范：\n- Container\n- Section\n- Button\n- Badge\n- Card\n- CaseCard\n\n页面内容：\n1. 页面标题\n2. 简短说明\n3. 分类筛选\n4. 案例卡片列表\n5. 空状态\n\n完成后运行：\nnpm run build\n\n如果构建成功就停止。\n```\n\n这种写法看起来啰嗦，但非常有用。\n\n因为它限制了 Codex 的修改范围。\n\n我之前踩过的坑是：只想做一个页面，它顺手把全站样式也改了。\n\n所以现在我会明确写：\n\n允许新增什么。\n允许修改什么。\n禁止修改什么。\n必须复用什么。\n完成后跑什么命令。\n\n这样出问题也容易定位。\n\n---\n\n## 7. 用 Impeccable 做第一次设计审查\n\n页面能跑起来之后，不要马上继续加功能。\n\n先让 Impeccable 做设计审查。\n\n这里一定不要说“帮我改好看一点”。\n\n要让它先审查，不要直接改代码。\n\n可以复制：\n\n```text\n请使用 Impeccable Skill 走查当前首页。\n\n目标：\n- 高级\n- 编辑感\n- 可信\n- 像高质量 AI Coding 内容站\n- 不要像默认组件库模板\n- 不要像 AI 自动生成的 SaaS 页面\n\n请重点检查：\n1. 信息层级是否清楚\n2. Hero 是否太满\n3. 字体和字号是否有节奏\n4. 按钮是否太重\n5. 卡片是否太像模板\n6. 标签是否太抢眼\n7. 图片占位是否太默认\n8. 移动端是否拥挤\n9. 页面是否复用 src/styles 下的设计规范\n10. 是否存在页面里随机新增颜色、阴影、圆角和间距\n\n不要直接大改代码。\n先只指出最影响质感的 3 个问题。\n\n每个问题请包含：\n- 具体问题\n- 为什么影响质感\n- 建议怎么改\n- 可能涉及哪些样式文件或组件\n```\n\n这一步很关键。\n\n我不让它马上改代码，而是先让它审查。\n\n因为很多时候 Codex 直接改，会一次性改太多。\n\n先让 Impeccable 给出问题清单，再挑前三个改，效果会稳定很多。\n\n---\n\n## 8. 只修前三个最影响质感的问题\n\nImpeccable 走查后，通常会指出很多问题。\n\n但不要一次性全改。\n\n我一般只挑最重要的 3 个。\n\n比如它指出：\n\n按钮太重。\n卡片信息太挤。\n图片占位太默认。\n\n那这一轮就只改这三个。\n\n可以这样写：\n\n```text\n根据刚才 Impeccable 的设计走查结果，本轮只修复最影响质感的 3 个问题。\n\n只允许调整：\n- 颜色引用\n- 字体层级\n- 间距\n- 卡片样式\n- 按钮样式\n- 图片占位样式\n- 移动端布局细节\n\n优先修改：\n- src/styles/tokens.css\n- src/styles/base.css\n- src/styles/layout.css\n- src/styles/components.css\n- src/styles/pages.css\n\n不要新增页面。\n不要修改数据结构。\n不要重构组件。\n不要改路由。\n不要引入新依赖。\n不要做动画大改。\n不要在页面文件中写散乱样式。\n\n修复目标：\n1. 降低按钮的视觉重量\n2. 让卡片信息更舒展\n3. 让图片占位更像真实内容站，而不是灰色默认块\n\n完成后运行 npm run build，并总结修改了哪些文件。\n```\n\n这个方式比“帮我整体提升设计”稳定很多。\n\n因为它不是凭感觉改，而是基于设计审查结果改。\n\n---\n\n## 9. Impeccable 真正有用的地方：反模板感\n\n我觉得 Impeccable 最大的价值，不是让页面突然变成世界顶级设计。\n\n而是帮你避免 AI 页面常见问题。\n\n比如：\n\n卡片太多。\n按钮太黑。\n标签太抢眼。\n阴影太模板。\n渐变太重。\n页面到处都是圆角卡片。\n图标都放在圆角方块里。\n灰色文字放在浅色背景上，可读性很差。\nHero 区域堆太多信息，像 AI 生成的 SaaS 模板。\n\n这些问题非常常见。\n\nCodex 默认很容易做出这种页面，因为它学到的很多前端模式就是这种。\n\nImpeccable 的好处是，它会提醒你：\n\n不要再堆卡片了。\n不要再加渐变了。\n不要让标签比标题还抢眼。\n不要用组件库默认审美。\n不要把所有内容都装进背景块里。\n不要让 hover 效果变成炫技。\n\n这对 UIcoding.ai 很有帮助。\n\n因为我希望它更像一个编辑精选站，而不是一个普通 AI 工具站。\n\n---\n\n## 10. 自动设计审查：让 Impeccable 每轮都检查\n\n后面我更常用的是一个固定循环：\n\nCodex 完成页面。\nImpeccable 审查。\n只修前三个问题。\n重新构建。\n再检查页面。\n\n可以把这个流程写成固定提示词：\n\n```text\n请对当前页面执行一次 Impeccable 自动设计审查循环。\n\n流程：\n1. 读取当前页面和相关样式文件。\n2. 从视觉品质角度审查页面。\n3. 检查页面是否符合 src/styles 下的固定 CSS 规范。\n4. 只列出最影响质感的 3 个问题。\n5. 不要提出超过 3 个问题。\n6. 不要大改结构。\n7. 只针对这 3 个问题做最小修改。\n8. 修改后运行 npm run build。\n9. 最后总结修改文件、修改内容和剩余问题。\n\n审查标准：\n- 是否像真实内容站\n- 是否有编辑感\n- 是否有清晰层级\n- 是否避免组件库默认感\n- 是否避免 AI 模板感\n- 是否移动端可读\n- 是否复用 tokens、layout、components 的样式规范\n- 是否存在随机颜色、随机圆角、随机阴影、随机间距\n\n不要新增页面。\n不要新增功能。\n不要修改业务逻辑。\n不要引入新依赖。\n```\n\n这个提示词我觉得很适合零基础用户。\n\n因为你不需要懂太多设计术语。\n\n只要让 Impeccable 先审查，再让 Codex 只改前三个问题，就能稳定提升页面质感。\n\n---\n\n## 11. 更严格一点：用 detect 做反模式检查\n\n除了让 Impeccable 在 Codex 里审查页面，也可以让它做更偏自动化的反模式检查。\n\n我会把它理解成：\n\n不是审美打分。\n而是检查页面里有没有明显的 AI 设计坏味道。\n\n比如：\n\n重渐变。\n发光边框。\n过度阴影。\n模板化色彩。\n不必要的视觉装饰。\n\n可以直接复制：\n\n```text\n请为当前项目执行一次 Impeccable 反模式检测。\n\n要求：\n1. 运行 npx impeccable detect src/\n2. 如果检测失败，请不要马上大改。\n3. 先总结检测到了哪些问题。\n4. 按严重程度排序。\n5. 只选择最影响页面质感的 3 个问题。\n6. 说明每个问题可能影响哪些页面或组件。\n7. 等我确认后再修改。\n\n不要修改业务逻辑。\n不要新增依赖。\n不要改路由。\n不要重构组件结构。\n```\n\n我建议不要让它检测完就自动大改。\n\n先让它列问题。\n\n因为有些检测结果可能不是当前最重要的问题。\n\n设计优化不是越多越好。\n\n每次只改最重要的 3 个，反而更稳。\n\n---\n\n## 12. 页面验证不要省\n\n很多问题不是看代码能发现的。\n\n而是在浏览器里才看得出来。\n\n我做 UIcoding.ai 的时候，遇到过这些问题：\n\n卡片底部有一条白线。\n图标白底太大。\nHero 图片被裁剪。\n详情页正文宽度太宽。\n标签在移动端换行很乱。\n某个卡片 hover 后会撑开布局。\n图片加载失败后占位很丑。\n页面出现横向滚动条。\n\n所以每次修改后，我都会要求 Codex 做验证。\n\n```text\n修改完成后请执行以下验证：\n\n1. 运行 npm run build。\n2. 打开本地页面。\n3. 检查是否有横向溢出。\n4. 检查移动端布局是否拥挤。\n5. 如果页面包含图片，检查图片是否加载成功、是否被裁剪。\n6. 如果页面包含卡片，检查 hover、按钮、标签、标题和描述是否对齐。\n7. 如果页面包含长文本，检查正文宽度和行高是否适合阅读。\n8. 检查页面是否继续复用 src/styles 下的固定样式规范。\n\n只汇报验证结果。\n不要继续扩展新功能。\n```\n\n这里的关键是最后一句：\n\n不要继续扩展新功能。\n\nCodex 有时候很容易顺手做更多事情。\n\n你必须让它停在当前任务。\n\n---\n\n## 13. AGENTS.md 应该写什么\n\n设计规范不应该只写进 AGENTS.md。\n\n但 AGENTS.md 仍然有用。\n\n它应该写工作规则，而不是承载完整设计系统。\n\n我会这样写：\n\n```text\n请更新 AGENTS.md，只加入必要的工作规则。\n\n不要把完整设计规范写进 AGENTS.md。\n真正的设计规范在 src/styles/ 下的固定 CSS 文件中。\n\nAGENTS.md 只需要说明：\n1. 不要删除、移动、重命名文件，除非明确要求。\n2. 不要重构无关代码。\n3. 不要修改业务逻辑，除非当前任务要求。\n4. UI 修改必须优先复用 src/styles 下的规范。\n5. 不要在页面文件里随机新增颜色、阴影、圆角、间距。\n6. 不要随便修改 tokens，除非任务明确要求调整设计系统。\n7. 每次 UI 修改后，优先使用 Impeccable 做设计审查。\n8. 每轮只修最重要的 3 个视觉问题。\n9. 修改完成后必须运行 npm run build。\n10. 最后总结修改了哪些文件。\n\n保持简洁，不要写成长文档。\n```\n\n这样更合理。\n\nAGENTS.md 负责提醒 Codex：\n\n设计系统已经在 CSS 里了。\n不要每次重新发明样式。\n不要乱改 tokens。\n不要把页面样式写散。\n\n而 Impeccable 负责审查页面有没有偏离规范。\n\n---\n\n## 14. Impeccable 帮我具体改出了哪些方向\n\nUIcoding.ai 后面的视觉方向，就是这样一点点收敛出来的。\n\n一开始页面比较像普通组件站。\n\n后来慢慢改成：\n\n品牌色从纯黑转向更有温度的棕色。\n按钮变轻，不再满屏黑色按钮。\n卡片 hover 只做轻微反馈。\n学习详情页更像文章阅读，不再用很多背景块。\n工具页统一真实产品 icon，而不是随机图标。\n案例详情页减少模块堆叠，重点展示图片和作者信息。\n列表页标签降低视觉权重，让标题和封面更突出。\nFooter 和导航更克制，不抢主内容。\n\n这些不是一次性做出来的。\n\n而是每次审查一点，修改一点，再验证一点。\n\n这也是我现在觉得最适合 AI Coding 的方式：\n\n不要追求一次生成完美页面。\n而是让 AI 帮你持续迭代。\n\n---\n\n## 15. 给零基础用户的建议\n\n如果你是零基础用户，不要把 AI Coding 理解成“一句话生成完整网站”。\n\n这种方式很容易失控。\n\n更稳定的方式是：\n\n先做一个能运行的版本。\n再逐页拆任务。\n每次只改一个页面。\n每次只解决 3 个设计问题。\n每次修改后都构建验证。\n最后把规则沉淀到固定 CSS 规范里。\n\nImpeccable 最适合用在这种场景：\n\n你觉得页面不对劲。\n但你说不清哪里不对。\n\n这时候不要直接让 Codex “优化一下”。\n\n而是让 Impeccable 先审查。\n\n比如：\n\n```text\n请用 Impeccable 审查这个页面。\n只指出最影响质感的 3 个问题。\n不要直接改代码。\n```\n\n然后再让 Codex 按这 3 个问题修改。\n\n这样做慢一点，但更稳。\n\n也更接近真实产品开发流程。\n\n---\n\n## 总结\n\n这次做 UIcoding.ai，我最大的感受是：\n\nCodex 适合执行。\nImpeccable 适合审查。\n\nCodex 能很快把页面写出来，但它不一定知道页面为什么不高级。\n\nImpeccable 的价值，就是帮你把“感觉不对”变成更具体的问题。\n\n比如：\n\n按钮太重。\n标签太抢眼。\n卡片太模板。\n图片像占位。\n间距没有节奏。\n页面信息太满。\n移动端阅读压力太大。\n\n有了这些判断，再让 Codex 修改，效率会高很多。\n\n我现在的工作流基本是：\n\n```text\nCodex 搭页面\n↓\n固定 CSS 规范约束视觉\n↓\nImpeccable 做设计审查\n↓\n只改最重要的 3 个问题\n↓\nnpm run build\n↓\n浏览器验证\n↓\n把稳定规则沉淀到项目结构里\n```\n\n这套流程不复杂，但很适合独立开发者。\n\n尤其是你不想只做一个“能跑”的网站，而是希望页面真的有一点质感。\n\nUIcoding.ai 就是这样一点点做出来的。";
+
 export const learningContent = [
+  {
+    "id": "getting-the-most-out-of-codex",
+    "sourceUrl": "https://x.com/dotey/article/2057250417638035555",
+    "translationMode": "guidedTranslation",
+    "title": "如何把 Codex 用到极致：来自 Codex 团队的工作流分享",
+    "originalTitle": "Getting the most out of Codex",
+    "notice": "本文为 Uicoding 基于外部文章整理的中文精读稿，不是原文全文搬运。原文来自 X Article，中文参考宝玉的公开整理稿；请访问原始来源查看完整上下文。",
+    "sections": [
+      {
+        "heading": "这篇文章真正想说明什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多人刚开始使用 Codex 时，会把它当成一个更聪明的代码编辑助手：让它读代码库，生成 diff，跑测试，修 bug，最后提交 PR。这当然是 Codex 的核心能力，但这篇文章提醒我们，Codex 的价值已经不止于“写代码”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "现实工作里，大量任务虽然最后会落到代码上，但过程并不只发生在代码库里。你可能要查网页、看文档、整理 Slack 里的线索、导出 PDF、检查表格、操作浏览器、等待反馈、触发自动化流程。Codex 如果能连接这些上下文，就不再只是帮你补代码，而是能协助完成一整段电脑工作。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这篇文章的核心，是把 Codex 当成一个可持续协作的工作流系统来用，而不是一次性聊天框。持久对话流、语音输入、任务干预、工具连接、自动化、Goals、侧边栏和共享记忆，都是为了让 Codex 更稳定地在真实工作中接力。"
+          }
+        ],
+        "image": "/learn-images/codex-maximizing-hero.jpg",
+        "imageAlt": "Codex 工作流分享文章配图"
+      },
+      {
+        "heading": "持久对话流：把一个任务变成长期工作空间",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "文章首先讲的是 durable threads，也就是可以长期保存上下文的对话流。普通聊天的缺点是每次都像重新开始，你要反复解释项目背景、偏好、当前进度和之前做过的决定。持久对话流则像一个长期工作空间，适合反复推进同一类任务。"
+          },
+          {
+            "type": "paragraph",
+            "content": "你可以把常用对话流固定下来，例如一个专门处理日常事务的线程，一个负责产品发布的线程，一个审查文档的线程，一个监控外部数据的线程。它们不是一次性提问窗口，而是长期存在的工作台。随着时间推移，Codex 可以在同一个线程里回到之前的上下文，继续处理未完成的工作。"
+          },
+          {
+            "type": "paragraph",
+            "content": "对独立开发者来说，这一点非常实用。你可以为一个产品建立长期线程，比如“Uicoding.ai 内容维护”“KnowLens.ai 发布准备”“每周检查网站问题”。每个线程只处理一类任务，长期积累上下文，避免所有事情混在一个聊天里。"
+          }
+        ]
+      },
+      {
+        "heading": "语音输入：先把粗糙想法倒出来",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "文章接着提到语音输入。它的价值不在于让输入更酷，而是能捕捉那些还没有被你整理成清晰文字的想法。很多时候，我们脑子里有一个方向，但还没来得及组织成正式 prompt。直接说出来，反而能保留更多上下文。"
+          },
+          {
+            "type": "paragraph",
+            "content": "比如你只记得某个人在 Slack 里提过一个问题，但不记得细节。你可以先把模糊记忆说给 Codex，让它去帮你搜索、收集线索、整理成可执行任务。对于一个能自己查找上下文的 Agent 来说，粗糙但完整的口述，往往比一句精炼但缺少背景的指令更有用。"
+          },
+          {
+            "type": "paragraph",
+            "content": "会议录音、临时想法、产品复盘、视觉反馈，都适合先用语音输入收集。不要急着把它变成完美 prompt。先把想法说完整，再让 Codex 帮你整理成任务清单、修改计划或可执行步骤。"
+          }
+        ]
+      },
+      {
+        "heading": "任务干预和任务排队：执行中也要保持控制",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Codex 在执行任务时，人不应该完全放手。文章区分了两个能力：steering 和 queuing。Steering 是在任务还没完成时中途干预，发现方向不对就立刻纠正；queuing 是不打断当前任务，而是把下一步安排到队列里。"
+          },
+          {
+            "type": "paragraph",
+            "content": "比如你让 Codex 审查一个网页时，看到侧边栏里的页面间距不对，可以直接打断它，告诉它把某个元素调小，或者提醒它某段文案理解错了。这种干预能避免它沿着错误方向越跑越远。"
+          },
+          {
+            "type": "paragraph",
+            "content": "任务排队则适合安排后续动作。比如当前修复完成后，让它把预览链接发给审核人，或者等构建完成后再检查截图。简单理解：干预是改变它正在做什么，排队是安排它接下来做什么。这两者让你在自动化过程中仍然保留主导权。"
+          }
+        ]
+      },
+      {
+        "heading": "工具和触达范围：不要把 Codex 关在代码库里",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "当一个对话流能保存上下文后，下一步就是扩展它能触达的范围。文章提到浏览器、Chrome、电脑控制、MCP server 和各种连接器。它们让 Codex 不只处理代码文件，也能参与网页审查、登录态浏览器流程、桌面图形界面任务和外部数据工作。"
+          },
+          {
+            "type": "paragraph",
+            "content": "浏览器适合在侧边栏里审查网页，尤其是本地开发页面、UI 预览、交互流程和视觉问题。Chrome 适合需要你个人账号登录态的工作，例如只能在你的浏览器会话中打开的后台或工具。电脑控制则适合那些没有 API，只能通过桌面界面完成的任务。"
+          },
+          {
+            "type": "paragraph",
+            "content": "MCP 和连接器的意义，是把真实工作流里的材料接进来。很多任务最开始不是代码，而是一条 Slack 消息、一封邮件、一个日程、一份文档或一个外部系统反馈。Codex 能连接这些来源，才能从“代码助手”变成“工作流助手”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "文章还提到 Skills。一个已经验证有效的重复流程，可以沉淀成 Skill，下次直接调用，而不是每次重新解释。对于 Uicoding.ai 这类内容站，设计审查、文章整理、案例补全、上线检查，都可以逐步变成可复用流程。"
+          }
+        ]
+      },
+      {
+        "heading": "随时随地工作：任务不一定要停在电脑前",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "文章也强调了跨设备协作。一个任务可以在你的本地电脑上启动，使用本地文件、权限和环境运行。当你离开电脑时，你仍然可以通过手机查看进度，回答 Codex 的问题，批准下一步行动，或者在回到工位前补充新的方向。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这对长任务很有意义。比如跑测试、生成素材、整理反馈、重构模块、生成报告，这些任务不需要你一直坐在电脑前盯着。你可以让 Codex 在本地环境里继续推进，而你用移动端保持决策权。"
+          }
+        ]
+      },
+      {
+        "heading": "自动化：让线程自己定期回来工作",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "自动化是文章里很关键的一部分。它可以按计划定时执行任务。如果是每天从零开始的例行工作，例如生成日报、检查代码库或整理更新，可以用定时自动化。如果任务需要保留历史上下文，就更适合使用 thread automation，让同一个对话流定期被唤醒。"
+          },
+          {
+            "type": "paragraph",
+            "content": "文章把 thread automation 形容成一种心跳机制：它会按照设定时间回到同一个线程里继续工作，直到满足某个条件。比如一个日常助理线程可以每隔一段时间检查 Slack 和 Gmail，找出还没处理的重要消息，帮你整理优先级，甚至先起草回复。"
+          },
+          {
+            "type": "paragraph",
+            "content": "自动化也适合处理反馈循环。比如 PR、Google Docs、Slack 里有人留下评论，Codex 可以定期检查新反馈，回到代码库做修改，然后继续等待下一轮意见。真正有价值的地方不是“自动跑一次”，而是它可以围绕同一个上下文持续推进。"
+          }
+        ]
+      },
+      {
+        "heading": "Goals：长任务必须有明确终点线",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "文章强调，长任务不能只靠一句泛泛的目标。一个坏目标是“把这个计划实现一下”。这种说法没有终点线，Codex 不知道什么时候算完成，也不知道如何判断自己做得更接近目标。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一个好的 Goal 必须包含可验证的成功标准。比如迁移一个内部工具时，可以设定为“直到所有单元测试通过才算完成”。这样 Codex 不只是一直工作，而是在朝着一个可衡量的结果前进。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适合做验证器的东西包括测试用例、性能基准、稳定复现的 bug、验证矩阵、端到端流程。对 AI Coding 来说，野心很重要，但如果没有验证机制，野心就只是愿望。目标设定的本质，是把持续执行和验证器结合起来。"
+          }
+        ]
+      },
+      {
+        "heading": "侧边栏：在原地审查产物",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "侧边栏是这篇文章里非常实用的一部分。它让 Codex 生成的成果和聊天窗口并排出现，你不需要把文件导出到别的软件里再检查。生成成果可以是代码，也可以是网页、PDF、幻灯片、表格、Markdown 文档或其他文件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "侧边栏主要适合四类工作：检查生成文件，在文件上标注需要修改的地方，操作网页界面，审查代码或文件变更。对设计师和产品经理来说，这意味着你可以像审稿一样看 Codex 的产物，而不是只看文字回复。"
+          }
+        ],
+        "image": "/learn-images/codex-side-panel-pdf.jpg",
+        "imageAlt": "Codex 侧边栏审查 PDF 示例"
+      },
+      {
+        "heading": "侧边栏也能让网页成为工作台",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "当侧边栏和应用内浏览器结合起来，网页既是 Codex 的输出，也可以成为控制面板。Codex 可以生成一个页面，在侧边栏打开，检查渲染效果，发现 bug，再继续修复。你在网页上的标注和反馈也能留在同一个闭环里。"
+          },
+          {
+            "type": "paragraph",
+            "content": "文章提到很多适合侧边栏的场景：一个单独的 index.html 可以变成轻量交互页面；Storybook 可以用来审查 UI 组件；Remotion Studio 可以处理代码生成动画；浏览器里的幻灯片、数据分析应用也都适合这种方式。核心是让 Codex 直接看见最终产物，而不是只凭代码想象页面效果。"
+          }
+        ],
+        "image": "/learn-images/codex-side-panel-csv.jpg",
+        "imageAlt": "Codex 侧边栏审查数据文件示例"
+      },
+      {
+        "heading": "共享记忆：把上下文放到单次对话之外",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "文章最后讲共享记忆。持久对话流很有用，但重要上下文不应该只锁在某一次聊天里。更稳的方法，是把长期上下文写进明确的文件或知识库，让未来的任务也能读取和接手。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一个简单做法是建立纯文本知识库。里面可以放 TODO、人员信息、项目记录、Agent 规则和笔记。最外层可以放一个 AGENTS.md，告诉 Codex 当它了解到新的人员、项目、决策、待办或卡点时，应该怎样更新这些文件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这里的重点不是照抄某种文件夹结构，而是教会 Codex：哪些上下文需要被保留，应该放在哪里，什么时候不要乱改。代码库存代码，知识库存持续滚动的上下文。否则两次聊天中断之后，很多关键细节就会消失。"
+          }
+        ],
+        "image": "/learn-images/codex-side-panel-slides.jpg",
+        "imageAlt": "Codex 侧边栏审查幻灯片示例"
+      },
+      {
+        "heading": "从代码向外延伸",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这篇文章最后的判断是：Codex 仍然以写代码为核心，但围绕代码发生的许多周边工作，正在进入同一个系统。MCP、网页、桌面控制、自动化、侧边栏文件审查，都让 Codex 不再只是代码补全工具。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这也改变了人控制 AI 的方式。你可以在任务中途干预，让它排队执行下一步，用自动化在人不在时继续推进，用 Goals 给长任务设定终点线，用侧边栏直接审查最终文件。一个完整工作流从听取指令、执行任务到审查产物，都可以在 Codex 里形成闭环。"
+          },
+          {
+            "type": "paragraph",
+            "content": "对新手来说，不需要一次学会所有功能。更好的顺序是：先用持久线程保存项目上下文，再练习干预和排队，然后用浏览器或侧边栏审查结果，接着把重要规则写进文件，最后再尝试自动化和 Goals。这样能真正把 Codex 从“会写代码”用到“能协作完成工作”。"
+          }
+        ]
+      }
+    ]
+  },
   {
     "id": "uicoding-skill-coding-process",
     "sourceUrl": "",
     "translationMode": "original",
-    "title": "用 Codex + Impeccable 做 UIcoding.ai：从搭页面到设计审查",
+    "title": "我如何用 Codex + Impeccable Skill 做出 UIcoding.ai",
     "originalTitle": "",
-    "notice": "本文为 Uicoding.ai 站内原创经验稿，记录这个网站使用 Codex 和 Impeccable 搭建与设计走查的过程。",
-    "sections": [
-      {
-        "heading": "为什么只用 Codex 还不够",
-        "content": "做 UIcoding.ai 的时候，我很快发现一个问题：Codex 写代码很快，但页面质感不一定稳定。它很适合完成明确的工程任务，比如创建页面、补组件、修构建错误、调整路由。但如果目标变成“更高级”“更像内容精选站”“不要像模板”，Codex 很容易理解成多加一些设计元素。"
-      },
-      {
-        "heading": "实际开发中遇到的问题",
-        "content": "实际开发中我遇到过这些问题：页面卡片越来越多，背景块越来越重，按钮颜色太黑，抢内容注意力，标签比标题还明显，阴影、渐变、圆角被反复叠加。页面看起来能用，但很像 AI 自动生成的模板站。"
-      },
-      {
-        "heading": "为什么引入 Impeccable",
-        "content": "所以我开始引入 Impeccable。我对它的定位很简单：Codex 负责把页面做出来，Impeccable 负责检查页面为什么不够好。它不是替代设计师，也不是一键生成高级页面，而是帮我把“感觉不对”拆成具体问题：按钮太重、信息层级不清楚、卡片太模板、移动端太挤、图片占位太默认、页面没有编辑感。"
-      },
-      {
-        "heading": "后来形成的固定流程",
-        "content": "UIcoding.ai 的搭建流程，后面就变成了一套固定方法：Codex 先搭页面，固定 CSS 规范保持全站一致，Impeccable 做设计审查，每轮只改最重要的几个问题，最后再 build 和浏览器验证。"
-      },
-      {
-        "heading": "这套方式真正解决什么",
-        "content": "这套方式的核心，不是让 AI 一次性生成完整网站，而是用 Codex 快速完成页面，再用 Impeccable 持续做设计走查，把页面从“能跑”慢慢改到“有质感”。"
-      },
-      {
-        "heading": "UIcoding.ai 需要什么样的质感",
-        "content": "UIcoding.ai 是一个 AI Coding 案例和学习内容站，主要整理 Codex、Claude Code、Cursor 等工具的案例、教程和实战经验。它不是传统 SaaS 官网，也不是组件库 demo，所以页面需要更像一个编辑精选站：信息清楚、留白舒服、内容可信，不要有太强的模板感。"
-      },
-      {
-        "heading": "接下来会继续补充完整流程",
-        "content": "下面我会继续整理实际使用 Codex + Impeccable 的搭建流程，包括如何拆任务、如何限制修改范围、如何做设计审查、如何把反馈变成 CSS 规范，以及如何用 build 和浏览器验证每一轮修改。"
-      }
-    ]
+    "notice": "本文为 Uicoding.ai 站内原创经验稿，记录这个网站使用 Codex 和 Impeccable Skill 搭建与设计走查的过程。",
+    "hideLead": true,
+    "sections": parseLearningMarkdown(uicodingSkillArticleMarkdown)
   },
   {
     "id": "knowlens-codex-2b-token-tips",
@@ -45,19 +317,53 @@ export const learningContent = [
     "translationMode": "original",
     "title": "20 亿 Token 后，我用 Codex 开发 KnowLens.ai 的 8 个技巧",
     "originalTitle": "",
-    "notice": "本文为 Uicoding.ai 站内原创经验稿，记录真实 AI Coding 项目过程。后续会继续补充图片和完整技巧。",
+    "notice": "",
+    "hideLead": true,
     "sections": [
       {
-        "heading": "从 KnowLens.ai 开始的一次真实 AI Coding 经验",
-        "content": "过去两周，我基本都在用 Codex 开发 KnowLens.ai。累计差不多花了 20 亿 token。说实话，这里面至少 50% 都浪费在重构、修 bug、恢复错误改动上。不是 Codex 不行，而是我一开始太乐观了。我以为只要不停把需求丢给它，它就能一路把产品做出来。结果真正做下来才发现，如果前期没有设计好产品工作流，Codex 会很努力地写代码，也会很努力地把项目改乱。"
-      },
-      {
-        "heading": "最初只是一个很简单的功能",
-        "content": "KnowLens.ai 最开始只是想做一个很简单的功能：用户输入一段文本，AI 生成一张专业的信息可视化图片。但做着做着，功能很快就变多了。登录、积分、支付、生成记录、图片下载、SEO 页面、博客页、案例页、错误处理、部署、环境变量，全部都会冒出来。"
-      },
-      {
-        "heading": "为什么后来不断重构",
-        "content": "如果一开始没有主线，后面就会不断重构。我踩了一圈坑之后，现在总结出 8 个具体技巧。顺序是由浅入深，从最基础的任务拆分，到最后的上线和支付链路。"
+        "heading": "",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "过去两周，我基本都在用 Codex 开发 KnowLens.ai。"
+          },
+          {
+            "type": "paragraph",
+            "content": "累计差不多花了 20 亿 token。"
+          },
+          {
+            "type": "paragraph",
+            "content": "说实话，这里面至少 50% 都浪费在重构、修 bug、恢复错误改动上。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不是 Codex 不行，而是我一开始太乐观了。我以为只要不停把需求丢给它，它就能一路把产品做出来。结果真正做下来才发现，如果前期没有设计好产品工作流，Codex 会很努力地写代码，也会很努力地把项目改乱。"
+          },
+          {
+            "type": "paragraph",
+            "content": "KnowLens.ai 最开始只是想做一个很简单的功能："
+          },
+          {
+            "type": "paragraph",
+            "content": "用户输入一段文本，AI 生成一张专业的信息可视化图片。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但做着做着，功能很快就变多了。"
+          },
+          {
+            "type": "paragraph",
+            "content": "登录、积分、支付、生成记录、图片下载、SEO 页面、博客页、案例页、错误处理、部署、环境变量，全部都会冒出来。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果一开始没有主线，后面就会不断重构。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我踩了一圈坑之后，现在总结出 8 个具体技巧。顺序是由浅入深，从最基础的任务拆分，到最后的上线和支付链路。"
+          }
+        ]
       }
     ]
   },

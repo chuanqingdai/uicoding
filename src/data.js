@@ -927,10 +927,47 @@ export const learningPathSteps = [
 
 export const lessons = [
   {
+    "id": "getting-the-most-out-of-codex",
+    "title": "如何把 Codex 用到极致：来自 Codex 团队的工作流分享",
+    "originalTitle": "Getting the most out of Codex",
+    "description": "完整梳理 Codex 团队分享的高级使用方式：持久对话流、语音输入、任务干预、工具连接、自动化、目标设定、侧边栏和共享记忆。",
+    "sourceType": "开发者文章",
+    "sourceName": "X Article / 宝玉的分享",
+    "sourceUrl": "https://x.com/dotey/article/2057250417638035555",
+    "author": "jason (@jxnlco) / 宝玉整理",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-16",
+    "audience": "独立开发者",
+    "duration": "22 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "Workflow",
+      "Agent"
+    ],
+    "href": "/learn/getting-the-most-out-of-codex",
+    "image": "/learn-images/codex-maximizing-hero.jpg",
+    "imageAlt": "Codex 工作流文章封面图",
+    "publishedAt": "2026-06-16",
+    "viewCount": 748,
+    "likeCount": 63,
+    "featured": false,
+    "external": true,
+    "keyTakeaways": [
+      "把 Codex 从写代码扩展成完整工作流助手",
+      "用持久对话流和共享记忆保存上下文",
+      "用侧边栏、自动化和 Goals 提升长任务质量"
+    ]
+  },
+  {
     "id": "uicoding-skill-coding-process",
-    "title": "用 Codex + Impeccable 做 UIcoding.ai：从搭页面到设计审查",
+    "title": "我如何用 Codex + Impeccable Skill 做出 UIcoding.ai",
     "originalTitle": "",
-    "description": "记录 UIcoding.ai 的真实搭建过程：Codex 负责快速实现页面，Impeccable 负责设计审查和视觉质量把关。",
+    "description": "整理 AI Coding 案例、学习资料、工具介绍，帮助设计师、产品经理、独立开发者更快学会用 Codex、Claude Code、Cursor 这类工具做真实产品。",
     "sourceType": "站内原创",
     "sourceName": "Uicoding.ai",
     "sourceUrl": "",
@@ -939,7 +976,7 @@ export const lessons = [
     "translationMode": "original",
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
-    "duration": "8 分钟",
+    "duration": "24 分钟",
     "category": "Workflow",
     "tools": [
       "Codex"
@@ -947,7 +984,7 @@ export const lessons = [
     "tags": [
       "Codex",
       "Impeccable",
-      "设计审查"
+      "真实经验"
     ],
     "href": "/learn/uicoding-skill-coding-process",
     "publishedAt": "2026-06-16",
@@ -956,16 +993,16 @@ export const lessons = [
     "featured": true,
     "external": false,
     "keyTakeaways": [
-      "Codex 负责实现页面",
+      "Codex 负责执行",
       "Impeccable 负责设计审查",
-      "每轮只修最重要的问题"
+      "每轮只改最重要的问题"
     ]
   },
   {
     "id": "knowlens-codex-2b-token-tips",
     "title": "20 亿 Token 后，我用 Codex 开发 KnowLens.ai 的 8 个技巧",
     "originalTitle": "",
-    "description": "记录用 Codex 开发 KnowLens.ai 的真实经验：从任务拆分、避免重构，到上线和支付链路前的工作流反思。",
+    "description": "过去两周，我基本都在用 Codex 开发 KnowLens.ai。",
     "sourceType": "站内原创",
     "sourceName": "Uicoding.ai",
     "sourceUrl": "",
@@ -2042,32 +2079,22 @@ export const footerGroups = [
   {
     title: '探索',
     links: [
-      { label: '精选案例', href: '/cases' },
-      { label: '最新作品', href: '/cases' },
-      { label: '学习路径', href: '/learn' },
+      { label: '案例', href: '/cases' },
+      { label: '学习资料', href: '/learn' },
+      { label: '工具', href: '/tools' },
     ],
   },
   {
-    title: '分类',
+    title: '参与',
     links: [
-      { label: '数据看板', href: '/cases' },
-      { label: '官网', href: '/cases' },
-      { label: '原型', href: '/learn' },
-    ],
-  },
-  {
-    title: '工具',
-    links: [
-      { label: 'Codex', href: '/tools' },
-      { label: 'Cursor', href: '/tools' },
-      { label: 'v0', href: '/tools' },
+      { label: '提交作品', href: '/submit' },
+      { label: '登录', href: '/login' },
     ],
   },
   {
     title: '站点',
     links: [
       { label: '关于', href: '/about' },
-      { label: '提交作品', href: '/submit' },
       { label: '隐私协议', href: '/privacy' },
     ],
   },

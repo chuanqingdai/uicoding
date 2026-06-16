@@ -28,24 +28,67 @@ function buildFallbackContent(lesson) {
   };
 }
 
-function LearnArticleSection({ section }) {
-  const [imageFailed, setImageFailed] = useState(false);
-  const showImage = section.image && !imageFailed;
+function LearnCodeBlock({ code }) {
   const [copied, setCopied] = useState(false);
 
   const copyCode = async () => {
-    if (!section.code?.content) {
+    if (!code?.content) {
       return;
     }
 
     try {
-      await navigator.clipboard.writeText(section.code.content);
+      await navigator.clipboard.writeText(code.content);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1400);
     } catch {
       setCopied(false);
     }
   };
+
+  if (!code) {
+    return null;
+  }
+
+  return (
+    <div className="learn-code-block">
+      <div className="learn-code-head">
+        <span>代码片段</span>
+        <button onClick={copyCode} type="button">
+          {copied ? (
+            <Check size={14} strokeWidth={2} aria-hidden="true" />
+          ) : (
+            <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
+          )}
+          {copied ? '已复制' : '复制'}
+        </button>
+      </div>
+      <pre>
+        <code>{code.content}</code>
+      </pre>
+    </div>
+  );
+}
+
+function LearnArticleSection({ section }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = section.image && !imageFailed;
+  const paragraphs = section.paragraphs ?? [section.content].filter(Boolean);
+  const blocks =
+    section.blocks ??
+    [
+      ...paragraphs.map((paragraph) => ({
+        type: 'paragraph',
+        content: paragraph,
+      })),
+      ...(section.code
+        ? [
+            {
+              type: 'code',
+              ...section.code,
+            },
+          ]
+        : []),
+    ];
 
   return (
     <section className={`learn-article-section ${showImage ? 'has-visual' : ''}`}>
@@ -60,27 +103,18 @@ function LearnArticleSection({ section }) {
         </div>
       )}
       <div className="learn-article-copy">
-        <h2>{section.heading}</h2>
-        <p>{section.content}</p>
+        {section.heading && <h2>{section.heading}</h2>}
+        {blocks.map((block, index) => (
+          block.type === 'code' ? (
+            <LearnCodeBlock
+              code={block}
+              key={`${block.label ?? 'code'}-${index}`}
+            />
+          ) : (
+            <p key={`${block.content}-${index}`}>{block.content}</p>
+          )
+        ))}
       </div>
-      {section.code && (
-        <div className="learn-code-block">
-          <div className="learn-code-head">
-            <span>{section.code.label ?? '示例'}</span>
-            <button onClick={copyCode} type="button">
-              {copied ? (
-                <Check size={14} strokeWidth={2} aria-hidden="true" />
-              ) : (
-                <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
-              )}
-              {copied ? '已复制' : '复制'}
-            </button>
-          </div>
-          <pre>
-            <code>{section.code.content}</code>
-          </pre>
-        </div>
-      )}
     </section>
   );
 }
@@ -185,10 +219,10 @@ export default function LearnDetailPage({ slug }) {
             />
 
             <div className="blog-prose">
-              <p className="blog-lead">{lesson.description}</p>
+              {!content.hideLead && <p className="blog-lead">{lesson.description}</p>}
               {content.sections.map((section, index) => (
                 <LearnArticleSection
-                  key={section.heading}
+                  key={`${section.heading || 'intro'}-${index}`}
                   section={section}
                 />
               ))}
