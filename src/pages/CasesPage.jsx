@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 import { caseToolFilters, caseTypeFilters, cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
@@ -12,6 +12,9 @@ function byLatest(a, b) {
 function byHot(a, b) {
   return b.likeCount - a.likeCount || b.viewCount - a.viewCount;
 }
+
+const initialVisibleCount = 9;
+const loadMoreCount = 6;
 
 function FilterSelect({
   id,
@@ -82,6 +85,7 @@ export default function CasesPage() {
   const [activeTool, setActiveTool] = useState('全部工具');
   const [activeType, setActiveType] = useState('全部类型');
   const [openFilter, setOpenFilter] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
 
   const visibleCases = useMemo(() => {
     return [...cases]
@@ -89,6 +93,13 @@ export default function CasesPage() {
       .filter((item) => activeType === '全部类型' || item.category === activeType)
       .sort(sortMode === 'latest' ? byLatest : byHot);
   }, [activeTool, activeType, sortMode]);
+
+  useEffect(() => {
+    setVisibleCount(initialVisibleCount);
+  }, [activeTool, activeType, sortMode]);
+
+  const displayedCases = visibleCases.slice(0, visibleCount);
+  const hasMoreCases = visibleCount < visibleCases.length;
 
   const resetFilters = () => {
     setActiveTool('全部工具');
@@ -152,11 +163,24 @@ export default function CasesPage() {
         </div>
 
         {visibleCases.length > 0 ? (
-          <div className="cases-grid">
-            {visibleCases.map((item) => (
-              <CaseCard item={item} key={item.id} />
-            ))}
-          </div>
+          <>
+            <div className="cases-grid waterfall-grid">
+              {displayedCases.map((item) => (
+                <CaseCard item={item} key={item.id} />
+              ))}
+            </div>
+            {hasMoreCases && (
+              <div className="waterfall-more">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setVisibleCount((count) => count + loadMoreCount)}
+                >
+                  加载更多案例
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="cases-empty">
             <h2>暂时没有匹配的案例</h2>

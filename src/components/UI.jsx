@@ -29,14 +29,14 @@ export function Badge({ children, tone = 'default' }) {
   return <span className={`badge badge-${tone}`}>{children}</span>;
 }
 
-export function Card({ children, className = '', href }) {
+export function Card({ children, className = '', href, ...props }) {
   if (href) {
     return (
-      <a className={`card ${className}`} href={href}>
+      <a className={`card ${className}`} href={href} {...props}>
         {children}
       </a>
     );
   }
 
-  return <article className={`card ${className}`}>{children}</article>;
+  return <article className={`card ${className}`} {...props}>{children}</article>;
 }

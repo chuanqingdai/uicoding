@@ -9,10 +9,12 @@ import {
 import CasesPage from './pages/CasesPage.jsx';
 import CaseDetailPage from './pages/CaseDetailPage.jsx';
 import LearnPage from './pages/LearnPage.jsx';
+import LearnDetailPage from './pages/LearnDetailPage.jsx';
 import ToolsPage from './pages/ToolsPage.jsx';
-import ToolDetailPage from './pages/ToolDetailPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import PrivacyPage from './pages/PrivacyPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import SubmitPage from './pages/SubmitPage.jsx';
 
 function Home() {
   return (
@@ -30,26 +32,30 @@ function App() {
   const pathname = window.location.pathname;
   const parts = pathname.split('/').filter(Boolean);
   const isHome = pathname === '/';
+  const isLogin = pathname === '/login';
   const isCaseDetail = parts[0] === 'cases' && parts.length === 3;
-  const isToolDetail = pathname.startsWith('/tools/');
-  const knownPaths = ['/cases', '/learn', '/tools', '/about', '/privacy'];
+  const isLearnDetail = parts[0] === 'learn' && parts.length === 2;
+  const isToolsPath = parts[0] === 'tools';
+  const knownPaths = ['/cases', '/learn', '/tools', '/about', '/privacy', '/login', '/submit'];
 
   return (
-    <div className={`site-shell ${isHome ? 'site-shell-home' : ''}`}>
-      <Header />
+    <div className={`site-shell ${isHome ? 'site-shell-home' : ''} ${isLogin ? 'site-shell-auth' : ''}`}>
+      {!isLogin && <Header />}
       <main>
         {pathname === '/cases' && <CasesPage />}
         {isCaseDetail && (
           <CaseDetailPage categorySlug={parts[1]} slug={parts[2]} />
         )}
         {pathname === '/learn' && <LearnPage />}
-        {pathname === '/tools' && <ToolsPage />}
-        {isToolDetail && <ToolDetailPage />}
+        {isLearnDetail && <LearnDetailPage slug={parts[1]} />}
+        {isToolsPath && <ToolsPage />}
         {pathname === '/about' && <AboutPage />}
         {pathname === '/privacy' && <PrivacyPage />}
-        {!knownPaths.includes(pathname) && !isCaseDetail && !isToolDetail && <Home />}
+        {pathname === '/login' && <LoginPage />}
+        {pathname === '/submit' && <SubmitPage />}
+        {!knownPaths.includes(pathname) && !isCaseDetail && !isLearnDetail && !isToolsPath && <Home />}
       </main>
-      <Footer />
+      {!isLogin && <Footer />}
     </div>
   );
 }

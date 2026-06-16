@@ -3,6 +3,74 @@ const guidedNotice =
 
 export const learningContent = [
   {
+    id: 'datacamp-codex-cli-beginner',
+    sourceUrl: 'https://www.datacamp.com/tutorial/open-ai-codex-cli-tutorial',
+    translationMode: 'guidedTranslation',
+    title: 'Codex CLI 新手入门：从安装到生成页面',
+    originalTitle: 'OpenAI Codex CLI Tutorial',
+    notice: guidedNotice,
+    sections: [
+      {
+        heading: '这篇教程适合谁',
+        content:
+          '这篇 DataCamp 教程适合第一次接触 Codex CLI 的学习者。它不是深入讲模型原理，而是从安装、登录、运行命令和审批模式开始，帮助你理解 Codex CLI 如何在本地项目里读取文件、修改代码并等待人工确认。',
+        image:
+          'https://media.datacamp.com/cms/ad_4nxcr-mjzshqcln3209rd9vvzdth7ixwgu5rz-7fsqtyw5059vbxtxqna00ssclojbdgm6aeazehyeujatxy28tto5i3wl_pp_mpce81hrhwltjl966-p9bct18x7l-uv4at-zqwqga.png',
+        imageAlt: 'Codex CLI 教程中的截图输入示例',
+      },
+      {
+        heading: '先理解审批模式',
+        content:
+          'Codex CLI 的一个关键点是审批模式。新手不要一开始就让工具自动修改所有内容，更稳的方式是先使用默认或受限模式，让它提出修改建议、展示 diff，再由你确认执行。这样可以避免因为任务描述不清导致项目结构被大幅重写。',
+        code: {
+          label: '终端命令示例',
+          content: 'npm install -g @openai/codex\ncodex',
+        },
+      },
+      {
+        heading: '用图片输入生成页面原型',
+        content:
+          '教程中比较适合设计师和产品经理学习的一段，是把截图或界面参考交给 Codex，让它生成网页原型。这里的重点不是复制截图，而是学会描述目标、保留视觉结构、说明技术栈和验收标准。',
+      },
+      {
+        heading: 'UIcoding 解读',
+        content:
+          '这篇资料的学习价值在于把 Codex CLI 当成一个可控的本地协作者，而不是一次性生成器。新手练习时可以从一个小页面开始：准备截图、写清楚页面目标、限定文件范围，最后通过浏览器截图和构建结果检查输出。',
+      },
+    ],
+  },
+  {
+    id: 'designer-ai-coding',
+    sourceUrl: '',
+    translationMode: 'original',
+    title: '设计师如何学习 AI Coding',
+    originalTitle: '',
+    notice: '',
+    sections: [
+      {
+        heading: '从界面判断开始，而不是从代码开始',
+        content:
+          '设计师学习 AI 编程，第一步不是背语法，而是把自己熟悉的界面判断表达清楚。比如页面目标是什么、用户先看哪里、哪些信息应该弱化、组件之间应该保持怎样的节奏。当这些判断被写成明确约束，AI 才更容易生成接近预期的页面。',
+      },
+      {
+        heading: '把设计稿拆成可执行的组件任务',
+        content:
+          '不要一次性要求 AI “做一个完整网站”。更稳定的方式是先拆出页面结构，再拆出组件：导航、Hero、卡片、筛选、空状态、Footer。每个任务都说明内容、状态、间距、响应式和禁止事项，这样修改范围更小，也更容易复盘。',
+        visualType: 'landing',
+        code: {
+          label: '提示词示例',
+          content:
+            '请只优化首页案例卡片：保持现有数据和路由不变。图片区域固定 16:9，标题最多两行，描述统一两行，标签弱化，底部显示浏览量、点赞量和“查看案例”。完成后运行 npm run build。',
+        },
+      },
+      {
+        heading: '用截图和验收标准推动下一轮优化',
+        content:
+          'AI 生成页面后，设计师最有价值的工作是审查结果：文字是否拥挤，层级是否清楚，按钮是否过重，移动端是否溢出。把这些观察转成下一轮提示词，例如“描述统一两行”“标签视觉弱化”“图片保持 16:9”，比笼统说“高级一点”更有效。',
+      },
+    ],
+  },
+  {
     id: 'codex-usage-practices',
     sourceUrl: 'https://developers.openai.com/codex/prompting',
     translationMode: 'guidedTranslation',

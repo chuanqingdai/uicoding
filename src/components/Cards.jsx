@@ -2,22 +2,22 @@ import {
   Eye,
   Heart,
 } from 'lucide-react';
-import ClaudeCodeIcon from '@lobehub/icons/es/ClaudeCode/components/Color';
-import ClineIcon from '@lobehub/icons/es/Cline/components/Mono';
-import CodexIcon from '@lobehub/icons/es/Codex/components/Color';
-import CursorIcon from '@lobehub/icons/es/Cursor/components/Mono';
-import DeepSeekIcon from '@lobehub/icons/es/DeepSeek/components/Color';
-import DoubaoIcon from '@lobehub/icons/es/Doubao/components/Color';
-import GithubCopilotIcon from '@lobehub/icons/es/GithubCopilot/components/Mono';
-import KimiIcon from '@lobehub/icons/es/Kimi/components/Color';
-import LovableIcon from '@lobehub/icons/es/Lovable/components/Color';
-import QwenIcon from '@lobehub/icons/es/Qwen/components/Color';
-import ReplitIcon from '@lobehub/icons/es/Replit/components/Color';
-import TraeIcon from '@lobehub/icons/es/Trae/components/Color';
-import V0Icon from '@lobehub/icons/es/V0/components/Mono';
-import WenxinIcon from '@lobehub/icons/es/Wenxin/components/Color';
-import WindsurfIcon from '@lobehub/icons/es/Windsurf/components/Mono';
-import ZhipuIcon from '@lobehub/icons/es/Zhipu/components/Color';
+import ClaudeCode from '@lobehub/icons/es/ClaudeCode/components/Mono';
+import Cline from '@lobehub/icons/es/Cline/components/Mono';
+import Codex from '@lobehub/icons/es/Codex/components/Color';
+import Cursor from '@lobehub/icons/es/Cursor/components/Mono';
+import DeepSeek from '@lobehub/icons/es/DeepSeek/components/Color';
+import Doubao from '@lobehub/icons/es/Doubao/components/Color';
+import GithubCopilot from '@lobehub/icons/es/GithubCopilot/components/Mono';
+import Kimi from '@lobehub/icons/es/Kimi/components/Color';
+import Lovable from '@lobehub/icons/es/Lovable/components/Color';
+import Qwen from '@lobehub/icons/es/Qwen/components/Color';
+import Replit from '@lobehub/icons/es/Replit/components/Color';
+import Trae from '@lobehub/icons/es/Trae/components/Color';
+import V0 from '@lobehub/icons/es/V0/components/Mono';
+import Wenxin from '@lobehub/icons/es/Wenxin/components/Color';
+import Windsurf from '@lobehub/icons/es/Windsurf/components/Mono';
+import Zhipu from '@lobehub/icons/es/Zhipu/components/Color';
 import { Badge, Card } from './UI.jsx';
 
 const visualAccent = {
@@ -29,23 +29,48 @@ const visualAccent = {
 
 const numberFormatter = new Intl.NumberFormat('zh-CN');
 
-const toolLogos = {
-  'claude-code': ClaudeCodeIcon,
-  cline: ClineIcon,
-  codex: CodexIcon,
-  cursor: CursorIcon,
-  deepseek: DeepSeekIcon,
-  doubao: DoubaoIcon,
-  'github-copilot': GithubCopilotIcon,
-  kimi: KimiIcon,
-  lovable: LovableIcon,
-  qwen: QwenIcon,
-  replit: ReplitIcon,
-  trae: TraeIcon,
-  v0: V0Icon,
-  wenxin: WenxinIcon,
-  windsurf: WindsurfIcon,
-  zhipu: ZhipuIcon,
+const toolIconLabels = {
+  bolt: 'B',
+  'claude-code': 'CC',
+  cline: 'Cl',
+  codex: 'Cx',
+  cursor: 'Cu',
+  deepseek: 'Ds',
+  doubao: '豆',
+  'github-copilot': 'Co',
+  kimi: 'Ki',
+  lovable: 'Lv',
+  qwen: 'Qw',
+  replit: 'Re',
+  trae: 'Tr',
+  v0: 'v0',
+  wenxin: '文',
+  windsurf: 'Ws',
+  zhipu: 'GLM',
+};
+
+const toolIcons = {
+  'claude-code': ClaudeCode,
+  cline: Cline,
+  codex: Codex,
+  cursor: Cursor,
+  deepseek: DeepSeek,
+  doubao: Doubao,
+  'github-copilot': GithubCopilot,
+  kimi: Kimi,
+  lovable: Lovable,
+  qwen: Qwen,
+  replit: Replit,
+  trae: Trae,
+  v0: V0,
+  wenxin: Wenxin,
+  windsurf: Windsurf,
+  zhipu: Zhipu,
+};
+
+const toolIconImages = {
+  bolt: '/tool-icons/bolt.svg',
+  continue: '/tool-icons/continue.png',
 };
 
 export function CaseCard({ item, showStats = true }) {
@@ -57,18 +82,6 @@ export function CaseCard({ item, showStats = true }) {
     <Card className="case-card" href={item.href ?? '/cases'}>
       <div className="case-card-visual">
         <ProductMockup accent={accent} compact type={item.visualType} />
-        {hasStats && (
-          <div className="case-stats case-stats-overlay">
-            <span>
-              <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(item.viewCount)}
-            </span>
-            <span>
-              <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(item.likeCount)}
-            </span>
-          </div>
-        )}
       </div>
       <div className="case-card-body">
         <h3>{item.title}</h3>
@@ -77,7 +90,23 @@ export function CaseCard({ item, showStats = true }) {
           <Badge>{item.category}</Badge>
           {item.tools?.[0] && <Badge>{item.tools[0]}</Badge>}
         </div>
-        <div className="card-footer-row">
+        <div
+          className={`card-footer-row case-card-footer ${
+            hasStats ? '' : 'is-link-only'
+          }`}
+        >
+          {hasStats && (
+            <div className="case-stats">
+              <span>
+                <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
+                {numberFormatter.format(item.viewCount)}
+              </span>
+              <span>
+                <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
+                {numberFormatter.format(item.likeCount)}
+              </span>
+            </div>
+          )}
           <span className="card-link">
             查看案例 →
           </span>
@@ -88,30 +117,28 @@ export function CaseCard({ item, showStats = true }) {
 }
 
 export function LearningCard({ item, showStats = true }) {
-  const duration = item.duration ?? item.readingTime;
   const hasStats =
     showStats && item.viewCount !== undefined && item.likeCount !== undefined;
 
   return (
     <Card className="learning-card" href={item.href ?? '/learn'}>
-      <h3>{item.title}</h3>
-      <p>{item.description}</p>
-      {(item.category || duration) && (
-        <div className="learning-meta">
-          {item.category && <Badge>{item.category}</Badge>}
-          {duration && <Badge>{duration}</Badge>}
+      {item.image && (
+        <div className="learning-card-image">
+          <img src={item.image} alt={item.imageAlt ?? item.title} loading="lazy" />
         </div>
       )}
+      <h3>{item.title}</h3>
+      <p>{item.description}</p>
       {hasStats && (
         <div className="card-footer-row">
           <div className="case-stats">
             <span>
               <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(item.viewCount)} 浏览
+              {numberFormatter.format(item.viewCount)}
             </span>
             <span>
               <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(item.likeCount)} 点赞
+              {numberFormatter.format(item.likeCount)}
             </span>
           </div>
           <span className="card-link">
@@ -124,22 +151,29 @@ export function LearningCard({ item, showStats = true }) {
   );
 }
 
-export function ToolPill({ id, name, description, href }) {
-  const Logo = toolLogos[id];
+export function ToolPill({ id, name, description, officialUrl }) {
+  const label = toolIconLabels[id] ?? name.slice(0, 2);
+  const Icon = toolIcons[id];
+  const iconImage = toolIconImages[id];
 
   return (
-    <Card className="tool-card" href={href ?? '/tools'}>
+    <Card
+      className="tool-card"
+      href={officialUrl ?? '/tools'}
+      rel={officialUrl ? 'noreferrer' : undefined}
+      target={officialUrl ? '_blank' : undefined}
+    >
       <div className="tool-icon" aria-hidden="true">
-        {id === 'bolt' && <img src="/brand-icons/bolt.svg" alt="" />}
-        {Logo && <Logo size={28} aria-hidden="true" />}
-        {!Logo && id !== 'bolt' && <span>{name.slice(0, 2)}</span>}
+        {Icon ? <Icon size={28} /> : null}
+        {!Icon && iconImage ? <img src={iconImage} alt="" loading="lazy" /> : null}
+        {!Icon && !iconImage ? <span>{label}</span> : null}
       </div>
       <div className="tool-card-copy">
         <h3>{name}</h3>
         <p>{description}</p>
       </div>
       <span className="card-link">
-        了解工具 →
+        访问官网 →
       </span>
     </Card>
   );

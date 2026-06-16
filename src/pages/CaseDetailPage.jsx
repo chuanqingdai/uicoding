@@ -12,11 +12,11 @@ function CaseStats({ viewCount, likeCount }) {
     <div className="case-stats">
       <span>
         <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
-        {numberFormatter.format(viewCount)} 浏览
+        {numberFormatter.format(viewCount)}
       </span>
       <span>
         <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
-        {numberFormatter.format(likeCount)} 点赞
+        {numberFormatter.format(likeCount)}
       </span>
     </div>
   );
@@ -40,7 +40,7 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
   };
 
   return (
-    <Card className="submitter-card">
+    <Card className="blog-author-card">
       <div className="submitter-main">
         <div className="submitter-avatar" aria-hidden="true">
           {submitter.avatar ? (
@@ -51,8 +51,7 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
         </div>
         <div>
           <h2>{submitter.name}</h2>
-          {submitter.role && <p>{submitter.role}</p>}
-          {submitter.bio && <p>{submitter.bio}</p>}
+          <p>{submitter.bio || submitter.role || '分享 AI 编程作品和实践经验。'}</p>
         </div>
       </div>
 
@@ -92,6 +91,7 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
       </div>
 
       <Button
+        className="author-follow-button"
         icon={UserPlus}
         onClick={onFollowToggle}
         type="button"
@@ -104,6 +104,11 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
 }
 
 function DetailBlock({ section, visualType }) {
+  const paragraph = [
+    section.description,
+    ...(section.points ?? []),
+  ].filter(Boolean).join(' ');
+
   return (
     <article className="detail-block">
       <div className="detail-image">
@@ -114,15 +119,7 @@ function DetailBlock({ section, visualType }) {
         )}
       </div>
       <div className="detail-copy">
-        <h2>{section.title}</h2>
-        <p>{section.description}</p>
-        {section.points?.length > 0 && (
-          <ul className="detail-points">
-            {section.points.slice(0, 3).map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        )}
+        <p>{paragraph}</p>
       </div>
     </article>
   );
@@ -157,17 +154,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   const [isFollowing, setIsFollowing] = useState(false);
 
   const likedCount = caseItem ? caseItem.likeCount + (liked ? 1 : 0) : 0;
-
-  const moreBySubmitter = useMemo(() => {
-    if (!caseItem?.submitter?.id) {
-      return [];
-    }
-
-    return cases
-      .filter((item) => item.id !== caseItem.id)
-      .filter((item) => item.submitter?.id === caseItem.submitter?.id)
-      .slice(0, 3);
-  }, [caseItem]);
 
   const relatedCases = useMemo(() => {
     if (!caseItem) {
@@ -215,78 +201,72 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   return (
     <div className="case-detail">
       <Container>
-        <Card className="case-detail-hero">
-          <div>
-            <div className="case-detail-meta">
-              {metaTags.map((tag, index) => (
-                <Badge key={tag} tone={index === 0 ? 'accent' : 'default'}>
-                  {tag}
-                </Badge>
-              ))}
+        <div className="blog-detail-layout">
+          <article className="blog-article">
+            <header className="blog-article-head">
+              <div className="case-detail-meta">
+                {metaTags.slice(0, 2).map((tag, index) => (
+                  <Badge key={tag} tone={index === 0 ? 'accent' : 'default'}>
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+              <h1>{caseItem.title}</h1>
+              <div className="blog-article-meta">
+                <CaseStats viewCount={caseItem.viewCount} likeCount={likedCount} />
+                <span>{caseItem.publishedAt}</span>
+              </div>
+              <div className="case-detail-actions">
+                {caseItem.websiteUrl && (
+                  <Button
+                    href={caseItem.websiteUrl}
+                    icon={ExternalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    访问网站
+                  </Button>
+                )}
+                <Button
+                  icon={Heart}
+                  onClick={toggleLike}
+                  type="button"
+                  variant={liked ? 'primary' : 'secondary'}
+                >
+                  {numberFormatter.format(likedCount)}
+                </Button>
+              </div>
+            </header>
+
+            <div className="blog-prose">
+              <p className="blog-lead">{caseItem.description}</p>
+              <div className="case-detail-sections">
+                {caseItem.detailSections.map((section) => (
+                  <DetailBlock
+                    key={section.id}
+                    section={section}
+                    visualType={caseItem.visualType}
+                  />
+                ))}
+              </div>
             </div>
-            <h1>{caseItem.title}</h1>
-            <p>{caseItem.description}</p>
-            <CaseStats viewCount={caseItem.viewCount} likeCount={likedCount} />
-          </div>
-          <div className="case-detail-actions">
-            {caseItem.websiteUrl && (
-              <Button
-                href={caseItem.websiteUrl}
-                icon={ExternalLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                访问网站
-              </Button>
-            )}
-            <Button
-              icon={Heart}
-              onClick={toggleLike}
-              type="button"
-              variant={liked ? 'primary' : 'secondary'}
-            >
-              {liked ? '已点赞' : '点赞'}
-            </Button>
-          </div>
-        </Card>
 
-        <SubmitterCard
-          submitter={caseItem.submitter}
-          isFollowing={isFollowing}
-          onFollowToggle={toggleFollow}
-        />
-
-        <div>
-          {caseItem.detailSections.map((section) => (
-            <DetailBlock
-              key={section.id}
-              section={section}
-              visualType={caseItem.visualType}
+            <RelatedCaseSection
+              title="类似案例"
+              description="继续查看更多值得拆解的 AI 编程作品。"
+              items={relatedCases}
             />
-          ))}
+          </article>
+
+          <aside className="blog-sidebar">
+            <SubmitterCard
+              submitter={caseItem.submitter}
+              isFollowing={isFollowing}
+              onFollowToggle={toggleFollow}
+            />
+          </aside>
         </div>
 
-        <SubmitterCard
-          submitter={caseItem.submitter}
-          isFollowing={isFollowing}
-          onFollowToggle={toggleFollow}
-        />
-
-        <RelatedCaseSection
-          title="提交者的更多作品"
-          description="继续查看这个提交者分享的其他 AI 编程项目。"
-          items={moreBySubmitter}
-        />
-
-        <RelatedCaseSection
-          title="类似案例"
-          description="根据工具、类型和标签推荐更多可以参考的作品。"
-          items={relatedCases}
-        />
-
-        <div className="case-detail-actions">
-          <Button href="/cases" variant="secondary">返回案例列表</Button>
-        </div>
       </Container>
     </div>
   );
