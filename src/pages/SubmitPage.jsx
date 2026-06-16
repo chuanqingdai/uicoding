@@ -16,21 +16,17 @@ export default function SubmitPage() {
         <div className="submit-shell submit-shell-simple">
           <div className="submit-copy">
             <h1>提交你的 AI 编程作品</h1>
-            <p>
-              提交功能正在开发中。现阶段如果你有作品想展示，可以先加我的微信，我会手动帮你整理并发布到 Uicoding.ai。
-            </p>
           </div>
 
           <Card className="submit-card submit-dev-card">
             <div className="submit-status">
-              <span>正在开发中</span>
               <h2>先通过微信手动提交</h2>
               <p>
-                后续会开放正式提交页面，支持填写作品信息、上传截图和补充构建过程。当前阶段我会先人工收集作品，保证内容质量和展示效果。
+                把作品链接和简短说明发给我即可。当前阶段不收取提交费用，我会先人工确认内容质量和展示效果。
               </p>
             </div>
 
-            <div className="submit-contact-card">
+            <div className="submit-contact" aria-label="提交联系方式">
               <MessageCircle size={20} strokeWidth={1.8} aria-hidden="true" />
               <div>
                 <strong>微信：AI_ChuanQing</strong>
@@ -39,7 +35,7 @@ export default function SubmitPage() {
             </div>
 
             <div className="submit-tips">
-              <h3>发送时可以附上</h3>
+              <h3>建议附上</h3>
               <ul>
                 {submitTips.map((tip) => (
                   <li key={tip}>{tip}</li>
@@ -49,7 +45,6 @@ export default function SubmitPage() {
 
             <div className="submit-actions">
               <Button href="/cases">浏览案例</Button>
-              <Button href="/" variant="ghost">返回首页</Button>
             </div>
           </Card>
         </div>

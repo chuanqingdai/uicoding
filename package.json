@@ -2,7 +2,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "learning:discover": "node scripts/import-learning-article.mjs search",
+    "learning:extract": "node scripts/import-learning-article.mjs extract",
+    "learning:import": "node scripts/import-learning-article.mjs import",
+    "learning:auto": "node scripts/import-learning-article.mjs auto"
   },
   "dependencies": {
     "@lobehub/icons": "^5.10.0",

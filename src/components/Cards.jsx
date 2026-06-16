@@ -73,15 +73,23 @@ const toolIconImages = {
   continue: '/tool-icons/continue.png',
 };
 
+export function isDefaultLearningCover(image = '') {
+  return image.startsWith('/learn-covers/');
+}
+
 export function CaseCard({ item, showStats = true }) {
   const accent = item.accent ?? visualAccent[item.visualType] ?? 'slate';
-  const hasStats =
-    showStats && item.viewCount !== undefined && item.likeCount !== undefined;
+  const visualImage = item.image ?? item.screenshotUrl;
+  const hasStats = false;
 
   return (
     <Card className="case-card" href={item.href ?? '/cases'}>
       <div className="case-card-visual">
-        <ProductMockup accent={accent} compact type={item.visualType} />
+        {visualImage ? (
+          <img src={visualImage} alt={item.imageAlt ?? `${item.title} 截图`} loading="lazy" />
+        ) : (
+          <ProductMockup accent={accent} compact type={item.visualType} />
+        )}
       </div>
       <div className="case-card-body">
         <h3>{item.title}</h3>
@@ -116,13 +124,17 @@ export function CaseCard({ item, showStats = true }) {
   );
 }
 
-export function LearningCard({ item, showStats = true }) {
+export function LearningCard({ item, showStats = false, showImage = true }) {
   const hasStats =
     showStats && item.viewCount !== undefined && item.likeCount !== undefined;
+  const hasImage = Boolean(showImage && item.image && !isDefaultLearningCover(item.image));
 
   return (
-    <Card className="learning-card" href={item.href ?? '/learn'}>
-      {item.image && (
+    <Card
+      className={`learning-card ${hasImage ? 'has-image' : 'is-text-only'}`}
+      href={item.href ?? '/learn'}
+    >
+      {hasImage && (
         <div className="learning-card-image">
           <img src={item.image} alt={item.imageAlt ?? item.title} loading="lazy" />
         </div>

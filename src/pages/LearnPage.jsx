@@ -1,11 +1,24 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { lessons } from '../data.js';
 import { Container } from '../components/Layout.jsx';
-import { Button } from '../components/UI.jsx';
 import { LearningCard } from '../components/Cards.jsx';
+
+const pinnedLessonIds = [
+  'uicoding-skill-coding-process',
+  'knowlens-codex-2b-token-tips',
+];
 
 function byLatest(a, b) {
   return new Date(b.publishedAt) - new Date(a.publishedAt);
+}
+
+function byPinnedThenLatest(a, b) {
+  const pinnedA = pinnedLessonIds.indexOf(a.id);
+  const pinnedB = pinnedLessonIds.indexOf(b.id);
+  const rankA = pinnedA === -1 ? Number.POSITIVE_INFINITY : pinnedA;
+  const rankB = pinnedB === -1 ? Number.POSITIVE_INFINITY : pinnedB;
+
+  return rankA - rankB || byLatest(a, b);
 }
 
 const initialVisibleCount = 6;
@@ -13,9 +26,38 @@ const loadMoreCount = 6;
 
 export default function LearnPage() {
   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
-  const visibleLessons = useMemo(() => [...lessons].sort(byLatest), []);
+  const loadMoreRef = useRef(null);
+  const visibleLessons = useMemo(() => [...lessons].sort(byPinnedThenLatest), []);
   const displayedLessons = visibleLessons.slice(0, visibleCount);
   const hasMoreLessons = visibleCount < visibleLessons.length;
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+
+    if (!target || !hasMoreLessons) {
+      return undefined;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      setVisibleCount(visibleLessons.length);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCount((count) =>
+            Math.min(count + loadMoreCount, visibleLessons.length),
+          );
+        }
+      },
+      { rootMargin: '360px 0px 360px' },
+    );
+
+    observer.observe(target);
+
+    return () => observer.disconnect();
+  }, [hasMoreLessons, visibleLessons.length]);
 
   return (
     <div className="learn-page">
@@ -34,17 +76,13 @@ export default function LearnPage() {
             <LearningCard item={item} key={item.id} />
           ))}
         </div>
-        {hasMoreLessons && (
-          <div className="waterfall-more">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => setVisibleCount((count) => count + loadMoreCount)}
-            >
-              加载更多资料
-            </Button>
-          </div>
-        )}
+        <div
+          aria-hidden={!hasMoreLessons}
+          className="auto-load-sentinel"
+          ref={loadMoreRef}
+        >
+          {hasMoreLessons ? '继续向下浏览' : '已显示全部资料'}
+        </div>
       </Container>
     </div>
   );

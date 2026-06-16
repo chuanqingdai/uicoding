@@ -1,25 +1,12 @@
 import { useMemo, useState } from 'react';
-import { Copy, ExternalLink, Eye, Heart, Mail, UserPlus } from 'lucide-react';
+import { Copy, ExternalLink, Heart, Mail, UserPlus } from 'lucide-react';
 import { cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge, Card } from '../components/UI.jsx';
 import { CaseCard, ProductMockup } from '../components/Cards.jsx';
 
-const numberFormatter = new Intl.NumberFormat('zh-CN');
-
-function CaseStats({ viewCount, likeCount }) {
-  return (
-    <div className="case-stats">
-      <span>
-        <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
-        {numberFormatter.format(viewCount)}
-      </span>
-      <span>
-        <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
-        {numberFormatter.format(likeCount)}
-      </span>
-    </div>
-  );
+function isRecentCase(item) {
+  return Boolean(item.sourceType);
 }
 
 function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
@@ -104,11 +91,6 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
 }
 
 function DetailBlock({ section, visualType }) {
-  const paragraph = [
-    section.description,
-    ...(section.points ?? []),
-  ].filter(Boolean).join(' ');
-
   return (
     <article className="detail-block">
       <div className="detail-image">
@@ -119,7 +101,15 @@ function DetailBlock({ section, visualType }) {
         )}
       </div>
       <div className="detail-copy">
-        <p>{paragraph}</p>
+        <h2>{section.title}</h2>
+        <p>{section.description}</p>
+        {section.points?.length > 0 && (
+          <ul>
+            {section.points.map((point) => (
+              <li key={point}>{point}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </article>
   );
@@ -131,7 +121,7 @@ function RelatedCaseSection({ title, description, items }) {
   }
 
   return (
-    <section className="tool-detail-section">
+    <section className="tool-detail-section case-related-section">
       <div>
         <h2>{title}</h2>
         <p>{description}</p>
@@ -153,8 +143,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   const [liked, setLiked] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
-  const likedCount = caseItem ? caseItem.likeCount + (liked ? 1 : 0) : 0;
-
   const relatedCases = useMemo(() => {
     if (!caseItem) {
       return [];
@@ -162,6 +150,7 @@ export default function CaseDetailPage({ categorySlug, slug }) {
 
     return cases
       .filter((item) => item.id !== caseItem.id)
+      .filter(isRecentCase)
       .filter((item) => {
         const sameCategory = item.category === caseItem.category;
         const sameTool = item.tools?.some((tool) => caseItem.tools?.includes(tool));
@@ -169,7 +158,7 @@ export default function CaseDetailPage({ categorySlug, slug }) {
 
         return sameCategory || sameTool || sameTag;
       })
-      .slice(0, 3);
+      .slice(0, 4);
   }, [caseItem]);
 
   if (!caseItem) {
@@ -213,7 +202,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
               </div>
               <h1>{caseItem.title}</h1>
               <div className="blog-article-meta">
-                <CaseStats viewCount={caseItem.viewCount} likeCount={likedCount} />
                 <span>{caseItem.publishedAt}</span>
               </div>
               <div className="case-detail-actions">
@@ -233,7 +221,7 @@ export default function CaseDetailPage({ categorySlug, slug }) {
                   type="button"
                   variant={liked ? 'primary' : 'secondary'}
                 >
-                  {numberFormatter.format(likedCount)}
+                  {liked ? '已喜欢' : '喜欢'}
                 </Button>
               </div>
             </header>
@@ -251,11 +239,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
               </div>
             </div>
 
-            <RelatedCaseSection
-              title="类似案例"
-              description="继续查看更多值得拆解的 AI 编程作品。"
-              items={relatedCases}
-            />
           </article>
 
           <aside className="blog-sidebar">
@@ -267,6 +250,11 @@ export default function CaseDetailPage({ categorySlug, slug }) {
           </aside>
         </div>
 
+        <RelatedCaseSection
+          title="类似案例"
+          description="继续查看更多值得拆解的 AI 编程作品。"
+          items={relatedCases}
+        />
       </Container>
     </div>
   );

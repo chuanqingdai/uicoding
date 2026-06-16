@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 import { caseToolFilters, caseTypeFilters, cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
@@ -15,6 +15,10 @@ function byHot(a, b) {
 
 const initialVisibleCount = 9;
 const loadMoreCount = 6;
+
+function isRecentCase(item) {
+  return Boolean(item.sourceType);
+}
 
 function FilterSelect({
   id,
@@ -81,14 +85,16 @@ function FilterSelect({
 }
 
 export default function CasesPage() {
-  const [sortMode, setSortMode] = useState('hot');
+  const [sortMode, setSortMode] = useState('latest');
   const [activeTool, setActiveTool] = useState('全部工具');
   const [activeType, setActiveType] = useState('全部类型');
   const [openFilter, setOpenFilter] = useState(null);
   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
+  const loadMoreRef = useRef(null);
 
   const visibleCases = useMemo(() => {
     return [...cases]
+      .filter(isRecentCase)
       .filter((item) => activeTool === '全部工具' || item.tools.includes(activeTool))
       .filter((item) => activeType === '全部类型' || item.category === activeType)
       .sort(sortMode === 'latest' ? byLatest : byHot);
@@ -101,10 +107,38 @@ export default function CasesPage() {
   const displayedCases = visibleCases.slice(0, visibleCount);
   const hasMoreCases = visibleCount < visibleCases.length;
 
+  useEffect(() => {
+    const target = loadMoreRef.current;
+
+    if (!target || !hasMoreCases) {
+      return undefined;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      setVisibleCount(visibleCases.length);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCount((count) =>
+            Math.min(count + loadMoreCount, visibleCases.length),
+          );
+        }
+      },
+      { rootMargin: '360px 0px 360px' },
+    );
+
+    observer.observe(target);
+
+    return () => observer.disconnect();
+  }, [hasMoreCases, visibleCases.length]);
+
   const resetFilters = () => {
     setActiveTool('全部工具');
     setActiveType('全部类型');
-    setSortMode('hot');
+    setSortMode('latest');
   };
 
   return (
@@ -169,17 +203,13 @@ export default function CasesPage() {
                 <CaseCard item={item} key={item.id} />
               ))}
             </div>
-            {hasMoreCases && (
-              <div className="waterfall-more">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => setVisibleCount((count) => count + loadMoreCount)}
-                >
-                  加载更多案例
-                </Button>
-              </div>
-            )}
+            <div
+              aria-hidden={!hasMoreCases}
+              className="auto-load-sentinel"
+              ref={loadMoreRef}
+            >
+              {hasMoreCases ? '继续向下浏览' : '已显示全部案例'}
+            </div>
           </>
         ) : (
           <div className="cases-empty">

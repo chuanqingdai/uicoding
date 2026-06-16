@@ -1,12 +1,10 @@
 import { useMemo, useState } from 'react';
-import { Check, Copy, ExternalLink, Heart } from 'lucide-react';
+import { Check, Copy, ExternalLink } from 'lucide-react';
 import { lessons } from '../data.js';
 import { learningContent } from '../content/learningContent.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge } from '../components/UI.jsx';
-import { LearningCard } from '../components/Cards.jsx';
-
-const numberFormatter = new Intl.NumberFormat('zh-CN');
+import { LearningCard, isDefaultLearningCover } from '../components/Cards.jsx';
 
 function buildFallbackContent(lesson) {
   return {
@@ -52,7 +50,7 @@ function LearnCodeBlock({ code }) {
   return (
     <div className="learn-code-block">
       <div className="learn-code-head">
-        <span>代码片段</span>
+        <span>{code.label || '代码片段'}</span>
         <button onClick={copyCode} type="button">
           {copied ? (
             <Check size={14} strokeWidth={2} aria-hidden="true" />
@@ -71,7 +69,7 @@ function LearnCodeBlock({ code }) {
 
 function LearnArticleSection({ section }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const showImage = section.image && !imageFailed;
+  const showImage = section.image && !isDefaultLearningCover(section.image) && !imageFailed;
   const paragraphs = section.paragraphs ?? [section.content].filter(Boolean);
   const blocks =
     section.blocks ??
@@ -135,6 +133,26 @@ function LearnCover({ image, imageAlt }) {
   ) : null;
 }
 
+function LearnSourceNotice({ content, lesson }) {
+  const sourceUrl = content.sourceUrl || lesson.sourceUrl;
+
+  if (!content.notice && !sourceUrl) {
+    return null;
+  }
+
+  return (
+    <aside className="learn-source-notice">
+      {content.notice && <p>{content.notice}</p>}
+      {sourceUrl && (
+        <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+          查看英文原文
+          <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+        </a>
+      )}
+    </aside>
+  );
+}
+
 export default function LearnDetailPage({ slug }) {
   const lesson = useMemo(() => lessons.find((item) => item.id === slug), [slug]);
   const content = useMemo(() => {
@@ -144,7 +162,6 @@ export default function LearnDetailPage({ slug }) {
 
     return learningContent.find((item) => item.id === lesson.id) ?? buildFallbackContent(lesson);
   }, [lesson]);
-  const [liked, setLiked] = useState(false);
 
   const relatedLessons = useMemo(() => {
     if (!lesson) {
@@ -175,12 +192,15 @@ export default function LearnDetailPage({ slug }) {
     );
   }
 
-  const likedCount = lesson.likeCount + (liked ? 1 : 0);
   const tags = [lesson.category, lesson.tools?.[0]].filter(Boolean);
-  const contentCover = content.sections.find((section) => section.image);
-  const coverImage = lesson.image || contentCover?.image;
+  const contentCover = content.sections.find(
+    (section) => section.image && !isDefaultLearningCover(section.image),
+  );
+  const lessonCoverImage =
+    lesson.image && !isDefaultLearningCover(lesson.image) ? lesson.image : '';
+  const coverImage = lessonCoverImage || contentCover?.image;
   const coverImageAlt =
-    lesson.imageAlt || contentCover?.imageAlt || `${lesson.title} 头图`;
+    (lessonCoverImage ? lesson.imageAlt : contentCover?.imageAlt) || `${lesson.title} 头图`;
 
   return (
     <div className="learn-detail">
@@ -196,11 +216,8 @@ export default function LearnDetailPage({ slug }) {
                 ))}
               </div>
               <h1>{lesson.title}</h1>
-              <div className="blog-article-meta">
-                <span>{numberFormatter.format(lesson.viewCount)} 阅读</span>
-                <span>{numberFormatter.format(likedCount)} 喜欢</span>
-                <span>{lesson.duration}</span>
-                {lesson.sourceUrl && (
+              {lesson.sourceUrl && (
+                <div className="blog-article-meta">
                   <a
                     className="learn-source-link"
                     href={lesson.sourceUrl}
@@ -209,8 +226,8 @@ export default function LearnDetailPage({ slug }) {
                   >
                     来源 <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                   </a>
-                )}
-              </div>
+                </div>
+              )}
             </header>
 
             <LearnCover
@@ -219,6 +236,7 @@ export default function LearnDetailPage({ slug }) {
             />
 
             <div className="blog-prose">
+              <LearnSourceNotice content={content} lesson={lesson} />
               {!content.hideLead && <p className="blog-lead">{lesson.description}</p>}
               {content.sections.map((section, index) => (
                 <LearnArticleSection
@@ -226,14 +244,6 @@ export default function LearnDetailPage({ slug }) {
                   section={section}
                 />
               ))}
-              <button
-                className={`blog-like-button ${liked ? 'is-active' : ''}`}
-                onClick={() => setLiked((current) => !current)}
-                type="button"
-              >
-                <Heart size={16} strokeWidth={1.8} aria-hidden="true" />
-                {numberFormatter.format(likedCount)}
-              </button>
             </div>
 
             {relatedLessons.length > 0 && (

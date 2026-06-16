@@ -1,4 +1,4 @@
-import { Eye, Heart, LayoutGrid, Send } from 'lucide-react';
+import { LayoutGrid, Send } from 'lucide-react';
 import {
   cases,
   heroRecommendation,
@@ -9,8 +9,6 @@ import {
 import { Container, Section } from './Layout.jsx';
 import { CaseCard, LearningCard, ProductMockup, ToolPill } from './Cards.jsx';
 import { Badge, Button, Card } from './UI.jsx';
-
-const numberFormatter = new Intl.NumberFormat('en-US');
 
 export function HomeHero() {
   return (
@@ -40,13 +38,23 @@ export function HomeHero() {
 }
 
 export function HeroRecommendation() {
+  const visualImage = heroRecommendation.image ?? heroRecommendation.screenshotUrl;
+
   return (
     <Card className="recommend-card" href={heroRecommendation.href}>
+      <div className="recommend-stamp" aria-label="今日推荐">
+        <span>今日推荐</span>
+      </div>
       <div className="recommend-visual">
-        <ProductMockup featured type={heroRecommendation.visualType} />
-        <div className="recommend-stamp" aria-label="今日推荐">
-          <span>今日推荐</span>
-        </div>
+        {visualImage ? (
+          <img
+            src={visualImage}
+            alt={heroRecommendation.imageAlt ?? `${heroRecommendation.title} 截图`}
+            loading="eager"
+          />
+        ) : (
+          <ProductMockup featured type={heroRecommendation.visualType} />
+        )}
         <div className="recommend-overlay">
           <div className="recommend-overlay-tags">
             <Badge>{heroRecommendation.category}</Badge>
@@ -55,16 +63,6 @@ export function HeroRecommendation() {
           <div className="recommend-overlay-copy">
             <h2>{heroRecommendation.title}</h2>
             <p>{heroRecommendation.description}</p>
-          </div>
-          <div className="recommend-overlay-meta">
-            <span>
-              <Eye size={15} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(heroRecommendation.viewCount)}
-            </span>
-            <span>
-              <Heart size={15} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(heroRecommendation.likeCount)}
-            </span>
           </div>
           <span className="button button-primary">查看</span>
         </div>
@@ -103,7 +101,7 @@ export function LearningResources() {
     >
       <div className="learning-grid">
         {learningResources.map((item) => (
-          <LearningCard item={item} key={item.title} showStats={false} />
+          <LearningCard item={item} key={item.title} showImage={false} showStats={false} />
         ))}
       </div>
     </Section>

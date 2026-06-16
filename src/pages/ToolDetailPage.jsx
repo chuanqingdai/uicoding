@@ -99,6 +99,19 @@ function SourceList({ items }) {
   );
 }
 
+function OptionalListSection({ title, items }) {
+  if (!items?.length) {
+    return null;
+  }
+
+  return (
+    <section className="tool-detail-section">
+      <h2>{title}</h2>
+      <SimpleList items={items} />
+    </section>
+  );
+}
+
 export default function ToolDetailPage() {
   const tool = getToolFromPath();
 
@@ -152,6 +165,10 @@ export default function ToolDetailPage() {
           <h2>适合什么场景</h2>
           <SimpleList items={tool.bestFor ?? []} />
         </section>
+
+        <OptionalListSection title="工作流规则" items={tool.workflowSteps} />
+        <OptionalListSection title="输出字段" items={tool.outputFields} />
+        <OptionalListSection title="质量检查" items={tool.qualityChecklist} />
 
         <BenchmarkList items={tool.benchmarks} />
         <ReviewList items={tool.userReviews} />

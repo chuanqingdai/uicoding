@@ -1,0 +1,126 @@
+<!-- generated from system-overview.svg by scripts/generate-blacklight-light-svgs.mjs; do not edit by hand -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" role="img" aria-labelledby="bl-sys-title bl-sys-desc">
+  <title id="bl-sys-title">What makes blacklight work, in one frame</title>
+  <desc id="bl-sys-desc">A Curator session (Opus 4.7, 1M context) reasons over mounted Skills, reference Files, the bl-case memory store, and evidence JSONL bundles, helped by Sonnet 4.6 for summaries and Haiku 4.5 for false-positive adjudication. It emits typed step JSON. The Runner re-asserts verb class, classifies each step into one of five tiers (read-only, reversible-low, reversible-high, destructive, unknown), and applies it to a substrate primitive only after a backup is written; every applied action dual-writes to the case state and a local audit ledger; clean operations quarantine rather than unlink.</desc>
+
+  <defs>
+    <linearGradient id="bl-sys-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f4f3f0"/>
+      <stop offset="100%" stop-color="#fdfcfa"/>
+    </linearGradient>
+    <marker id="bl-sys-arrow-violet" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 L3,6 Z" fill="#6d28d9"/>
+    </marker>
+    <marker id="bl-sys-arrow-amber" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 L3,6 Z" fill="#b45309"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="470" rx="12" fill="url(#bl-sys-bg)"/>
+
+  <!-- ==================== BAND 1 · CURATOR ==================== -->
+  <g aria-label="Curator">
+    <rect x="40" y="28" width="800" height="172" rx="10" fill="#fdfcfa" stroke="#6d28d9" stroke-width="1" stroke-opacity="0.55"/>
+    <rect x="40" y="28" width="6" height="172" rx="3" fill="#6d28d9"/>
+
+    <!-- Left column: identity -->
+    <text x="68" y="56" fill="#6d28d9" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11" letter-spacing="3">CURATOR</text>
+    <text x="68" y="92" fill="#6d28d9" font-family="ui-sans-serif,system-ui,sans-serif" font-size="26" font-weight="700">bl-curator</text>
+    <text x="68" y="116" fill="#18181b" fill-opacity="0.85" font-family="ui-sans-serif,system-ui,sans-serif" font-size="14">Opus 4.7  ·  1M context  ·  Session resumes 30 days</text>
+    <text x="68" y="138" fill="#18181b" fill-opacity="0.55" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">custom tools  report_step  ·  synthesize_defense  ·  reconstruct_intent</text>
+
+    <!-- Right column: helpers -->
+    <text x="568" y="56" fill="#18181b" fill-opacity="0.55" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11" letter-spacing="3">HELPERS</text>
+    <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">
+      <circle cx="572" cy="86" r="3" fill="#6d28d9" fill-opacity="0.85"/>
+      <text x="584" y="90" fill="#18181b" fill-opacity="0.85"><tspan font-weight="600">Sonnet 4.6</tspan>  bundle summaries</text>
+      <circle cx="572" cy="110" r="3" fill="#6d28d9" fill-opacity="0.85"/>
+      <text x="584" y="114" fill="#18181b" fill-opacity="0.85"><tspan font-weight="600">Haiku 4.5</tspan>  FP-gate adjudication</text>
+      <circle cx="572" cy="134" r="3" fill="#6d28d9" fill-opacity="0.55"/>
+      <text x="584" y="138" fill="#18181b" fill-opacity="0.55" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">BL_DISABLE_LLM=1  short-circuits all three</text>
+    </g>
+
+    <!-- Inputs row (chips along the bottom of the band) -->
+    <line x1="68" y1="158" x2="812" y2="158" stroke="#18181b" stroke-opacity="0.08" stroke-width="1"/>
+    <text x="68" y="178" fill="#18181b" fill-opacity="0.55" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="10" letter-spacing="2">MOUNTED AT SESSION CREATE</text>
+
+    <g font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">
+      <!-- Chip 1: 6 routing Skills -->
+      <rect x="68" y="186" width="170" height="22" rx="4" fill="#fdfcfa" stroke="#6d28d9" stroke-opacity="0.45"/>
+      <text x="153" y="201" fill="#18181b" fill-opacity="0.85" text-anchor="middle">6 routing Skills</text>
+      <!-- Chip 2: 8 reference Files -->
+      <rect x="248" y="186" width="170" height="22" rx="4" fill="#fdfcfa" stroke="#6d28d9" stroke-opacity="0.45"/>
+      <text x="333" y="201" fill="#18181b" fill-opacity="0.85" text-anchor="middle">8 reference Files</text>
+      <!-- Chip 3: bl-case (rw) -->
+      <rect x="428" y="186" width="170" height="22" rx="4" fill="#fdfcfa" stroke="#6d28d9" stroke-opacity="0.45"/>
+      <text x="513" y="201" fill="#18181b" fill-opacity="0.85" text-anchor="middle">bl-case memstore (rw)</text>
+      <!-- Chip 4: evidence JSONL -->
+      <rect x="608" y="186" width="204" height="22" rx="4" fill="#fdfcfa" stroke="#6d28d9" stroke-opacity="0.45"/>
+      <text x="710" y="201" fill="#18181b" fill-opacity="0.85" text-anchor="middle">evidence bundles  ·  tar.gz</text>
+    </g>
+  </g>
+
+  <!-- Connector 1 -> 2 -->
+  <g aria-label="step.json">
+    <line x1="440" y1="200" x2="440" y2="240" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#bl-sys-arrow-violet)"/>
+    <text x="452" y="226" fill="#6d28d9" fill-opacity="0.85" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">step.json  (typed verb + args + claimed tier)</text>
+  </g>
+
+  <!-- ==================== BAND 2 · TIER GATE ==================== -->
+  <g aria-label="Runner tier gate">
+    <rect x="40" y="248" width="800" height="106" rx="10" fill="#fdfcfa" stroke="#b45309" stroke-width="1" stroke-opacity="0.55"/>
+    <rect x="40" y="248" width="6" height="106" rx="3" fill="#b45309"/>
+
+    <text x="68" y="274" fill="#b45309" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11" letter-spacing="3">TIER GATE</text>
+    <text x="190" y="274" fill="#18181b" fill-opacity="0.55" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">Runner re-asserts verb class  ·  clean.* always destructive  ·  unknown deny by default</text>
+
+    <!-- Five tier pills, color-coded -->
+    <g font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">
+      <!-- read-only · auto -->
+      <rect x="68" y="294" width="148" height="44" rx="6" fill="#fdfcfa" stroke="#15803d" stroke-opacity="0.7" stroke-width="1"/>
+      <circle cx="80" cy="308" r="3" fill="#15803d"/>
+      <text x="92" y="312" fill="#15803d" font-size="12" font-weight="600">read-only</text>
+      <text x="80" y="330" fill="#18181b" fill-opacity="0.65">auto</text>
+
+      <!-- reversible-low · auto -->
+      <rect x="224" y="294" width="148" height="44" rx="6" fill="#fdfcfa" stroke="#15803d" stroke-opacity="0.55" stroke-width="1"/>
+      <circle cx="236" cy="308" r="3" fill="#15803d"/>
+      <text x="248" y="312" fill="#15803d" font-size="12" font-weight="600">reversible-low</text>
+      <text x="236" y="330" fill="#18181b" fill-opacity="0.65">auto</text>
+
+      <!-- reversible-high · suggest -->
+      <rect x="380" y="294" width="148" height="44" rx="6" fill="#fdfcfa" stroke="#b45309" stroke-opacity="0.7" stroke-width="1"/>
+      <circle cx="392" cy="308" r="3" fill="#b45309"/>
+      <text x="404" y="312" fill="#b45309" font-size="12" font-weight="600">reversible-high</text>
+      <text x="392" y="330" fill="#18181b" fill-opacity="0.65">suggested</text>
+
+      <!-- destructive · diff + ack -->
+      <rect x="536" y="294" width="148" height="44" rx="6" fill="#fdfcfa" stroke="#dc2626" stroke-opacity="0.7" stroke-width="1"/>
+      <circle cx="548" cy="308" r="3" fill="#dc2626"/>
+      <text x="560" y="312" fill="#dc2626" font-size="12" font-weight="600">destructive</text>
+      <text x="548" y="330" fill="#18181b" fill-opacity="0.65">diff + --yes</text>
+
+      <!-- unknown · deny -->
+      <rect x="692" y="294" width="120" height="44" rx="6" fill="#fdfcfa" stroke="#dc2626" stroke-opacity="0.55" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="704" cy="308" r="3" fill="#dc2626" fill-opacity="0.7"/>
+      <text x="716" y="312" fill="#dc2626" fill-opacity="0.85" font-size="12" font-weight="600">unknown</text>
+      <text x="704" y="330" fill="#18181b" fill-opacity="0.65">deny</text>
+    </g>
+  </g>
+
+  <!-- Connector 2 -> 3 -->
+  <g aria-label="approved">
+    <line x1="440" y1="354" x2="440" y2="388" stroke="#b45309" stroke-width="1.6" marker-end="url(#bl-sys-arrow-amber)"/>
+    <text x="452" y="376" fill="#b45309" fill-opacity="0.85" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11">approved  +  pre-apply check passed</text>
+  </g>
+
+  <!-- ==================== BAND 3 · APPLY ==================== -->
+  <g aria-label="Apply">
+    <rect x="40" y="396" width="800" height="58" rx="10" fill="#fdfcfa" stroke="#15803d" stroke-width="1" stroke-opacity="0.55"/>
+    <rect x="40" y="396" width="6" height="58" rx="3" fill="#15803d"/>
+
+    <text x="68" y="420" fill="#15803d" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="11" letter-spacing="3">APPLY</text>
+    <text x="812" y="420" fill="#18181b" fill-opacity="0.55" font-family="ui-monospace,Menlo,Monaco,monospace" font-size="10" letter-spacing="1" text-anchor="end">--undo round-trips  ·  quarantine before unlink</text>
+    <text x="68" y="442" fill="#18181b" fill-opacity="0.85" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13"><tspan font-weight="600">backup</tspan><tspan fill="#18181b" fill-opacity="0.4">  →  </tspan><tspan>substrate primitive</tspan><tspan fill="#18181b" fill-opacity="0.55"> (apachectl · apf · iptables · nftables · YARA / LMD)</tspan><tspan fill="#18181b" fill-opacity="0.4">  →  </tspan><tspan font-weight="600">audit ledger</tspan></text>
+  </g>
+</svg>

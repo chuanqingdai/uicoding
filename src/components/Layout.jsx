@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LogIn, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { footerGroups, navItems } from '../data.js';
 import { Button } from './UI.jsx';
 
@@ -78,9 +78,6 @@ export function Header() {
           })}
         </nav>
         <div className="header-actions">
-          <Button href="/login" variant="ghost" icon={LogIn}>
-            登录
-          </Button>
           <Button href="/submit" icon={Send}>
             提交作品
           </Button>
