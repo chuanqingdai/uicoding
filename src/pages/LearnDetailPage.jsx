@@ -4,16 +4,9 @@ import { lessons } from '../data.js';
 import { learningContent } from '../content/learningContent.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge } from '../components/UI.jsx';
-import { LearningCard, ProductMockup } from '../components/Cards.jsx';
+import { LearningCard } from '../components/Cards.jsx';
 
 const numberFormatter = new Intl.NumberFormat('zh-CN');
-const lessonVisualType = {
-  Agent: 'prompt',
-  Prompt: 'prompt',
-  'UI Design': 'landing',
-  Workflow: 'dashboard',
-  上线部署: 'landing',
-};
 
 function buildFallbackContent(lesson) {
   return {
@@ -38,7 +31,6 @@ function buildFallbackContent(lesson) {
 function LearnArticleSection({ section }) {
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = section.image && !imageFailed;
-  const showVisual = showImage || section.visualType;
   const [copied, setCopied] = useState(false);
 
   const copyCode = async () => {
@@ -56,19 +48,15 @@ function LearnArticleSection({ section }) {
   };
 
   return (
-    <section className={`learn-article-section ${showVisual ? 'has-visual' : ''}`}>
-      {showVisual && (
+    <section className={`learn-article-section ${showImage ? 'has-visual' : ''}`}>
+      {showImage && (
         <div className="learn-article-visual">
-          {showImage ? (
-            <img
-              src={section.image}
-              alt={section.imageAlt ?? section.heading}
-              loading="lazy"
-              onError={() => setImageFailed(true)}
-            />
-          ) : (
-            <ProductMockup featured type={section.visualType ?? 'prompt'} />
-          )}
+          <img
+            src={section.image}
+            alt={section.imageAlt ?? section.heading}
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
         </div>
       )}
       <div className="learn-article-copy">
@@ -97,24 +85,20 @@ function LearnArticleSection({ section }) {
   );
 }
 
-function LearnCover({ image, imageAlt, visualType }) {
+function LearnCover({ image, imageAlt }) {
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = image && !imageFailed;
 
-  return (
+  return showImage ? (
     <div className={`learn-detail-cover ${showImage ? 'has-image' : ''}`}>
-      {showImage ? (
-        <img
-          src={image}
-          alt={imageAlt}
-          loading="eager"
-          onError={() => setImageFailed(true)}
-        />
-      ) : (
-        <ProductMockup featured type={visualType} />
-      )}
+      <img
+        src={image}
+        alt={imageAlt}
+        loading="eager"
+        onError={() => setImageFailed(true)}
+      />
     </div>
-  );
+  ) : null;
 }
 
 export default function LearnDetailPage({ slug }) {
@@ -163,7 +147,6 @@ export default function LearnDetailPage({ slug }) {
   const coverImage = lesson.image || contentCover?.image;
   const coverImageAlt =
     lesson.imageAlt || contentCover?.imageAlt || `${lesson.title} 头图`;
-  const coverVisualType = lessonVisualType[lesson.category] ?? 'prompt';
 
   return (
     <div className="learn-detail">
@@ -199,12 +182,10 @@ export default function LearnDetailPage({ slug }) {
             <LearnCover
               image={coverImage}
               imageAlt={coverImageAlt}
-              visualType={coverVisualType}
             />
 
             <div className="blog-prose">
               <p className="blog-lead">{lesson.description}</p>
-              {content.notice && <p className="blog-note">{content.notice}</p>}
               {content.sections.map((section, index) => (
                 <LearnArticleSection
                   key={section.heading}

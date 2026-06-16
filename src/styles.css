@@ -981,8 +981,8 @@ h3 {
 .learning-card-image {
   overflow: hidden;
   margin: 0 -27px 6px;
-  border-bottom: 1px solid rgba(39, 37, 33, 0.07);
-  background: var(--color-soft);
+  border-bottom: 1px solid rgba(39, 37, 33, 0.035);
+  background: #eee9df;
 }
 
 .learning-card-image img {
@@ -990,7 +990,7 @@ h3 {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  filter: saturate(0.95);
+  filter: saturate(0.98);
   transition: filter 180ms ease, transform 180ms ease;
 }
 

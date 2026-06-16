@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Claude Code 工作流简洁插图">
+  <rect width="1200" height="675" fill="#eee9df"/>
+  <rect x="120" y="96" width="960" height="483" rx="30" fill="#fffdf8"/>
+  <rect x="168" y="150" width="864" height="44" rx="16" fill="#eee9df"/>
+  <rect x="182" y="258" width="278" height="220" rx="28" fill="#f4f0e9"/>
+  <rect x="234" y="324" width="170" height="18" rx="9" fill="#d7cbbd"/>
+  <rect x="234" y="374" width="118" height="18" rx="9" fill="#b88966"/>
+  <rect x="502" y="258" width="196" height="220" rx="28" fill="#e4ded3"/>
+  <circle cx="600" cy="342" r="26" fill="#fffdf8"/>
+  <rect x="740" y="258" width="278" height="220" rx="28" fill="#f4f0e9"/>
+  <rect x="792" y="318" width="164" height="18" rx="9" fill="#d7cbbd"/>
+  <rect x="792" y="368" width="112" height="18" rx="9" fill="#b88966"/>
+  <path d="M462 368h40M698 368h40" stroke="#c9bcae" stroke-width="12" stroke-linecap="round"/>
+</svg>

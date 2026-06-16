@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="简洁学习资料插图">
+  <rect width="1200" height="675" fill="#eee9df"/>
+  <rect x="120" y="96" width="960" height="483" rx="30" fill="#fffdf8"/>
+  <rect x="168" y="150" width="864" height="44" rx="16" fill="#eee9df"/>
+  <rect x="286" y="254" width="628" height="230" rx="30" fill="#e4ded3"/>
+  <path d="M600 304l100 40v58c0 58-38 94-100 116-62-22-100-58-100-116v-58l100-40z" fill="#fffdf8"/>
+  <path d="M566 400l26 26 54-62" fill="none" stroke="#a46343" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
