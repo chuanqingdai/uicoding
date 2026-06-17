@@ -355,7 +355,7 @@ export const learningContent = [
     "sections": parseLearningMarkdown(knowlensCodexTipsMarkdown)
   },
   {
-    "id": "ai-coding-full-workflow-提示词-chain",
+    "id": "ai-coding-full-workflow-prompt-chain",
     "sourceUrl": "https://github.com/vlad-ko/claude-wizard",
     "translationMode": "guidedTranslation",
     "title": "让 Claude Code / Codex 先思考再写代码：一套可复制的完整链路提示词",
@@ -591,7 +591,7 @@ export const learningContent = [
     ]
   },
   {
-    "id": "claude-code-official-提示词-library-copyable-workflows",
+    "id": "claude-code-official-prompt-library-copyable-workflows",
     "sourceUrl": "https://code.claude.com/docs/en/prompt-library",
     "translationMode": "guidedTranslation",
     "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制提示词",
@@ -868,7 +868,7 @@ Bug 现象：
     ]
   },
   {
-    "id": "codex-official-workflows-copyable-提示词",
+    "id": "codex-official-workflows-copyable-prompts",
     "sourceUrl": "https://developers.openai.com/codex/workflows",
     "translationMode": "guidedTranslation",
     "title": "Codex 官方工作流：7 个可直接复制的实战提示词",
@@ -1152,7 +1152,7 @@ PR 目标：
     ]
   },
   {
-    "id": "codex-real-webpage-提示词-case-library",
+    "id": "codex-real-webpage-prompt-case-library",
     "sourceUrl": "https://developers.openai.com/codex/use-cases",
     "translationMode": "guidedTranslation",
     "title": "Codex 真实网页案例提示词库：从网页拆解到验证套件",
@@ -1246,7 +1246,7 @@ PR 目标：
 [粘贴 URL，或用文字描述截图内容。]
 
 目标路由：
-[例如 /learn/codex-提示词-case-study 或 /cases/new-example]
+[例如 /learn/codex-prompt-case-study 或 /cases/new-example]
 
 复刻目标：
 - 复刻页面的信息架构；
@@ -1594,7 +1594,7 @@ Do not modify these areas unless the user explicitly asks:
 - Do not make labels more visually dominant than titles.
 - Make sure text does not overflow, overlap, or show half lines.
 - Check desktop and mobile layouts when UI changes.
-- Use existing 设计变量 and page patterns where possible.
+- Use existing tokens and page patterns where possible.
 
 ## Verification
 
@@ -2069,7 +2069,7 @@ If there are no findings, say:
     ]
   },
   {
-    "id": "codex-slack-team-workflow-提示词",
+    "id": "codex-slack-team-workflow-prompts",
     "sourceUrl": "https://developers.openai.com/codex/integrations/slack",
     "translationMode": "guidedTranslation",
     "title": "Slack 里调用 Codex：把团队反馈变成可执行任务提示词",
@@ -2346,7 +2346,7 @@ PR 目标：
     ]
   },
   {
-    "id": "codex-pixel-perfect-website-rebuild-提示词",
+    "id": "codex-pixel-perfect-website-rebuild-prompts",
     "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
     "translationMode": "guidedTranslation",
     "title": "Codex 高保真网站复现提示词：从参考网页到像素级验证",
@@ -2642,7 +2642,7 @@ PR 目标：
     ]
   },
   {
-    "id": "codex-cinematic-web-effects-提示词",
+    "id": "codex-cinematic-web-effects-prompts",
     "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
     "translationMode": "guidedTranslation",
     "title": "Codex 酷炫网页效果提示词：3D、滚动叙事和高级动效",
@@ -2981,12 +2981,12 @@ Hero 内容：
     ]
   },
   {
-    "id": "codex-design-system-consistency-提示词",
+    "id": "codex-design-system-consistency-prompts",
     "sourceUrl": "https://m3.material.io/foundations/design-tokens",
     "translationMode": "guidedTranslation",
     "title": "Codex 设计规范一致性提示词：从 Tokens 到组件治理",
     "originalTitle": "Design systems and design tokens consistency workflows",
-    "notice": "本文为 Uicoding.ai 基于公开设计系统资料整理的中文学习笔记，不是原文全文翻译。参考来源包括 Material 设计变量：https://m3.material.io/foundations/design-tokens，Figma 设计系统s：https://www.figma.com/design-systems/，W3C 设计变量 Community Group：https://www.w3.org/community/design-tokens/。",
+    "notice": "本文为 Uicoding.ai 基于公开设计系统资料整理的中文学习笔记，不是原文全文翻译。参考来源包括 Material 设计变量：https://m3.material.io/foundations/design-tokens，Figma 设计系统：https://www.figma.com/design-systems/，W3C Design Tokens Community Group：https://www.w3.org/community/design-tokens/。",
     "sections": [
       {
         "heading": "为什么网站越做越不一致",
@@ -4070,7 +4070,7 @@ Usage:
     ]
   },
   {
-    "id": "claude-code-skills-reusable-提示词-workflows",
+    "id": "claude-code-skills-reusable-prompt-workflows",
     "sourceUrl": "https://docs.anthropic.com/en/docs/claude-code/skills",
     "translationMode": "guidedTranslation",
     "title": "Claude Code Skills 官方指南：把一次性提示词沉淀成可复用工作流",
@@ -5278,7 +5278,7 @@ For UI changes:
             "content": "用 AI Coding 的例子理解：提示词 engineering 是告诉 Codex“修复这个 bug”；context engineering 是让它看到 bug 复现步骤、相关文件、测试命令、项目规则、历史修改原因，以及哪些文件不能动。前者是请求，后者是工作环境。"
           }
         ],
-        "image": "/learn-images/context-engineering-提示词-vs-context.png",
+        "image": "/learn-images/context-engineering-prompt-vs-context.png",
         "imageAlt": "原文配图：提示词 engineering 与 context engineering 的对比"
       },
       {
@@ -5326,7 +5326,7 @@ For UI changes:
             "content": "原文还强调，系统提示词需要持续校准。不是写一次就结束，而是根据 Agent 的真实表现不断调整：哪里容易误解，哪里权限过大，哪里输出格式不稳定，哪里需要补充边界。"
           }
         ],
-        "image": "/learn-images/context-engineering-system-提示词.png",
+        "image": "/learn-images/context-engineering-system-prompt.png",
         "imageAlt": "原文配图：在上下文工程中校准系统提示词"
       },
       {
@@ -6016,11 +6016,11 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-提示词-for-stunning-ai-websites",
+    "id": "copyable-prompts-for-stunning-ai-websites",
     "sourceUrl": "https://developers.openai.com/showcase",
     "translationMode": "guidedTranslation",
     "title": "5 个带可复制提示词的酷炫网页案例：照着还原首页",
-    "originalTitle": "Copyable 提示词 for stunning AI websites",
+    "originalTitle": "Copyable prompts for stunning AI websites",
     "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附官网链接，以及适合直接拿去还原网页的中文提示词。",
     "sections": [
       {
@@ -6232,11 +6232,11 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-提示词-for-playable-ai-websites",
+    "id": "copyable-prompts-for-playable-ai-websites",
     "sourceUrl": "https://developers.openai.com/showcase",
     "translationMode": "guidedTranslation",
     "title": "5 个更偏游戏感的 AI 网页案例：直接照着做首页和交互入口",
-    "originalTitle": "Copyable 提示词 for playable AI websites",
+    "originalTitle": "Copyable prompts for playable AI websites",
     "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址，以及适合直接拿去还原网页首页和交互入口的中文提示词。",
     "sections": [
       {
@@ -6448,11 +6448,11 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-提示词-for-ai-tool-surfaces",
+    "id": "copyable-prompts-for-ai-tool-surfaces",
     "sourceUrl": "https://developers.openai.com/showcase",
     "translationMode": "guidedTranslation",
     "title": "5 个工具型 AI 网页案例：照着做生成器、控制面板和 3D 场景界面",
-    "originalTitle": "Copyable 提示词 for AI tool surfaces",
+    "originalTitle": "Copyable prompts for AI tool surfaces",
     "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址，以及适合直接拿去还原网页首页、工具表面和控制面板的中文提示词。",
     "sections": [
       {
@@ -6664,11 +6664,11 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-提示词-for-knowledge-and-education-ai-websites",
+    "id": "copyable-prompts-for-knowledge-and-education-ai-websites",
     "sourceUrl": "https://www.uicoding.ai/cases",
     "translationMode": "guidedTranslation",
     "title": "5 个教育与知识表达的 AI 网页案例：照着做信息图、教学和内容解释界面",
-    "originalTitle": "Copyable 提示词 for knowledge and education AI websites",
+    "originalTitle": "Copyable prompts for knowledge and education AI websites",
     "notice": "本文为 UIcoding 基于真实网站与已收录案例整理的中文学习稿。这一组更偏真实产品与公开站点，因此我给出的提示词是面向还原首页与核心交互的拆解版中文提示词。",
     "sections": [
       {
@@ -6900,11 +6900,11 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-提示词-for-enterprise-ai-workflows",
+    "id": "copyable-prompts-for-enterprise-ai-workflows",
     "sourceUrl": "https://www.uicoding.ai/cases",
     "translationMode": "guidedTranslation",
     "title": "5 个企业工作流 AI 网页案例：照着做安全、合规和团队工具界面",
-    "originalTitle": "Copyable 提示词 for enterprise AI workflow websites",
+    "originalTitle": "Copyable prompts for enterprise AI workflow websites",
     "notice": "本文为 UIcoding 基于真实网站与已收录案例整理的中文学习稿。这一组案例更偏企业工作流、安全、合规和团队工具，因此我给出的提示词会更强调任务入口、信息层级、状态反馈和专业场景可信感。",
     "sections": [
       {
@@ -7664,405 +7664,252 @@ For UI changes:
     "id": "anthropic-company-wide-claude-code-rollout",
     "sourceUrl": "https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf",
     "translationMode": "guidedTranslation",
-    "title": "Anthropic 跨团队使用 Claude Code 的落地方法：从个人提效到组织协作",
+    "title": "Anthropic 团队如何使用 Claude Code：10 个内部团队实践",
     "originalTitle": "How Anthropic teams use Claude Code",
-    "notice": "本文为 UIcoding 基于 Anthropic 官方资料整理的中文学习稿，不是原文全文翻译。调研时没有找到一篇 CEO 亲自撰写、完整介绍“全员使用 Codex 或 Claude Code”的高质量长文；目前最接近且最有实操价值的是 Anthropic 官方《How Anthropic teams use Claude Code》和《Scaling agentic coding across your organization》。因此本文按公司落地方法论重组：如何从个人使用，推进到跨团队协作、质量门禁和组织复用。",
+    "notice": "本文为 UIcoding 基于 Anthropic 官方 PDF《How Anthropic teams use Claude Code》整理的中文翻译稿，按原文结构保留“团队背景、主要用例、影响、建议”四类信息。本文不额外加入可复制提示词。原文地址：https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf。",
     "sections": [
       {
-        "heading": "先说结论：全员使用不是人人开一个聊天窗口",
+        "heading": "原文在讲什么",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "公司级 AI Coding 落地，最容易走偏的地方，是把它理解成“给每个人发一个 Codex 或 Claude Code 账号”。账号只是起点，真正困难的是：每个人给 Agent 的上下文是否一致、生成的代码是否能被 review、经验是否能复用、风险是否有边界、结果是否能度量。"
+            "content": "Anthropic 在这份资料里采访了内部 Claude Code 重度用户，展示不同部门如何把 Claude Code 用进日常工作。原文不是一篇提示词教程，也不是 CEO 视角的宣言，而是一组跨团队案例：开发者和非技术员工如何处理复杂项目、自动化重复任务，并补上过去限制效率的技能缺口。"
           },
           {
             "type": "paragraph",
-            "content": "Anthropic 官方资料的价值，正在于它不是只讲工程师怎么写代码，而是展示 Claude Code 如何进入数据基础设施、产品开发、安全、推理、API、增长、设计、研究和法务等团队。换句话说，AI Coding 不只是 IDE 里的插件，而是一套跨团队工作方式。"
-          },
-          {
-            "type": "paragraph",
-            "content": "如果要把这套经验迁移到自己的团队，可以把目标定成一句话：让 AI 能在正确上下文里完成低风险高频任务，让人类负责目标、边界、审查和最终判断。"
+            "content": "整份资料覆盖 10 个团队：数据基础设施、产品开发、安全工程、推理、数据科学与可视化、API、增长营销、产品设计、RL 工程和法务。每个章节都围绕同一套结构展开：Claude Code 被用在哪里、带来了什么影响，以及团队给其它组织的采用建议。"
           },
           {
             "type": "links",
             "items": [
               {
-                "label": "Anthropic 跨团队案例 PDF",
+                "label": "原文 PDF",
                 "url": "https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf"
-              },
-              {
-                "label": "组织级落地 PDF",
-                "url": "https://resources.anthropic.com/hubfs/Scaling%20agentic%20coding%20across%20your%20organization.pdf"
-              },
-              {
-                "label": "Claude Code 最佳实践",
-                "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
               }
             ]
           }
         ]
       },
       {
-        "heading": "第一阶段：先选高频低风险场景",
+        "heading": "数据基础设施团队：让数据工作流自助化",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "成熟团队不会一开始就让 AI 接管核心业务链路。更稳的做法是先从高频、低风险、可验证的任务开始，例如解释陌生代码、整理变更摘要、写单元测试、修小 bug、迁移样式、生成文档、跑本地检查、做 PR 初审。"
+            "content": "数据基础设施团队负责组织公司内部业务数据，让各个团队都能使用这些数据。他们把 Claude Code 用在日常数据工程自动化、复杂基础设施问题排查，以及把数据工作流写成文档，让技术和非技术成员都能独立访问、处理数据。"
           },
           {
             "type": "paragraph",
-            "content": "这些任务有三个共同点：上下文容易给清楚，结果容易被验证，失败成本相对低。等团队熟悉了提示词、上下文文件、权限和 review 方式，再逐步进入更复杂的功能开发。"
+            "content": "原文提到一个 Kubernetes 排障案例：集群无法调度新 pod 时，团队把监控面板截图交给 Claude Code，Claude Code 引导他们在 Google Cloud UI 中逐步定位到 pod IP 地址耗尽，并给出创建新 IP 池、添加到集群的具体命令，避免临时拉网络专家介入。"
           },
           {
-            "type": "code",
-            "label": "团队试点场景选择模板",
-            "content": `请帮我们设计一个 Claude Code / Codex 试点范围。
-
-团队背景：
-- 团队类型：
-- 代码库规模：
-- 当前最耗时的开发环节：
-- 当前最常见的质量问题：
-
-请按以下维度评估 10 个适合试点的 AI Coding 场景：
-1. 任务描述
-2. 适合使用 AI 的原因
-3. 所需上下文
-4. 人类必须审查的内容
-5. 验证方式
-6. 风险等级：低 / 中 / 高
-7. 是否适合作为第一批试点
-
-请优先推荐低风险、高频、容易验证、能立刻改善团队体验的任务。`
+            "type": "paragraph",
+            "content": "他们还让财务团队用纯文本描述数据流程，例如查询某个看板、运行查询、生成 Excel 输出。Claude Code 读取这些流程后自动执行，并在需要日期等输入时主动询问。新入职的数据科学家也会用 Claude Code 导航庞大代码库，理解 Claude.md 文档、相关文件和数据管道依赖。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类用法带来的影响包括：不用专门专家也能解决部分基础设施问题；新人更快理解复杂系统；支持团队可以处理更多看板和异常；没有编程经验的财务团队也能独立执行复杂数据流程。团队建议是：认真写 Claude.md，用 MCP server 处理敏感数据访问，并通过团队演示分享 Claude Code 的具体工作流。"
           }
         ]
       },
       {
-        "heading": "第二阶段：建立共享上下文，而不是反复口头交代",
+        "heading": "产品开发团队：原型、测试和代码库探索",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "个人使用 AI Coding 时，很多上下文都在脑子里；团队使用时，隐性知识必须写下来。Claude Code 的 CLAUDE.md、Codex 的 AGENTS.md、项目 README、架构文档、测试命令和代码规范，都是让 Agent 稳定工作的基础。"
+            "content": "Claude Code 团队自己也使用 Claude Code 来开发 Claude Code，包括企业能力和 agentic loop 相关功能。对快速原型，他们会开启 auto-accept mode，让 Claude 写代码、跑测试并持续迭代；工程师再接手约 80% 完成度的方案做最终打磨。"
           },
           {
             "type": "paragraph",
-            "content": "这类文件不应该写成空泛说明，而应该回答 Agent 真正会犯错的问题：哪些目录可以改，哪些不能改；改完必须跑什么命令；UI 要遵循什么设计系统；新增依赖是否需要批准；安全相关代码谁来审。"
+            "content": "对核心业务逻辑相关功能，团队会同步监督 Claude Code，给出更具体的实现要求，实时检查代码质量、样式规范和架构方向。原文还提到 Vim key bindings 的案例：这个功能大约 70% 的最终实现来自 Claude 的自主工作。"
           },
           {
-            "type": "code",
-            "label": "项目级 AI Coding 规则模板",
-            "content": `# AI Coding Project Rules
-
-## 项目目标
-这个仓库用于：
-主要用户是：
-当前最重要的产品目标是：
-
-## 目录职责
-- src/pages：页面级入口
-- src/components：复用组件
-- src/content：长文章和学习资料
-- src/data：列表、导航和静态数据
-- public：图片和静态资源
-
-## 允许 Agent 修改的范围
-- 普通内容任务：只改 src/content、src/data、public assets
-- UI 任务：可以改相关页面、组件和 CSS
-- 逻辑任务：只能改与任务直接相关的函数和测试
-
-## 禁止默认修改
-- 登录、权限、支付、部署配置、环境变量
-- 无关文件格式化
-- 大范围重构
-- 未经确认新增重量级依赖
-
-## 必须验证
-- 内容或数据改动：npm run build
-- 逻辑改动：npm run test 或对应测试命令
-- UI 改动：本地页面走查，检查桌面端和移动端
-
-## 最终回复格式
-请说明：
-1. 改了哪些文件
-2. 做了什么行为变化
-3. 跑了哪些验证
-4. 有哪些剩余风险`
+            "type": "paragraph",
+            "content": "他们还用 Claude Code 生成测试、处理 PR review 中发现的简单 bug，并通过 GitHub Actions 集成自动处理格式问题或函数重命名等评论。面对不熟悉的 monorepo 或 API 代码，团队会直接向 Claude Code 询问系统如何工作，以减少等待同事回复带来的上下文切换。"
+          },
+          {
+            "type": "paragraph",
+            "content": "原文总结的建议是：给 Claude 建立能自我验证的循环，让它自动运行 build、test 和 lint；学会区分适合异步交给 Claude 的边缘任务，和必须同步监督的核心逻辑；当代码库里存在名称相近的组件或函数时，说明必须足够具体。"
           }
         ]
       },
       {
-        "heading": "第三阶段：把好提示词沉淀成命令、Skill 和模板",
+        "heading": "安全工程团队：排障、审查和 runbook",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "团队里最浪费的事情，是每个人都重新发明一遍提示词。Anthropic 的资料里反复强调复用模式：把稳定工作流沉淀成 slash command、skill、脚本、检查清单和项目规则。"
+            "content": "安全工程团队负责软件开发生命周期安全、供应链安全和开发环境安全。他们把 Claude Code 大量用于写代码和调试代码，尤其是在事故处理、基础设施审查、文档综合和跨项目贡献上。"
           },
           {
             "type": "paragraph",
-            "content": "这一步的目标不是收集花哨提示词，而是把团队最常做的动作标准化：总结变更、修 issue、写测试、生成 PR 摘要、做本地 review、检查 UI、发布前验证。每个模板都应该包含目标、上下文、边界、验证和交付格式。"
+            "content": "处理事故时，他们会把 stack trace 和文档交给 Claude Code，让它追踪代码库中的控制流。原本需要 10 到 15 分钟人工扫代码的问题，可以在约 5 分钟内理解。对需要安全审批的 Terraform 变更，他们会把 plan 复制给 Claude Code，询问变更会做什么、是否会后悔，从而缩短安全 review 周期。"
           },
           {
-            "type": "code",
-            "label": "可沉淀为 slash command 的本地审查提示词",
-            "content": `你现在是我们团队的本地代码审查助手。
-
-请只做 review，不要直接修改文件。
-
-审查范围：
-- 当前 git diff
-- 与本次改动直接相关的文件
-
-请重点检查：
-1. 是否偏离需求目标
-2. 是否修改了无关文件
-3. 是否破坏现有 API、路由、数据结构或样式约定
-4. 是否缺少必要测试或验证
-5. 是否有明显安全、性能、可访问性或移动端问题
-6. 是否有可以删除的重复代码或临时代码
-
-输出格式：
-- 先列严重问题，按 P0 / P1 / P2 排序
-- 每个问题必须包含文件路径、具体位置、原因和建议修复方式
-- 如果没有发现问题，明确说“未发现阻塞问题”
-- 最后列出建议补充的验证命令
-
-不要为了显得有发现而编造问题。`
+            "type": "paragraph",
+            "content": "团队还让 Claude Code 吸收多个文档源，生成 markdown runbook、排障指南和概览。相比反复搜索完整知识库，把这些压缩文档作为真实问题排查上下文更高效。原文也提到他们把 markdown 规格写进代码库，再用 Claude Code 编写、审查和执行这些规格，让成员能在几天而不是几周内贡献到已有项目。"
+          },
+          {
+            "type": "paragraph",
+            "content": "安全团队的建议包括：大量使用自定义 slash command，因为这能把重复安全流程标准化；让 Claude Code 先自主展开工作，再定期检查；除了写代码，也要把它用于文档综合，并提供写作样例和格式偏好，减少在 Slack、Google Docs 等工具之间来回切换。"
           }
         ]
       },
       {
-        "heading": "第四阶段：按角色分工，而不是所有人同一种用法",
+        "heading": "推理团队：补齐机器学习和代码库理解缺口",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "公司级推广时，不同角色对 AI Coding 的用法完全不同。工程师关心代码修改和验证；Tech Lead 关心架构边界和 review；PM 关心需求是否能变成可执行 Spec；设计师关心页面是否符合规范；安全和法务关心数据边界、依赖、许可证和敏感信息。"
+            "content": "推理团队管理 Claude 读取提示词和生成回复时使用的记忆系统。对没有机器学习背景的新成员来说，Claude Code 可以快速解释模型相关函数、设置和代码结构，帮助他们跨过知识门槛。"
           },
           {
             "type": "paragraph",
-            "content": "Anthropic 跨团队案例最值得借鉴的一点，是它把 Claude Code 用在非传统编程场景里：设计团队可以用它快速做原型，法务团队可以用它处理结构化文本和内部流程，安全团队可以用它辅助分析和自动化。这说明“全员使用”不是全员写代码，而是每个角色把自己的重复工作流程 agent 化。"
+            "content": "团队用 Claude Code 快速理解复杂代码库：不用手动搜索 GitHub repo，也不用先问同事，而是直接让 Claude 找出某个功能由哪些文件调用。写完核心功能后，他们会让 Claude 生成覆盖边界情况的单元测试，把原本消耗大量脑力的测试补齐工作压缩到几分钟。"
           },
           {
-            "type": "code",
-            "label": "角色分工表",
-            "content": `公司推广 AI Coding 时，每个角色应该有明确产出物：
-
-业务负责人 / Sponsor：
-- 定义引入 AI Coding 的业务目标
-- 明确试点范围和成功指标
-- 批准安全和数据边界
-
-AI Coding Owner：
-- 维护提示词 library、skill library、项目规则模板
-- 组织培训和复盘
-- 跟踪采用率、质量和效率指标
-
-PM：
-- 输出 AI-ready Spec
-- 明确目标、非目标、验收标准和边界
-- 参与最终验收
-
-设计师：
-- 输出截图、设计规范、组件状态和设计 QA 清单
-- 审查 AI 生成页面的层级、响应式和一致性
-
-Tech Lead：
-- 定义架构边界、允许修改范围和验证命令
-- 负责高风险模块审查
-- 拆分适合 Agent 执行的小任务
-
-工程师：
-- 提供上下文、执行任务、审查 diff、跑验证
-- 对最终代码质量负责
-
-QA：
-- 把验收经验变成测试清单
-- 设计回归测试和手动验收路径
-
-安全 / 法务：
-- 定义敏感数据、许可证、新依赖和高风险代码审查规则`
+            "type": "paragraph",
+            "content": "在机器学习概念解释上，原文给出的量化效果很明确：过去可能要花 1 小时搜索和读文档的问题，现在通常 10 到 20 分钟就能弄清楚，研究时间减少约 80%。在跨语言测试场景里，团队还会描述想测试什么，让 Claude 用 Rust 等不熟悉语言写出对应逻辑。"
+          },
+          {
+            "type": "paragraph",
+            "content": "他们的建议是：先测试 Claude Code 是否能比搜索更快回答知识库问题；从具体代码生成开始建立信任，再扩大到复杂任务；把单元测试生成作为日常开发压力的缓冲，让 Claude 帮助覆盖容易遗漏的测试情况。"
           }
         ]
       },
       {
-        "heading": "第五阶段：用黑客松和内部案例推动采用",
+        "heading": "数据科学与可视化团队：从一次性 notebook 到持久分析工具",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "工具推广不能只靠发通知。更有效的方式是组织短周期实践：比如 2 小时 workshop、半天 hackathon、每周一次 AI coding clinic。让团队把真实任务带来，当场拆上下文、写模板、跑验证、复盘失败案例。"
+            "content": "数据科学和 ML 工程团队需要复杂可视化工具来理解模型表现，但构建这些工具常常要求掌握不熟悉的语言和框架。Claude Code 让他们在不成为全栈开发者的情况下，构建生产级分析看板。"
           },
           {
             "type": "paragraph",
-            "content": "内部案例比外部宣传更有说服力。比如某个同事用 Claude Code 把老页面测试补齐、把本地脚本自动化、把一个重复运营流程变成命令，这些都应该沉淀到团队资料库里。推广的核心不是“AI 很强”，而是“我们团队这个真实问题已经被它稳定解决”。"
+            "content": "原文提到，团队即使几乎不了解 JavaScript 和 TypeScript，也能让 Claude Code 从零写出完整 React 应用，用于可视化 RL 模型表现和训练数据。一个例子是 5000 行 TypeScript 应用。因为这类可视化应用上下文相对低，不需要理解整个 monorepo，所以适合快速原型。"
           },
           {
-            "type": "code",
-            "label": "半天 AI Coding Hackathon 流程",
-            "content": `目标：让团队在半天内产出可复用的 AI Coding 工作流，而不是只体验工具。
-
-准备阶段：
-1. 每人带一个真实但低风险的任务
-2. 提前准备本地环境和验证命令
-3. 准备项目规则文件模板
-
-第 1 小时：任务拆分
-- 写清目标、非目标、允许修改范围
-- 列出相关文件
-- 明确完成标准
-
-第 2 小时：Agent 执行
-- 让 Agent 先读代码并给计划
-- 人类确认计划后再允许修改
-- 每次只推进一个小任务
-
-第 3 小时：验证和修正
-- 跑 build / test / lint
-- 做本地页面或功能检查
-- 记录 Agent 犯错点
-
-第 4 小时：沉淀
-- 把成功提示词整理成模板
-- 把失败原因写进项目规则
-- 选出 3 个可复用 slash command 或 skill
-
-最终产出：
-- 一个已验证的小改动
-- 一个可复用提示词
-- 一个项目规则更新
-- 一条经验复盘`
+            "type": "paragraph",
+            "content": "他们还把 Claude Code 用在重复重构、merge conflict 和半复杂文件调整上：先提交当前状态，让 Claude 自主跑 30 分钟，成功就接受，不行就从干净状态重来。更重要的是，他们把一次性 Jupyter notebook 转成可复用 React dashboard，让模型评估不再依赖临时分析脚本。"
+          },
+          {
+            "type": "paragraph",
+            "content": "团队影响包括 2 到 4 倍节省时间、用不熟悉语言构建复杂应用、从一次性 notebook 转向持久工具，以及用可视化支持模型训练和评估决策。建议是：像 slot machine 一样先保存状态再让 Claude 尝试；发现方案过复杂时及时打断，要求它尝试更简单的方法。"
           }
         ]
       },
       {
-        "heading": "第六阶段：设置质量门禁和安全边界",
+        "heading": "API Knowledge 团队：把 Claude Code 当作进入代码库的第一站",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "AI Coding 让代码产生速度变快，也会让错误产生速度变快。公司级落地必须把质量门禁写进流程：所有 AI 生成代码都要 review；高风险模块需要高级工程师或安全负责人审核；新增依赖要检查；敏感信息不能输入外部工具；构建和测试必须可复现。"
+            "content": "API Knowledge 团队负责 PDF 支持、引用、网页搜索等功能，这些功能会把额外知识带进 Claude 的上下文窗口。由于他们长期在大型复杂代码库中工作，常常需要先弄清应该看哪些文件、系统架构如何连接，才能开始修改。"
           },
           {
             "type": "paragraph",
-            "content": "最健康的状态不是限制大家不用，而是让大家知道什么时候可以放心用、什么时候必须升级审查、什么时候完全不能用。边界越明确，使用越稳定。"
+            "content": "他们把 Claude Code 作为任何任务的第一站：修 bug、开发功能或做分析时，先让 Claude Code 指出应该检查哪些文件。这替代了手动导航代码库、搜集上下文的耗时过程。团队成员也因此更敢独立处理陌生区域的 bug，而不是先找别人帮忙。"
           },
           {
-            "type": "code",
-            "label": "AI Coding 发布前检查清单",
-            "content": `请对本次 AI 辅助改动做发布前检查。
-
-检查项：
-1. 需求目标是否完成
-2. 是否改动了无关文件
-3. 是否引入新依赖
-4. 是否触碰权限、支付、安全、数据迁移、环境变量
-5. 是否有敏感信息、密钥、客户数据进入代码或日志
-6. 是否通过 build / test / lint
-7. 是否需要补充手动验收
-8. 是否需要安全、法务或架构负责人 review
-
-请输出：
-- 可以发布 / 暂不建议发布
-- 阻塞问题
-- 非阻塞风险
-- 已完成验证
-- 建议补充验证`
+            "type": "paragraph",
+            "content": "另一个用法是通过 dogfooding 体验模型迭代。Claude Code 会自动使用最新研究模型 snapshot，因此团队可以直接感知模型行为变化。相比之前发布流程中较少亲身体验模型变化，这给他们提供了更直接的反馈。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类使用减少了把代码片段复制到 Claude.ai、拖文件、反复解释问题的心理负担。团队建议把 Claude Code 当作迭代伙伴，而不是一次性答案机器；在不熟悉领域也可以先让它建立信心；开始时只提供必要信息，让 Claude 引导后续过程。"
           }
         ]
       },
       {
-        "heading": "第七阶段：用指标判断是否真的变好",
+        "heading": "增长营销团队：把重复营销任务自动化",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "不要只用“生成了多少代码”衡量 AI Coding。代码量可能增加，但交付质量不一定变好。更值得看的指标是：需求到上线周期、PR 等待时间、review 返工次数、测试覆盖变化、缺陷逃逸、部署频率、开发者满意度和新人上手时间。"
+            "content": "增长营销团队负责付费搜索、付费社交、移动应用商店、邮件营销和 SEO 等表现营销渠道。原文特别指出，这是一个非技术的一人团队，因此他们使用 Claude Code 自动化重复营销任务，构建原本需要工程资源的 agentic 工作流。"
           },
           {
             "type": "paragraph",
-            "content": "如果 AI 只是让个人写代码更快，却让 review、测试、返工和线上问题变多，那它没有真正提升组织效率。组织级落地的目标，是让整个交付系统更顺，而不是让某一个环节显得更快。"
+            "content": "他们构建了 Google Ads 创意生成工作流：读取包含数百条广告及表现指标的 CSV，识别表现较差的广告并生成新变体，同时遵守标题 30 字符、描述 90 字符等限制。这个系统用两个专门 sub-agent 分别处理标题和描述，能在几分钟内生成数百条广告。"
           },
           {
-            "type": "code",
-            "label": "AI Coding 度量看板",
-            "content": `建议每两周复盘一次以下指标：
-
-采用指标：
-- 活跃使用人数
-- 使用场景分布
-- 复用提示词 / skill 数量
-- 新增项目规则数量
-
-效率指标：
-- 需求到 PR 时间
-- PR 到合并时间
-- 审查等待时间
-- 重复任务耗时
-
-质量指标：
-- 构建失败率
-- 测试失败率
-- 审查返工次数
-- 缺陷逃逸数
-- 高风险改动占比
-
-体验指标：
-- 开发者满意度
-- 新人上手时间
-- 团队认为最有价值的 3 个 AI 工作流
-- 团队认为最危险的 3 个 AI 使用方式`
+            "type": "paragraph",
+            "content": "团队还开发了 Figma 插件，用来批量生成付费社交广告静态图变体；创建 Meta Ads MCP server，在 Claude Desktop 中直接查询投放表现、花费和广告效果；并实现基础记忆系统，把广告实验假设和结果带入后续变体生成，形成自我改进的测试框架。"
+          },
+          {
+            "type": "paragraph",
+            "content": "影响很直接：广告文案创建从 2 小时降到 15 分钟，创意产出提升 10 倍，一人团队可以承担过去需要工程资源的任务，并把更多时间放在策略和自动化设计上。建议是优先寻找有 API 的重复任务，把复杂工作流拆成专门 sub-agent，并在写代码前先充分梳理完整流程。"
           }
         ]
       },
       {
-        "heading": "可以直接照搬的 30 天落地计划",
+        "heading": "产品设计团队：设计师也能直接实现原型和细节",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "如果团队还没有系统使用 Codex 或 Claude Code，可以从 30 天试点开始。第一周不追求产出，只建立边界；第二周做低风险任务；第三周沉淀模板；第四周评估是否扩大范围。"
+            "content": "产品设计团队支持 Claude Code、Claude.ai 和 Anthropic API，专注 AI 产品设计。原文强调，即使是非开发者，也可以用 Claude Code 缩短设计和工程之间的传统距离，直接实现自己的设计意图，而不必经历大量来回沟通。"
           },
           {
-            "type": "code",
-            "label": "30 天公司级 AI Coding 试点计划",
-            "content": `第 1 周：建立规则
-- 选 1 到 2 个试点团队
-- 明确允许和禁止使用场景
-- 建立 CLAUDE.md / AGENTS.md
-- 建立验证命令清单
-- 选定 5 个低风险任务类型
-
-第 2 周：真实任务试点
-- 每位参与者完成 2 个低风险任务
-- 每个任务必须有人工 review
-- 记录 Agent 犯错点和提示词改进
-- 每天 15 分钟同步经验
-
-第 3 周：沉淀复用资产
-- 整理 10 个可复用提示词
-- 生成 3 到 5 个 slash command 或 skill
-- 更新项目规则文件
-- 建立本地 review 和发布前检查模板
-
-第 4 周：评估和扩展
-- 统计采用率、效率、质量和体验指标
-- 选出最有效的 3 个场景
-- 列出暂不适合 AI 参与的高风险场景
-- 决定是否扩展到更多团队
-
-试点成功标准：
-- 至少 3 个工作流可稳定复用
-- 没有明显质量下降
-- 团队能说清楚什么时候该用、什么时候不该用
-- 经验能被新成员复制`
+            "type": "paragraph",
+            "content": "他们用 Claude Code 做前端 polish 和状态管理修改，例如字体、颜色、间距等视觉细节，不再先写大量设计说明再让工程师实现。工程师也观察到，设计师开始做一些过去通常不会由设计师完成的大型状态管理变更。"
+          },
+          {
+            "type": "paragraph",
+            "content": "设计团队还通过 GitHub Actions 集成提交 issue 或 ticket，让 Claude 自动提出代码解法；把 mockup 图片粘贴给 Claude Code，生成可运行交互原型；让 Claude 映射错误状态、逻辑流和系统状态，在设计阶段提前发现边界情况。原文举例：移除全代码库中的“research preview”文案并和法务实时协调，原本可能需要一周来回沟通，最后用两次 30 分钟电话完成。"
+          },
+          {
+            "type": "paragraph",
+            "content": "影响包括：Claude Code 成为核心设计工具，Figma 和 Claude Code 约 80% 时间同时打开；视觉和状态管理变更执行快 2 到 3 倍；一些跨团队复杂项目从一周压缩到数小时。建议是：让工程师帮助非开发者完成仓库和权限初始配置；用自定义记忆文件说明自己是设计师、需要更详细解释和小步修改；充分利用截图粘贴，把静态 mockup 变成可交互原型。"
           }
         ]
       },
       {
-        "heading": "最后的判断：CEO 可以推动，但方法论必须由团队长出来",
+        "heading": "RL 工程团队：小中型功能、调试和可回滚实验",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "CEO 或管理层可以定义方向：AI Coding 是组织能力，团队需要认真采用。但真正能落地的部分，必须从团队日常工作长出来：哪些任务适合 Agent，哪些上下文最关键，哪些错误最常见，哪些验证最可靠。"
+            "content": "RL 工程团队关注 RL 中的高效采样和集群中的权重传输。他们主要把 Claude Code 用于小到中型功能开发、调试和理解复杂代码库，并采用频繁 checkpoint 和 rollback 的迭代方式。"
           },
           {
             "type": "paragraph",
-            "content": "所以一篇 CEO 文章即使很鼓舞，也不能替代团队自己的 playbook。更成熟的路径是：领导层给目标和边界，Enablement Owner 沉淀方法，Tech Lead 守住架构和质量，工程师把真实任务跑通，QA 和安全把门禁制度化。这样 AI Coding 才不会停留在个人技巧，而会变成公司可复制的协作系统。"
+            "content": "在功能开发中，他们让 Claude Code 编写小中型功能的大部分代码，例如为权重传输组件实现认证机制；人类负责监督，并在 Claude 偏离方向时介入。实现完成后，他们也会让 Claude Code 补测试或 review 代码，节省例行质量保障任务的时间。"
+          },
+          {
+            "type": "paragraph",
+            "content": "他们对 Claude Code 的调试评价比较克制：有时能立刻定位问题并补相关测试，有时会难以理解问题，但整体仍有价值。工作流中最大的变化之一，是用 Claude Code 快速总结相关组件和 call stack，替代手动读代码或生成大量调试输出。"
+          },
+          {
+            "type": "paragraph",
+            "content": "原文也保留了限制：Claude Code 第一次就成功实现小中型 PR 的概率大约三分之一，其余情况需要继续引导或人工介入。团队建议在 Claude.md 中加入针对常见错误的具体规则，频繁提交 checkpoint 以便回滚，并可以先让 Claude one-shot 尝试，失败后再切换到更协作的引导模式。"
+          }
+        ]
+      },
+      {
+        "heading": "法务团队：非技术团队的原型能力",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "法务团队通过实验和了解 Anthropic 产品能力，发现了 Claude Code 对非开发者的价值。原文中既有个人可访问性工具案例，也有面向法务部门内部流程的原型案例。"
+          },
+          {
+            "type": "paragraph",
+            "content": "有团队成员为存在说话困难的家庭成员构建沟通助手：用原生语音转文字、预测回复，并通过 voice bank 读出回复。这个应用在约 1 小时内完成，用来补足言语治疗师推荐工具无法满足的空白。"
+          },
+          {
+            "type": "paragraph",
+            "content": "在工作场景中，他们构建了原型化的“phone tree”系统，帮助成员找到 Anthropic 内部合适的律师；管理者也构建了 G Suite 应用，自动化每周团队更新并跟踪产品法务 review 状态，让律师用简单按钮标记需要 review 的事项，而不是维护电子表格。"
+          },
+          {
+            "type": "paragraph",
+            "content": "法务团队的工作方式是先在 Claude.ai 中充分构思和规划，再转到 Claude Code 实现，并要求它放慢速度、一步步做。他们也会大量使用截图表达界面想法。原文同时提醒，随着 MCP 集成让 AI 工具访问更敏感系统，安全和合规边界会变得更关键。"
+          }
+        ]
+      },
+      {
+        "heading": "这份资料的共同线索",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "把 10 个团队放在一起看，Claude Code 在 Anthropic 内部并不是单一“写代码工具”。对工程团队，它是代码库导航、测试、调试和原型工具；对数据、增长、设计和法务，它是把文字、截图、流程和 API 连接成可执行工作的桥梁。"
+          },
+          {
+            "type": "paragraph",
+            "content": "原文反复出现的关键词不是“万能自动化”，而是上下文、检查点、文档、可回滚、迭代和人类监督。团队越能把规则、工作流、权限和期望写清楚，Claude Code 越能承担更长、更复杂的任务；反过来，越高风险、越核心的逻辑，越需要同步监督和人工判断。"
           }
         ]
       }
@@ -8634,6 +8481,237 @@ https://www.figma.com/design/...
           {
             "type": "paragraph",
             "content": "所以设计师真正要做的，不是学习怎么写更玄的提示词，而是和工程一起把设计系统变成 AI 能理解的上下文。到那一步，Figma 就不只是视觉稿，而会变成团队 AI Coding 工作流的入口。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "solo-founder-ai-coding-profit-playbook",
+    "sourceUrl": "https://productled.com/blog/the-solo-founder-playbook-how-to-run-a-1m-arr-saas-with-one-person",
+    "translationMode": "guidedTranslation",
+    "title": "一人公司如何用 AI Coding 盈利：从低成本交付到可持续增长",
+    "originalTitle": "The Solo-Founder Playbook: How to Run a $1M ARR SaaS With One Person",
+    "notice": "",
+    "hideSourceNoticeLink": true,
+    "sections": [
+      {
+        "heading": "为什么 Vincent 不再寻找联合创始人",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Vincent Jong 曾经多次尝试传统创业路径，但结果都被联合创始人的问题拖住。有的人投入不够，有的人中途被别的方向吸引，有的人和项目节奏不一致。公司还没真正开始，协作问题已经消耗了大量精力。"
+          },
+          {
+            "type": "paragraph",
+            "content": "他后来意识到，等待一个“合适的联合创始人”，本身可能就是一种拖延。很多公司不是死于糟糕的想法，而是还没开始就被组队、磨合和承诺问题耗死。"
+          },
+          {
+            "type": "paragraph",
+            "content": "AI 工具开始承担越来越多技术重活之后，等式变了。创始人不再必须先找到技术合伙人，才能验证一个想法是否值得做。一个人可以先把产品做出来，放进市场测试，再用真实反馈判断要不要继续投入。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这种变化很深。联合创始人从“绝对必要”变成了“有会更好，但不是启动前提”。对一人公司来说，关键不是先把组织搭起来，而是先证明市场真的需要这个东西。"
+          }
+        ]
+      },
+      {
+        "heading": "Lovable 和 Cursor 正在替代早期工程团队",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Vincent 并不认为自己是特别强的程序员。放在几年前，这几乎会直接限制他做 SaaS 的可能性。现在，Lovable、Cursor、ChatGPT 这类工具让这个限制变得不再致命。"
+          },
+          {
+            "type": "paragraph",
+            "content": "过去做第一版产品，可能需要先准备二十万美元以上预算，雇工程师开发几个月，才有机会见到第一个用户。现在，一个可运行、接近生产质量的产品，有机会在几周内被做出来，而且成本极低。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这不是在说 AI 只能做粗糙 MVP。越来越多独立创始人已经能做出足够完整、足够精致、可以和融资团队产品正面竞争的版本。技术壁垒正在被削弱，真正重要的变成执行力、产品品味和进入市场的能力。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不理解某个技术问题时，也不再只能等工程师解释。可以直接问 Agent，问 ChatGPT，让它解释架构、接口、数据库、部署和错误信息。早期创业里最昂贵的“技术等待时间”，正在被大幅压缩。"
+          }
+        ]
+      },
+      {
+        "heading": "做产品变容易，卖产品变更难",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "最容易让创始人误判的地方在这里：构建变得容易了，但销售并没有变容易，甚至变得更关键。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Vincent 曾经花了一年半构建一个 product-led sales 工具。产品慢慢接近他想象中的样子，功能也能跑起来。但越往后，他越发现市场很小，onboarding 很难，还需要客户经理、客户成功和持续服务。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这完全违背了一人公司模型。一个产品如果每增加一批客户，就必须增加对应的人力支持，它就很难保持高利润和低复杂度。真正适合一人公司的产品，应该尽可能自助、低交付、低客服、低边际成本。"
+          },
+          {
+            "type": "paragraph",
+            "content": "MeetBot 上线时，Vincent 对第一天的预期很现实：也许会有 10 到 20 个注册。最后来了 12 个。没有爆发，也没有奇迹。增长来自持续打磨、持续优化和少数几个真正有效的渠道，而不是一次发布。"
+          },
+          {
+            "type": "paragraph",
+            "content": "未来的难点可能不再是技能，而是兴趣。很多人可以借助 AI 做出产品，但并不喜欢销售、分发、定位和增长。如果创始人讨厌这些事情，再强的 AI 工具也救不了公司。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么要进入红海市场",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "传统创业建议常说，要寻找蓝海，避开竞争。Vincent 反着做。他进入了一个极其拥挤的 SaaS 市场：排期工具。这个市场里已经有 Calendly 这样的大公司，有庞大团队，也有明确市场份额。"
+          },
+          {
+            "type": "paragraph",
+            "content": "红海市场有隐藏优势：客户已经有预算，正在主动搜索替代方案，市场已经被教育过。创始人不需要从零解释“为什么需要这个产品”，只需要做出足够不同、足够明确的切入口。"
+          },
+          {
+            "type": "paragraph",
+            "content": "MeetBot 的差异化不是“再做一个 Calendly”。它选择 API-first 架构，用按会议付费替代按席位付费，把运营成本控制在每月几百美元，并把合作伙伴集成作为分发方式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "大公司很难跟随这种策略。它们有既有收入要保护，有团队结构要维护，有投资人增长预期，也很难把某些能力以近乎零成本提供给合作方。一人公司可以选择巨头不方便进入的角落。"
+          }
+        ]
+      },
+      {
+        "heading": "无限 runway 的经济学",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "MeetBot 每月运行成本只有几百美元。没有办公室，没有员工，没有福利，没有公司管理开销。和拥有数百名员工的大公司相比，这种成本结构就是不公平优势。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所谓无限 runway，不只是账面上花得少，而是创始人可以长期存在。即使还保留一份工作，也可以持续维护产品、测试定价、优化页面、尝试渠道。只要固定成本足够低，公司就不会因为短期增长慢而被迫死亡。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类公司不是传统意义上的 lifestyle business。它们可以非常赚钱，只是不用大团队支撑。目标不是用人数证明规模，而是让每个员工，甚至只有一个员工，创造尽可能高的收入。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你的 burn rate 是每月 300 美元，而竞争对手是每月 50 万美元，你就能在他们看不上的收入规模里活得很好。你可以把某些功能免费提供，可以更激进地试定价，可以转向更小的用户群，也不必向董事会解释每一次调整。"
+          },
+          {
+            "type": "paragraph",
+            "content": "时间会变成护城河。很多公司价值来自长期存在，让用户把某个名字和某个问题关联起来。低成本让你有机会活得足够久。"
+          }
+        ]
+      },
+      {
+        "heading": "无限 runway 的经济学",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "一人公司最强的优势，是极低的固定成本。如果一个 SaaS 每月只需要几百美元就能运行，创始人就可以长期存在、慢慢迭代，而不是被高昂的人力成本和融资节奏逼迫。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这种成本结构带来的不是单纯省钱，而是生存时间。创始人可以继续保留工作、利用业余时间维护产品，也可以在没有巨大收入压力的情况下测试定价、优化页面、尝试渠道和等待复利。"
+          },
+          {
+            "type": "paragraph",
+            "content": "与高烧钱公司相比，低成本一人公司可以承受更长的验证周期。对方每月需要几十万美元维持团队，一人公司可能只需要少量服务器和工具费用。时间因此变成一种护城河。"
+          }
+        ]
+      },
+      {
+        "heading": "速度比规模更重要",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "一人公司无法和大团队比资源，但可以比速度。大公司需要会议、排期、审批和跨团队协作；一个人可以当天发现问题，当天改产品，当天更新页面，当天测试新价格。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这种速度优势尤其适合早期产品。市场还不确定时，过大的团队会增加沟通成本和决策成本；小系统反而更容易快速试错。AI Coding 进一步放大了这种优势，因为它把很多执行工作压缩成更短的循环。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但速度窗口不会永远存在。随着越来越多创始人掌握 AI Coding，构建速度会变成基础能力。真正可持续的防御来自品牌、分发渠道、成本结构、社区内容、产品网络效应和对细分用户的深刻理解。"
+          }
+        ]
+      },
+      {
+        "heading": "构建阶段和增长阶段要分开",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "一人公司最容易陷入的状态，是一直待在构建阶段。不断加功能、改界面、重构代码，会让产品看起来在进步，但不一定带来收入。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更健康的节奏是把工作分成两个阶段：构建阶段专注于做出下一版产品，增长阶段专注于页面、文案、渠道、SEO、用户反馈、定价和转化。增长阶段不能被当成构建完成后的附属工作，它本身就是公司能否赚钱的核心。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果创始人只喜欢写代码，不愿意做销售和分发，AI 工具也救不了这家公司。未来更稀缺的不是单纯会构建产品的人，而是既愿意理解市场，又能借助 AI 快速交付产品的人。"
+          }
+        ]
+      },
+      {
+        "heading": "别再发布粗糙 MVP",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "过去常有人说，如果你不为第一版产品感到尴尬，说明发布太晚了。Vincent 认为这个建议已经过时。"
+          },
+          {
+            "type": "paragraph",
+            "content": "以前构建产品很慢、很贵，所以先用粗糙版本验证需求是合理的。现在，AI 可以在几周内帮助做出更完整、更好看的版本。用户已经习惯成熟产品的可用性，也会拿你的产品和现有方案比较。"
+          },
+          {
+            "type": "paragraph",
+            "content": "AI 能很快完成 80%，但剩下 20% 才是赢的地方：细节、onboarding、定价、定位、交互、文案、视觉品味和用户路径。新的稀缺能力不是单纯写代码，而是 taste。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以不要再用粗糙 MVP 当借口。应该发布有观点、有清晰定位、尊重用户预期的产品。构建成本已经下降，产品标准反而提高了。"
+          }
+        ]
+      },
+      {
+        "heading": "不要太早辞职",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Vincent 的建议很直接：开始做，但不要马上辞职。现在构建速度很快，很多早期验证可以利用周末、晚上和碎片时间完成。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当每月成本只有几百美元，MVP 又可以在几周内做出来时，保留现金流反而更理性。过早辞职会增加焦虑，让创始人为了短期收入做出错误决定。"
+          },
+          {
+            "type": "paragraph",
+            "content": "真正危险的不是慢一点开始，而是长时间停下来。AI 工具变化很快，市场假设也变化很快。如果中间暂停半年，回来时工具、竞品和用户预期可能都已经变了。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一人公司最适合的启动方式，是在低成本下持续推进：先做出产品，拿真实用户反馈，验证收费意愿，再决定是否把它变成全职事业。"
+          }
+        ]
+      },
+      {
+        "heading": "来源链接",
+        "blocks": [
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "ProductLed 文章",
+                "url": "https://productled.com/blog/the-solo-founder-playbook-how-to-run-a-1m-arr-saas-with-one-person"
+              }
+            ]
           }
         ]
       }

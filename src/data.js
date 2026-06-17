@@ -230,8 +230,8 @@ const caseDrafts = [
     submitterId: 'mia',
   }),
   buildCase({
-    id: '发布kit',
-    slug: '发布kit',
+    id: 'launchkit',
+    slug: 'launchkit',
     title: 'LaunchKit 官网',
     description: '一个用于展示产品定位、核心卖点和转化入口的 AI 生成官网案例。',
     category: '官网',
@@ -2046,7 +2046,7 @@ export const lessons = [
     ]
   },
   {
-    "id": "knowlens-codex-2b-设计变量-tips",
+    "id": "knowlens-codex-2b-token-tips",
     "title": "20 亿 Token 后，我用 Codex 开发 KnowLens.ai 的 8 个技巧",
     "originalTitle": "",
     "description": "过去两周，我基本都在用 Codex 开发 KnowLens.ai。",
@@ -2068,8 +2068,8 @@ export const lessons = [
       "真实经验",
       "工作流"
     ],
-    "href": "/learn/knowlens-codex-2b-设计变量-tips",
-    "image": "/learn-images/knowlens-codex-2b-设计变量-hero.png",
+    "href": "/learn/knowlens-codex-2b-token-tips",
+    "image": "/learn-images/knowlens-codex-2b-token-hero.png",
     "imageAlt": "KnowLens.ai AI Infographic Generator 首页截图",
     "publishedAt": "2026-06-16",
     "viewCount": 520,
@@ -2080,6 +2080,46 @@ export const lessons = [
       "不要把需求一次性丢给 Codex",
       "先设计产品工作流再写代码",
       "从任务拆分减少返工和重构"
+    ]
+  },
+  {
+    "id": "solo-founder-ai-coding-profit-playbook",
+    "title": "一人公司如何用 AI Coding 盈利：从低成本交付到可持续增长",
+    "originalTitle": "The Solo-Founder Playbook: How to Run a $1M ARR SaaS With One Person",
+    "description": "基于 ProductLed 对 Vincent Jong 的访谈整理，拆解一人公司如何用 Lovable、Cursor 等 AI Coding 工具降低开发成本，用红海市场、低运营成本和产品驱动增长建立盈利模型。",
+    "sourceType": "英文文章整理",
+    "sourceName": "ProductLed",
+    "sourceUrl": "https://productled.com/blog/the-solo-founder-playbook-how-to-run-a-1m-arr-saas-with-one-person",
+    "author": "Wes Bush / ProductLed",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "18 分钟",
+    "category": "商业变现",
+    "tools": [
+      "Cursor",
+      "Lovable",
+      "ChatGPT"
+    ],
+    "tags": [
+      "一人公司",
+      "AI Coding",
+      "独立开发",
+      "SaaS 盈利"
+    ],
+    "href": "/learn/solo-founder-ai-coding-profit-playbook",
+    "image": "/learn-images/solo-founder-ai-coding-profit-playbook.png",
+    "imageAlt": "ProductLed 一人公司 SaaS 访谈封面图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 368,
+    "likeCount": 24,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "AI Coding 把技术门槛降低，但销售和分发仍是核心难题",
+      "一人公司要优先选择低交付、低客服、低运营成本的产品机会",
+      "红海市场不是坏事，已有预算和搜索需求反而能降低教育成本"
     ]
   },
   {
@@ -2410,12 +2450,12 @@ export const lessons = [
   {
     "id": "codex-design-system-consistency-prompts",
     "title": "Codex 设计规范一致性提示词：从设计变量到组件治理",
-    "originalTitle": "Design systems and design 设计变量 consistency workflows",
+    "originalTitle": "Design systems and design token consistency workflows",
     "description": "基于设计变量、Material Design 和 Figma 设计系统资料整理，学习如何让 Codex 审查并统一颜色、字体、间距、圆角、按钮、卡片和页面节奏，提升网站设计规范一致性。",
     "sourceType": "设计系统资料整理",
     "sourceName": "Material Design / Figma / W3C 设计变量",
-    "sourceUrl": "https://m3.material.io/foundations/design-设计变量",
-    "author": "Google、Figma、W3C 设计变量 Community Group、Uicoding.ai 整理",
+    "sourceUrl": "https://m3.material.io/foundations/design-tokens",
+    "author": "Google、Figma、W3C Design Tokens Community Group、Uicoding.ai 整理",
     "license": "外部资料整理",
     "translationMode": "guidedTranslation",
     "collectedAt": "2026-06-17",
@@ -2438,7 +2478,7 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "用设计 设计变量 统一颜色、字体、间距和圆角",
+      "用设计变量统一颜色、字体、间距和圆角",
       "让 Codex 审查散乱样式和重复组件",
       "用组件治理和页面 QA 保持长期一致性"
     ]
@@ -3313,9 +3353,7 @@ export const lessons = [
     "duration": "22 分钟",
     "category": "提示词",
     "tools": [
-      "Claude Code",
-      "Codex",
-      "通用"
+      "Claude Code"
     ],
     "tags": [
       "提示词",
@@ -3339,10 +3377,10 @@ export const lessons = [
   },
   {
     "id": "anthropic-company-wide-claude-code-rollout",
-    "title": "Anthropic 跨团队使用 Claude Code 的落地方法：从个人提效到组织协作",
+    "title": "Anthropic 团队如何使用 Claude Code：10 个内部团队实践",
     "originalTitle": "How Anthropic teams use Claude Code",
-    "description": "基于 Anthropic 官方跨团队经验和 Claude Code 最佳实践整理，拆解一家公司如何从试点、项目规则、命令模板、团队角色、质量门禁和度量体系推动 AI 编程落地。",
-    "sourceType": "官方资料整理",
+    "description": "基于 Anthropic 官方 PDF《How Anthropic teams use Claude Code》整理，翻译其 10 个内部团队如何把 Claude Code 用于数据、产品、安全、设计、增长和法务等真实工作。",
+    "sourceType": "官方原文翻译",
     "sourceName": "Anthropic / Claude Code Docs",
     "sourceUrl": "https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf",
     "author": "UIcoding 编辑部",
@@ -3351,17 +3389,17 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "团队负责人",
     "duration": "24 分钟",
-    "category": "方法论",
+    "category": "团队实践",
     "tools": [
       "Claude Code",
       "Codex",
       "通用"
     ],
     "tags": [
-      "团队工作流",
+      "团队实践",
       "Claude Code",
       "AI 编程",
-      "组织落地"
+      "Anthropic"
     ],
     "href": "/learn/anthropic-company-wide-claude-code-rollout",
     "publishedAt": "2026-06-17T22:00:00+08:00",
@@ -3370,9 +3408,9 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "公司级 AI 编程落地不是让每个人随便用工具，而是建立共享上下文和质量门禁",
-      "CLAUDE.md、斜杠命令、skills、hooks 和验证命令是团队复用经验的核心载体",
-      "从低风险高频任务试点，再扩展到产品、数据、安全、设计和法务等跨职能场景"
+      "Anthropic 内部将 Claude Code 用在数据、产品、安全、推理、设计、增长和法务等多个团队",
+      "不同团队的共同点是先给足上下文，再通过测试、检查点、文档和人工监督控制风险",
+      "Claude Code 不只服务工程师，也让设计、增长和法务团队把想法直接变成可运行原型或自动化流程"
     ]
   },
   {
@@ -3409,7 +3447,7 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "AI 还原 Figma 的关键不是截图像，而是代码是否使用正确组件、设计变量、属性 和可访问性规则",
+      "AI 还原 Figma 的关键不是截图像，而是代码是否使用正确组件、设计变量、属性和可访问性规则",
       "设计系统要变成机器可读的上下文，不能只靠自然语言提示词描述",
       "团队落地需要把 Figma、代码、设计评审和视觉 差异 连接成连续循环"
     ]
@@ -3692,9 +3730,9 @@ export const tools = [
     tags: ['浏览器', '原型', '快速启动'],
     href: '/tools/bolt',
     officialUrl: 'https://bolt.new',
-    pricing: 'Free / Paid 设计变量-based；免费额度用完后需要等待或升级。',
+    pricing: 'Free / Paid usage-based；免费额度用完后需要等待或升级。',
     bestFor: ['在浏览器里从提示词启动项目', '快速生成并运行全栈 Web 原型', '边调试边修改前端和后端代码', '把想法转成可演示版本'],
-    coreAdvantages: ['无需离开浏览器即可 prompt、运行、编辑和部署应用。', '适合快速看到可运行结果，降低环境配置成本。', '支持 设计变量-based 计划，适合按使用量扩展。'],
+    coreAdvantages: ['无需离开浏览器即可 prompt、运行、编辑和部署应用。', '适合快速看到可运行结果，降低环境配置成本。', '支持 usage-based 计划，适合按使用量扩展。'],
     limitations: ['Token 消耗和成本需要提前关注。', '复杂生产级应用仍需要人工架构和测试。', '公开评价中也有用户反馈稳定性和支持体验不一致。'],
     benchmarks: [],
     userReviews: [
