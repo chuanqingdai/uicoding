@@ -1,13 +1,11 @@
 import { MessageCircle } from 'lucide-react';
 import { Container } from '../components/Layout.jsx';
-import { Button, Card } from '../components/UI.jsx';
 import Comments from '../components/Comments.jsx';
 
 const submitTips = [
-  '作品名称和访问链接',
-  '使用的 AI Coding 工具',
-  '你希望别人学习到的构建经验',
-  '1-3 张作品截图或页面链接',
+  '发一个作品链接',
+  '简单说下使用的工具',
+  '有访问量或收入数据可以顺手补充',
 ];
 
 export default function SubmitPage() {
@@ -19,12 +17,10 @@ export default function SubmitPage() {
             <h1>提交你的 AI 编程作品</h1>
           </div>
 
-          <Card className="submit-card submit-dev-card">
+          <section className="submit-card submit-dev-card">
             <div className="submit-status">
-              <h2>先通过微信手动提交</h2>
-              <p>
-                把作品链接和简短说明发给我即可。当前阶段不收取提交费用，我会先人工确认内容质量和展示效果。
-              </p>
+              <h2>把作品链接发给我就行</h2>
+              <p>我会人工查看作品，再整理成适合学习和展示的案例。</p>
             </div>
 
             <div className="submit-contact" aria-label="提交联系方式">
@@ -36,7 +32,7 @@ export default function SubmitPage() {
             </div>
 
             <div className="submit-tips">
-              <h3>建议附上</h3>
+              <h3>不用准备太多</h3>
               <ul>
                 {submitTips.map((tip) => (
                   <li key={tip}>{tip}</li>
@@ -44,18 +40,18 @@ export default function SubmitPage() {
               </ul>
             </div>
 
-            <div className="submit-actions">
-              <Button
-                href="/cases"
-                analyticsEvent={{
-                  name: 'cta_click',
-                  params: { area: 'submit_page', label: '浏览案例', link_url: '/cases' },
-                }}
-              >
-                浏览案例
-              </Button>
+            <div className="submit-community" aria-label="交流社群二维码">
+              <img
+                src="/community-qr.jpg"
+                alt="Uicoding.ai 交流社群二维码"
+                loading="lazy"
+              />
+              <div>
+                <strong>交流社群</strong>
+                <p>交流 AI Coding 和一人公司的经验，也可以直接把作品链接发过来。</p>
+              </div>
             </div>
-          </Card>
+          </section>
 
           <Comments
             targetId="submit"

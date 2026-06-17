@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { MessageCircle, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { trackEvent } from '../lib/analytics.js';
 
 const cookieName = 'uicoding_comment_user';
@@ -175,14 +175,9 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
         </div>
       </form>
 
-      <div className="comment-list">
-        {comments.length === 0 ? (
-          <div className="comment-empty">
-            <MessageCircle size={18} strokeWidth={1.8} aria-hidden="true" />
-            <span>暂无评论。</span>
-          </div>
-        ) : (
-          comments.map((comment) => (
+      {comments.length > 0 && (
+        <div className="comment-list">
+          {comments.map((comment) => (
             <article className="comment-item" key={comment.id}>
               <span
                 className="comment-avatar"
@@ -199,9 +194,9 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
                 <p>{comment.content}</p>
               </div>
             </article>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

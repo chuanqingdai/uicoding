@@ -21,12 +21,93 @@ function byPinnedThenLatest(a, b) {
 const initialVisibleCount = 6;
 const loadMoreCount = 6;
 
+const topicFilters = [
+  {
+    id: 'all',
+    label: '全部',
+    matches: () => true,
+  },
+  {
+    id: 'codex',
+    label: 'Codex',
+    matches: (lesson) =>
+      lesson.tools?.some((tool) => tool.toLowerCase().includes('codex')) ||
+      lesson.tags?.some((tag) => tag.toLowerCase().includes('codex')) ||
+      lesson.title.toLowerCase().includes('codex'),
+  },
+  {
+    id: 'claude',
+    label: 'Claude',
+    matches: (lesson) =>
+      lesson.tools?.some((tool) => tool.toLowerCase().includes('claude')) ||
+      lesson.tags?.some((tag) => tag.toLowerCase().includes('claude')) ||
+      lesson.title.toLowerCase().includes('claude'),
+  },
+  {
+    id: 'monetization',
+    label: '商业变现',
+    matches: (lesson) =>
+      lesson.category === '商业变现' ||
+      lesson.audience === '一人公司' ||
+      lesson.tags?.some((tag) =>
+        ['一人公司', '真实收入', 'SaaS 盈利', '月经常性收入'].includes(tag),
+      ),
+  },
+  {
+    id: 'prompts',
+    label: '提示词',
+    matches: (lesson) =>
+      lesson.category === '提示词' ||
+      lesson.tags?.some((tag) => tag.includes('提示词')) ||
+      lesson.title.includes('Prompt') ||
+      lesson.title.includes('提示词'),
+  },
+  {
+    id: 'workflow',
+    label: '工作流',
+    matches: (lesson) =>
+      lesson.category === '工作流' || lesson.tags?.includes('工作流'),
+  },
+  {
+    id: 'team',
+    label: '团队落地',
+    matches: (lesson) =>
+      lesson.category === '团队实践' ||
+      lesson.audience === '团队负责人' ||
+      lesson.tags?.some((tag) => tag.includes('团队') || tag.includes('协作')),
+  },
+];
+
 export default function LearnPage() {
+  const [activeTopicId, setActiveTopicId] = useState('all');
   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
   const loadMoreRef = useRef(null);
-  const visibleLessons = useMemo(() => [...lessons].sort(byPinnedThenLatest), []);
+  const activeTopic = topicFilters.find((filter) => filter.id === activeTopicId) ?? topicFilters[0];
+  const visibleLessons = useMemo(
+    () => [...lessons].filter(activeTopic.matches).sort(byPinnedThenLatest),
+    [activeTopic],
+  );
   const displayedLessons = visibleLessons.slice(0, visibleCount);
   const hasMoreLessons = visibleCount < visibleLessons.length;
+  const topicCounts = useMemo(
+    () =>
+      Object.fromEntries(
+        topicFilters.map((filter) => [
+          filter.id,
+          lessons.filter(filter.matches).length,
+        ]),
+      ),
+    [],
+  );
+
+  const changeTopic = (topicId) => {
+    setActiveTopicId(topicId);
+    setVisibleCount(initialVisibleCount);
+    trackEvent('learn_topic_filter_click', {
+      page: 'learn',
+      topic: topicId,
+    });
+  };
 
   useEffect(() => {
     const target = loadMoreRef.current;
@@ -69,6 +150,20 @@ export default function LearnPage() {
           <p>
             从真实案例、可复制提示词和产品拆解开始，尽快把想法做成能上线的网页和工具。
           </p>
+          <div className="learn-topic-tabs" aria-label="学习资料分类">
+            {topicFilters.map((filter) => (
+              <button
+                aria-pressed={activeTopicId === filter.id}
+                className="learn-topic-tab"
+                key={filter.id}
+                onClick={() => changeTopic(filter.id)}
+                type="button"
+              >
+                <span>{filter.label}</span>
+                <span>{topicCounts[filter.id]}</span>
+              </button>
+            ))}
+          </div>
         </Container>
       </section>
 

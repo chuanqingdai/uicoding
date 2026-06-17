@@ -8689,6 +8689,477 @@ https://www.figma.com/design/...
     ]
   },
   {
+    "id": "getwebsite-report-nocode-solo-founder",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1cb118p/investors_pulled_out_the_term_sheet_nontech_solo/",
+    "translationMode": "fullTranslation",
+    "title": "融资失败后，非技术创始人怎样把一个网站审计工具做到 2500 美元收入",
+    "originalTitle": "Investors pulled out the term sheet. Non-tech solo founder to building AI micro SaaS with no-code tools. $2500 Revenue in 3 months.",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "投资人撤回条款书之后",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "2023 年 8 月，我的创业公司没能拿到融资。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我的合伙人离开了。投资人撤回了条款书。整个局面很糟糕。"
+          },
+          {
+            "type": "paragraph",
+            "content": "那时候我不是技术创始人，也不会写代码。如果按照传统创业路径，我大概应该继续找新的技术合伙人，继续找投资人，继续等待下一次机会。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但我不想再等了。"
+          }
+        ]
+      },
+      {
+        "heading": "转向一个更小的产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我开始做一个更小、更具体的产品：GetWebsite.Report。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它是一个人工智能网站审计工具，帮助机构和网站所有者快速生成着陆页审计报告，找出影响转化的问题，并给出可以执行的改进建议。"
+          },
+          {
+            "type": "paragraph",
+            "content": "网站地址是 https://getwebsite.report。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我没有从一开始就组建完整团队，也没有先做复杂平台。我用无代码工具把第一版产品做出来，然后尽快拿到真实用户反馈。"
+          }
+        ]
+      },
+      {
+        "heading": "三个月的结果",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "三个月后，这个产品带来了 2500 美元收入。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它获得了 100 多个付费用户。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它还在 Product Hunt 上被推荐，成为 User Experience 分类的当周第一名，并拿到当天第三名。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这不是一个巨大的数字，但对我来说，它证明了一件事：即使没有融资、没有技术合伙人，也可以先做出一个能销售的产品。"
+          }
+        ]
+      },
+      {
+        "heading": "第一课：任何人都可以构建自己的软件",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我的第一个收获是：任何人都可以构建自己的软件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "现在有很多无代码工具，也有很多人工智能工具。它们让非技术创始人可以跳过最早期的技术阻碍，先把想法做成可以被用户试用的东西。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这并不意味着技术不重要，也不意味着产品后面不需要工程能力。它只是意味着，在验证阶段，你不一定必须先等到一个完整技术团队出现。"
+          },
+          {
+            "type": "paragraph",
+            "content": "你可以先做出一个能运行的版本，先让用户看到结果，先证明问题是否真实存在。"
+          }
+        ]
+      },
+      {
+        "heading": "第二课：无代码不是终点，而是起点",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "无代码工具最有价值的地方，不是让你永远不用写代码，而是让你更快进入市场。"
+          },
+          {
+            "type": "paragraph",
+            "content": "早期最重要的问题通常不是架构是否完美，而是用户是否真的愿意使用，是否愿意付费，是否愿意把它推荐给别人。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你先花几个月搭建一个完美系统，但最后发现没人需要，那才是更大的浪费。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我宁愿先用更轻的方式验证需求，再根据真实用户反馈决定下一步要不要继续投入。"
+          }
+        ]
+      },
+      {
+        "heading": "第三课：小产品也可以有清楚的收费理由",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "GetWebsite.Report 做的事情很具体：生成网站审计报告。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它不是一个什么都做的平台，也不是一个特别宏大的人工智能产品。它只解决一个清楚的问题：让用户更快知道自己的网站哪里影响转化，应该怎么改。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个问题对机构有价值。机构可以把报告交给客户，作为沟通和销售的一部分；网站所有者也可以用报告判断页面该怎么优化。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当一个工具能节省时间、帮助成交、减少沟通成本时，它就有收费理由。"
+          }
+        ]
+      },
+      {
+        "heading": "第四课：发布能带来真实反馈",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Product Hunt 的发布给产品带来了关注，也带来了用户。"
+          },
+          {
+            "type": "paragraph",
+            "content": "发布不是结束，而是开始。真正重要的是发布后用户会不会注册、会不会付费、会不会告诉你哪里不清楚、哪里不够好。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这些反馈比想象中的商业计划更有价值。它们会告诉你产品应该继续往哪里走。"
+          }
+        ]
+      },
+      {
+        "heading": "现在我相信什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我现在相信，非技术创始人不应该因为自己不会写代码就放弃。"
+          },
+          {
+            "type": "paragraph",
+            "content": "你可以从一个小问题开始，用现有工具做出第一版，尽快发布，尽快收费，尽快和用户对话。"
+          },
+          {
+            "type": "paragraph",
+            "content": "融资失败、合伙人离开、没有技术背景，这些都很难，但它们不一定是终点。"
+          },
+          {
+            "type": "paragraph",
+            "content": "有时候，它们反而会迫使你做出更小、更快、更现实的产品。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "plottie-ai-coding-research-saas-mrr",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1r6kgv4/im_a_researcher_who_cant_code_built_a_saas_with/",
+    "translationMode": "fullTranslation",
+    "title": "不会做网页的研究者，怎样用 AI 编程把 Plottie 做到 1000 美元月收入",
+    "originalTitle": "I'm a researcher who can't code. Built a SaaS with vibe coding. $1K MRR in 25 days, 2,000+ users. Here's everything I did.",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "从不会做网页开始",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "大家好。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我是生物信息学研究者，不是全栈开发者。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我一直会写 Python，也能做数据分析和做图，但从来没有做过真正的网页应用。"
+          },
+          {
+            "type": "paragraph",
+            "content": "25 天前，我用 Claude 和 Cursor 做了 Plottie。"
+          },
+          {
+            "type": "paragraph",
+            "content": "现在结果是：超过 2000 个用户，超过 100 个付费客户，月经常性收入约 1000 美元，产品还被 Product Hunt 评为当天第二名。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我想分享完整过程，因为我在这里看到过很多人提问：不是工程师的人，能不能用人工智能编程真的做出一个能赚钱的软件服务？"
+          },
+          {
+            "type": "paragraph",
+            "content": "我的回答是：可以。但过程会很混乱，也有很多细节。"
+          }
+        ]
+      },
+      {
+        "heading": "我到底做了什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Plottie 是给科研人员用的人工智能绘图工具。"
+          },
+          {
+            "type": "paragraph",
+            "content": "用户用自然语言描述想要的科研图，例如通路图、细胞图示、显微镜风格插图、流程图，Plottie 会生成可以直接用于论文或演示文稿的图。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它的不同之处在于，生成结果不是通用的人工智能图片，而是偏科研语境的图。"
+          },
+          {
+            "type": "paragraph",
+            "content": "产品网站是 https://ai.plottie.art。"
+          }
+        ]
+      },
+      {
+        "heading": "之前先做了免费图表库",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "在做付费产品之前，我先做了一个免费图表库。"
+          },
+          {
+            "type": "paragraph",
+            "content": "图表库里有成千上万张免费的科研图、图标和模板，覆盖医学、基因组学、人工智能、微生物学等主题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "那部分内容开始从 Google 获得自然搜索流量。很多研究者会搜索科研图、细胞器图标、医学插图、论文图示，然后进入网站。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以后来推出 Plottie 时，我不是从完全没有受众开始，而是已经有了一批相关访客。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么做付费产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "免费图表库让我看到一个问题：研究者不只是想下载现成素材，他们还想生成自己需要的图。"
+          },
+          {
+            "type": "paragraph",
+            "content": "很多科研图很具体，现成素材很难完全匹配。研究者通常需要表达某个实验流程、某种机制、某个细胞结构或某个通路。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这就是付费产品的机会。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果用户可以直接描述自己想要的图，并快速生成结果，这比在素材库里搜索、下载、再手动编辑更省时间。"
+          }
+        ]
+      },
+      {
+        "heading": "第一版是怎么做出来的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我用 Claude 和 Cursor 做第一版。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我没有网页开发经验，所以很多东西都是边做边问。页面、状态、支付、用户系统、数据库、部署，都是在过程中一点点拼起来的。"
+          },
+          {
+            "type": "paragraph",
+            "content": "人工智能编程很有用，但不是魔法。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它能让我快速前进，也能让我在完全不熟悉的地方卡住很久。有些错误我看不懂，只能不断把报错、上下文和目标重新发给模型，让它一步步解释。"
+          }
+        ]
+      },
+      {
+        "heading": "我做对的事情",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一，我先做了一个免费内容产品。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果没有免费图表库带来的搜索流量，Plottie 的启动会难很多。免费内容让我知道用户是谁、他们搜索什么、他们关心什么。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二，我做的是自己熟悉的领域。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我不是凭空选择一个热门方向，而是从科研绘图这个自己每天都理解的问题出发。因为我自己就是目标用户，所以更容易判断哪些生成结果有用，哪些只是看起来漂亮。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三，我很早就收费。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果只让用户免费使用，你很难知道他们是不是真的需要。有人愿意付钱，才说明它解决了一个足够具体的问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四，我尽快发布。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第一版不完美，但它已经可以让用户完成核心任务。发布之后，我才能拿到真正的反馈。"
+          }
+        ]
+      },
+      {
+        "heading": "我做错的事情",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我也犯了很多错。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一开始我在技术选择上绕了很多弯。因为不熟悉前端和后端，我有时候会让人工智能给出过度复杂的方案，然后自己又没有足够经验判断它是否合理。"
+          },
+          {
+            "type": "paragraph",
+            "content": "有些地方后来不得不重写。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我也低估了调试时间。人工智能可以生成代码，但当产品出现真实用户、真实支付、真实失败情况时，调试会变得非常具体。"
+          },
+          {
+            "type": "paragraph",
+            "content": "另一个问题是，我一开始没有把分析、转化和用户行为记录做得足够清楚。后来我才意识到，想让产品增长，就必须知道用户从哪里来、在哪里卡住、为什么付费。"
+          }
+        ]
+      },
+      {
+        "heading": "技术栈",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "产品主要用 React 和 Tailwind 做界面。"
+          },
+          {
+            "type": "paragraph",
+            "content": "后端和数据库使用 Supabase。"
+          },
+          {
+            "type": "paragraph",
+            "content": "部署用 Cloudflare 和 Fly.io。"
+          },
+          {
+            "type": "paragraph",
+            "content": "生成部分连接了大语言模型接口，也使用了 E2B。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我用 Cursor 和 Claude 辅助写代码、解释错误、补功能和调整页面。"
+          }
+        ]
+      },
+      {
+        "heading": "增长是怎么来的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "最早的增长来自已有的免费图表库。"
+          },
+          {
+            "type": "paragraph",
+            "content": "搜索流量带来了一批精准用户，他们本来就在找科研图和科研插图。"
+          },
+          {
+            "type": "paragraph",
+            "content": "然后我在 Product Hunt 发布，拿到了当天第二名。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我也在 Twitter 和相关社区分享产品。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但最重要的还是产品和受众匹配。研究者已经有这个问题，他们只是需要一个更快的解决办法。"
+          }
+        ]
+      },
+      {
+        "heading": "25 天后的数字",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "25 天后，Plottie 有超过 2000 个用户。"
+          },
+          {
+            "type": "paragraph",
+            "content": "付费客户超过 100 个。"
+          },
+          {
+            "type": "paragraph",
+            "content": "月经常性收入约为 1000 美元。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这不是一个巨大公司，但对一个不会做网页的人来说，它证明了这条路可行。"
+          }
+        ]
+      },
+      {
+        "heading": "给其他人的建议",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果你不是工程师，也想用人工智能编程做产品，我的建议是：从你真正理解的问题开始。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不要因为某个市场热门就去做。选择你自己知道用户是谁、痛点是什么、结果好不好判断的领域。"
+          },
+          {
+            "type": "paragraph",
+            "content": "先做一个可以带来真实用户的入口。它可以是免费工具、内容库、模板库或小功能。"
+          },
+          {
+            "type": "paragraph",
+            "content": "然后再把最强的需求做成付费产品。"
+          },
+          {
+            "type": "paragraph",
+            "content": "人工智能编程能让你跨过很多技术门槛，但它不会替你理解市场，也不会替你判断什么产品值得做。"
+          },
+          {
+            "type": "paragraph",
+            "content": "最重要的仍然是：找到真实问题，尽快发布，尽快收费，然后继续改。"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "solo-founder-made-190k-two-years",
     "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/pf2bus/made_190k_in_2_years_as_solo_founder/",
     "translationMode": "fullTranslation",

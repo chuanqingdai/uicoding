@@ -2123,6 +2123,84 @@ export const lessons = [
     ]
   },
   {
+    "id": "getwebsite-report-nocode-solo-founder",
+    "title": "融资失败后，非技术创始人怎样把一个网站审计工具做到 2500 美元收入",
+    "originalTitle": "Investors pulled out the term sheet. Non-tech solo founder. I built an AI micro SaaS with no-code tools. $2500 Revenue in 3 months.",
+    "description": "一位非技术单人创始人在投资人撤回条款书、技术合伙人离开后，用无代码工具做出 GetWebsite.Report，并在 3 个月内获得 100 多个付费用户和 2500 美元收入。",
+    "sourceType": "Reddit 原文翻译",
+    "sourceName": "Reddit r/SaaS",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1cb118p/investors_pulled_out_the_term_sheet_nontech_solo/",
+    "author": "Reddit 用户 / GetWebsite.Report 创始人",
+    "license": "Reddit 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "7 分钟",
+    "category": "商业变现",
+    "tools": [
+      "GetWebsite.Report"
+    ],
+    "tags": [
+      "一人公司",
+      "无代码",
+      "人工智能工具",
+      "真实网页案例"
+    ],
+    "href": "/learn/getwebsite-report-nocode-solo-founder",
+    "image": "/learn-screenshots/getwebsite-report-home.png",
+    "imageAlt": "GetWebsite.Report 官网首页截图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 232,
+    "likeCount": 16,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "融资和合伙人失败后，仍可以用更轻的方式验证产品",
+      "无代码工具适合先做出可销售版本，而不是等待完整技术团队",
+      "产品发布平台和真实付费用户比融资叙事更能验证方向"
+    ]
+  },
+  {
+    "id": "plottie-ai-coding-research-saas-mrr",
+    "title": "不会做网页的研究者，怎样用 AI 编程把 Plottie 做到 1000 美元月收入",
+    "originalTitle": "I'm a researcher who can't code. Built a SaaS with vibe coding. $1K MRR in 25 days, 2,000+ users. Here's everything I did.",
+    "description": "一位生物信息学研究者用 Claude 和 Cursor 做出科研绘图工具 Plottie：25 天获得 2000 多用户、100 多付费客户和约 1000 美元月经常性收入。",
+    "sourceType": "Reddit 原文翻译",
+    "sourceName": "Reddit r/SaaS",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1r6kgv4/im_a_researcher_who_cant_code_built_a_saas_with/",
+    "author": "mert_jh / Plottie 创始人",
+    "license": "Reddit 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "13 分钟",
+    "category": "商业变现",
+    "tools": [
+      "Claude",
+      "Cursor",
+      "Plottie"
+    ],
+    "tags": [
+      "一人公司",
+      "AI 编程",
+      "科研工具",
+      "月经常性收入"
+    ],
+    "href": "/learn/plottie-ai-coding-research-saas-mrr",
+    "image": "/learn-screenshots/plottie-ai-home.png",
+    "imageAlt": "Plottie AI 科研绘图工具首页截图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 226,
+    "likeCount": 15,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "先做免费内容型产品获取搜索流量，再把用户导向付费工具",
+      "付费测试比免费测试更容易得到真实反馈",
+      "AI 编程能让非网页开发者完成产品，但调试和技术债仍然存在"
+    ]
+  },
+  {
     "id": "solo-founder-made-190k-two-years",
     "title": "一名单人创始人两年赚到 19 万美元的复盘",
     "originalTitle": "Made $190k in 2 years as Solo Founder",
@@ -4184,14 +4262,9 @@ export const footerGroups = [
     ],
   },
   {
-    title: '参与',
-    links: [
-      { label: '提交作品', href: '/submit' },
-    ],
-  },
-  {
     title: '站点',
     links: [
+      { label: '提交作品', href: '/submit' },
       { label: '关于', href: '/about' },
       { label: '隐私协议', href: '/privacy' },
     ],
