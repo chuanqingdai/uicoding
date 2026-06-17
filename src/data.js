@@ -2341,6 +2341,80 @@ export const lessons = [
     ]
   },
   {
+    "id": "codex-design-system-consistency-prompts",
+    "title": "Codex 设计规范一致性 Prompt：从 Tokens 到组件治理",
+    "originalTitle": "Design systems and design tokens consistency workflows",
+    "description": "基于 Design Tokens、Material Design 和 Figma Design Systems 资料整理，学习如何让 Codex 审查并统一颜色、字体、间距、圆角、按钮、卡片和页面节奏，提升网站设计规范一致性。",
+    "sourceType": "设计系统资料整理",
+    "sourceName": "Material Design / Figma / W3C Design Tokens",
+    "sourceUrl": "https://m3.material.io/foundations/design-tokens",
+    "author": "Google、Figma、W3C Design Tokens Community Group、Uicoding.ai 整理",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "设计师",
+    "duration": "19 分钟",
+    "category": "Design System",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "设计系统",
+      "Design Tokens",
+      "一致性"
+    ],
+    "href": "/learn/codex-design-system-consistency-prompts",
+    "publishedAt": "2026-06-17",
+    "viewCount": 338,
+    "likeCount": 19,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "用设计 tokens 统一颜色、字体、间距和圆角",
+      "让 Codex 审查散乱样式和重复组件",
+      "用组件治理和页面 QA 保持长期一致性"
+    ]
+  },
+  {
+    "id": "ai-coding-team-collaboration-operating-model",
+    "title": "AI Coding 团队协作落地方法论：角色分工、产出物和流程",
+    "originalTitle": "AI-assisted software development operating model",
+    "description": "基于 DORA、McKinsey、Faros AI 和 Atlassian 的专业报告整理，系统讲解团队如何使用 Codex、Claude Code、Cursor 等 AI Coding 工具协同开发：每个角色做什么、产出物是什么、流程如何跑、质量如何控、指标如何看。",
+    "sourceType": "专业报告整理",
+    "sourceName": "DORA / McKinsey / Faros AI / Atlassian",
+    "sourceUrl": "https://dora.dev/research/2025/dora-report/",
+    "author": "Google Cloud DORA、McKinsey、Faros AI、Atlassian、Uicoding.ai 整理",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "产品经理",
+    "duration": "26 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Codex",
+      "Claude Code",
+      "Cursor"
+    ],
+    "tags": [
+      "AI Coding",
+      "团队协作",
+      "方法论",
+      "DevEx"
+    ],
+    "href": "/learn/ai-coding-team-collaboration-operating-model",
+    "publishedAt": "2026-06-17",
+    "viewCount": 328,
+    "likeCount": 18,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "AI Coding 是组织系统问题，不只是工具采购",
+      "每个角色都要有明确职责、输入和产出物",
+      "用质量门禁和端到端指标避免个体变快但团队不快"
+    ]
+  },
+  {
     "id": "claude-code-skills-reusable-prompt-workflows",
     "title": "Claude Code Skills 官方指南：把一次性 Prompt 沉淀成可复用工作流",
     "originalTitle": "Claude Code Skills",
@@ -2999,6 +3073,45 @@ export const lessons = [
       "游戏感网页的关键不是特效多，而是第一屏就能进入情境",
       "先把主场景和操作入口做出来，再补 HUD、动效和反馈",
       "可玩型首页要尽量减少介绍废话，让用户想立刻点一下"
+    ]
+  },
+  {
+    "id": "copyable-prompts-for-ai-tool-surfaces",
+    "title": "5 个工具型 AI 网页案例：照着做生成器、控制面板和 3D 场景界面",
+    "originalTitle": "Copyable prompts for AI tool surfaces",
+    "description": "整理 5 个更偏工具表面、参数控制和 3D 场景交互的 AI 网页案例。每个案例都附真实网站首页截图、真实网址、官方 Prompt 页面，以及 2 个适合还原首页和控制面板的中文提示词。",
+    "sourceType": "UIcoding 精选",
+    "sourceName": "OpenAI Showcase / UIcoding 编辑整理",
+    "sourceUrl": "https://developers.openai.com/showcase",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "20 分钟",
+    "category": "Prompt",
+    "tools": [
+      "Codex",
+      "通用"
+    ],
+    "tags": [
+      "Prompt",
+      "Tool UI",
+      "3D",
+      "AI Coding"
+    ],
+    "href": "/learn/copyable-prompts-for-ai-tool-surfaces",
+    "image": "/case-screenshots/procedural-city-home.png",
+    "imageAlt": "工具型 AI 网页案例封面图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 452,
+    "likeCount": 37,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "工具型首页最好直接暴露核心界面，而不是先讲一大段价值主张",
+      "结果区、控制区和状态区的层级关系，决定了页面是否像真实工具",
+      "先把操作路径做清楚，再补 3D 场景、反馈和质感细节"
     ]
   }
 ];
