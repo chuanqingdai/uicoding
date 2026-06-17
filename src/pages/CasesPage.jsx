@@ -1,23 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
-import { caseToolFilters, caseTypeFilters, cases } from '../data.js';
+import { caseTypeFilters, cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
+import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
+import { byLatest as byPublishedLatest, byTodayPickFirst } from '../lib/contentOrdering.js';
 
-const pinnedCaseIds = new Set(['freemake-ai-image-maker']);
+const pinnedCaseIds = new Set([]);
 
 function byPinnedFirst(a, b) {
   return Number(pinnedCaseIds.has(b.id)) - Number(pinnedCaseIds.has(a.id));
 }
 
 function byLatest(a, b) {
-  return byPinnedFirst(a, b) || new Date(b.publishedAt) - new Date(a.publishedAt);
+  return byTodayPickFirst(a, b) || byPinnedFirst(a, b) || byPublishedLatest(a, b);
 }
 
 function byHot(a, b) {
-  return byPinnedFirst(a, b) || b.viewCount - a.viewCount;
+  return byTodayPickFirst(a, b) || byPinnedFirst(a, b) || b.viewCount - a.viewCount;
 }
 
 const initialVisibleCount = 9;
@@ -98,7 +100,6 @@ function FilterSelect({
 
 export default function CasesPage() {
   const [sortMode, setSortMode] = useState('latest');
-  const [activeTool, setActiveTool] = useState('全部工具');
   const [activeType, setActiveType] = useState('全部类型');
   const [openFilter, setOpenFilter] = useState(null);
   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
@@ -107,14 +108,13 @@ export default function CasesPage() {
   const visibleCases = useMemo(() => {
     return [...cases]
       .filter(isRecentCase)
-      .filter((item) => activeTool === '全部工具' || item.tools.includes(activeTool))
       .filter((item) => activeType === '全部类型' || item.category === activeType)
       .sort(sortMode === 'latest' ? byLatest : byHot);
-  }, [activeTool, activeType, sortMode]);
+  }, [activeType, sortMode]);
 
   useEffect(() => {
     setVisibleCount(initialVisibleCount);
-  }, [activeTool, activeType, sortMode]);
+  }, [activeType, sortMode]);
 
   const displayedCases = visibleCases.slice(0, visibleCount);
   const hasMoreCases = visibleCount < visibleCases.length;
@@ -154,7 +154,6 @@ export default function CasesPage() {
 
   const resetFilters = () => {
     trackEvent('filter_reset', { page: 'cases' });
-    setActiveTool('全部工具');
     setActiveType('全部类型');
     setSortMode('latest');
   };
@@ -198,17 +197,6 @@ export default function CasesPage() {
           </div>
 
           <FilterSelect
-            id="case-tool-filter"
-            label="工具"
-            value={activeTool}
-            options={caseToolFilters}
-            isOpen={openFilter === 'tool'}
-            onChange={setActiveTool}
-            onClose={() => setOpenFilter(null)}
-            onToggle={() => setOpenFilter(openFilter === 'tool' ? null : 'tool')}
-          />
-
-          <FilterSelect
             id="case-type-filter"
             label="类型"
             value={activeType}
@@ -222,11 +210,11 @@ export default function CasesPage() {
 
         {visibleCases.length > 0 ? (
           <>
-            <div className="cases-grid waterfall-grid">
-              {displayedCases.map((item) => (
-                <CaseCard item={item} key={item.id} />
-              ))}
-            </div>
+            <MasonryGrid
+              className="cases-grid waterfall-grid"
+              items={displayedCases}
+              renderItem={(item) => <CaseCard item={item} />}
+            />
             <div
               aria-hidden={!hasMoreCases}
               className="auto-load-sentinel"
@@ -238,7 +226,7 @@ export default function CasesPage() {
         ) : (
           <div className="cases-empty">
             <h2>暂时没有匹配的案例</h2>
-            <p>试试切换工具或类型，回到全部案例继续浏览。</p>
+            <p>试试切换类型，回到全部案例继续浏览。</p>
             <Button type="button" onClick={resetFilters}>
               查看全部
             </Button>

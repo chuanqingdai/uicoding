@@ -100,10 +100,7 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
   const [draft, setDraft] = useState('');
   const [error, setError] = useState('');
 
-  const commentCountLabel = useMemo(
-    () => `${comments.length} 条讨论`,
-    [comments.length],
-  );
+  const commentCountLabel = useMemo(() => `${comments.length} 条`, [comments.length]);
 
   const refreshUser = () => {
     const user = getCommentUser();
@@ -165,15 +162,15 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
           value={draft}
           onFocus={refreshUser}
           onChange={(event) => setDraft(event.target.value)}
-          placeholder="写下你的看法、问题或补充经验。"
+          placeholder="写下想法或问题。"
           maxLength={300}
-          rows={4}
+          rows={3}
         />
         <div className="comment-form-foot">
-          <span>{error || '点击评论框后，会自动生成一个中文昵称和头像。'}</span>
+          <span>{error || '首次评论会生成昵称。'}</span>
           <button type="submit">
             <Send size={15} strokeWidth={1.9} aria-hidden="true" />
-            发布评论
+            发布
           </button>
         </div>
       </form>
@@ -182,7 +179,7 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
         {comments.length === 0 ? (
           <div className="comment-empty">
             <MessageCircle size={18} strokeWidth={1.8} aria-hidden="true" />
-            <span>还没有评论，欢迎留下第一个想法。</span>
+            <span>暂无评论。</span>
           </div>
         ) : (
           comments.map((comment) => (

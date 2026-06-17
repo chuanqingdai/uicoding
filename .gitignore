@@ -12,3 +12,7 @@ recommend-*.png
 stamp-*.png
 tool-detail-*.png
 .vercel
+.agents/
+.codex/
+.cursor/
+.impeccable/

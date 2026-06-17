@@ -6,6 +6,7 @@ import { Button, Badge, Card } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
 import Comments from '../components/Comments.jsx';
 import { trackEvent } from '../lib/analytics.js';
+import { formatDisplayUrl } from '../lib/urls.js';
 
 function isRecentCase(item) {
   return Boolean(item.sourceType);
@@ -141,6 +142,35 @@ function RelatedCaseSection({ title, description, items }) {
   );
 }
 
+function ArticleSiteLink({ caseItem, url, label }) {
+  if (!url || !label) {
+    return null;
+  }
+
+  return (
+    <Button
+      className="article-site-button"
+      href={url}
+      icon={ExternalLink}
+      variant="secondary"
+      target="_blank"
+      rel="noopener noreferrer"
+      analyticsEvent={{
+        name: 'outbound_link_click',
+        params: {
+          label: '标题下方网站链接',
+          content_type: 'case',
+          item_id: caseItem.id,
+          item_name: caseItem.title,
+          link_url: url,
+        },
+      }}
+    >
+      {label}
+    </Button>
+  );
+}
+
 export default function CaseDetailPage({ categorySlug, slug }) {
   const caseItem = useMemo(
     () => cases.find((item) => item.categorySlug === categorySlug && item.slug === slug),
@@ -186,6 +216,8 @@ export default function CaseDetailPage({ categorySlug, slug }) {
       item !== 'AI 生成证据待补充' &&
       list.indexOf(item) === index,
   );
+  const siteUrl = caseItem.websiteUrl || caseItem.sourceUrl;
+  const siteLabel = formatDisplayUrl(siteUrl);
 
   return (
     <div className="case-detail">
@@ -201,30 +233,13 @@ export default function CaseDetailPage({ categorySlug, slug }) {
                 ))}
               </div>
               <h1>{caseItem.title}</h1>
+              <ArticleSiteLink
+                caseItem={caseItem}
+                url={siteUrl}
+                label={siteLabel}
+              />
               <div className="blog-article-meta">
                 <span>{caseItem.publishedAt}</span>
-              </div>
-              <div className="case-detail-actions">
-                {caseItem.websiteUrl && (
-                  <Button
-                    href={caseItem.websiteUrl}
-                    icon={ExternalLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    analyticsEvent={{
-                      name: 'outbound_link_click',
-                      params: {
-                        label: '访问网站',
-                        content_type: 'case',
-                        item_id: caseItem.id,
-                        item_name: caseItem.title,
-                        link_url: caseItem.websiteUrl,
-                      },
-                    }}
-                  >
-                    访问网站
-                  </Button>
-                )}
               </div>
             </header>
 
@@ -243,7 +258,7 @@ export default function CaseDetailPage({ categorySlug, slug }) {
             <Comments
               targetId={caseItem.id}
               targetType="case"
-              title="讨论这个案例"
+              title="评论"
             />
           </article>
         </div>

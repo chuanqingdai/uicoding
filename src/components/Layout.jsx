@@ -163,7 +163,7 @@ export function Footer() {
             Uicoding.ai
           </a>
           <p>
-            面向设计师、产品经理和独立开发者的 AI 编程学习站，整理真实作品、工具使用技巧和上线经验。
+            代码零基础人群的交流社区，一起学习工具使用技巧、界面设计和上线经验。
           </p>
         </div>
         <div className="footer-links">

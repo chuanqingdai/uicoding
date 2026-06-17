@@ -2,24 +2,20 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { lessons } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { LearningCard } from '../components/Cards.jsx';
+import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
+import { byLatest, byRank, byTodayPickFirst } from '../lib/contentOrdering.js';
 
 const pinnedLessonIds = [
+  'ten-essential-codex-skills',
+  'pallyy-74k-mrr-solo-founder-retrospective',
+  'promptboard-codex-real-developer-case',
   'uicoding-skill-coding-process',
   'knowlens-codex-2b-token-tips',
 ];
 
-function byLatest(a, b) {
-  return new Date(b.publishedAt) - new Date(a.publishedAt);
-}
-
 function byPinnedThenLatest(a, b) {
-  const pinnedA = pinnedLessonIds.indexOf(a.id);
-  const pinnedB = pinnedLessonIds.indexOf(b.id);
-  const rankA = pinnedA === -1 ? Number.POSITIVE_INFINITY : pinnedA;
-  const rankB = pinnedB === -1 ? Number.POSITIVE_INFINITY : pinnedB;
-
-  return rankA - rankB || byLatest(a, b);
+  return byTodayPickFirst(a, b) || byRank(pinnedLessonIds)(a, b) || byLatest(a, b);
 }
 
 const initialVisibleCount = 6;
@@ -69,19 +65,19 @@ export default function LearnPage() {
     <div className="learn-page">
       <section className="learn-hero">
         <Container>
-          <h1>学习资料</h1>
+          <h1>学会 AI Coding</h1>
           <p>
-            为设计师、产品经理和独立开发者整理 AI Coding 学习路径，帮助你从提示词、界面设计、工具选择到产品上线逐步掌握完整流程。
+            从真实案例、可复制提示词和产品拆解开始，尽快把想法做成能上线的网页和工具。
           </p>
         </Container>
       </section>
 
       <Container>
-        <div className="learn-grid waterfall-grid">
-          {displayedLessons.map((item) => (
-            <LearningCard item={item} key={item.id} />
-          ))}
-        </div>
+        <MasonryGrid
+          className="learn-grid waterfall-grid"
+          items={displayedLessons}
+          renderItem={(item) => <LearningCard item={item} />}
+        />
         <div
           aria-hidden={!hasMoreLessons}
           className="auto-load-sentinel"

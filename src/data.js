@@ -68,7 +68,7 @@ const submitters = {
     id: 'uicoding-editor',
     name: 'UIcoding 编辑部',
     role: '外部精选案例',
-    bio: 'UIcoding 编辑部持续精选值得学习的 AI Coding 作品，用于拆解产品结构、界面设计和 AI Coding 思路。',
+    bio: 'UIcoding 编辑部持续精选值得学习的 AI 编程作品，用于拆解产品结构、界面设计和 AI 编程思路。',
     avatar: '',
     email: '',
     wechat: '',
@@ -160,7 +160,7 @@ function buildCase({ categorySlug, detailSections, slug, submitterId = 'david', 
 }
 
 const externalCopyrightNote =
-  '该案例为 UIcoding 外部精选内容，用于学习产品结构、界面设计和 AI Coding 思路。请访问原始来源查看完整信息。';
+  '该案例为 UIcoding 外部精选内容，用于学习产品结构、界面设计和 AI 编程思路。请访问原始来源查看完整信息。';
 
 function createExternalDetailSections(item) {
   return [
@@ -238,8 +238,8 @@ const caseDrafts = [
     submitterId: 'mia',
   }),
   buildCase({
-    id: 'launchkit',
-    slug: 'launchkit',
+    id: '发布kit',
+    slug: '发布kit',
     title: 'LaunchKit 官网',
     description: '一个用于展示产品定位、核心卖点和转化入口的 AI 生成官网案例。',
     category: '官网',
@@ -360,7 +360,7 @@ const caseDrafts = [
   buildCase({
     id: 'landing-page-kit',
     slug: 'landing-page-kit',
-    title: 'Landing Page Kit',
+    title: '着陆页套件',
     description: '把常见首屏、功能介绍和转化模块整理成可复用模板的官网搭建案例。',
     category: '官网',
     categorySlug: 'landing-page',
@@ -429,10 +429,10 @@ const caseDrafts = [
     slug: 'cursor-seo-dashboard',
     title: 'Search Foundry SEO 看板',
     description: '基于 Cursor 构建的 SEO 与 LLM 检索可见度看板，适合学习指标组织和结果呈现。',
-    category: 'Dashboard',
+    category: '数据看板',
     categorySlug: 'dashboard',
     tools: ['Cursor'],
-    tags: ['SEO', 'Dashboard', 'GitHub'],
+    tags: ['SEO', '数据看板', 'GitHub'],
     websiteUrl: 'https://search-foundry.github.io/dashboard-llm/',
     sourceType: '外部精选',
     sourceName: 'Cursor Community / GitHub',
@@ -449,12 +449,12 @@ const caseDrafts = [
   buildCase({
     id: 'cursor-saas-mvp',
     slug: 'cursor-saas-mvp',
-    title: 'Cursor SaaS MVP 工作流',
-    description: 'Cursor 社区分享的 SaaS MVP 构建案例，适合学习从需求到可演示产品的快速迭代。',
+    title: 'Cursor SaaS 最小可行产品工作流',
+    description: 'Cursor 社区分享的 SaaS 最小可行产品 构建案例，适合学习从需求到可演示产品的快速迭代。',
     category: 'SaaS',
     categorySlug: 'saas',
     tools: ['Cursor'],
-    tags: ['SaaS', 'MVP', 'Workflow'],
+    tags: ['SaaS', '最小可行产品', '工作流'],
     websiteUrl: 'https://forum.cursor.com/t/built-a-full-saas-mvp-in-one-evening-with-cursor-claude-code-workflow-breakdown/156758',
     sourceType: '外部精选',
     sourceName: 'Cursor Community',
@@ -466,7 +466,7 @@ const caseDrafts = [
     likeCount: 57,
     featured: false,
     submitterId: 'uicodingEditor',
-    detailSections: createExternalDetailSections({ title: 'Cursor SaaS MVP 工作流' }),
+    detailSections: createExternalDetailSections({ title: 'Cursor SaaS 最小可行产品工作流' }),
   }),
   buildCase({
     id: 'lovable-habit-tracker',
@@ -537,12 +537,12 @@ const caseDrafts = [
   buildCase({
     id: 'bolt-landing-page',
     slug: 'bolt-landing-page',
-    title: 'Bolt Startup Landing Page',
+    title: 'Bolt 创业公司着陆页',
     description: 'Bolt 官方模板文章中的创业公司官网案例，适合学习首屏卖点、证据和转化入口。',
-    category: 'Landing Page',
+    category: '着陆页',
     categorySlug: 'landing-page',
     tools: ['Bolt'],
-    tags: ['Landing Page', 'Startup', 'Website'],
+    tags: ['着陆页', 'Startup', 'Website'],
     websiteUrl: 'https://bolt.new/blog/top-5-bolt-new-templates-to-jumpstart-your-next-project',
     sourceType: '外部精选',
     sourceName: 'Bolt Templates',
@@ -554,17 +554,17 @@ const caseDrafts = [
     likeCount: 43,
     featured: false,
     submitterId: 'uicodingEditor',
-    detailSections: createExternalDetailSections({ title: 'Bolt Startup Landing Page' }),
+    detailSections: createExternalDetailSections({ title: 'Bolt 创业公司着陆页' }),
   }),
   buildCase({
     id: 'v0-customer-success-dashboard',
     slug: 'v0-customer-success-dashboard',
-    title: 'v0 Customer Success 看板',
+    title: 'v0 客户成功看板',
     description: 'v0 模板中的客户成功管理应用，适合学习客户健康度、任务状态和运营指标展示。',
-    category: 'Dashboard',
+    category: '数据看板',
     categorySlug: 'dashboard',
     tools: ['v0'],
-    tags: ['Customer Success', 'Dashboard', '运营'],
+    tags: ['客户成功', '数据看板', '运营'],
     websiteUrl: 'https://v0-orbit-internal-app.vercel.app/',
     sourceType: '外部精选',
     sourceName: 'v0 Examples',
@@ -576,7 +576,7 @@ const caseDrafts = [
     likeCount: 82,
     featured: false,
     submitterId: 'uicodingEditor',
-    detailSections: createExternalDetailSections({ title: 'v0 Customer Success 看板' }),
+    detailSections: createExternalDetailSections({ title: 'v0 客户成功看板' }),
   }),
   buildCase({
     id: 'v0-salesops-dashboard',
@@ -603,7 +603,7 @@ const caseDrafts = [
       {
         id: 'overview',
         title: '作品结构',
-        description: 'SalesOps Dashboard 以销售团队的日常决策为中心，把收入、商机、客户获取和团队表现放在同一张看板中。',
+        description: 'SalesOps 销售运营看板 以销售团队的日常决策为中心，把收入、商机、客户获取和团队表现放在同一张看板中。',
         image: 'https://gvsmhepiuiax2e6y.public.blob.vercel-storage.com/templates/assets/ezgif-464bbe623ade3f56-nNnxi4IMwxHh8nXLULPHLdglqOwBsk.webp',
         imageAlt: 'SalesOps 销售运营看板截图',
         points: ['关键指标集中呈现', '销售漏斗和趋势信息并列展示', '管理视角和执行视角兼顾'],
@@ -629,12 +629,12 @@ const caseDrafts = [
   buildCase({
     id: 'replit-agent-app-prototype',
     slug: 'replit-agent-app-prototype',
-    title: 'Replit Agent App Prototype',
-    description: 'Replit 官方客户案例中的 AI Agent 应用原型方向，适合学习从想法到可运行产品的过程。',
+    title: 'Replit 智能体应用原型',
+    description: 'Replit 官方客户案例中的 AI 智能体应用原型方向，适合学习从想法到可运行产品的过程。',
     category: 'SaaS',
     categorySlug: 'saas',
     tools: ['Replit'],
-    tags: ['Agent', 'Prototype', 'SaaS'],
+    tags: ['智能体', 'Prototype', 'SaaS'],
     websiteUrl: 'https://podnudge.com',
     sourceType: '外部精选',
     sourceName: 'Replit Showcase',
@@ -646,7 +646,7 @@ const caseDrafts = [
     likeCount: 38,
     featured: false,
     submitterId: 'uicodingEditor',
-    detailSections: createExternalDetailSections({ title: 'Replit Agent App Prototype' }),
+    detailSections: createExternalDetailSections({ title: 'Replit 智能体应用原型' }),
   }),
   buildCase({
     id: 'clipcraft-video-editor',
@@ -891,12 +891,12 @@ const caseDrafts = [
   buildCase({
     id: 'forged-in-silence-codex',
     slug: 'forged-in-silence-codex',
-    title: 'Forged in Silence 3D Landing Page',
+    title: 'Forged in Silence 3D 着陆页',
     description: '一个由 Codex 构建的高质感 3D 武士刀品牌首页，首屏几乎只用排版、对比和沉浸式场景就建立了强烈记忆点。',
     category: '官网',
     categorySlug: 'landing-page',
     tools: ['Codex'],
-    tags: ['AI 生成', '3D', 'Landing Page', 'GPT-5.4'],
+    tags: ['AI 生成', '3D', '着陆页', 'GPT-5.4'],
     websiteUrl: 'https://katana-3d-5mdo.vercel.app',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -912,27 +912,55 @@ const caseDrafts = [
     detailSections: [
       {
         id: 'ai-generated-evidence',
-        title: 'AI 生成证据',
-        description: 'OpenAI Showcase 将 Forged in Silence 收录为 Codex 案例，官方说明写明该作品由 Codex 与 GPT-5.4 生成。这里展示的封面也使用真实网站首页截图，而不是介绍页素材。',
+        title: '官方来源与 AI 生成证据',
+        description: 'OpenAI Showcase 将 Forged in Silence 收录为 Codex 案例，官方页面明确写明该作品由 Codex 与 GPT-5.4 构建。站内这张封面也使用真实网站首页截图，而不是介绍页素材。',
         image: '/case-screenshots/forged-in-silence-home.png',
         imageAlt: 'Forged in Silence 首页截图',
-        points: ['真实首页可访问', '官方来源页标注由 Codex 构建', '封面图使用网站首页截图'],
+        points: ['真实首页可访问', '官方来源页标注由 Codex 与 GPT-5.4 构建', '封面图使用网站首页截图'],
       },
       {
-        id: 'visual-impact',
-        title: '首页视觉表达',
-        description: '这个首页几乎把信息压缩到最少：黑底、大号字、极强对比和中心化构图，让页面在第一屏就形成品牌气势。它适合学习如何用极少元素做出高压迫感和高辨识度。',
+        id: 'official-initial-prompt',
+        title: '官方公开的初始提示词',
+        description: '目前公开可直接核对的完整提示词只有 1 条，来自 OpenAI Showcase 的 Build notes。它不是一句抽象描述，而是一条非常具体的脚手架提示词：明确技术栈、文件结构、字体、全局样式和构建验收规则。',
         image: '',
-        imageAlt: 'Forged in Silence 视觉表达说明',
-        points: ['极简但记忆点很强', '大标题和留白共同建立节奏', '适合品牌型首屏参考'],
+        imageAlt: 'Forged in Silence 官方初始提示词说明',
+        points: [
+          '指定使用 Vite + React，并安装 three、@react-three/fiber、@react-three/drei、gsap、@gsap/react、lenis',
+          '明确要求创建 components、sections、hooks、styles 等精确目录结构',
+          '要求在 index.html 中加入 Noto Serif JP 与 Bebas Neue 字体',
+          '要求 global.css 写 基础重置、black/white/steel/gold/accent 变量，以及 100vh 电影感滚动 布局',
+          '要求 App.jsx 先放置 <Scene /> 与六个 100vh 滚动章节',
+          '要求 Scene.jsx 先用简单金属刀刃 占位网格模型 起步',
+          '最后要求运行 npm install 和 npm run build，并且只修构建错误，不改视觉和逻辑代码',
+        ],
       },
       {
-        id: 'interaction-structure',
-        title: '交互与叙事结构',
-        description: '从首页文案到滚动提示，这个案例把访问动作控制得很克制，强调用户继续往下探索。它更像一个被编排过的视觉叙事，而不是传统把信息一次性塞满的产品官网。',
+        id: 'official-iterations',
+        title: '官方公开的迭代步骤',
+        description: 'OpenAI Showcase 还公开了 7 条迭代步骤，但这里公开的是“步骤摘要”，不是每一轮的完整提示词原文。所以更准确的说法应该是：作者公开了完整初始提示词，以及后续迭代方向，而不是公开了每轮可直接复制的完整提示词。',
         image: '',
-        imageAlt: 'Forged in Silence 交互与叙事结构说明',
-        points: ['滚动感比信息密度更重要', '行动入口被弱化但不缺失', '适合拆解沉浸式官网节奏'],
+        imageAlt: 'Forged in Silence 官方迭代步骤说明',
+        points: [
+          '先研究 Vite、React 和 React Three Fiber 的架构，再给 Codex 一条详细 脚手架规格',
+          '搭起 React、Three.js、React Three Fiber、GSAP、Lenis 和 section-based 组件结构',
+          '用 Three.js BufferGeometry 程序化生成 katana，而不是依赖 Blender 或外部 3D 模型',
+          '多轮调整材质和灯光，包括 metalness、roughness、key light、fill light、gold highlights、RectAreaLight、SpotLight 和环境反射',
+          '把 Lenis 平滑滚动 接到 GSAP ScrollTrigger 时间线上，覆盖六个 电影感章节',
+          '加入中英混排文字、滚动触发文字显现、尘埃粒子、vignette、CRT scanlines、金色进度指示器、DPR capping 和 响应式相机行为',
+          '最后再把首页扩成完整 店铺页，包括 商品、购物车、结账、定制委托和联系流程',
+        ],
+      },
+      {
+        id: 'how-to-learn-it-correctly',
+        title: '这个案例最该怎么学',
+        description: '如果只看这个案例，最容易出错的地方就是把“官方迭代步骤”误写成“作者公开的逐轮提示词”。更稳的学习方法是：把官方初始提示词当成可直接复现的起点，再把官方步骤当成后续迭代清单，自己为每一步补写提示词。',
+        image: '',
+        imageAlt: 'Forged in Silence 学习方式说明',
+        points: [
+          '可以直接复现的只有官方初始提示词',
+          '后续 7 步更像路线图，而不是逐轮提示词原文',
+          '如果要写教学内容，必须明确哪些是原文，哪些是基于官方步骤整理出的复现提示词',
+        ],
       },
     ],
   }),
@@ -944,7 +972,7 @@ const caseDrafts = [
     category: '官网',
     categorySlug: 'landing-page',
     tools: ['Codex'],
-    tags: ['AI 生成', 'Luxury', 'Landing Page', 'GPT-5.5'],
+    tags: ['AI 生成', '奢侈品', '着陆页', 'GPT-5.5'],
     websiteUrl: 'https://openai-landing-page-examples.vercel.app/haute-horlogerie',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -988,11 +1016,11 @@ const caseDrafts = [
     id: 'arcade-bar-codex-landing',
     slug: 'arcade-bar-codex-landing',
     title: 'Arcade Bar 霓虹街机酒吧首页',
-    description: '一个由 Codex 生成的夜店风格 landing page，首页用强霓虹配色、暗场摄影和巨大标题把氛围一下子拉满。',
+    description: '一个由 Codex 生成的夜店风格着陆页，首页用强霓虹配色、暗场摄影和巨大标题把氛围一下子拉满。',
     category: '官网',
     categorySlug: 'landing-page',
     tools: ['Codex'],
-    tags: ['AI 生成', 'Neon', 'Landing Page', 'GPT-5.5'],
+    tags: ['AI 生成', '霓虹', '着陆页', 'GPT-5.5'],
     websiteUrl: 'https://openai-landing-page-examples.vercel.app/tilt-signal-arcade-bar/',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1009,7 +1037,7 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'OpenAI Showcase 将这个案例作为 Codex 生成的 landing page 示例公开展示，并给出 Codex、GPT-5.5 与 GPT Image 2 的组合说明。当前封面为网站首页截图。',
+        description: 'OpenAI Showcase 将这个案例作为 Codex 生成的着陆页示例公开展示，并给出 Codex、GPT-5.5 与 GPT Image 2 的组合说明。当前封面为网站首页截图。',
         image: '/case-screenshots/arcade-bar-home.png',
         imageAlt: 'Arcade Bar 首页截图',
         points: ['真实首页可访问', '官方来源页标注 Codex + GPT-5.5 + GPT Image 2', '封面图来自网站首页'],
@@ -1020,7 +1048,7 @@ const caseDrafts = [
         description: '这个首页最强的地方是气氛足够完整。用户几乎不用读太多内容，就已经知道这是一个偏夜生活、偏娱乐、偏城市霓虹感的品牌页面。',
         image: '',
         imageAlt: 'Arcade Bar 氛围感说明',
-        points: ['视觉情绪比功能说明更靠前', '大字和摄影共同承担首屏叙事', '很适合做风格化 landing page 参考'],
+        points: ['视觉情绪比功能说明更靠前', '大字和摄影共同承担首屏叙事', '很适合做风格化着陆页参考'],
       },
       {
         id: 'conversion-balance',
@@ -1040,7 +1068,7 @@ const caseDrafts = [
     category: '其他',
     categorySlug: 'other',
     tools: ['Codex'],
-    tags: ['AI 生成', '3D', 'Interactive', 'GPT-5.4'],
+    tags: ['AI 生成', '3D', '交互', 'GPT-5.4'],
     websiteUrl: 'https://petergpt.github.io/london-train',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1136,7 +1164,7 @@ const caseDrafts = [
     category: '内容工具',
     categorySlug: 'content-tool',
     tools: ['Codex'],
-    tags: ['AI 生成', '3D', 'Generator', 'GPT-5.5'],
+    tags: ['AI 生成', '3D', '生成器', 'GPT-5.5'],
     websiteUrl: 'https://openai-city-generator-demo.vercel.app/',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1184,7 +1212,7 @@ const caseDrafts = [
     category: '游戏',
     categorySlug: 'game',
     tools: ['Codex'],
-    tags: ['AI 生成', 'Game', 'Turn-Based RPG', 'GPT-5.4'],
+    tags: ['AI 生成', '游戏', 'Turn-Based RPG', 'GPT-5.4'],
     websiteUrl: 'https://trpg-demo-codex.vercel.app/',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1232,7 +1260,7 @@ const caseDrafts = [
     category: '游戏',
     categorySlug: 'game',
     tools: ['Codex'],
-    tags: ['AI 生成', 'Game', 'FPS', 'GPT-5.5'],
+    tags: ['AI 生成', '游戏', 'FPS', 'GPT-5.5'],
     websiteUrl: 'https://openai-minigames-examples.vercel.app/fps/',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1280,7 +1308,7 @@ const caseDrafts = [
     category: '游戏',
     categorySlug: 'game',
     tools: ['Codex'],
-    tags: ['AI 生成', 'Game', 'Platformer', 'GPT-5.5'],
+    tags: ['AI 生成', '游戏', '平台跳跃', 'GPT-5.5'],
     websiteUrl: 'https://openai-minigames-examples.vercel.app/brick-platformer/',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1328,7 +1356,7 @@ const caseDrafts = [
     category: '游戏',
     categorySlug: 'game',
     tools: ['Codex'],
-    tags: ['AI 生成', 'Game', 'Space', 'GPT-5.5'],
+    tags: ['AI 生成', '游戏', '太空', 'GPT-5.5'],
     websiteUrl: 'https://codextimetofly.com/',
     sourceType: '外部精选',
     sourceName: 'OpenAI Showcase',
@@ -1438,7 +1466,7 @@ const caseDrafts = [
     sourceName: 'Maieutic',
     sourceUrl: 'https://maieutic.dev/',
     screenshotUrl: '/case-screenshots/maieutic-home.png',
-    copyrightNote: '该案例来自 Maieutic 公开网站。官网 meta description 和首屏明确写有 Anthropic Claude Code x Cerebral Valley Hackathon / Built with Opus 4.7，用于学习 AI 生成产品的功能表达和页面结构。',
+    copyrightNote: '该案例来自 Maieutic 公开网站。官网 meta description 和首屏明确写有 Anthropic Claude Code x Cerebral Valley Hackathon / 使用 Opus 4.7 构建，用于学习 AI 生成产品的功能表达和页面结构。',
     visualType: 'landing',
     publishedAt: '2026-06-16',
     viewCount: 742,
@@ -1449,10 +1477,10 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'Maieutic 官网的页面描述和首屏文案直接写明它获得 Anthropic Claude Code x Cerebral Valley Hackathon 第三名，并标注 Built with Opus 4.7。这让它满足 Uicoding.ai 的硬条件：案例必须有真实网页地址，也必须能证明 AI 参与生成。',
+        description: 'Maieutic 官网的页面描述和首屏文案直接写明它获得 Anthropic Claude Code x Cerebral Valley Hackathon 第三名，并标注 使用 Opus 4.7 构建。这让它满足 Uicoding.ai 的硬条件：案例必须有真实网页地址，也必须能证明 AI 参与生成。',
         image: '/case-screenshots/maieutic-home.png',
         imageAlt: 'Maieutic 官网社交预览图',
-        points: ['官网地址可访问', '首屏和 meta 文案包含 Claude Code hackathon 证据', '公开页面标注 Built with Opus 4.7'],
+        points: ['官网地址可访问', '首屏和 meta 文案包含 Claude Code hackathon 证据', '公开页面标注 使用 Opus 4.7 构建'],
       },
       {
         id: 'product-positioning',
@@ -1473,7 +1501,7 @@ const caseDrafts = [
       {
         id: 'instructor-dashboard',
         title: '教师观察与课堂反馈',
-        description: 'Maieutic 也为教师提供课堂尺度的观察能力。官网提到教师可以看到 live class dashboard、per-student reasoning view，以及 cohort-level narrative，用来理解学生真实卡在哪里。',
+        description: 'Maieutic 也为教师提供课堂尺度的观察能力。官网提到教师可以看到 live class 工作台、per-student reasoning view，以及 cohort-level narrative，用来理解学生真实卡在哪里。',
         image: '',
         imageAlt: 'Maieutic 教师反馈功能示意图',
         points: ['每个学生一行的课堂状态摘要', '单个学生的推理过程视图', '课后生成班级整体学习叙事'],
@@ -1484,7 +1512,7 @@ const caseDrafts = [
     id: 'blacklight-agentic-defense',
     slug: 'blacklight-agentic-defense',
     title: 'Blacklight Agentic Defense',
-    description: '一个由 Opus 4.7 与 Anthropic Managed Agents 构建的 Linux 安全防御层，把 ModSecurity、iptables、nftables、LMD、ClamAV、YARA 和 fail2ban 等工具组织成 agentic defense 工作流。',
+    description: '一个由 Opus 4.7 与 Anthropic 托管智能体 构建的 Linux 安全防御层，把 ModSecurity、iptables、nftables、LMD、ClamAV、YARA 和 fail2ban 等工具组织成 智能体防御工作流。',
     category: '安全工具',
     categorySlug: 'other',
     tools: ['Claude Code'],
@@ -1494,7 +1522,7 @@ const caseDrafts = [
     sourceName: 'R-fx Networks',
     sourceUrl: 'https://rfxn.com/blacklight',
     screenshotUrl: '/case-screenshots/blacklight-home.png',
-    copyrightNote: '该案例来自 Blacklight 公开页面。页面首屏明确写有 Built with Opus 4.7 · Anthropic × Cerebral Valley Hackathon，用于学习 AI 生成安全产品的功能叙事。',
+    copyrightNote: '该案例来自 Blacklight 公开页面。页面首屏明确写有 使用 Opus 4.7 构建 · Anthropic × Cerebral Valley Hackathon，用于学习 AI 生成安全产品的功能叙事。',
     visualType: 'dashboard',
     publishedAt: '2026-06-16',
     viewCount: 688,
@@ -1505,15 +1533,15 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'Blacklight 页面首屏直接标注 Built with Opus 4.7 · Anthropic × Cerebral Valley Hackathon，并在页面结构化数据中描述它是用 Opus 4.7 和 Anthropic Managed Agents 在六天内构建的项目。',
+        description: 'Blacklight 页面首屏直接标注 使用 Opus 4.7 构建 · Anthropic × Cerebral Valley Hackathon，并在页面结构化数据中描述它是用 Opus 4.7 和 Anthropic 托管智能体 在六天内构建的项目。',
         image: '/case-screenshots/blacklight-home.png',
         imageAlt: 'Blacklight 首页截图',
-        points: ['网页地址可访问', '首屏标注 Built with Opus 4.7', '页面描述包含 Anthropic Managed Agents'],
+        points: ['网页地址可访问', '首屏标注 使用 Opus 4.7 构建', '页面描述包含 Anthropic 托管智能体'],
       },
       {
         id: 'product-positioning',
         title: '产品定位',
-        description: 'Blacklight 把自己定位为 Linux 防御栈上的 agentic layer：攻击者已经在使用 agents，防守方也需要能在现有安全工具之上进行推理、编排和响应。',
+        description: 'Blacklight 把自己定位为 Linux 防御栈上的 智能体层：攻击者已经在使用 智能体，防守方也需要能在现有安全工具之上进行推理、编排和响应。',
         image: '',
         imageAlt: 'Blacklight 产品定位截图',
         points: ['面向 Linux 服务器防御', '把现有安全工具统一编排', '强调人类信任和攻击者速度'],
@@ -1521,7 +1549,7 @@ const caseDrafts = [
       {
         id: 'core-capabilities',
         title: '核心功能',
-        description: '页面说明 Blacklight 连接 ModSec、iptables、nftables、APF、CSF、LMD、ClamAV、YARA 和 fail2ban 等工具，并由 Managed Agents curator 进行大上下文取证推理。',
+        description: '页面说明 Blacklight 连接 ModSec、iptables、nftables、APF、CSF、LMD、ClamAV、YARA 和 fail2ban 等工具，并由 托管智能体 curator 进行大上下文取证推理。',
         image: '',
         imageAlt: 'Blacklight 核心功能截图',
         points: ['统一接入 Linux 安全工具链', '用大上下文分析安全事件', '从告警走向可执行防御动作'],
@@ -1532,7 +1560,7 @@ const caseDrafts = [
     id: 'medkit-clinical-guide',
     slug: 'medkit-clinical-guide',
     title: 'Medkit 临床指南应用',
-    description: 'Anthropic Built with Opus 4.7 Hackathon 一等奖项目，把医学指南检索、临床流程和 AI 辅助解释整合成面向医护人员的实用工具。',
+    description: 'Anthropic 使用 Opus 4.7 构建 Hackathon 一等奖项目，把医学指南检索、临床流程和 AI 辅助解释整合成面向医护人员的实用工具。',
     category: '医疗',
     categorySlug: 'other',
     tools: ['Claude Code'],
@@ -1542,7 +1570,7 @@ const caseDrafts = [
     sourceName: 'Medkit',
     sourceUrl: 'https://medkit-app.vercel.app/',
     screenshotUrl: '/case-screenshots/medkit-home.png',
-    copyrightNote: '该案例来自 Medkit 公开网站和搜索结果中的 Built with Opus 4.7 Hackathon 信息，用于学习 AI 生成医疗工具如何组织复杂知识。',
+    copyrightNote: '该案例来自 Medkit 公开网站和搜索结果中的 使用 Opus 4.7 构建 Hackathon 信息，用于学习 AI 生成医疗工具如何组织复杂知识。',
     visualType: 'dashboard',
     publishedAt: '2026-06-16',
     viewCount: 624,
@@ -1553,10 +1581,10 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'Medkit 公开页面和搜索结果显示它是 Anthropic Built with Opus 4.7 Hackathon 的一等奖项目，满足 AI 生成案例的证据要求。',
+        description: 'Medkit 公开页面和搜索结果显示它是 Anthropic 使用 Opus 4.7 构建 Hackathon 的一等奖项目，满足 AI 生成案例的证据要求。',
         image: '/case-screenshots/medkit-home.png',
         imageAlt: 'Medkit 首页截图',
-        points: ['真实网页可访问', '公开信息标注 Built with Opus 4.7', 'Hackathon 排名提供来源线索'],
+        points: ['真实网页可访问', '公开信息标注 使用 Opus 4.7 构建', 'Hackathon 排名提供来源线索'],
       },
       {
         id: 'product-positioning',
@@ -1580,7 +1608,7 @@ const caseDrafts = [
     id: 'postmortem-incident-analysis',
     slug: 'postmortem-incident-analysis',
     title: 'Postmortem 事故复盘工具',
-    description: '一个 Built with Opus 4.7 的事故复盘案例，帮助团队把事件线索、时间线、根因和改进项整理成结构化 postmortem。',
+    description: '一个 使用 Opus 4.7 构建 的事故复盘案例，帮助团队把事件线索、时间线、根因和改进项整理成结构化 postmortem。',
     category: '内容工具',
     categorySlug: 'content-tool',
     tools: ['Claude Code'],
@@ -1590,7 +1618,7 @@ const caseDrafts = [
     sourceName: 'Postmortem',
     sourceUrl: 'https://postmortem-mauve.vercel.app/',
     screenshotUrl: '/case-screenshots/postmortem-home.png',
-    copyrightNote: '该案例来自 Postmortem 公开网页和 Built with Opus 4.7 搜索结果，用于学习 AI 生成工作流工具的结构。',
+    copyrightNote: '该案例来自 Postmortem 公开网页和 使用 Opus 4.7 构建 搜索结果，用于学习 AI 生成工作流工具的结构。',
     visualType: 'dashboard',
     publishedAt: '2026-06-16',
     viewCount: 571,
@@ -1601,10 +1629,10 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'Postmortem 对应公开网页可访问，搜索结果明确将它和 Built with Opus 4.7 关联，符合 AI 生成案例的初步收录条件。',
+        description: 'Postmortem 对应公开网页可访问，搜索结果明确将它和 使用 Opus 4.7 构建 关联，符合 AI 生成案例的初步收录条件。',
         image: '/case-screenshots/postmortem-home.png',
         imageAlt: 'Postmortem 首页截图',
-        points: ['真实网页可访问', '公开结果包含 Built with Opus 4.7', '可从页面首屏截取案例图'],
+        points: ['真实网页可访问', '公开结果包含 使用 Opus 4.7 构建', '可从页面首屏截取案例图'],
       },
       {
         id: 'product-positioning',
@@ -1628,7 +1656,7 @@ const caseDrafts = [
     id: 'masterborder-trade-compliance',
     slug: 'masterborder-trade-compliance',
     title: 'MasterBorder 跨境合规助手',
-    description: '一个 Built with Opus 4.7 的跨境贸易合规案例，围绕边境、关税、文档和物流规则帮助用户理解复杂流程。',
+    description: '一个 使用 Opus 4.7 构建 的跨境贸易合规案例，围绕边境、关税、文档和物流规则帮助用户理解复杂流程。',
     category: 'SaaS 产品',
     categorySlug: 'saas',
     tools: ['Claude Code'],
@@ -1638,7 +1666,7 @@ const caseDrafts = [
     sourceName: 'MasterBorder',
     sourceUrl: 'https://masterborder.vercel.app/',
     screenshotUrl: '/case-screenshots/masterborder-home.png',
-    copyrightNote: '该案例来自 MasterBorder 公开网页和 Built with Opus 4.7 搜索结果，用于学习 AI 生成合规类产品的信息组织。',
+    copyrightNote: '该案例来自 MasterBorder 公开网页和 使用 Opus 4.7 构建 搜索结果，用于学习 AI 生成合规类产品的信息组织。',
     visualType: 'landing',
     publishedAt: '2026-06-16',
     viewCount: 548,
@@ -1649,10 +1677,10 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'MasterBorder 有可访问官网，公开搜索结果显示它属于 Built with Opus 4.7 相关项目，因此作为 AI 生成案例收录。',
+        description: 'MasterBorder 有可访问官网，公开搜索结果显示它属于 使用 Opus 4.7 构建 相关项目，因此作为 AI 生成案例收录。',
         image: '/case-screenshots/masterborder-home.png',
         imageAlt: 'MasterBorder 首页截图',
-        points: ['真实网页可访问', '公开结果包含 Built with Opus 4.7', '首页可自动截图'],
+        points: ['真实网页可访问', '公开结果包含 使用 Opus 4.7 构建', '首页可自动截图'],
       },
       {
         id: 'product-positioning',
@@ -1676,7 +1704,7 @@ const caseDrafts = [
     id: 'poneglyph-knowledge-tool',
     slug: 'poneglyph-knowledge-tool',
     title: 'Poneglyph 知识解读工具',
-    description: '一个 Built with Opus 4.7 的知识工具案例，围绕复杂内容的解释、关联和结构化呈现展开。',
+    description: '一个 使用 Opus 4.7 构建 的知识工具案例，围绕复杂内容的解释、关联和结构化呈现展开。',
     category: '内容工具',
     categorySlug: 'content-tool',
     tools: ['Claude Code'],
@@ -1686,7 +1714,7 @@ const caseDrafts = [
     sourceName: 'Poneglyph',
     sourceUrl: 'https://poneglyph-chi.vercel.app/',
     screenshotUrl: '/case-screenshots/poneglyph-home.png',
-    copyrightNote: '该案例来自 Poneglyph 公开网页和 Built with Opus 4.7 搜索结果，用于学习 AI 生成知识工具的信息表达。',
+    copyrightNote: '该案例来自 Poneglyph 公开网页和 使用 Opus 4.7 构建 搜索结果，用于学习 AI 生成知识工具的信息表达。',
     visualType: 'landing',
     publishedAt: '2026-06-16',
     viewCount: 536,
@@ -1697,10 +1725,10 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'Poneglyph 有可访问网页，公开搜索结果显示它和 Built with Opus 4.7 相关，符合 AI 生成案例的收录线索。',
+        description: 'Poneglyph 有可访问网页，公开搜索结果显示它和 使用 Opus 4.7 构建 相关，符合 AI 生成案例的收录线索。',
         image: '/case-screenshots/poneglyph-home.png',
         imageAlt: 'Poneglyph 首页截图',
-        points: ['真实网页可访问', '公开结果包含 Built with Opus 4.7', '首页截图已保存'],
+        points: ['真实网页可访问', '公开结果包含 使用 Opus 4.7 构建', '首页截图已保存'],
       },
       {
         id: 'product-positioning',
@@ -1724,7 +1752,7 @@ const caseDrafts = [
     id: 'nerium-ai-workspace',
     slug: 'nerium-ai-workspace',
     title: 'NERIUM AI 工作空间',
-    description: '一个 Built with Opus 4.7 的 AI 工作空间案例，展示如何把任务、上下文和生成流程组织成可使用的产品界面。',
+    description: '一个 使用 Opus 4.7 构建 的 AI 工作空间案例，展示如何把任务、上下文和生成流程组织成可使用的产品界面。',
     category: 'SaaS 产品',
     categorySlug: 'saas',
     tools: ['Claude Code'],
@@ -1734,7 +1762,7 @@ const caseDrafts = [
     sourceName: 'NERIUM',
     sourceUrl: 'https://nerium-one.vercel.app/',
     screenshotUrl: '/case-screenshots/nerium-home.png',
-    copyrightNote: '该案例来自 NERIUM 公开网页和 Built with Opus 4.7 搜索结果，用于学习 AI 生成工作空间产品的界面组织。',
+    copyrightNote: '该案例来自 NERIUM 公开网页和 使用 Opus 4.7 构建 搜索结果，用于学习 AI 生成工作空间产品的界面组织。',
     visualType: 'dashboard',
     publishedAt: '2026-06-16',
     viewCount: 529,
@@ -1745,10 +1773,10 @@ const caseDrafts = [
       {
         id: 'ai-generated-evidence',
         title: 'AI 生成证据',
-        description: 'NERIUM 有可访问网页，公开搜索结果显示它和 Built with Opus 4.7 相关，因此作为 AI 生成工作空间案例收录。',
+        description: 'NERIUM 有可访问网页，公开搜索结果显示它和 使用 Opus 4.7 构建 相关，因此作为 AI 生成工作空间案例收录。',
         image: '/case-screenshots/nerium-home.png',
         imageAlt: 'NERIUM 首页截图',
-        points: ['真实网页可访问', '公开结果包含 Built with Opus 4.7', '首页截图已保存'],
+        points: ['真实网页可访问', '公开结果包含 使用 Opus 4.7 构建', '首页截图已保存'],
       },
       {
         id: 'product-positioning',
@@ -1782,7 +1810,7 @@ const caseDrafts = [
     sourceName: 'FreeMake.cc',
     sourceUrl: 'https://freemake.cc/',
     screenshotUrl: '/case-screenshots/freemake-home.png',
-    copyrightNote: '该案例根据 FreeMake.cc 官网公开信息整理，用于学习 AI 图片生成产品的首屏结构、模型聚合和工具导航。公开搜索中暂未找到 Codex 或 Claude Code 构建证据，AI Coding 来源待补充验证。',
+    copyrightNote: '该案例根据 FreeMake.cc 官网公开信息整理，用于学习 AI 图片生成产品的首屏结构、模型聚合和工具导航。公开搜索中暂未找到 Codex 或 Claude Code 构建证据，AI 编程来源待补充验证。',
     visualType: 'landing',
     publishedAt: '2026-06-16',
     viewCount: 512,
@@ -1801,7 +1829,7 @@ const caseDrafts = [
       {
         id: 'product-positioning',
         title: '产品定位',
-        description: '官网将 FreeMake 定位为 Simple AI Image Maker，强调在浏览器中选择模型、输入提示词并生成图片，不需要安装应用。',
+        description: '官网将 FreeMake 定位为 简单 AI 图片生成器，强调在浏览器中选择模型、输入提示词并生成图片，不需要安装应用。',
         image: '',
         imageAlt: 'FreeMake.cc 产品定位截图',
         points: ['浏览器内完成生成', '面向低门槛图片创作', '首屏直接承接生成任务'],
@@ -1851,7 +1879,7 @@ const visibleCaseIds = [
 export const cases = caseDrafts.filter((item) => visibleCaseIds.includes(item.id));
 
 export const homeFeaturedIds = [
-  'freemake-ai-image-maker',
+  'knowlens-ai-infographic-generator',
   'maieutic-programming-education',
   'blacklight-agentic-defense',
   'medkit-clinical-guide',
@@ -1861,13 +1889,16 @@ export const homeFeaturedIds = [
   'nerium-ai-workspace',
 ];
 
-const knowLensCase = cases.find((item) => item.id === 'knowlens-ai-infographic-generator');
-
 export const heroRecommendation = {
-  eyebrow: '今日推荐',
-  ...knowLensCase,
-  image: knowLensCase?.screenshotUrl,
-  imageAlt: 'KnowLens.ai 首页截图',
+  id: 'forged-in-silence-codex',
+  title: 'Forged in Silence：作者如何用 Codex 做出电影感 3D 武士刀网站',
+  description:
+    'OpenAI Showcase 收录的真实案例：从电影感 3D scroll 首页出发，再继续扩成完整 店铺页，适合拆解视觉叙事、Three.js 场景和 AI 生成证据。',
+  category: '官网',
+  tools: ['Codex', 'Three.js'],
+  href: '/cases/landing-page/forged-in-silence-codex',
+  image: '/case-screenshots/forged-in-silence-home.png',
+  imageAlt: 'Forged in Silence 首页截图',
 };
 
 export const lessonAudienceFilters = [
@@ -1888,15 +1919,15 @@ export const lessonToolFilters = [
 
 export const lessonTopicFilters = [
   '全部主题',
-  'Prompt',
-  'UI Design',
-  'Workflow',
-  'Agent',
+  '提示词',
+  '界面设计',
+  '工作流',
+  '智能体',
   '上线部署',
 ];
 
 export const learningPathSteps = [
-  '理解 AI Coding 工作流',
+  '理解 AI 编程工作流',
   '学会描述产品需求',
   '拆解优秀界面和组件',
   '使用 Codex / Cursor 构建项目',
@@ -1918,14 +1949,14 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "独立开发者",
     "duration": "22 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex",
-      "Workflow",
-      "Agent"
+      "工作流",
+      "智能体"
     ],
     "href": "/learn/getting-the-most-out-of-codex",
     "image": "/learn-images/codex-maximizing-hero.jpg",
@@ -1945,7 +1976,7 @@ export const lessons = [
     "id": "uicoding-skill-coding-process",
     "title": "我如何用 Codex + Impeccable Skill 做出 UIcoding.ai",
     "originalTitle": "",
-    "description": "整理 AI Coding 案例、学习资料、工具介绍，帮助设计师、产品经理、独立开发者更快学会用 Codex、Claude Code、Cursor 这类工具做真实产品。",
+    "description": "整理 AI 编程案例、学习资料、工具介绍，帮助设计师、产品经理、独立开发者更快学会用 Codex、Claude Code、Cursor 这类工具做真实产品。",
     "sourceType": "站内原创",
     "sourceName": "Uicoding.ai",
     "sourceUrl": "",
@@ -1955,7 +1986,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "24 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -1979,7 +2010,7 @@ export const lessons = [
     ]
   },
   {
-    "id": "knowlens-codex-2b-token-tips",
+    "id": "knowlens-codex-2b-设计变量-tips",
     "title": "20 亿 Token 后，我用 Codex 开发 KnowLens.ai 的 8 个技巧",
     "originalTitle": "",
     "description": "过去两周，我基本都在用 Codex 开发 KnowLens.ai。",
@@ -1992,7 +2023,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "18 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -2001,8 +2032,8 @@ export const lessons = [
       "真实经验",
       "工作流"
     ],
-    "href": "/learn/knowlens-codex-2b-token-tips",
-    "image": "/learn-images/knowlens-codex-2b-token-hero.png",
+    "href": "/learn/knowlens-codex-2b-设计变量-tips",
+    "image": "/learn-images/knowlens-codex-2b-设计变量-hero.png",
     "imageAlt": "KnowLens.ai AI Infographic Generator 首页截图",
     "publishedAt": "2026-06-16",
     "viewCount": 520,
@@ -2019,7 +2050,7 @@ export const lessons = [
     "id": "ai-coding-full-workflow-prompt-chain",
     "title": "让 Claude Code / Codex 先思考再写代码：一套可复制的完整链路提示词",
     "originalTitle": "I Made Claude Code Think Before It Codes. Here's the Prompt.",
-    "description": "基于 Claude Wizard、Addy Osmani 的 AI Agent Spec 写法和 OpenAI Codex 官方提示词建议整理，把 AI Coding 从一句话生成代码，升级为需求理解、代码探索、测试、实现、验证和自审的完整闭环。",
+    "description": "基于 Claude Wizard、Addy Osmani 的 AI 智能体规格写法和 OpenAI Codex 官方提示词建议整理，把 AI 编程从一句话生成代码，升级为需求理解、代码探索、测试、实现、验证和自审的完整闭环。",
     "sourceType": "开源提示词整理",
     "sourceName": "Claude Wizard / Addy Osmani / OpenAI Codex Docs",
     "sourceUrl": "https://github.com/vlad-ko/claude-wizard",
@@ -2029,7 +2060,7 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "16 分钟",
-    "category": "Prompting",
+    "category": "提示词",
     "tools": [
       "Claude Code",
       "Codex"
@@ -2054,9 +2085,9 @@ export const lessons = [
   },
   {
     "id": "claude-code-official-prompt-library-copyable-workflows",
-    "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制 Prompt",
+    "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制提示词",
     "originalTitle": "Claude Code Prompt Library / Common Workflows",
-    "description": "基于 Claude Code 官方 Prompt Library 和 Common Workflows 整理，把探索代码、修复 Bug、重构、写测试和交付验证整理成可以完整复制的中文 Prompt。",
+    "description": "基于 Claude Code 官方提示词库和常用工作流整理，把探索代码、修复 Bug、重构、写测试和交付验证整理成可以完整复制的中文提示词。",
     "sourceType": "官方文档整理",
     "sourceName": "Anthropic Claude Code Docs",
     "sourceUrl": "https://code.claude.com/docs/en/prompt-library",
@@ -2066,13 +2097,13 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "15 分钟",
-    "category": "Prompting",
+    "category": "提示词",
     "tools": [
       "Claude Code"
     ],
     "tags": [
       "Claude Code",
-      "Prompt",
+      "提示词",
       "工作流",
       "验证"
     ],
@@ -2083,16 +2114,16 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "把官方 Prompt 模式整理成完整中文模板",
+      "把官方提示词模式整理成完整中文模板",
       "从代码探索开始降低误改风险",
       "让每次修改都有验证和交付总结"
     ]
   },
   {
     "id": "codex-official-workflows-copyable-prompts",
-    "title": "Codex 官方工作流：7 个可直接复制的实战 Prompt",
+    "title": "Codex 官方工作流：7 个可直接复制的实战提示词",
     "originalTitle": "Workflows",
-    "description": "基于 OpenAI Codex 官方 Workflows 整理，覆盖解释代码流、修 Bug、写测试、根据截图做原型、UI 迭代、本地 code review 和 PR review，每个场景都给出完整可复制 Prompt。",
+    "description": "基于 OpenAI Codex 官方工作流整理，覆盖解释代码流、修 Bug、写测试、根据截图做原型、UI 迭代、本地代码审查和 PR 审查，每个场景都给出完整可复制提示词。",
     "sourceType": "官方文档整理",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/workflows",
@@ -2102,13 +2133,13 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "17 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex",
-      "Prompt",
+      "提示词",
       "代码审查",
       "UI 迭代"
     ],
@@ -2121,14 +2152,14 @@ export const lessons = [
     "keyTakeaways": [
       "按场景选择最合适的 Codex 工作流",
       "每个任务都写清上下文、约束和验证方式",
-      "用 review 和 PR review 形成提交前检查"
+      "用代码审查和 PR 审查形成提交前检查"
     ]
   },
   {
     "id": "codex-real-webpage-prompt-case-library",
-    "title": "Codex 真实网页案例 Prompt 库：从网页拆解到验证套件",
+    "title": "Codex 真实网页案例提示词库：从网页拆解到验证套件",
     "originalTitle": "Codex prompt examples and real web workflow cases",
-    "description": "整理 OpenAI Codex 官方用例和外部 Prompt 库中的真实网页场景，把网页拆解、截图复刻、实现计划、验证套件和提交总结沉淀成完整可复制 Prompt。",
+    "description": "整理 OpenAI Codex 官方用例和外部提示词库中的真实网页场景，把网页拆解、截图复刻、实现计划、验证套件和提交总结沉淀成完整可复制提示词。",
     "sourceType": "案例资料整理",
     "sourceName": "OpenAI Developers / Jose Casanova Prompts",
     "sourceUrl": "https://developers.openai.com/codex/use-cases",
@@ -2138,14 +2169,14 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "19 分钟",
-    "category": "Prompting",
+    "category": "提示词",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex",
       "真实网页案例",
-      "Prompt",
+      "提示词",
       "验证套件"
     ],
     "href": "/learn/codex-real-webpage-prompt-case-library",
@@ -2155,16 +2186,16 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "用真实网页作为 AI Coding 输入",
-      "把网页拆解、实现和验证拆成稳定 Prompt",
+      "用真实网页作为 AI 编程输入",
+      "把网页拆解、实现和验证拆成稳定提示词",
       "用验证套件避免页面只做到表面相似"
     ]
   },
   {
     "id": "codex-best-practices-plan-agents-review",
-    "title": "Codex 官方最佳实践：Plan first、AGENTS.md 和可验证交付",
+    "title": "Codex 官方最佳实践：先规划、AGENTS.md 和可验证交付",
     "originalTitle": "Best practices",
-    "description": "基于 OpenAI Codex 官方 Best practices 整理，学习如何用目标、上下文、约束和完成标准写任务，用 Plan first 处理复杂需求，用 AGENTS.md 固化规则，并通过测试和 review 验证交付。",
+    "description": "基于 OpenAI Codex 官方最佳实践整理，学习如何用目标、上下文、约束和完成标准写任务，用先规划处理复杂需求，用 AGENTS.md 固化规则，并通过测试和审查验证交付。",
     "sourceType": "官方文档整理",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/learn/best-practices",
@@ -2174,15 +2205,15 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "18 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex",
-      "Best Practices",
+      "最佳实践",
       "AGENTS.md",
-      "Review"
+      "审查"
     ],
     "href": "/learn/codex-best-practices-plan-agents-review",
     "publishedAt": "2026-06-17",
@@ -2193,14 +2224,14 @@ export const lessons = [
     "keyTakeaways": [
       "用目标、上下文、约束和完成标准组织任务",
       "复杂需求先让 Codex 计划和反问",
-      "用 AGENTS.md、测试和 review 固化交付质量"
+      "用 AGENTS.md、测试和审查固化交付质量"
     ]
   },
   {
     "id": "codex-agent-skills-reusable-workflow-templates",
-    "title": "Codex Agent Skills：把高频 Prompt 封装成可靠工作流",
+    "title": "Codex Agent Skills：把高频提示词封装成可靠工作流",
     "originalTitle": "Agent Skills",
-    "description": "基于 OpenAI Codex Agent Skills 官方文档整理，学习如何用 .agents/skills 和 SKILL.md 把页面走查、内容导入、本地 review、验证交付等高频 Prompt 封装成可复用技能。",
+    "description": "基于 OpenAI Codex Agent Skills 官方文档整理，学习如何用 .agents/skills 和 SKILL.md 把页面走查、内容导入、本地审查、验证交付等高频提示词封装成可复用 Skill。",
     "sourceType": "官方文档整理",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/skills",
@@ -2210,7 +2241,7 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "20 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -2229,12 +2260,12 @@ export const lessons = [
     "keyTakeaways": [
       "理解 Codex Skills 的目录结构和触发方式",
       "用 SKILL.md 固化高频工作流",
-      "把页面走查、内容导入和 review 做成可复用模板"
+      "把页面走查、内容导入和审查做成可复用模板"
     ]
   },
   {
     "id": "codex-slack-team-workflow-prompts",
-    "title": "Slack 里调用 Codex：把团队反馈变成可执行任务 Prompt",
+    "title": "Slack 里调用 Codex：把团队反馈变成可执行任务提示词",
     "originalTitle": "Use Codex in Slack",
     "description": "基于 OpenAI Codex Slack 官方集成文档整理，学习如何在 Slack 线程中 @Codex，把 Bug 反馈、设计意见、PR 检查和上线前验证变成可执行云任务。",
     "sourceType": "官方文档整理",
@@ -2246,7 +2277,7 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "16 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -2265,14 +2296,14 @@ export const lessons = [
     "keyTakeaways": [
       "在 Slack 线程里把反馈整理成 Codex 云任务",
       "用仓库、环境、验收标准减少上下文丢失",
-      "把 Bug、UI 反馈、PR review 和发布检查模板化"
+      "把 Bug、UI 反馈、PR 审查和发布检查模板化"
     ]
   },
   {
     "id": "codex-pixel-perfect-website-rebuild-prompts",
-    "title": "Codex 高保真网站复现 Prompt：从参考网页到像素级验证",
+    "title": "Codex 高保真网站复现提示词：从参考网页到像素级验证",
     "originalTitle": "Turn Figma designs into code",
-    "description": "基于 OpenAI Codex Figma-to-code 官方用例整理，学习如何把参考网页、截图或设计稿拆解成可实现页面，并用 Playwright 截图、响应式检查和迭代 Prompt 做到高保真复现。",
+    "description": "基于 OpenAI Codex Figma-to-code 官方用例整理，学习如何把参考网页、截图或设计稿拆解成可实现页面，并用 Playwright 截图、响应式检查和迭代提示词做到高保真复现。",
     "sourceType": "官方用例整理",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
@@ -2282,7 +2313,7 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "设计师",
     "duration": "20 分钟",
-    "category": "Prompting",
+    "category": "提示词",
     "tools": [
       "Codex"
     ],
@@ -2300,15 +2331,15 @@ export const lessons = [
     "external": true,
     "keyTakeaways": [
       "先拆解参考网页再写代码",
-      "用完整 Prompt 控制布局、资产、响应式和交互",
+      "用完整提示词控制布局、资产、响应式和交互",
       "用截图对比和迭代提示词逼近高保真效果"
     ]
   },
   {
     "id": "codex-cinematic-web-effects-prompts",
-    "title": "Codex 酷炫网页效果 Prompt：3D、滚动叙事和高级动效",
+    "title": "Codex 酷炫网页效果提示词：3D、滚动叙事和高级动效",
     "originalTitle": "Build cinematic web experiences with Codex",
-    "description": "基于 Codex Figma-to-code 用例、Three.js 和 GSAP ScrollTrigger 官方资料整理，学习如何用完整 Prompt 让 Codex 实现沉浸式 Hero、3D 背景、滚动叙事、粒子动效和性能验证。",
+    "description": "基于 Codex Figma-to-code 用例、Three.js 和 GSAP ScrollTrigger 官方资料整理，学习如何用完整提示词让 Codex 实现沉浸式 Hero、3D 背景、滚动叙事、粒子动效和性能验证。",
     "sourceType": "技术资料整理",
     "sourceName": "OpenAI Developers / Three.js / GSAP",
     "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
@@ -2318,7 +2349,7 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "设计师",
     "duration": "21 分钟",
-    "category": "Prompting",
+    "category": "提示词",
     "tools": [
       "Codex"
     ],
@@ -2335,33 +2366,33 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "用 Prompt 把酷炫效果拆成可实现模块",
+      "用提示词把酷炫效果拆成可实现模块",
       "让 Codex 同时处理视觉、交互、响应式和性能",
       "用截图、帧率和降级方案验证高级动效"
     ]
   },
   {
     "id": "codex-design-system-consistency-prompts",
-    "title": "Codex 设计规范一致性 Prompt：从 Tokens 到组件治理",
-    "originalTitle": "Design systems and design tokens consistency workflows",
-    "description": "基于 Design Tokens、Material Design 和 Figma Design Systems 资料整理，学习如何让 Codex 审查并统一颜色、字体、间距、圆角、按钮、卡片和页面节奏，提升网站设计规范一致性。",
+    "title": "Codex 设计规范一致性提示词：从设计变量到组件治理",
+    "originalTitle": "Design systems and design 设计变量 consistency workflows",
+    "description": "基于设计变量、Material Design 和 Figma 设计系统资料整理，学习如何让 Codex 审查并统一颜色、字体、间距、圆角、按钮、卡片和页面节奏，提升网站设计规范一致性。",
     "sourceType": "设计系统资料整理",
-    "sourceName": "Material Design / Figma / W3C Design Tokens",
-    "sourceUrl": "https://m3.material.io/foundations/design-tokens",
-    "author": "Google、Figma、W3C Design Tokens Community Group、Uicoding.ai 整理",
+    "sourceName": "Material Design / Figma / W3C 设计变量",
+    "sourceUrl": "https://m3.material.io/foundations/design-设计变量",
+    "author": "Google、Figma、W3C 设计变量 Community Group、Uicoding.ai 整理",
     "license": "外部资料整理",
     "translationMode": "guidedTranslation",
     "collectedAt": "2026-06-17",
     "audience": "设计师",
     "duration": "19 分钟",
-    "category": "Design System",
+    "category": "设计系统",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex",
       "设计系统",
-      "Design Tokens",
+      "设计变量",
       "一致性"
     ],
     "href": "/learn/codex-design-system-consistency-prompts",
@@ -2371,7 +2402,7 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "用设计 tokens 统一颜色、字体、间距和圆角",
+      "用设计 设计变量 统一颜色、字体、间距和圆角",
       "让 Codex 审查散乱样式和重复组件",
       "用组件治理和页面 QA 保持长期一致性"
     ]
@@ -2380,7 +2411,7 @@ export const lessons = [
     "id": "ai-coding-team-collaboration-operating-model",
     "title": "AI Coding 团队协作落地方法论：角色分工、产出物和流程",
     "originalTitle": "AI-assisted software development operating model",
-    "description": "基于 DORA、McKinsey、Faros AI 和 Atlassian 的专业报告整理，系统讲解团队如何使用 Codex、Claude Code、Cursor 等 AI Coding 工具协同开发：每个角色做什么、产出物是什么、流程如何跑、质量如何控、指标如何看。",
+    "description": "基于 DORA、McKinsey、Faros AI 和 Atlassian 的专业报告整理，系统讲解团队如何使用 Codex、Claude Code、Cursor 等 AI 编程工具协同开发：每个角色做什么、产出物是什么、流程如何跑、质量如何控、指标如何看。",
     "sourceType": "专业报告整理",
     "sourceName": "DORA / McKinsey / Faros AI / Atlassian",
     "sourceUrl": "https://dora.dev/research/2025/dora-report/",
@@ -2390,14 +2421,14 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "产品经理",
     "duration": "26 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex",
       "Claude Code",
       "Cursor"
     ],
     "tags": [
-      "AI Coding",
+      "AI 编程",
       "团队协作",
       "方法论",
       "DevEx"
@@ -2409,16 +2440,16 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "AI Coding 是组织系统问题，不只是工具采购",
+      "AI 编程是组织系统问题，不只是工具采购",
       "每个角色都要有明确职责、输入和产出物",
       "用质量门禁和端到端指标避免个体变快但团队不快"
     ]
   },
   {
     "id": "claude-code-skills-reusable-prompt-workflows",
-    "title": "Claude Code Skills 官方指南：把一次性 Prompt 沉淀成可复用工作流",
+    "title": "Claude Code Skills 官方指南：把一次性提示词沉淀成可复用工作流",
     "originalTitle": "Claude Code Skills",
-    "description": "基于 Claude Code 官方 Skills 文档整理，学习如何把 summarize-changes、fix-issue、pr-summary 等一次性提示词，变成可以反复调用的 Skill / slash command。",
+    "description": "基于 Claude Code 官方 Skills 文档整理，学习如何把 summarize-changes、fix-issue、pr-summary 等一次性提示词，变成可以反复调用的 Skill / 斜杠命令。",
     "sourceType": "官方文档整理",
     "sourceName": "Anthropic Claude Code Docs",
     "sourceUrl": "https://docs.anthropic.com/en/docs/claude-code/skills",
@@ -2428,15 +2459,15 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "18 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Claude Code"
     ],
     "tags": [
       "Claude Code",
       "Skills",
-      "Slash Command",
-      "Prompt 模板"
+      "斜杠命令",
+      "提示词模板"
     ],
     "href": "/learn/claude-code-skills-reusable-prompt-workflows",
     "publishedAt": "2026-06-17",
@@ -2445,7 +2476,7 @@ export const lessons = [
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "把高频 Prompt 变成可复用 Skill",
+      "把高频提示词变成可复用 Skill",
       "用 SKILL.md 固化任务流程和验证标准",
       "沉淀 summarize-changes、fix-issue、pr-summary 模板"
     ]
@@ -2454,7 +2485,7 @@ export const lessons = [
     "id": "codex-cli-basic-operations",
     "title": "Codex CLI 基础操作：从交互模式到第一个可验证修改",
     "originalTitle": "Codex CLI features",
-    "description": "基于 OpenAI 官方 CLI 功能文档整理，学习如何在项目目录里启动 Codex、描述任务、检查 diff 并完成构建验证。",
+    "description": "基于 OpenAI 官方 CLI 功能文档整理，学习如何在项目目录里启动 Codex、描述任务、检查 差异 并完成构建验证。",
     "sourceType": "官方文档",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/cli/features",
@@ -2464,7 +2495,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "11 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -2484,7 +2515,7 @@ export const lessons = [
     "keyTakeaways": [
       "在项目目录启动 Codex",
       "用小任务控制修改范围",
-      "通过 diff 和 build 验证结果"
+      "通过 差异 和 build 验证结果"
     ]
   },
   {
@@ -2501,12 +2532,12 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "14 分钟",
-    "category": "Prompt",
+    "category": "提示词",
     "tools": [
       "Codex"
     ],
     "tags": [
-      "Prompt",
+      "提示词",
       "需求描述",
       "验收标准"
     ],
@@ -2527,8 +2558,8 @@ export const lessons = [
   {
     "id": "codex-best-practices-plan-first",
     "title": "Codex 官方最佳实践：从提示词到自动化工作流",
-    "originalTitle": "Best practices - Codex",
-    "description": "基于 OpenAI 官方最佳实践整理，系统学习如何写清任务、使用 Plan mode、沉淀 AGENTS.md、接入 MCP 和 Skills，并用验证闭环稳定完成 AI Coding。",
+    "originalTitle": "最佳实践 - Codex",
+    "description": "基于 OpenAI 官方最佳实践整理，系统学习如何写清任务、使用 Plan mode、沉淀 AGENTS.md、接入 MCP 和 Skills，并用验证闭环稳定完成 AI 编程。",
     "sourceType": "官方文档",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/learn/best-practices",
@@ -2538,7 +2569,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "28 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -2565,7 +2596,7 @@ export const lessons = [
     "id": "claude-code-beginner-first-task",
     "title": "Claude Code 新手入门：安装并完成第一个任务",
     "originalTitle": "Terminal guide for new users",
-    "description": "基于 Claude Code 官方新手终端指南整理，带你从安装、进入项目、提出第一个任务到检查修改结果。",
+    "description": "基于 Claude Code 官方新手终端指南整理，从安装、进入项目、提出第一个任务到检查修改结果。",
     "sourceType": "官方文档",
     "sourceName": "Claude Code Docs",
     "sourceUrl": "https://code.claude.com/docs/en/terminal-guide",
@@ -2575,7 +2606,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "12 分钟",
-    "category": "Agent",
+    "category": "智能体",
     "tools": [
       "Claude Code"
     ],
@@ -2612,7 +2643,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "15 分钟",
-    "category": "Agent",
+    "category": "智能体",
     "tools": [
       "Claude Code"
     ],
@@ -2649,7 +2680,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "14 分钟",
-    "category": "Agent",
+    "category": "智能体",
     "tools": [
       "Claude Code"
     ],
@@ -2686,14 +2717,14 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "零基础学习者",
     "duration": "9 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex CLI",
       "新手教程",
-      "Workflow"
+      "工作流"
     ],
     "href": "/learn/datacamp-codex-cli-beginner",
     "image": "/learn-covers/codex-cli-basics.svg",
@@ -2713,7 +2744,7 @@ export const lessons = [
     "id": "codex-usage-practices",
     "title": "Codex 使用实践：如何把任务交代清楚",
     "originalTitle": "Prompting Codex",
-    "description": "基于 OpenAI Codex 官方提示词资料整理，学习如何限定范围、说明目标并让 Agent 稳定修改代码。",
+    "description": "基于 OpenAI Codex 官方提示词资料整理，学习如何限定范围、说明目标并让智能体稳定修改代码。",
     "sourceType": "官方文档",
     "sourceName": "OpenAI Developers",
     "sourceUrl": "https://developers.openai.com/codex/prompting",
@@ -2723,14 +2754,14 @@ export const lessons = [
     "collectedAt": "2026-06-15",
     "audience": "独立开发者",
     "duration": "13 分钟",
-    "category": "Prompt",
+    "category": "提示词",
     "tools": [
       "Codex"
     ],
     "tags": [
       "Codex",
-      "Prompt",
-      "Agent"
+      "提示词",
+      "智能体"
     ],
     "href": "/learn/codex-usage-practices",
     "publishedAt": "2026-06-15",
@@ -2741,14 +2772,14 @@ export const lessons = [
     "keyTakeaways": [
       "先说明目标和验收标准",
       "限定要修改的文件和范围",
-      "要求 Agent 运行构建或测试验证结果"
+      "要求智能体运行构建或测试验证结果"
     ]
   },
   {
     "id": "cursor-agent-workflow",
-    "title": "Cursor Agent 工作流：从需求到多文件修改",
+    "title": "Cursor 智能体工作流：从需求到多文件修改",
     "originalTitle": "Cursor Agent Documentation",
-    "description": "基于 Cursor 官方 Agent 文档整理，理解如何让 Agent 在项目上下文中规划、编辑和验证多文件任务。",
+    "description": "基于 Cursor 官方智能体文档整理，理解如何让智能体在项目上下文中规划、编辑和验证多文件任务。",
     "sourceType": "官方文档",
     "sourceName": "Cursor Docs",
     "sourceUrl": "https://docs.cursor.com/agent/overview",
@@ -2758,14 +2789,14 @@ export const lessons = [
     "collectedAt": "2026-06-15",
     "audience": "独立开发者",
     "duration": "12 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Cursor"
     ],
     "tags": [
       "Cursor",
-      "Agent",
-      "Workflow"
+      "智能体",
+      "工作流"
     ],
     "href": "/learn/cursor-agent-workflow",
     "publishedAt": "2026-06-15",
@@ -2775,13 +2806,13 @@ export const lessons = [
     "external": true,
     "keyTakeaways": [
       "把大任务拆成可审查步骤",
-      "让 Agent 利用项目上下文",
-      "每轮修改后检查 diff 和运行结果"
+      "让智能体利用项目上下文",
+      "每轮修改后检查差异和运行结果"
     ]
   },
   {
     "id": "cursor-rules-project-standards",
-    "title": "Cursor Rules 项目规范：让 AI 按你的方式写代码",
+    "title": "Cursor Rules 项目规范：让 AI 按项目规范写代码",
     "originalTitle": "Cursor Rules Documentation",
     "description": "基于 Cursor Rules 文档整理，学习如何沉淀项目约束、组件规范和团队协作规则。",
     "sourceType": "官方文档",
@@ -2793,14 +2824,14 @@ export const lessons = [
     "collectedAt": "2026-06-15",
     "audience": "设计师",
     "duration": "10 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Cursor"
     ],
     "tags": [
       "Cursor",
       "Rules",
-      "Workflow"
+      "工作流"
     ],
     "href": "/learn/cursor-rules-project-standards",
     "publishedAt": "2026-06-15",
@@ -2816,9 +2847,9 @@ export const lessons = [
   },
   {
     "id": "claude-code-best-practices",
-    "title": "Claude Code 最佳实践：用 Agent 处理真实代码库",
+    "title": "Claude Code 最佳实践：用智能体处理真实代码库",
     "originalTitle": "Claude Code: Best practices for agentic coding",
-    "description": "基于 Anthropic 官方工程博客整理，学习如何配置上下文、拆解任务并安全地使用命令行 Agent。",
+    "description": "基于 Anthropic 官方工程博客整理，学习如何配置上下文、拆解任务并安全地使用命令行智能体。",
     "sourceType": "官方博客",
     "sourceName": "Anthropic Engineering",
     "sourceUrl": "https://www.anthropic.com/engineering/claude-code-best-practices",
@@ -2828,14 +2859,14 @@ export const lessons = [
     "collectedAt": "2026-06-15",
     "audience": "独立开发者",
     "duration": "15 分钟",
-    "category": "Agent",
+    "category": "智能体",
     "tools": [
       "Claude Code"
     ],
     "tags": [
       "Claude Code",
-      "Agent",
-      "Best Practices"
+      "智能体",
+      "最佳实践"
     ],
     "href": "/learn/claude-code-best-practices",
     "publishedAt": "2026-06-15",
@@ -2845,15 +2876,15 @@ export const lessons = [
     "external": true,
     "keyTakeaways": [
       "先建立项目上下文",
-      "让 Agent 小步执行并确认结果",
+      "让智能体小步执行并确认结果",
       "保留人工审查和权限控制"
     ]
   },
   {
     "id": "effective-context-engineering-ai-agents",
-    "title": "AI Agent 上下文工程：让 Coding Agent 真正落地",
+    "title": "AI 智能体上下文工程：让编程智能体真正落地",
     "originalTitle": "Effective context engineering for AI agents",
-    "description": "基于 Anthropic 工程文章整理，学习如何从提示词走向上下文工程，让 Codex、Claude Code 这类 Agent 在真实任务里获得正确目标、工具、记忆和反馈。",
+    "description": "基于 Anthropic 工程文章整理，学习如何从提示词走向上下文工程，让 Codex、Claude Code 这类智能体在真实任务里获得正确目标、工具、记忆和反馈。",
     "sourceType": "官方博客",
     "sourceName": "Anthropic Engineering",
     "sourceUrl": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
@@ -2863,34 +2894,34 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "独立开发者",
     "duration": "18 分钟",
-    "category": "Agent",
+    "category": "智能体",
     "tools": [
       "Claude Code",
       "通用"
     ],
     "tags": [
-      "Context Engineering",
-      "Agent",
-      "AI Coding",
-      "Workflow"
+      "上下文工程",
+      "智能体",
+      "AI 编程",
+      "工作流"
     ],
     "href": "/learn/effective-context-engineering-ai-agents",
     "image": "/learn-images/context-engineering-agents-hero.png",
-    "imageAlt": "AI Agent 上下文工程文章封面图",
+    "imageAlt": "AI 智能体上下文工程文章封面图",
     "publishedAt": "2026-06-16",
     "viewCount": 836,
     "likeCount": 58,
     "featured": false,
     "external": true,
     "keyTakeaways": [
-      "上下文工程比单次提示词更适合真实 Agent",
+      "上下文工程比单次提示词更适合真实智能体",
       "把工具、记忆、检索和反馈组织成可用上下文",
-      "长任务需要持续校准上下文而不是一次性写完 prompt"
+      "长任务需要持续校准上下文，而不是一次性写完提示词"
     ]
   },
   {
     "id": "codex-cli-first-days-terminal-workflow",
-    "title": "Codex CLI 初体验：把 AI Agent 放进你的终端工作流",
+    "title": "Codex CLI 初体验：把 AI 智能体放进终端工作流",
     "originalTitle": "First few days with Codex CLI",
     "description": "基于 Aman Mittal 的实战文章整理，学习如何安装 Codex CLI、恢复会话、用它编辑 Obsidian 笔记，并通过 MCP、Playwright Bridge 和 Skills 做成可复用工作流。",
     "sourceType": "开发者文章",
@@ -2902,7 +2933,7 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "独立开发者",
     "duration": "22 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Codex"
     ],
@@ -2928,7 +2959,7 @@ export const lessons = [
   },
   {
     "id": "claude-code-best-practices-agentic-coding",
-    "title": "Claude Code 官方最佳实践：让 Agentic Coding 真正落地",
+    "title": "Claude Code 官方最佳实践：让智能体编程真正落地",
     "originalTitle": "Best practices for Claude Code",
     "description": "基于 Anthropic 官方 Claude Code 最佳实践整理，学习如何让 Claude 先探索再计划、写清上下文、配置 CLAUDE.md、连接 MCP，并通过验证和自动化稳定推进真实项目。",
     "sourceType": "官方文档",
@@ -2940,15 +2971,15 @@ export const lessons = [
     "collectedAt": "2026-06-16",
     "audience": "独立开发者",
     "duration": "20 分钟",
-    "category": "Workflow",
+    "category": "工作流",
     "tools": [
       "Claude Code"
     ],
     "tags": [
       "Claude Code",
-      "Agentic Coding",
+      "智能体编程",
       "MCP",
-      "Workflow"
+      "工作流"
     ],
     "href": "/learn/claude-code-best-practices-agentic-coding",
     "publishedAt": "2026-06-16T12:00:00+08:00",
@@ -2964,9 +2995,9 @@ export const lessons = [
   },
   {
     "id": "context-engineering-coding-agents",
-    "title": "Coding Agent 的上下文工程：让 AI 看见正确的信息",
+    "title": "编程智能体的上下文工程：让 AI 看见正确的信息",
     "originalTitle": "Context engineering for coding agents",
-    "description": "基于 Martin Fowler 网站的开发者文章整理，理解为什么上下文比单次提示词更影响 Agent 结果。",
+    "description": "基于 Martin Fowler 网站的开发者文章整理，理解为什么上下文比单次提示词更影响智能体结果。",
     "sourceType": "开发者文章",
     "sourceName": "Martin Fowler",
     "sourceUrl": "https://martinfowler.com/articles/exploring-gen-ai/context-engineering-coding-agents.html",
@@ -2976,14 +3007,14 @@ export const lessons = [
     "collectedAt": "2026-06-15",
     "audience": "独立开发者",
     "duration": "16 分钟",
-    "category": "Agent",
+    "category": "智能体",
     "tools": [
       "通用"
     ],
     "tags": [
-      "Context Engineering",
-      "Agent",
-      "Workflow"
+      "上下文工程",
+      "智能体",
+      "工作流"
     ],
     "href": "/learn/context-engineering-coding-agents",
     "publishedAt": "2026-06-15",
@@ -2998,10 +3029,86 @@ export const lessons = [
     ]
   },
   {
+    "id": "ten-essential-codex-skills",
+    "title": "Codex 最该先装的 10 个 Skills",
+    "originalTitle": "10 essential skills for Codex",
+    "description": "10 个高频 Codex Skills，覆盖查官方资料、看网页、做 UI、生成素材、提交 PR、安装扩展和沉淀团队流程。装对顺序，Codex 才能从聊天助手变成可复用工作台。",
+    "sourceType": "OpenAI 官方文档 + 实战整理",
+    "sourceName": "OpenAI Codex Docs / UIcoding 编辑整理",
+    "sourceUrl": "https://developers.openai.com/codex/skills",
+    "author": "UIcoding 编辑部",
+    "license": "官方资料整理",
+    "translationMode": "original",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "32 分钟",
+    "category": "工作流",
+    "tools": [
+      "Codex",
+      "GitHub"
+    ],
+    "tags": [
+      "Codex",
+      "Skills",
+      "工作流",
+      "安装指南"
+    ],
+    "href": "/learn/ten-essential-codex-skills",
+    "publishedAt": "2026-06-17",
+    "viewCount": 612,
+    "likeCount": 48,
+    "featured": true,
+    "external": false,
+    "keyTakeaways": [
+      "先分清内置 Skill、插件 Skill 和团队自定义 Skill",
+      "高频工作最好交给 Skill，而不是每次重写一大段提示词",
+      "把安装、调用和验证方法一起固定下来，Codex 才会越用越顺"
+    ]
+  },
+  {
+    "id": "promptboard-codex-real-developer-case",
+    "title": "PromptBoard：真实开发者如何用 Codex 做出提示词管理产品",
+    "originalTitle": "I Let Codex Design and Test a Frontend App for Me. Here's What Actually Happened",
+    "description": "PromptBoard 是一个面向开发者的提示词管理产品原型，支持整理、筛选、查看和草拟提示词。作者公开了网站、工作台、提示词文档和 Playwright 验证流程。",
+    "sourceType": "开发者文章 + 开源仓库",
+    "sourceName": "Level Up / GitHub",
+    "sourceUrl": "https://levelup.gitconnected.com/i-let-codex-design-and-test-a-frontend-app-for-me-heres-what-actually-happened-a192b514f27e",
+    "author": "Sanjay Nela",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "20 分钟",
+    "category": "提示词",
+    "tools": [
+      "Codex",
+      "Playwright"
+    ],
+    "tags": [
+      "Codex",
+      "真实开发者案例",
+      "提示词",
+      "Playwright"
+    ],
+    "href": "/learn/promptboard-codex-real-developer-case",
+    "image": "https://raw.githubusercontent.com/sanjaynela/promptBoard/main/public/screenshots/landing-page.png",
+    "imageAlt": "PromptBoard 首页截图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 560,
+    "likeCount": 41,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "把视觉方向、页面实现和浏览器验证拆成不同提示词",
+      "让着陆页和工作台共用一个真实产品故事",
+      "用 Playwright 和浏览器走查把“看起来差不多”变成可验证交付"
+    ]
+  },
+  {
     "id": "copyable-prompts-for-stunning-ai-websites",
-    "title": "5 个带可复制 Prompt 的酷炫网页案例：照着还原首页",
+    "title": "5 个带可复制提示词的酷炫网页案例：照着还原首页",
     "originalTitle": "Copyable prompts for stunning AI websites",
-    "description": "整理 5 个明确提供可复制 prompt 的 AI 网页案例。每个案例都附真实网站首页图、网站链接、官方 prompt 页面，以及 2 到 3 个可直接拿去还原网页的中文提示词。",
+    "description": "整理 5 个明确提供可复制提示词的 AI 网页案例。每个案例都附真实网站首页图、网站链接，以及 2 到 3 个可直接拿去还原网页的中文提示词。",
     "sourceType": "UIcoding 精选",
     "sourceName": "OpenAI Showcase / UIcoding 编辑整理",
     "sourceUrl": "https://developers.openai.com/showcase",
@@ -3011,28 +3118,28 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "18 分钟",
-    "category": "Prompt",
+    "category": "提示词",
     "tools": [
       "Codex",
       "通用"
     ],
     "tags": [
-      "Prompt",
-      "Landing Page",
-      "Game",
-      "AI Coding"
+      "提示词",
+      "着陆页",
+      "游戏",
+      "AI 编程"
     ],
     "href": "/learn/copyable-prompts-for-stunning-ai-websites",
     "image": "/case-screenshots/forged-in-silence-home.png",
-    "imageAlt": "带可复制 Prompt 的酷炫网页案例封面图",
+    "imageAlt": "带可复制提示词的酷炫网页案例封面图",
     "publishedAt": "2026-06-17",
     "viewCount": 528,
     "likeCount": 46,
     "featured": true,
     "external": true,
     "keyTakeaways": [
-      "优先选公开提供 Copy Prompt 的网页案例来学",
-      "把 prompt 拆成首屏、交互和收尾三段更容易还原",
+      "优先选公开提供复制提示词的网页案例来学",
+      "把提示词拆成首屏、交互和收尾三段更容易还原",
       "先还原网站气质，再补动效、响应式和细节"
     ]
   },
@@ -3040,7 +3147,7 @@ export const lessons = [
     "id": "copyable-prompts-for-playable-ai-websites",
     "title": "5 个更偏游戏感的 AI 网页案例：直接照着做首页和交互入口",
     "originalTitle": "Copyable prompts for playable AI websites",
-    "description": "整理 5 个更偏游戏感、互动感和可玩体验的 AI 网页案例。每个案例都附真实网站首页截图、真实网址、官方 Prompt 页面，以及 2 个适合还原首页与交互入口的中文提示词。",
+    "description": "整理 5 个更偏游戏感、互动感和可玩体验的 AI 网页案例。每个案例都附真实网站首页截图、真实网址，以及 2 个适合还原首页与交互入口的中文提示词。",
     "sourceType": "UIcoding 精选",
     "sourceName": "OpenAI Showcase / UIcoding 编辑整理",
     "sourceUrl": "https://developers.openai.com/showcase",
@@ -3050,16 +3157,16 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "19 分钟",
-    "category": "Prompt",
+    "category": "提示词",
     "tools": [
       "Codex",
       "通用"
     ],
     "tags": [
-      "Prompt",
-      "Game",
-      "Interactive",
-      "AI Coding"
+      "提示词",
+      "游戏",
+      "交互",
+      "AI 编程"
     ],
     "href": "/learn/copyable-prompts-for-playable-ai-websites",
     "image": "/case-screenshots/ember-tactics-home.png",
@@ -3079,7 +3186,7 @@ export const lessons = [
     "id": "copyable-prompts-for-ai-tool-surfaces",
     "title": "5 个工具型 AI 网页案例：照着做生成器、控制面板和 3D 场景界面",
     "originalTitle": "Copyable prompts for AI tool surfaces",
-    "description": "整理 5 个更偏工具表面、参数控制和 3D 场景交互的 AI 网页案例。每个案例都附真实网站首页截图、真实网址、官方 Prompt 页面，以及 2 个适合还原首页和控制面板的中文提示词。",
+    "description": "整理 5 个更偏工具表面、参数控制和 3D 场景交互的 AI 网页案例。每个案例都附真实网站首页截图、真实网址，以及 2 个适合还原首页和控制面板的中文提示词。",
     "sourceType": "UIcoding 精选",
     "sourceName": "OpenAI Showcase / UIcoding 编辑整理",
     "sourceUrl": "https://developers.openai.com/showcase",
@@ -3089,16 +3196,16 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "20 分钟",
-    "category": "Prompt",
+    "category": "提示词",
     "tools": [
       "Codex",
       "通用"
     ],
     "tags": [
-      "Prompt",
-      "Tool UI",
+      "提示词",
+      "工具界面",
       "3D",
-      "AI Coding"
+      "AI 编程"
     ],
     "href": "/learn/copyable-prompts-for-ai-tool-surfaces",
     "image": "/case-screenshots/procedural-city-home.png",
@@ -3128,17 +3235,17 @@ export const lessons = [
     "collectedAt": "2026-06-17",
     "audience": "独立开发者",
     "duration": "21 分钟",
-    "category": "Prompt",
+    "category": "提示词",
     "tools": [
       "Codex",
       "Claude Code",
       "通用"
     ],
     "tags": [
-      "Prompt",
+      "提示词",
       "Education",
-      "Knowledge UI",
-      "AI Coding"
+      "知识界面",
+      "AI 编程"
     ],
     "href": "/learn/copyable-prompts-for-knowledge-and-education-ai-websites",
     "image": "/case-screenshots/knowlens-ai-home.webp",
@@ -3153,6 +3260,201 @@ export const lessons = [
       "教育与解释类页面的重点是降低理解成本，而不是炫技",
       "先把内容结构做清楚，再补视觉风格、状态反馈和细节"
     ]
+  },
+  {
+    "id": "copyable-prompts-for-enterprise-ai-workflows",
+    "title": "5 个企业工作流 AI 网页案例：照着做安全、合规和团队工具界面",
+    "originalTitle": "Copyable prompts for enterprise AI workflow websites",
+    "description": "整理 5 个更偏企业工作流、安全、合规和团队协作的 AI 网页案例。每个案例都附真实网站首页截图、网站链接、案例详情链接，以及 2 个适合还原首页和核心界面的中文提示词。",
+    "sourceType": "UIcoding 精选",
+    "sourceName": "UIcoding 编辑整理",
+    "sourceUrl": "https://www.uicoding.ai/cases",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "22 分钟",
+    "category": "提示词",
+    "tools": [
+      "Claude Code",
+      "Codex",
+      "通用"
+    ],
+    "tags": [
+      "提示词",
+      "企业界面",
+      "工作流",
+      "AI 编程"
+    ],
+    "href": "/learn/copyable-prompts-for-enterprise-ai-workflows",
+    "image": "/case-screenshots/blacklight-home.png",
+    "imageAlt": "企业工作流 AI 网页案例封面图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 424,
+    "likeCount": 33,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "企业工具首页的核心不是炫酷，而是让角色、流程和状态一眼清楚",
+      "复杂工作流页面要先定义任务入口、信息层级和下一步动作",
+      "先让产品像真实工具，再补品牌感和视觉细节"
+    ]
+  },
+  {
+    "id": "anthropic-company-wide-claude-code-rollout",
+    "title": "Anthropic 跨团队使用 Claude Code 的落地方法：从个人提效到组织协作",
+    "originalTitle": "How Anthropic teams use Claude Code",
+    "description": "基于 Anthropic 官方跨团队经验和 Claude Code 最佳实践整理，拆解一家公司如何从试点、项目规则、命令模板、团队角色、质量门禁和度量体系推动 AI 编程落地。",
+    "sourceType": "官方资料整理",
+    "sourceName": "Anthropic / Claude Code Docs",
+    "sourceUrl": "https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "团队负责人",
+    "duration": "24 分钟",
+    "category": "方法论",
+    "tools": [
+      "Claude Code",
+      "Codex",
+      "通用"
+    ],
+    "tags": [
+      "团队工作流",
+      "Claude Code",
+      "AI 编程",
+      "组织落地"
+    ],
+    "href": "/learn/anthropic-company-wide-claude-code-rollout",
+    "publishedAt": "2026-06-17T22:00:00+08:00",
+    "viewCount": 386,
+    "likeCount": 31,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "公司级 AI 编程落地不是让每个人随便用工具，而是建立共享上下文和质量门禁",
+      "CLAUDE.md、斜杠命令、skills、hooks 和验证命令是团队复用经验的核心载体",
+      "从低风险高频任务试点，再扩展到产品、数据、安全、设计和法务等跨职能场景"
+    ]
+  },
+  {
+    "id": "figma-ai-coding-design-system-mcp-workflow",
+    "title": "设计师如何用 Figma + AI Coding 保证界面还原：monday.com 的 设计系统 MCP 经验",
+    "originalTitle": "How We Use AI to Turn Figma Designs into Production Code",
+    "description": "基于 monday.com 工程团队和 Figma 官方 MCP 工作流整理，讲清楚为什么直接把 Figma 链接丢给 AI 不够，如何用设计系统、设计变量、组件、可访问性规则和团队流程保证界面细节还原。",
+    "sourceType": "工程团队案例",
+    "sourceName": "monday engineering / Figma Blog",
+    "sourceUrl": "https://engineering.monday.com/how-we-use-ai-to-turn-figma-designs-into-production-code/",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "设计师",
+    "duration": "23 分钟",
+    "category": "工作流",
+    "tools": [
+      "Figma",
+      "Cursor",
+      "Claude Code",
+      "Codex"
+    ],
+    "tags": [
+      "Figma",
+      "设计系统",
+      "MCP",
+      "AI 编程"
+    ],
+    "href": "/learn/figma-ai-coding-design-system-mcp-workflow",
+    "publishedAt": "2026-06-17T22:30:00+08:00",
+    "viewCount": 362,
+    "likeCount": 29,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "AI 还原 Figma 的关键不是截图像，而是代码是否使用正确组件、设计变量、属性 和可访问性规则",
+      "设计系统要变成机器可读的上下文，不能只靠自然语言提示词描述",
+      "团队落地需要把 Figma、代码、设计评审和视觉 差异 连接成连续循环"
+    ]
+  },
+  {
+    "id": "pallyy-74k-mrr-solo-founder-retrospective",
+    "title": "从自学写代码到 $74K MRR：Pallyy 一人公司复盘",
+    "originalTitle": "Here's how I've built Pallyy to $74K MRR solo.",
+    "description": "Tim B 复盘自己如何先花 6 个月学 HTML、CSS、JS 和 Nuxt，再用 30 天做出 最小可行产品，从无人问津的 Product Hunt 发布一路做到 $74K MRR。",
+    "sourceType": "创始人复盘 + 产品官网",
+    "sourceName": "Indie Hackers / Pallyy",
+    "sourceUrl": "https://www.indiehackers.com/post/heres-how-i-ve-built-pallyy-to-74k-mrr-solo-a5d9c78766",
+    "websiteUrl": "https://pallyy.com/",
+    "author": "Tim B",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "18 分钟",
+    "category": "上线部署",
+    "tools": [
+      "通用"
+    ],
+    "tags": [
+      "一人公司",
+      "MRR",
+      "SaaS",
+      "增长"
+    ],
+    "href": "/learn/pallyy-74k-mrr-solo-founder-retrospective",
+    "image": "/learn-screenshots/pallyy-og.png",
+    "imageAlt": "Pallyy 官网预览图",
+    "publishedAt": "2026-06-17T23:45:00+08:00",
+    "viewCount": 316,
+    "likeCount": 27,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "没有观众和没有技术背景，并不妨碍一人公司做出长期现金流产品，关键是先做出能跑的 最小可行产品",
+      "前 100 个付费用户的来源往往不是宏大的 发布，而是一个具体而有效的分发入口",
+      "砍掉没人要的功能、承认增长停滞、顺着真实需求 转向，往往比一开始做对所有事更重要"
+    ]
+  },
+  {
+    "id": "ivabot-solo-founder-first-stripe-retrospective",
+    "title": "9 个月、3 次重写、第一笔 Stripe：IvaBot 一人公司 AI Coding 复盘",
+    "originalTitle": "I'm a solo founder. It took me 9 months and at least 3 stack rewrites to ship my SaaS.",
+    "description": "Galyna Arikh 复盘自己如何一边学一边做，用 AI 当老师，把一个 SEO 工具从 Telegram bot、Typebot + Webflow 方案一路重写到正式上线，并拿到第一笔 Stripe 收款。",
+    "sourceType": "创始人复盘 + 产品官网",
+    "sourceName": "Indie Hackers / IvaBot",
+    "sourceUrl": "https://www.indiehackers.com/post/im-a-solo-founder-it-took-me-9-months-and-at-least-3-stack-rewrites-to-ship-my-saas-a66b5fbe33",
+    "websiteUrl": "https://ivabot.xyz",
+    "author": "Galyna Arikh",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "17 分钟",
+    "category": "上线部署",
+    "tools": [
+      "通用"
+    ],
+    "tags": [
+      "一人公司",
+      "收入",
+      "AI 编程",
+      "SaaS"
+    ],
+    "href": "/learn/ivabot-solo-founder-first-stripe-retrospective",
+    "image": "/learn-screenshots/ivabot-og.png",
+    "imageAlt": "IvaBot 官网预览图",
+    "publishedAt": "2026-06-17T23:10:00+08:00",
+    "viewCount": 298,
+    "likeCount": 24,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "对独立开发者来说，重写并不一定是失败，关键是每一轮都在减少成本和提升可持续性",
+      "AI 最实际的价值之一不是一键代工，而是让非开发者边做边学 HTTP、webhooks、JSON 和数据库这些基础能力",
+      "第一笔 Stripe 收款比宏大叙事更重要，它证明这个产品已经从练习项目跨进了真实业务"
+    ]
   }
 ];
 
@@ -3162,7 +3464,7 @@ export const toolCategoryFilters = [
   '全部',
   'AI IDE',
   'Coding Agent',
-  'Workflow',
+  '工作流',
   'App Builder',
   'Code Assistant',
   'Open Source',
@@ -3298,7 +3600,7 @@ export const tools = [
     company: 'Cognition',
     description: 'Cognition 旗下的 AI 开发环境，延续 Windsurf 编辑器体验，聚焦上下文驱动的多文件修改和连续开发。',
     category: 'AI IDE',
-    tags: ['编辑器', 'Agent', '工作流'],
+    tags: ['编辑器', '智能体', '工作流'],
     href: '/tools/windsurf',
     officialUrl: 'https://windsurf.com',
     pricing: 'Free / Paid；具体以官网计划为准。',
@@ -3320,13 +3622,13 @@ export const tools = [
     href: '/tools/lovable',
     officialUrl: 'https://lovable.dev',
     pricing: 'Free / Paid credits；个人和团队按计划与 credits 使用。',
-    bestFor: ['从自然语言生成产品原型', '非技术用户验证页面和业务想法', '搭建 MVP、内部工具和简单 Web 应用', '结合 Supabase、GitHub 等工作流继续迭代'],
-    coreAdvantages: ['官方定位为 full-stack AI development platform，可生成真实代码。', '适合零基础用户用自然语言快速得到可运行原型。', '对 landing page、MVP 和内部工具的第一版验证很快。', '支持与常见开发和部署工作流连接。'],
+    bestFor: ['从自然语言生成产品原型', '非技术用户验证页面和业务想法', '搭建 最小可行产品、内部工具和简单 Web 应用', '结合 Supabase、GitHub 等工作流继续迭代'],
+    coreAdvantages: ['官方定位为 full-stack AI development platform，可生成真实代码。', '适合零基础用户用自然语言快速得到可运行原型。', '对着陆页、最小可行产品和内部工具的第一版验证很快。', '支持与常见开发和部署工作流连接。'],
     limitations: ['复杂应用仍需要开发者接手架构、权限和后端细节。', '多轮修改可能消耗较多 credits。', '生成结果需要人工检查安全、数据和边界状态。'],
     benchmarks: [],
     userReviews: [
       {
-        summary: 'Product Hunt 反馈普遍认可它能快速把提示词变成原型和 MVP，但也提到复杂应用和成本控制需要注意。',
+        summary: 'Product Hunt 反馈普遍认可它能快速把提示词变成原型和 最小可行产品，但也提到复杂应用和成本控制需要注意。',
         sentiment: '中性',
         sourceName: 'Product Hunt',
         url: 'https://www.producthunt.com/products/lovable',
@@ -3354,9 +3656,9 @@ export const tools = [
     tags: ['浏览器', '原型', '快速启动'],
     href: '/tools/bolt',
     officialUrl: 'https://bolt.new',
-    pricing: 'Free / Paid token-based；免费额度用完后需要等待或升级。',
+    pricing: 'Free / Paid 设计变量-based；免费额度用完后需要等待或升级。',
     bestFor: ['在浏览器里从提示词启动项目', '快速生成并运行全栈 Web 原型', '边调试边修改前端和后端代码', '把想法转成可演示版本'],
-    coreAdvantages: ['无需离开浏览器即可 prompt、运行、编辑和部署应用。', '适合快速看到可运行结果，降低环境配置成本。', '支持 token-based 计划，适合按使用量扩展。'],
+    coreAdvantages: ['无需离开浏览器即可 prompt、运行、编辑和部署应用。', '适合快速看到可运行结果，降低环境配置成本。', '支持 设计变量-based 计划，适合按使用量扩展。'],
     limitations: ['Token 消耗和成本需要提前关注。', '复杂生产级应用仍需要人工架构和测试。', '公开评价中也有用户反馈稳定性和支持体验不一致。'],
     benchmarks: [],
     userReviews: [
@@ -3391,13 +3693,13 @@ export const tools = [
     href: '/tools/v0',
     officialUrl: 'https://v0.app',
     pricing: 'Free credits / Paid；Free、Team、Business 等计划包含不同月度 credits。',
-    bestFor: ['从提示词或截图生成 UI 原型', '快速生成 React、Tailwind 和 Next.js 页面', '探索 landing page、定价页和后台界面结构', '把原型部署或转成 PR 继续开发'],
+    bestFor: ['从提示词或截图生成 UI 原型', '快速生成 React、Tailwind 和 Next.js 页面', '探索着陆页、定价页和后台界面结构', '把原型部署或转成 PR 继续开发'],
     coreAdvantages: ['官方定位为可生成真实代码、全栈应用和 agent 的 AI agent。', '对 UI 结构和页面排版的初稿生成速度快。', '与 Vercel 部署和 GitHub 工作流衔接自然。', '适合设计师和产品经理快速表达页面想法。'],
     limitations: ['复杂后端、权限和数据模型仍需要工程补充。', 'Credits 消耗取决于模型和提示复杂度。', '生成 UI 需要继续做品牌、交互和响应式细节打磨。'],
     benchmarks: [],
     userReviews: [
       {
-        summary: 'Product Hunt 反馈认为 v0 适合快速把 rough prompts 或截图转成 React/Tailwind 原型，尤其适合 landing page 和 demo。',
+        summary: 'Product Hunt 反馈认为 v0 适合快速把粗略提示词或截图转成 React/Tailwind 原型，尤其适合着陆页和演示页。',
         sentiment: '正面',
         sourceName: 'Product Hunt',
         url: 'https://www.producthunt.com/products/v0',
@@ -3476,10 +3778,10 @@ export const tools = [
     company: 'Cline',
     description: 'Cline 团队维护的开源 VS Code Agent，可连接不同模型执行文件修改和命令，优势是透明、可配置、可控。',
     category: 'Open Source',
-    tags: ['开源', 'VS Code', 'Agent'],
+    tags: ['开源', 'VS Code', '智能体'],
     href: '/tools/cline',
     officialUrl: 'https://cline.bot',
-    pricing: 'Open source；模型费用取决于你连接的模型服务。',
+    pricing: 'Open source；模型费用取决于连接的模型服务。',
     bestFor: ['在 VS Code 中使用开源 Agent', '连接自选模型完成文件修改', '需要更强可控性和可配置性的工作流'],
     coreAdvantages: ['开源和可配置，适合自定义开发环境。', '能在编辑器中执行文件修改和命令。', '适合连接不同模型，按团队偏好配置。'],
     limitations: ['需要理解模型 key、权限和命令执行边界。', '体验质量取决于所接入模型和配置。'],
@@ -3497,7 +3799,7 @@ export const tools = [
     tags: ['开源', '代码助手', '可配置'],
     href: '/tools/continue',
     officialUrl: 'https://continue.dev',
-    pricing: 'Open source；模型和托管成本取决于你的配置。',
+    pricing: 'Open source；模型和托管成本取决于具体配置。',
     bestFor: ['搭建团队可控的 AI 代码助手', '连接不同模型和 IDE', '把 AI 编程能力纳入内部开发环境'],
     coreAdvantages: ['开源、可扩展，适合团队定制。', '支持连接不同模型，便于控制成本和数据流。', '适合需要私有化或灵活配置的团队。'],
     limitations: ['需要配置和维护成本。', '最终体验依赖模型选择和团队工作流设计。'],

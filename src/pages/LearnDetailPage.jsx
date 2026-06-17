@@ -7,6 +7,7 @@ import { Button, Badge } from '../components/UI.jsx';
 import { LearningCard, isDefaultLearningCover } from '../components/Cards.jsx';
 import Comments from '../components/Comments.jsx';
 import { trackEvent } from '../lib/analytics.js';
+import { formatDisplayUrl } from '../lib/urls.js';
 
 function buildFallbackContent(lesson) {
   return {
@@ -179,15 +180,16 @@ function LearnCover({ image, imageAlt }) {
 
 function LearnSourceNotice({ content, lesson }) {
   const sourceUrl = content.sourceUrl || lesson.sourceUrl;
+  const showSourceLink = Boolean(sourceUrl && !content.hideSourceNoticeLink);
 
-  if (!content.notice && !sourceUrl) {
+  if (!content.notice && !showSourceLink) {
     return null;
   }
 
   return (
     <aside className="learn-source-notice">
       {content.notice && <p>{content.notice}</p>}
-      {sourceUrl && (
+      {showSourceLink && (
         <a
           href={sourceUrl}
           target="_blank"
@@ -205,6 +207,35 @@ function LearnSourceNotice({ content, lesson }) {
         </a>
       )}
     </aside>
+  );
+}
+
+function ArticleSiteLink({ url, label, lesson }) {
+  if (!url || !label) {
+    return null;
+  }
+
+  return (
+    <Button
+      className="article-site-button"
+      href={url}
+      icon={ExternalLink}
+      variant="secondary"
+      target="_blank"
+      rel="noopener noreferrer"
+      analyticsEvent={{
+        name: 'outbound_link_click',
+        params: {
+          label: '标题下方网站链接',
+          content_type: 'lesson',
+          item_id: lesson?.id,
+          item_name: lesson?.title,
+          link_url: url,
+        },
+      }}
+    >
+      {label}
+    </Button>
   );
 }
 
@@ -256,6 +287,8 @@ export default function LearnDetailPage({ slug }) {
   const coverImage = lessonCoverImage || contentCover?.image;
   const coverImageAlt =
     (lessonCoverImage ? lesson.imageAlt : contentCover?.imageAlt) || `${lesson.title} 头图`;
+  const lessonSiteUrl = lesson.websiteUrl || lesson.sourceUrl;
+  const lessonSiteLabel = formatDisplayUrl(lessonSiteUrl);
 
   return (
     <div className="learn-detail">
@@ -271,27 +304,11 @@ export default function LearnDetailPage({ slug }) {
                 ))}
               </div>
               <h1>{lesson.title}</h1>
-              {lesson.sourceUrl && (
-                <div className="blog-article-meta">
-                  <a
-                    className="learn-source-link"
-                    href={lesson.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() =>
-                      trackEvent('outbound_link_click', {
-                        label: '来源',
-                        content_type: 'lesson',
-                        item_id: lesson.id,
-                        item_name: lesson.title,
-                        link_url: lesson.sourceUrl,
-                      })
-                    }
-                  >
-                    来源 <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
-                  </a>
-                </div>
-              )}
+              <ArticleSiteLink
+                url={lessonSiteUrl}
+                label={lessonSiteLabel}
+                lesson={lesson}
+              />
             </header>
 
             <LearnCover
@@ -314,7 +331,7 @@ export default function LearnDetailPage({ slug }) {
             <Comments
               targetId={lesson.id}
               targetType="lesson"
-              title="讨论这篇资料"
+              title="评论"
             />
 
             {relatedLessons.length > 0 && (

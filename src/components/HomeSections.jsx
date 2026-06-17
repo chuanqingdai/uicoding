@@ -9,6 +9,7 @@ import {
 import { Container, Section } from './Layout.jsx';
 import { CaseCard, LearningCard, ProductMockup, ToolPill } from './Cards.jsx';
 import { Badge, Button, Card } from './UI.jsx';
+import { byLatest, byRank, byTodayPickFirst } from '../lib/contentOrdering.js';
 
 export function HomeHero() {
   return (
@@ -17,7 +18,7 @@ export function HomeHero() {
         <div className="hero-copy">
           <h1>从真实作品学习 AI 编程</h1>
           <p>
-            面向设计师和产品经理等代码零基础人群的交流社区，一起学习工具使用技巧、界面设计和上线经验。
+            代码零基础人群的交流社区，一起学习工具使用技巧、界面设计和上线经验。
           </p>
           <div className="hero-actions">
             <Button
@@ -99,9 +100,9 @@ export function HeroRecommendation() {
 }
 
 export function FeaturedCases() {
-  const homeCases = homeFeaturedIds
-    .map((id) => cases.find((item) => item.id === id))
-    .filter(Boolean);
+  const homeCases = [...cases]
+    .sort((a, b) => byTodayPickFirst(a, b) || byRank(homeFeaturedIds)(a, b) || byLatest(a, b))
+    .slice(0, 12);
 
   return (
     <Section
@@ -119,6 +120,10 @@ export function FeaturedCases() {
 }
 
 export function LearningResources() {
+  const homeLearningResources = [...learningResources]
+    .sort((a, b) => byTodayPickFirst(a, b) || byLatest(a, b))
+    .slice(0, 6);
+
   return (
     <Section
       actionHref="/learn"
@@ -127,7 +132,7 @@ export function LearningResources() {
       description="为设计师、产品经理和独立开发者准备的学习资料。"
     >
       <div className="learning-grid">
-        {learningResources.map((item) => (
+        {homeLearningResources.map((item) => (
           <LearningCard item={item} key={item.title} showImage={false} showStats={false} />
         ))}
       </div>

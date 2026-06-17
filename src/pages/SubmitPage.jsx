@@ -60,7 +60,7 @@ export default function SubmitPage() {
           <Comments
             targetId="submit"
             targetType="submit"
-            title="提交交流"
+            title="评论"
           />
         </div>
       </Container>

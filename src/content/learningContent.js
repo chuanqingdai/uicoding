@@ -54,7 +54,7 @@ function parseLearningMarkdown(markdown) {
         if (fenceMatch[1].startsWith(codeFence)) {
           current.blocks.push({
             type: 'code',
-            label: codeLanguage ? `${codeLanguage} prompt` : '可复制内容',
+            label: codeLanguage ? `${codeLanguage} 提示词` : '可复制内容',
             content: codeLines.join('\n').trimEnd(),
           });
           codeLines = [];
@@ -103,7 +103,7 @@ function parseLearningMarkdown(markdown) {
   if (inCodeBlock) {
     current.blocks.push({
       type: 'code',
-      label: codeLanguage ? `${codeLanguage} prompt` : '可复制内容',
+      label: codeLanguage ? `${codeLanguage} 提示词` : '可复制内容',
       content: codeLines.join('\n').trimEnd(),
     });
   }
@@ -113,9 +113,9 @@ function parseLearningMarkdown(markdown) {
   return sections;
 }
 
-const uicodingSkillArticleMarkdown = "# 我如何用 Codex + Impeccable Skill 做出 UIcoding.ai\n\n最近我用 Codex 搭了一个新站：UIcoding.ai。\n\n这个网站的定位很简单：整理 AI Coding 案例、学习资料、工具介绍，帮助设计师、产品经理、独立开发者更快学会用 Codex、Claude Code、Cursor 这类工具做真实产品。\n\n但真正做下来，我发现一个问题：\n\nCodex 写代码很快，但默认设计能力不稳定。\n\n它可以很快创建页面、组件、路由、数据结构，也能修构建错误。但当我说“页面更高级一点”“更像编辑精选站”“减少模板感”的时候，Codex 经常会走偏。\n\n比如它会加很多卡片。\n加很多背景块。\n加很重的阴影。\n加渐变。\n加发光边框。\n按钮越来越黑。\n标签越来越抢眼。\n最后页面不是更高级，而是更像 AI 自动生成的网站。\n\n后面我开始配合使用一个前端设计 Skill：Impeccable。\n\n我自己的理解是：\n\nCodex 负责写代码。\nImpeccable 负责做设计审查。\n\n它不是直接替你变出一个完美网站，而是帮你发现页面为什么不高级、哪里像模板、哪里排版不舒服、哪里组件太重、哪里视觉层级混乱。\n\n这篇文章复盘一下，我是怎么用 Codex + Impeccable Skill 搭建 UIcoding.ai 的。\n\n文中的代码块都可以直接复制到 Codex 输入框里，根据你的项目名称做少量替换就能用。\n\n---\n\n## 1. 为什么要给 Codex 配 Impeccable\n\n只用 Codex 写代码时，它非常适合完成明确的工程任务。\n\n比如：\n\n创建页面。\n新增组件。\n调整路由。\n补静态数据。\n修构建错误。\n优化移动端。\n整理页面结构。\n\n这些事情只要你描述清楚，Codex 基本都能完成。\n\n但设计不一样。\n\n设计不是简单地“多写几行样式”。\n\n很多时候页面不高级，不是因为缺少效果，而是因为东西太多了。\n\n我在做 UIcoding.ai 的时候，遇到过很多这种问题：\n\n首页 Hero 区域信息太满。\n案例卡片像普通组件库默认样式。\n学习资料页面没有文章阅读感。\n工具页 icon 白底太突兀。\n按钮颜色太重，抢了内容注意力。\n标签太多，视觉上比标题还突出。\n卡片 hover 太夸张，页面像模板站。\n灰色占位图太默认，没有编辑感。\n\n如果我只对 Codex 说：\n\n```text\n页面不够高级，帮我优化一下。\n```\n\n它很容易继续堆效果。\n\n但 Impeccable 更适合做“设计审查”。\n\n我会让它先审查页面，再只挑最影响质感的几个问题改。\n\n这样比一次性大改稳定很多。\n\n---\n\n## 2. 一键安装 Impeccable：直接复制给 Codex\n\n如果你想在 Codex 项目里使用 Impeccable，最简单的方式不是自己去研究一堆命令，而是直接让 Codex 帮你检查、安装、初始化。\n\n我会把安装任务也写得很明确。\n\n不要让 Codex 一边安装，一边顺手改项目代码。\n\n可以直接复制这段：\n\n```text\n请帮我在当前项目中一键安装并初始化 Impeccable Skill。\n\n要求：\n1. 先确认当前目录是否是项目根目录。\n2. 检查 package.json 是否存在。\n3. 不要修改业务代码。\n4. 不要修改页面组件。\n5. 不要修改 CSS 文件。\n6. 只执行 Impeccable 的安装和初始化相关步骤。\n7. 如果需要执行命令，请先说明命令用途，然后再执行。\n8. 安装完成后，告诉我如何在 Codex 中调用 Impeccable。\n\n请执行：\n- npx impeccable install\n- 按项目级安装优先\n- 安装后提示我重启 Codex 或重新加载技能\n- 然后指导我运行 /impeccable init\n\n如果 Codex 中看不到 /impeccable，请告诉我如何通过 /skills 或 $ 检查技能是否已加载。\n```\n\n这段的重点是：\n\n只安装 Skill。\n不要改页面。\n不要改 CSS。\n不要顺手优化 UI。\n\n安装工具和修改项目要分开。\n\n这是我踩过的坑。\n\n有时候你只是想安装一个 Skill，Codex 会顺手开始“优化项目结构”。这种非常没必要。\n\n所以安装阶段一定要写清楚：只安装，不改业务代码。\n\n---\n\n## 3. 初始化 Impeccable：先告诉它 UIcoding.ai 是什么\n\n安装之后，不要马上让它改页面。\n\n先初始化项目上下文。\n\nImpeccable 需要知道这个网站是什么类型、面向谁、视觉方向是什么、不要像什么。\n\nUIcoding.ai 不是一个传统 SaaS 工具站。\n\n它更像一个 AI Coding 案例和学习内容站。\n\n所以我不会只说“现代、简洁、高级”。\n\n这种词太泛了。\n\n我会这样描述：\n\n```text\n请使用 /impeccable init 初始化当前项目的设计上下文。\n\n这是 UIcoding.ai，一个 AI Coding 案例和学习内容站。\n\n项目定位：\n- 面向设计师、产品经理、独立开发者、一人公司\n- 帮助用户学习如何使用 Codex、Claude Code、Cursor 等 AI Coding 工具\n- 展示优秀 AI Coding 案例、教程、工具和实战经验\n\n网站气质：\n- 编辑感\n- 可信\n- 简洁\n- 有审美\n- 像高质量内容精选站\n- 不要像普通 SaaS 模板\n- 不要像组件库 demo\n- 不要像自动生成的 AI 工具站\n\n视觉参考：\n- 高质量编辑型内容站\n- 设计案例精选站\n- 干净的产品手册页面\n- 有留白、有节奏、有明确层级\n\n反向要求：\n- 不要重渐变\n- 不要重阴影\n- 不要发光边框\n- 不要多层卡片嵌套\n- 不要满屏黑色按钮\n- 不要让标签比标题更抢眼\n- 不要把所有内容都放进背景块\n\n初始化完成后，请总结 Impeccable 记录了哪些项目上下文。\n不要修改页面代码。\n```\n\n这一步很重要。\n\n因为如果没有项目上下文，Impeccable 也只能给出比较通用的设计建议。\n\n我希望它理解：\n\nUIcoding.ai 是内容站，不是后台系统。\n是编辑精选站，不是普通工具站。\n是给 AI Coding 学习者看的，不是给企业采购看的。\n\n上下文越清楚，后面的设计审查越准确。\n\n---\n\n## 4. 先做能跑起来的项目，不要一开始追求完美\n\nUIcoding.ai 一开始不是直接做完整网站。\n\n我先让 Codex 创建一个最小可运行版本。\n\n技术上也没有搞复杂：\n\nReact。\nVite。\nnpm。\n普通 CSS。\n静态数据。\n\n页面也先只做首页：\n\nHeader。\nHero。\n精选案例。\n学习资料。\n常用工具。\nFooter。\n\n这个阶段最重要的不是设计多漂亮，而是项目能跑、结构清晰、文件不要拆太碎。\n\n可以直接复制：\n\n```text\n从零开始创建一个 React + Vite 前端项目。\n\n技术栈：\n- React\n- Vite\n- npm\n- 普通 CSS\n- 静态数据\n\n当前只做首页。\n不要做后端。\n不要做登录。\n不要做数据库。\n不要接 API。\n不要引入复杂组件库。\n\n文件结构保持简单：\n- src/main.jsx\n- src/App.jsx\n- src/data.js\n- src/components/\n- src/styles/\n\n样式文件可以按规范拆分，但不要过度复杂：\n- tokens\n- base\n- layout\n- components\n- pages\n\n首页包含：\n1. Header\n2. Hero\n3. 精选案例\n4. 学习资料\n5. 常用工具\n6. Footer\n\n完成后运行：\nnpm install\nnpm run build\n\n构建成功后停止，不要继续扩展新功能。\n```\n\n这里有个坑。\n\n如果一开始就说“帮我做完整网站”，Codex 很容易把项目拆得很复杂。\n\n路由、状态、组件、样式文件、数据文件全部一起上。\n\n看起来很专业，但后面非常难控。\n\n我现在更倾向于：\n\n先简单跑起来。\n再逐页迭代。\n再用 Impeccable 审查。\n最后把规范沉淀到固定样式文件里。\n\n---\n\n## 5. 设计规范不要只写进 MD，要沉淀成固定 CSS 规范\n\n这里我后来也调整过一次。\n\n一开始我以为，把设计规则写进 AGENTS.md 或 DESIGN.md 就够了。\n\n比如告诉 Codex：\n\n页面要高级。\n按钮不要太重。\n卡片不要太模板。\n不要使用重渐变。\n标签不要太抢眼。\n\n但实际开发下来发现，只写在 MD 文件里不够。\n\nMD 文件更适合做上下文说明和工作规则。\n\n真正决定网站质感的，是固定的 CSS 规范。\n\n我的理解是：\n\nAGENTS.md 管 Codex 的行为。\nPRODUCT.md / DESIGN.md 管设计上下文。\n固定 CSS 文件管真正的视觉系统。\nImpeccable 负责审查页面有没有偏离规范。\n\n所以 UIcoding.ai 的样式不应该散落在每个页面里，也不应该每次让 Codex 重新写一套样式。\n\n更合理的方式是建立固定样式结构：\n\n```text\nsrc/styles/\n  tokens.css\n  base.css\n  layout.css\n  components.css\n  pages.css\n```\n\n这里不展开 CSS 代码，只说每个文件的作用。\n\ntokens.css：放颜色、字体、字号、间距、圆角、阴影、容器宽度。\nbase.css：放 body、标题、段落、链接、图片等基础样式。\nlayout.css：放 Container、Section、Grid、页面宽度、响应式布局。\ncomponents.css：放 Button、Card、Badge、Nav、Footer 等通用组件样式。\npages.css：放首页、案例页、详情页等页面级样式。\n\n这样做的好处是：\n\n颜色不会每个页面乱写。\n按钮不会每个页面长得不一样。\n卡片圆角和间距会统一。\n页面布局有固定节奏。\nCodex 不会每次重新发明一套视觉系统。\n\n可以直接复制这个 prompt：\n\n```text\n请为当前项目建立一套固定 CSS 设计规范，但不要输出具体 CSS 代码给我解释。\n\n目标：\n把 UIcoding.ai 的视觉规范沉淀到固定样式文件中，而不是只写进 AGENTS.md 或 DESIGN.md。\n\n请整理或创建这些文件：\n- src/styles/tokens.css\n- src/styles/base.css\n- src/styles/layout.css\n- src/styles/components.css\n- src/styles/pages.css\n\n要求：\n1. tokens.css 只负责设计变量，比如颜色、字体、字号、间距、圆角、阴影、容器宽度。\n2. base.css 只负责全站基础样式，比如 body、标题、段落、链接、图片。\n3. layout.css 只负责布局规则，比如 Container、Section、Grid、响应式。\n4. components.css 只负责通用组件，比如 Button、Card、Badge、Nav、Footer。\n5. pages.css 只负责页面级样式，比如首页、案例页、详情页。\n6. 不要把页面专属样式写进 tokens。\n7. 不要在页面文件里随机新增颜色、阴影、圆角和间距。\n8. 不要引入新的 UI 组件库。\n9. 不要重构业务逻辑。\n10. 不要修改页面内容结构，除非样式引用必须调整。\n\n视觉方向：\n- 编辑感\n- 干净\n- 高级\n- 可信\n- 不要像默认组件库\n- 不要重渐变\n- 不要重阴影\n- 不要多层卡片嵌套\n- 标签不要抢过标题\n- 按钮不要太重\n\n完成后运行 npm run build，并总结：\n1. 创建或修改了哪些样式文件\n2. 每个样式文件负责什么\n3. 哪些页面或组件引用了这些样式\n4. 是否存在需要后续清理的重复样式\n```\n\n这个比“把设计规则写进 AGENTS.md”更有效。\n\nAGENTS.md 可以提醒 Codex 不要乱改设计系统。\n\n但真正的设计系统，必须落到固定 CSS 文件里。\n\n---\n\n## 6. 把大任务拆成单页任务\n\nAI Coding 最容易失控的地方，就是一次性要求它做完整站点。\n\nUIcoding.ai 我后面拆成了几个页面：\n\n首页。\n案例列表页。\n案例详情页。\n学习资料页。\n工具索引页。\n工具详情页。\n提交作品页。\n登录页。\n404 页面。\n\n每次只做一个页面。\n\n比如做案例页，我不会说“把案例系统做完整”。\n\n我会这样写：\n\n```text\n继续开发当前项目。\n\n本次任务只实现一个页面：/cases。\n\n不要创建后端。\n不要创建登录。\n不要接数据库。\n不要重构目录。\n不要引入复杂路由方案。\n不要修改首页视觉风格。\n不要修改设计 tokens。\n\n允许新增：\n- src/pages/CasesPage.jsx\n\n允许修改：\n- src/App.jsx\n- src/data.js\n- src/components/\n- src/styles/pages.css\n\n页面必须复用已有组件和样式规范：\n- Container\n- Section\n- Button\n- Badge\n- Card\n- CaseCard\n\n页面内容：\n1. 页面标题\n2. 简短说明\n3. 分类筛选\n4. 案例卡片列表\n5. 空状态\n\n完成后运行：\nnpm run build\n\n如果构建成功就停止。\n```\n\n这种写法看起来啰嗦，但非常有用。\n\n因为它限制了 Codex 的修改范围。\n\n我之前踩过的坑是：只想做一个页面，它顺手把全站样式也改了。\n\n所以现在我会明确写：\n\n允许新增什么。\n允许修改什么。\n禁止修改什么。\n必须复用什么。\n完成后跑什么命令。\n\n这样出问题也容易定位。\n\n---\n\n## 7. 用 Impeccable 做第一次设计审查\n\n页面能跑起来之后，不要马上继续加功能。\n\n先让 Impeccable 做设计审查。\n\n这里一定不要说“帮我改好看一点”。\n\n要让它先审查，不要直接改代码。\n\n可以复制：\n\n```text\n请使用 Impeccable Skill 走查当前首页。\n\n目标：\n- 高级\n- 编辑感\n- 可信\n- 像高质量 AI Coding 内容站\n- 不要像默认组件库模板\n- 不要像 AI 自动生成的 SaaS 页面\n\n请重点检查：\n1. 信息层级是否清楚\n2. Hero 是否太满\n3. 字体和字号是否有节奏\n4. 按钮是否太重\n5. 卡片是否太像模板\n6. 标签是否太抢眼\n7. 图片占位是否太默认\n8. 移动端是否拥挤\n9. 页面是否复用 src/styles 下的设计规范\n10. 是否存在页面里随机新增颜色、阴影、圆角和间距\n\n不要直接大改代码。\n先只指出最影响质感的 3 个问题。\n\n每个问题请包含：\n- 具体问题\n- 为什么影响质感\n- 建议怎么改\n- 可能涉及哪些样式文件或组件\n```\n\n这一步很关键。\n\n我不让它马上改代码，而是先让它审查。\n\n因为很多时候 Codex 直接改，会一次性改太多。\n\n先让 Impeccable 给出问题清单，再挑前三个改，效果会稳定很多。\n\n---\n\n## 8. 只修前三个最影响质感的问题\n\nImpeccable 走查后，通常会指出很多问题。\n\n但不要一次性全改。\n\n我一般只挑最重要的 3 个。\n\n比如它指出：\n\n按钮太重。\n卡片信息太挤。\n图片占位太默认。\n\n那这一轮就只改这三个。\n\n可以这样写：\n\n```text\n根据刚才 Impeccable 的设计走查结果，本轮只修复最影响质感的 3 个问题。\n\n只允许调整：\n- 颜色引用\n- 字体层级\n- 间距\n- 卡片样式\n- 按钮样式\n- 图片占位样式\n- 移动端布局细节\n\n优先修改：\n- src/styles/tokens.css\n- src/styles/base.css\n- src/styles/layout.css\n- src/styles/components.css\n- src/styles/pages.css\n\n不要新增页面。\n不要修改数据结构。\n不要重构组件。\n不要改路由。\n不要引入新依赖。\n不要做动画大改。\n不要在页面文件中写散乱样式。\n\n修复目标：\n1. 降低按钮的视觉重量\n2. 让卡片信息更舒展\n3. 让图片占位更像真实内容站，而不是灰色默认块\n\n完成后运行 npm run build，并总结修改了哪些文件。\n```\n\n这个方式比“帮我整体提升设计”稳定很多。\n\n因为它不是凭感觉改，而是基于设计审查结果改。\n\n---\n\n## 9. Impeccable 真正有用的地方：反模板感\n\n我觉得 Impeccable 最大的价值，不是让页面突然变成世界顶级设计。\n\n而是帮你避免 AI 页面常见问题。\n\n比如：\n\n卡片太多。\n按钮太黑。\n标签太抢眼。\n阴影太模板。\n渐变太重。\n页面到处都是圆角卡片。\n图标都放在圆角方块里。\n灰色文字放在浅色背景上，可读性很差。\nHero 区域堆太多信息，像 AI 生成的 SaaS 模板。\n\n这些问题非常常见。\n\nCodex 默认很容易做出这种页面，因为它学到的很多前端模式就是这种。\n\nImpeccable 的好处是，它会提醒你：\n\n不要再堆卡片了。\n不要再加渐变了。\n不要让标签比标题还抢眼。\n不要用组件库默认审美。\n不要把所有内容都装进背景块里。\n不要让 hover 效果变成炫技。\n\n这对 UIcoding.ai 很有帮助。\n\n因为我希望它更像一个编辑精选站，而不是一个普通 AI 工具站。\n\n---\n\n## 10. 自动设计审查：让 Impeccable 每轮都检查\n\n后面我更常用的是一个固定循环：\n\nCodex 完成页面。\nImpeccable 审查。\n只修前三个问题。\n重新构建。\n再检查页面。\n\n可以把这个流程写成固定提示词：\n\n```text\n请对当前页面执行一次 Impeccable 自动设计审查循环。\n\n流程：\n1. 读取当前页面和相关样式文件。\n2. 从视觉品质角度审查页面。\n3. 检查页面是否符合 src/styles 下的固定 CSS 规范。\n4. 只列出最影响质感的 3 个问题。\n5. 不要提出超过 3 个问题。\n6. 不要大改结构。\n7. 只针对这 3 个问题做最小修改。\n8. 修改后运行 npm run build。\n9. 最后总结修改文件、修改内容和剩余问题。\n\n审查标准：\n- 是否像真实内容站\n- 是否有编辑感\n- 是否有清晰层级\n- 是否避免组件库默认感\n- 是否避免 AI 模板感\n- 是否移动端可读\n- 是否复用 tokens、layout、components 的样式规范\n- 是否存在随机颜色、随机圆角、随机阴影、随机间距\n\n不要新增页面。\n不要新增功能。\n不要修改业务逻辑。\n不要引入新依赖。\n```\n\n这个提示词我觉得很适合零基础用户。\n\n因为你不需要懂太多设计术语。\n\n只要让 Impeccable 先审查，再让 Codex 只改前三个问题，就能稳定提升页面质感。\n\n---\n\n## 11. 更严格一点：用 detect 做反模式检查\n\n除了让 Impeccable 在 Codex 里审查页面，也可以让它做更偏自动化的反模式检查。\n\n我会把它理解成：\n\n不是审美打分。\n而是检查页面里有没有明显的 AI 设计坏味道。\n\n比如：\n\n重渐变。\n发光边框。\n过度阴影。\n模板化色彩。\n不必要的视觉装饰。\n\n可以直接复制：\n\n```text\n请为当前项目执行一次 Impeccable 反模式检测。\n\n要求：\n1. 运行 npx impeccable detect src/\n2. 如果检测失败，请不要马上大改。\n3. 先总结检测到了哪些问题。\n4. 按严重程度排序。\n5. 只选择最影响页面质感的 3 个问题。\n6. 说明每个问题可能影响哪些页面或组件。\n7. 等我确认后再修改。\n\n不要修改业务逻辑。\n不要新增依赖。\n不要改路由。\n不要重构组件结构。\n```\n\n我建议不要让它检测完就自动大改。\n\n先让它列问题。\n\n因为有些检测结果可能不是当前最重要的问题。\n\n设计优化不是越多越好。\n\n每次只改最重要的 3 个，反而更稳。\n\n---\n\n## 12. 页面验证不要省\n\n很多问题不是看代码能发现的。\n\n而是在浏览器里才看得出来。\n\n我做 UIcoding.ai 的时候，遇到过这些问题：\n\n卡片底部有一条白线。\n图标白底太大。\nHero 图片被裁剪。\n详情页正文宽度太宽。\n标签在移动端换行很乱。\n某个卡片 hover 后会撑开布局。\n图片加载失败后占位很丑。\n页面出现横向滚动条。\n\n所以每次修改后，我都会要求 Codex 做验证。\n\n```text\n修改完成后请执行以下验证：\n\n1. 运行 npm run build。\n2. 打开本地页面。\n3. 检查是否有横向溢出。\n4. 检查移动端布局是否拥挤。\n5. 如果页面包含图片，检查图片是否加载成功、是否被裁剪。\n6. 如果页面包含卡片，检查 hover、按钮、标签、标题和描述是否对齐。\n7. 如果页面包含长文本，检查正文宽度和行高是否适合阅读。\n8. 检查页面是否继续复用 src/styles 下的固定样式规范。\n\n只汇报验证结果。\n不要继续扩展新功能。\n```\n\n这里的关键是最后一句：\n\n不要继续扩展新功能。\n\nCodex 有时候很容易顺手做更多事情。\n\n你必须让它停在当前任务。\n\n---\n\n## 13. AGENTS.md 应该写什么\n\n设计规范不应该只写进 AGENTS.md。\n\n但 AGENTS.md 仍然有用。\n\n它应该写工作规则，而不是承载完整设计系统。\n\n我会这样写：\n\n```text\n请更新 AGENTS.md，只加入必要的工作规则。\n\n不要把完整设计规范写进 AGENTS.md。\n真正的设计规范在 src/styles/ 下的固定 CSS 文件中。\n\nAGENTS.md 只需要说明：\n1. 不要删除、移动、重命名文件，除非明确要求。\n2. 不要重构无关代码。\n3. 不要修改业务逻辑，除非当前任务要求。\n4. UI 修改必须优先复用 src/styles 下的规范。\n5. 不要在页面文件里随机新增颜色、阴影、圆角、间距。\n6. 不要随便修改 tokens，除非任务明确要求调整设计系统。\n7. 每次 UI 修改后，优先使用 Impeccable 做设计审查。\n8. 每轮只修最重要的 3 个视觉问题。\n9. 修改完成后必须运行 npm run build。\n10. 最后总结修改了哪些文件。\n\n保持简洁，不要写成长文档。\n```\n\n这样更合理。\n\nAGENTS.md 负责提醒 Codex：\n\n设计系统已经在 CSS 里了。\n不要每次重新发明样式。\n不要乱改 tokens。\n不要把页面样式写散。\n\n而 Impeccable 负责审查页面有没有偏离规范。\n\n---\n\n## 14. Impeccable 帮我具体改出了哪些方向\n\nUIcoding.ai 后面的视觉方向，就是这样一点点收敛出来的。\n\n一开始页面比较像普通组件站。\n\n后来慢慢改成：\n\n品牌色从纯黑转向更有温度的棕色。\n按钮变轻，不再满屏黑色按钮。\n卡片 hover 只做轻微反馈。\n学习详情页更像文章阅读，不再用很多背景块。\n工具页统一真实产品 icon，而不是随机图标。\n案例详情页减少模块堆叠，重点展示图片和作者信息。\n列表页标签降低视觉权重，让标题和封面更突出。\nFooter 和导航更克制，不抢主内容。\n\n这些不是一次性做出来的。\n\n而是每次审查一点，修改一点，再验证一点。\n\n这也是我现在觉得最适合 AI Coding 的方式：\n\n不要追求一次生成完美页面。\n而是让 AI 帮你持续迭代。\n\n---\n\n## 15. 给零基础用户的建议\n\n如果你是零基础用户，不要把 AI Coding 理解成“一句话生成完整网站”。\n\n这种方式很容易失控。\n\n更稳定的方式是：\n\n先做一个能运行的版本。\n再逐页拆任务。\n每次只改一个页面。\n每次只解决 3 个设计问题。\n每次修改后都构建验证。\n最后把规则沉淀到固定 CSS 规范里。\n\nImpeccable 最适合用在这种场景：\n\n你觉得页面不对劲。\n但你说不清哪里不对。\n\n这时候不要直接让 Codex “优化一下”。\n\n而是让 Impeccable 先审查。\n\n比如：\n\n```text\n请用 Impeccable 审查这个页面。\n只指出最影响质感的 3 个问题。\n不要直接改代码。\n```\n\n然后再让 Codex 按这 3 个问题修改。\n\n这样做慢一点，但更稳。\n\n也更接近真实产品开发流程。\n\n---\n\n## 总结\n\n这次做 UIcoding.ai，我最大的感受是：\n\nCodex 适合执行。\nImpeccable 适合审查。\n\nCodex 能很快把页面写出来，但它不一定知道页面为什么不高级。\n\nImpeccable 的价值，就是帮你把“感觉不对”变成更具体的问题。\n\n比如：\n\n按钮太重。\n标签太抢眼。\n卡片太模板。\n图片像占位。\n间距没有节奏。\n页面信息太满。\n移动端阅读压力太大。\n\n有了这些判断，再让 Codex 修改，效率会高很多。\n\n我现在的工作流基本是：\n\n```text\nCodex 搭页面\n↓\n固定 CSS 规范约束视觉\n↓\nImpeccable 做设计审查\n↓\n只改最重要的 3 个问题\n↓\nnpm run build\n↓\n浏览器验证\n↓\n把稳定规则沉淀到项目结构里\n```\n\n这套流程不复杂，但很适合独立开发者。\n\n尤其是你不想只做一个“能跑”的网站，而是希望页面真的有一点质感。\n\nUIcoding.ai 就是这样一点点做出来的。";
+const uicodingSkillArticleMarkdown = "# 我如何用 Codex + Impeccable Skill 做出 UIcoding.ai\n\n最近我用 Codex 搭了一个新站：UIcoding.ai。\n\n这个网站的定位很简单：整理 AI Coding 案例、学习资料、工具介绍，帮助设计师、产品经理、独立开发者更快学会用 Codex、Claude Code、Cursor 这类工具做真实产品。\n\n但真正做下来，我发现一个问题：\n\nCodex 写代码很快，但默认设计能力不稳定。\n\n它可以很快创建页面、组件、路由、数据结构，也能修构建错误。但当我说“页面更高级一点”“更像编辑精选站”“减少模板感”的时候，Codex 经常会走偏。\n\n比如它会加很多卡片。\n加很多背景块。\n加很重的阴影。\n加渐变。\n加发光边框。\n按钮越来越黑。\n标签越来越抢眼。\n最后页面不是更高级，而是更像 AI 自动生成的网站。\n\n后面我开始配合使用一个前端设计 Skill：Impeccable。\n\n我自己的理解是：\n\nCodex 负责写代码。\nImpeccable 负责做设计审查。\n\n它不是直接替你变出一个完美网站，而是帮你发现页面为什么不高级、哪里像模板、哪里排版不舒服、哪里组件太重、哪里视觉层级混乱。\n\n这篇文章复盘一下，我是怎么用 Codex + Impeccable Skill 搭建 UIcoding.ai 的。\n\n文中的代码块都可以直接复制到 Codex 输入框里，根据你的项目名称做少量替换就能用。\n\n---\n\n## 1. 为什么要给 Codex 配 Impeccable\n\n只用 Codex 写代码时，它非常适合完成明确的工程任务。\n\n比如：\n\n创建页面。\n新增组件。\n调整路由。\n补静态数据。\n修构建错误。\n优化移动端。\n整理页面结构。\n\n这些事情只要你描述清楚，Codex 基本都能完成。\n\n但设计不一样。\n\n设计不是简单地“多写几行样式”。\n\n很多时候页面不高级，不是因为缺少效果，而是因为东西太多了。\n\n我在做 UIcoding.ai 的时候，遇到过很多这种问题：\n\n首页 Hero 区域信息太满。\n案例卡片像普通组件库默认样式。\n学习资料页面没有文章阅读感。\n工具页 icon 白底太突兀。\n按钮颜色太重，抢了内容注意力。\n标签太多，视觉上比标题还突出。\n卡片 hover 太夸张，页面像模板站。\n灰色占位图太默认，没有编辑感。\n\n如果我只对 Codex 说：\n\n```text\n页面不够高级，帮我优化一下。\n```\n\n它很容易继续堆效果。\n\n但 Impeccable 更适合做“设计审查”。\n\n我会让它先审查页面，再只挑最影响质感的几个问题改。\n\n这样比一次性大改稳定很多。\n\n---\n\n## 2. 一键安装 Impeccable：直接复制给 Codex\n\n如果你想在 Codex 项目里使用 Impeccable，最简单的方式不是自己去研究一堆命令，而是直接让 Codex 帮你检查、安装、初始化。\n\n我会把安装任务也写得很明确。\n\n不要让 Codex 一边安装，一边顺手改项目代码。\n\n可以直接复制这段：\n\n```text\n请帮我在当前项目中一键安装并初始化 Impeccable Skill。\n\n要求：\n1. 先确认当前目录是否是项目根目录。\n2. 检查 package.json 是否存在。\n3. 不要修改业务代码。\n4. 不要修改页面组件。\n5. 不要修改 CSS 文件。\n6. 只执行 Impeccable 的安装和初始化相关步骤。\n7. 如果需要执行命令，请先说明命令用途，然后再执行。\n8. 安装完成后，告诉我如何在 Codex 中调用 Impeccable。\n\n请执行：\n- npx impeccable install\n- 按项目级安装优先\n- 安装后提示我重启 Codex 或重新加载技能\n- 然后指导我运行 /impeccable init\n\n如果 Codex 中看不到 /impeccable，请告诉我如何通过 /skills 或 $ 检查技能是否已加载。\n```\n\n这段的重点是：\n\n只安装 Skill。\n不要改页面。\n不要改 CSS。\n不要顺手优化 UI。\n\n安装工具和修改项目要分开。\n\n这是我踩过的坑。\n\n有时候你只是想安装一个 Skill，Codex 会顺手开始“优化项目结构”。这种非常没必要。\n\n所以安装阶段一定要写清楚：只安装，不改业务代码。\n\n---\n\n## 3. 初始化 Impeccable：先告诉它 UIcoding.ai 是什么\n\n安装之后，不要马上让它改页面。\n\n先初始化项目上下文。\n\nImpeccable 需要知道这个网站是什么类型、面向谁、视觉方向是什么、不要像什么。\n\nUIcoding.ai 不是一个传统 SaaS 工具站。\n\n它更像一个 AI Coding 案例和学习内容站。\n\n所以我不会只说“现代、简洁、高级”。\n\n这种词太泛了。\n\n我会这样描述：\n\n```text\n请使用 /impeccable init 初始化当前项目的设计上下文。\n\n这是 UIcoding.ai，一个 AI Coding 案例和学习内容站。\n\n项目定位：\n- 面向设计师、产品经理、独立开发者、一人公司\n- 帮助用户学习如何使用 Codex、Claude Code、Cursor 等 AI Coding 工具\n- 展示优秀 AI Coding 案例、教程、工具和实战经验\n\n网站气质：\n- 编辑感\n- 可信\n- 简洁\n- 有审美\n- 像高质量内容精选站\n- 不要像普通 SaaS 模板\n- 不要像组件库 demo\n- 不要像自动生成的 AI 工具站\n\n视觉参考：\n- 高质量编辑型内容站\n- 设计案例精选站\n- 干净的产品手册页面\n- 有留白、有节奏、有明确层级\n\n反向要求：\n- 不要重渐变\n- 不要重阴影\n- 不要发光边框\n- 不要多层卡片嵌套\n- 不要满屏黑色按钮\n- 不要让标签比标题更抢眼\n- 不要把所有内容都放进背景块\n\n初始化完成后，请总结 Impeccable 记录了哪些项目上下文。\n不要修改页面代码。\n```\n\n这一步很重要。\n\n因为如果没有项目上下文，Impeccable 也只能给出比较通用的设计建议。\n\n我希望它理解：\n\nUIcoding.ai 是内容站，不是后台系统。\n是编辑精选站，不是普通工具站。\n是给 AI Coding 学习者看的，不是给企业采购看的。\n\n上下文越清楚，后面的设计审查越准确。\n\n---\n\n## 4. 先做能跑起来的项目，不要一开始追求完美\n\nUIcoding.ai 一开始不是直接做完整网站。\n\n我先让 Codex 创建一个最小可运行版本。\n\n技术上也没有搞复杂：\n\nReact。\nVite。\nnpm。\n普通 CSS。\n静态数据。\n\n页面也先只做首页：\n\nHeader。\nHero。\n精选案例。\n学习资料。\n常用工具。\nFooter。\n\n这个阶段最重要的不是设计多漂亮，而是项目能跑、结构清晰、文件不要拆太碎。\n\n可以直接复制：\n\n```text\n从零开始创建一个 React + Vite 前端项目。\n\n技术栈：\n- React\n- Vite\n- npm\n- 普通 CSS\n- 静态数据\n\n当前只做首页。\n不要做后端。\n不要做登录。\n不要做数据库。\n不要接 API。\n不要引入复杂组件库。\n\n文件结构保持简单：\n- src/main.jsx\n- src/App.jsx\n- src/data.js\n- src/components/\n- src/styles/\n\n样式文件可以按规范拆分，但不要过度复杂：\n- tokens\n- base\n- layout\n- components\n- pages\n\n首页包含：\n1. Header\n2. Hero\n3. 精选案例\n4. 学习资料\n5. 常用工具\n6. Footer\n\n完成后运行：\nnpm install\nnpm run build\n\n构建成功后停止，不要继续扩展新功能。\n```\n\n这里有个坑。\n\n如果一开始就说“帮我做完整网站”，Codex 很容易把项目拆得很复杂。\n\n路由、状态、组件、样式文件、数据文件全部一起上。\n\n看起来很专业，但后面非常难控。\n\n我现在更倾向于：\n\n先简单跑起来。\n再逐页迭代。\n再用 Impeccable 审查。\n最后把规范沉淀到固定样式文件里。\n\n---\n\n## 5. 设计规范不要只写进 MD，要沉淀成固定 CSS 规范\n\n这里我后来也调整过一次。\n\n一开始我以为，把设计规则写进 AGENTS.md 或 DESIGN.md 就够了。\n\n比如告诉 Codex：\n\n页面要高级。\n按钮不要太重。\n卡片不要太模板。\n不要使用重渐变。\n标签不要太抢眼。\n\n但实际开发下来发现，只写在 MD 文件里不够。\n\nMD 文件更适合做上下文说明和工作规则。\n\n真正决定网站质感的，是固定的 CSS 规范。\n\n我的理解是：\n\nAGENTS.md 管 Codex 的行为。\nPRODUCT.md / DESIGN.md 管设计上下文。\n固定 CSS 文件管真正的视觉系统。\nImpeccable 负责审查页面有没有偏离规范。\n\n所以 UIcoding.ai 的样式不应该散落在每个页面里，也不应该每次让 Codex 重新写一套样式。\n\n更合理的方式是建立固定样式结构：\n\n```text\nsrc/styles/\n  tokens.css\n  base.css\n  layout.css\n  components.css\n  pages.css\n```\n\n这里不展开 CSS 代码，只说每个文件的作用。\n\ntokens.css：放颜色、字体、字号、间距、圆角、阴影、容器宽度。\nbase.css：放 body、标题、段落、链接、图片等基础样式。\nlayout.css：放 Container、Section、Grid、页面宽度、响应式布局。\ncomponents.css：放 Button、Card、Badge、Nav、Footer 等通用组件样式。\npages.css：放首页、案例页、详情页等页面级样式。\n\n这样做的好处是：\n\n颜色不会每个页面乱写。\n按钮不会每个页面长得不一样。\n卡片圆角和间距会统一。\n页面布局有固定节奏。\nCodex 不会每次重新发明一套视觉系统。\n\n可以直接复制这个提示词：\n\n```text\n请为当前项目建立一套固定 CSS 设计规范，但不要输出具体 CSS 代码给我解释。\n\n目标：\n把 UIcoding.ai 的视觉规范沉淀到固定样式文件中，而不是只写进 AGENTS.md 或 DESIGN.md。\n\n请整理或创建这些文件：\n- src/styles/tokens.css\n- src/styles/base.css\n- src/styles/layout.css\n- src/styles/components.css\n- src/styles/pages.css\n\n要求：\n1. tokens.css 只负责设计变量，比如颜色、字体、字号、间距、圆角、阴影、容器宽度。\n2. base.css 只负责全站基础样式，比如 body、标题、段落、链接、图片。\n3. layout.css 只负责布局规则，比如 Container、Section、Grid、响应式。\n4. components.css 只负责通用组件，比如 Button、Card、Badge、Nav、Footer。\n5. pages.css 只负责页面级样式，比如首页、案例页、详情页。\n6. 不要把页面专属样式写进 tokens。\n7. 不要在页面文件里随机新增颜色、阴影、圆角和间距。\n8. 不要引入新的 UI 组件库。\n9. 不要重构业务逻辑。\n10. 不要修改页面内容结构，除非样式引用必须调整。\n\n视觉方向：\n- 编辑感\n- 干净\n- 高级\n- 可信\n- 不要像默认组件库\n- 不要重渐变\n- 不要重阴影\n- 不要多层卡片嵌套\n- 标签不要抢过标题\n- 按钮不要太重\n\n完成后运行 npm run build，并总结：\n1. 创建或修改了哪些样式文件\n2. 每个样式文件负责什么\n3. 哪些页面或组件引用了这些样式\n4. 是否存在需要后续清理的重复样式\n```\n\n这个比“把设计规则写进 AGENTS.md”更有效。\n\nAGENTS.md 可以提醒 Codex 不要乱改设计系统。\n\n但真正的设计系统，必须落到固定 CSS 文件里。\n\n---\n\n## 6. 把大任务拆成单页任务\n\nAI Coding 最容易失控的地方，就是一次性要求它做完整站点。\n\nUIcoding.ai 我后面拆成了几个页面：\n\n首页。\n案例列表页。\n案例详情页。\n学习资料页。\n工具索引页。\n工具详情页。\n提交作品页。\n登录页。\n404 页面。\n\n每次只做一个页面。\n\n比如做案例页，我不会说“把案例系统做完整”。\n\n我会这样写：\n\n```text\n继续开发当前项目。\n\n本次任务只实现一个页面：/cases。\n\n不要创建后端。\n不要创建登录。\n不要接数据库。\n不要重构目录。\n不要引入复杂路由方案。\n不要修改首页视觉风格。\n不要修改设计 tokens。\n\n允许新增：\n- src/pages/CasesPage.jsx\n\n允许修改：\n- src/App.jsx\n- src/data.js\n- src/components/\n- src/styles/pages.css\n\n页面必须复用已有组件和样式规范：\n- Container\n- Section\n- Button\n- Badge\n- Card\n- CaseCard\n\n页面内容：\n1. 页面标题\n2. 简短说明\n3. 分类筛选\n4. 案例卡片列表\n5. 空状态\n\n完成后运行：\nnpm run build\n\n如果构建成功就停止。\n```\n\n这种写法看起来啰嗦，但非常有用。\n\n因为它限制了 Codex 的修改范围。\n\n我之前踩过的坑是：只想做一个页面，它顺手把全站样式也改了。\n\n所以现在我会明确写：\n\n允许新增什么。\n允许修改什么。\n禁止修改什么。\n必须复用什么。\n完成后跑什么命令。\n\n这样出问题也容易定位。\n\n---\n\n## 7. 用 Impeccable 做第一次设计审查\n\n页面能跑起来之后，不要马上继续加功能。\n\n先让 Impeccable 做设计审查。\n\n这里一定不要说“帮我改好看一点”。\n\n要让它先审查，不要直接改代码。\n\n可以复制：\n\n```text\n请使用 Impeccable Skill 走查当前首页。\n\n目标：\n- 高级\n- 编辑感\n- 可信\n- 像高质量 AI Coding 内容站\n- 不要像默认组件库模板\n- 不要像 AI 自动生成的 SaaS 页面\n\n请重点检查：\n1. 信息层级是否清楚\n2. Hero 是否太满\n3. 字体和字号是否有节奏\n4. 按钮是否太重\n5. 卡片是否太像模板\n6. 标签是否太抢眼\n7. 图片占位是否太默认\n8. 移动端是否拥挤\n9. 页面是否复用 src/styles 下的设计规范\n10. 是否存在页面里随机新增颜色、阴影、圆角和间距\n\n不要直接大改代码。\n先只指出最影响质感的 3 个问题。\n\n每个问题请包含：\n- 具体问题\n- 为什么影响质感\n- 建议怎么改\n- 可能涉及哪些样式文件或组件\n```\n\n这一步很关键。\n\n我不让它马上改代码，而是先让它审查。\n\n因为很多时候 Codex 直接改，会一次性改太多。\n\n先让 Impeccable 给出问题清单，再挑前三个改，效果会稳定很多。\n\n---\n\n## 8. 只修前三个最影响质感的问题\n\nImpeccable 走查后，通常会指出很多问题。\n\n但不要一次性全改。\n\n我一般只挑最重要的 3 个。\n\n比如它指出：\n\n按钮太重。\n卡片信息太挤。\n图片占位太默认。\n\n那这一轮就只改这三个。\n\n可以这样写：\n\n```text\n根据刚才 Impeccable 的设计走查结果，本轮只修复最影响质感的 3 个问题。\n\n只允许调整：\n- 颜色引用\n- 字体层级\n- 间距\n- 卡片样式\n- 按钮样式\n- 图片占位样式\n- 移动端布局细节\n\n优先修改：\n- src/styles/tokens.css\n- src/styles/base.css\n- src/styles/layout.css\n- src/styles/components.css\n- src/styles/pages.css\n\n不要新增页面。\n不要修改数据结构。\n不要重构组件。\n不要改路由。\n不要引入新依赖。\n不要做动画大改。\n不要在页面文件中写散乱样式。\n\n修复目标：\n1. 降低按钮的视觉重量\n2. 让卡片信息更舒展\n3. 让图片占位更像真实内容站，而不是灰色默认块\n\n完成后运行 npm run build，并总结修改了哪些文件。\n```\n\n这个方式比“帮我整体提升设计”稳定很多。\n\n因为它不是凭感觉改，而是基于设计审查结果改。\n\n---\n\n## 9. Impeccable 真正有用的地方：反模板感\n\n我觉得 Impeccable 最大的价值，不是让页面突然变成世界顶级设计。\n\n而是帮你避免 AI 页面常见问题。\n\n比如：\n\n卡片太多。\n按钮太黑。\n标签太抢眼。\n阴影太模板。\n渐变太重。\n页面到处都是圆角卡片。\n图标都放在圆角方块里。\n灰色文字放在浅色背景上，可读性很差。\nHero 区域堆太多信息，像 AI 生成的 SaaS 模板。\n\n这些问题非常常见。\n\nCodex 默认很容易做出这种页面，因为它学到的很多前端模式就是这种。\n\nImpeccable 的好处是，它会提醒你：\n\n不要再堆卡片了。\n不要再加渐变了。\n不要让标签比标题还抢眼。\n不要用组件库默认审美。\n不要把所有内容都装进背景块里。\n不要让 hover 效果变成炫技。\n\n这对 UIcoding.ai 很有帮助。\n\n因为我希望它更像一个编辑精选站，而不是一个普通 AI 工具站。\n\n---\n\n## 10. 自动设计审查：让 Impeccable 每轮都检查\n\n后面我更常用的是一个固定循环：\n\nCodex 完成页面。\nImpeccable 审查。\n只修前三个问题。\n重新构建。\n再检查页面。\n\n可以把这个流程写成固定提示词：\n\n```text\n请对当前页面执行一次 Impeccable 自动设计审查循环。\n\n流程：\n1. 读取当前页面和相关样式文件。\n2. 从视觉品质角度审查页面。\n3. 检查页面是否符合 src/styles 下的固定 CSS 规范。\n4. 只列出最影响质感的 3 个问题。\n5. 不要提出超过 3 个问题。\n6. 不要大改结构。\n7. 只针对这 3 个问题做最小修改。\n8. 修改后运行 npm run build。\n9. 最后总结修改文件、修改内容和剩余问题。\n\n审查标准：\n- 是否像真实内容站\n- 是否有编辑感\n- 是否有清晰层级\n- 是否避免组件库默认感\n- 是否避免 AI 模板感\n- 是否移动端可读\n- 是否复用 tokens、layout、components 的样式规范\n- 是否存在随机颜色、随机圆角、随机阴影、随机间距\n\n不要新增页面。\n不要新增功能。\n不要修改业务逻辑。\n不要引入新依赖。\n```\n\n这个提示词我觉得很适合零基础用户。\n\n因为你不需要懂太多设计术语。\n\n只要让 Impeccable 先审查，再让 Codex 只改前三个问题，就能稳定提升页面质感。\n\n---\n\n## 11. 更严格一点：用 detect 做反模式检查\n\n除了让 Impeccable 在 Codex 里审查页面，也可以让它做更偏自动化的反模式检查。\n\n我会把它理解成：\n\n不是审美打分。\n而是检查页面里有没有明显的 AI 设计坏味道。\n\n比如：\n\n重渐变。\n发光边框。\n过度阴影。\n模板化色彩。\n不必要的视觉装饰。\n\n可以直接复制：\n\n```text\n请为当前项目执行一次 Impeccable 反模式检测。\n\n要求：\n1. 运行 npx impeccable detect src/\n2. 如果检测失败，请不要马上大改。\n3. 先总结检测到了哪些问题。\n4. 按严重程度排序。\n5. 只选择最影响页面质感的 3 个问题。\n6. 说明每个问题可能影响哪些页面或组件。\n7. 等我确认后再修改。\n\n不要修改业务逻辑。\n不要新增依赖。\n不要改路由。\n不要重构组件结构。\n```\n\n我建议不要让它检测完就自动大改。\n\n先让它列问题。\n\n因为有些检测结果可能不是当前最重要的问题。\n\n设计优化不是越多越好。\n\n每次只改最重要的 3 个，反而更稳。\n\n---\n\n## 12. 页面验证不要省\n\n很多问题不是看代码能发现的。\n\n而是在浏览器里才看得出来。\n\n我做 UIcoding.ai 的时候，遇到过这些问题：\n\n卡片底部有一条白线。\n图标白底太大。\nHero 图片被裁剪。\n详情页正文宽度太宽。\n标签在移动端换行很乱。\n某个卡片 hover 后会撑开布局。\n图片加载失败后占位很丑。\n页面出现横向滚动条。\n\n所以每次修改后，我都会要求 Codex 做验证。\n\n```text\n修改完成后请执行以下验证：\n\n1. 运行 npm run build。\n2. 打开本地页面。\n3. 检查是否有横向溢出。\n4. 检查移动端布局是否拥挤。\n5. 如果页面包含图片，检查图片是否加载成功、是否被裁剪。\n6. 如果页面包含卡片，检查 hover、按钮、标签、标题和描述是否对齐。\n7. 如果页面包含长文本，检查正文宽度和行高是否适合阅读。\n8. 检查页面是否继续复用 src/styles 下的固定样式规范。\n\n只汇报验证结果。\n不要继续扩展新功能。\n```\n\n这里的关键是最后一句：\n\n不要继续扩展新功能。\n\nCodex 有时候很容易顺手做更多事情。\n\n你必须让它停在当前任务。\n\n---\n\n## 13. AGENTS.md 应该写什么\n\n设计规范不应该只写进 AGENTS.md。\n\n但 AGENTS.md 仍然有用。\n\n它应该写工作规则，而不是承载完整设计系统。\n\n我会这样写：\n\n```text\n请更新 AGENTS.md，只加入必要的工作规则。\n\n不要把完整设计规范写进 AGENTS.md。\n真正的设计规范在 src/styles/ 下的固定 CSS 文件中。\n\nAGENTS.md 只需要说明：\n1. 不要删除、移动、重命名文件，除非明确要求。\n2. 不要重构无关代码。\n3. 不要修改业务逻辑，除非当前任务要求。\n4. UI 修改必须优先复用 src/styles 下的规范。\n5. 不要在页面文件里随机新增颜色、阴影、圆角、间距。\n6. 不要随便修改 tokens，除非任务明确要求调整设计系统。\n7. 每次 UI 修改后，优先使用 Impeccable 做设计审查。\n8. 每轮只修最重要的 3 个视觉问题。\n9. 修改完成后必须运行 npm run build。\n10. 最后总结修改了哪些文件。\n\n保持简洁，不要写成长文档。\n```\n\n这样更合理。\n\nAGENTS.md 负责提醒 Codex：\n\n设计系统已经在 CSS 里了。\n不要每次重新发明样式。\n不要乱改 tokens。\n不要把页面样式写散。\n\n而 Impeccable 负责审查页面有没有偏离规范。\n\n---\n\n## 14. Impeccable 帮我具体改出了哪些方向\n\nUIcoding.ai 后面的视觉方向，就是这样一点点收敛出来的。\n\n一开始页面比较像普通组件站。\n\n后来慢慢改成：\n\n品牌色从纯黑转向更有温度的棕色。\n按钮变轻，不再满屏黑色按钮。\n卡片 hover 只做轻微反馈。\n学习详情页更像文章阅读，不再用很多背景块。\n工具页统一真实产品 icon，而不是随机图标。\n案例详情页减少模块堆叠，重点展示图片和作者信息。\n列表页标签降低视觉权重，让标题和封面更突出。\nFooter 和导航更克制，不抢主内容。\n\n这些不是一次性做出来的。\n\n而是每次审查一点，修改一点，再验证一点。\n\n这也是我现在觉得最适合 AI Coding 的方式：\n\n不要追求一次生成完美页面。\n而是让 AI 帮你持续迭代。\n\n---\n\n## 15. 给零基础用户的建议\n\n如果你是零基础用户，不要把 AI Coding 理解成“一句话生成完整网站”。\n\n这种方式很容易失控。\n\n更稳定的方式是：\n\n先做一个能运行的版本。\n再逐页拆任务。\n每次只改一个页面。\n每次只解决 3 个设计问题。\n每次修改后都构建验证。\n最后把规则沉淀到固定 CSS 规范里。\n\nImpeccable 最适合用在这种场景：\n\n你觉得页面不对劲。\n但你说不清哪里不对。\n\n这时候不要直接让 Codex “优化一下”。\n\n而是让 Impeccable 先审查。\n\n比如：\n\n```text\n请用 Impeccable 审查这个页面。\n只指出最影响质感的 3 个问题。\n不要直接改代码。\n```\n\n然后再让 Codex 按这 3 个问题修改。\n\n这样做慢一点，但更稳。\n\n也更接近真实产品开发流程。\n\n---\n\n## 总结\n\n这次做 UIcoding.ai，我最大的感受是：\n\nCodex 适合执行。\nImpeccable 适合审查。\n\nCodex 能很快把页面写出来，但它不一定知道页面为什么不高级。\n\nImpeccable 的价值，就是帮你把“感觉不对”变成更具体的问题。\n\n比如：\n\n按钮太重。\n标签太抢眼。\n卡片太模板。\n图片像占位。\n间距没有节奏。\n页面信息太满。\n移动端阅读压力太大。\n\n有了这些判断，再让 Codex 修改，效率会高很多。\n\n我现在的工作流基本是：\n\n```text\nCodex 搭页面\n↓\n固定 CSS 规范约束视觉\n↓\nImpeccable 做设计审查\n↓\n只改最重要的 3 个问题\n↓\nnpm run build\n↓\n浏览器验证\n↓\n把稳定规则沉淀到项目结构里\n```\n\n这套流程不复杂，但很适合独立开发者。\n\n尤其是你不想只做一个“能跑”的网站，而是希望页面真的有一点质感。\n\nUIcoding.ai 就是这样一点点做出来的。";
 
-const knowlensCodexTipsMarkdown = "# 20 亿 Token 后，我用 Codex 开发 KnowLens.ai 的 8 个技巧\n\n过去两周，我基本都在用 Codex 开发 KnowLens.ai。\n\n累计差不多花了 20 亿 token。\n\n说实话，这里面至少 50% 都浪费在重构、修 bug、恢复错误改动上。\n\n不是 Codex 不行，而是我一开始太乐观了。我以为只要不停把需求丢给它，它就能一路把产品做出来。结果真正做下来才发现，如果前期没有设计好产品工作流，Codex 会很努力地写代码，也会很努力地把项目改乱。\n\nKnowLens.ai 最开始只是一个很简单的想法：\n\n用户输入一段文本，AI 自动生成一张专业的信息可视化图片。\n\n比如科普内容、新闻热点、财报摘要、历史知识、流程说明，都可以变成一张更适合传播的 infographic。\n\n但真正做起来之后，功能很快就变多了。\n\nGoogle 登录要做。\n积分要做。\nStripe 支付要做。\n生成记录要保存。\n图片要能下载。\nSEO 页面要批量做。\n博客页、案例页、错误页、loading 状态都要补。\nVercel 环境变量、数据库、图片存储、支付回调也都要处理。\n\n一开始如果没有主线，后面就会不断重构。\n\n我前期最大的问题就是：想到哪里做到哪里。\n\n今天让 Codex 改生成流程，明天让它改登录，后天让它接 Stripe，再后面又让它做 SEO 页面。页面、组件、API、数据库、支付逻辑全部混在一起改，很快项目就开始变乱。\n\n后面我才慢慢总结出一套比较稳定的使用方式。\n\n下面是我用 Codex 开发 KnowLens.ai 后，总结出来的 8 个技巧。顺序是由浅入深，从最基础的任务拆分，到后面更容易出问题的登录、支付、部署链路。\n\n---\n\n## 1. 先写产品主流程，不要一上来就让 Codex 写功能\n\n这是我踩的第一个坑。\n\n我一开始太想快速看到效果了。\n\n想到一个功能，就直接丢给 Codex 做。\n\n比如：\n\n```text\n帮我做一个 AI infographic generator。\n```\n\n然后又继续加：\n\n```text\n增加登录。\n增加支付。\n增加积分。\n增加生成历史。\n增加 SEO 页面。\n增加博客页面。\n增加案例页面。\n```\n\n看起来每天都在推进，但其实项目越来越乱。\n\n因为我没有先定义清楚 KnowLens.ai 的核心工作流。\n\n后面我重新收敛了一下，发现真正最核心的流程其实就这一条：\n\n```text\n用户输入文本\n↓\nAI 理解内容\n↓\n生成 infographic prompt\n↓\n调用图像模型\n↓\n生成图片\n↓\n保存生成记录\n↓\n扣除积分\n↓\n用户下载图片\n```\n\n这条主流程稳定之前，不应该同时做太多分支。\n\n我后来会先把这个主流程发给 Codex：\n\n```text\n这是 KnowLens.ai 当前最核心的产品流程：\n\n用户输入文本\n↓\nAI 理解内容\n↓\n生成 infographic prompt\n↓\n调用图像模型\n↓\n生成图片\n↓\n保存生成记录\n↓\n扣除积分\n↓\n用户下载图片\n\n后续所有功能都围绕这个流程做。\n不要新增复杂分支。\n不要提前做 PPT、视频、博客、案例库等功能。\n先保证文本生成 infographic 的主链路稳定。\n```\n\n这样 Codex 执行起来会稳定很多。\n\n我现在的感受是，Codex 不怕写代码，它怕你没有主线。\n\n你不给它主线，它就会按自己的理解扩展。最后功能可能做了很多，但产品会越来越散。\n\n---\n\n## 2. 每次只让 Codex 做一个小任务\n\n第二个坑，是我一开始特别喜欢一次性给大需求。\n\n比如我会说：\n\n```text\n帮我整体优化一下网站，看起来更高级一点，顺便把移动端、SEO、交互、组件都处理下。\n```\n\n这种需求看起来很省事，但结果基本都会失控。\n\nCodex 可能会同时改首页、组件、全局样式、layout、SEO、按钮、卡片，甚至还会顺手改一些和当前任务没关系的逻辑。\n\n我遇到过很多次这种情况：\n\n我只是想优化一个页面的视觉，结果它改了公共组件。\n我只是想调整一个按钮，结果它动了全局 CSS。\n我只是想做一个 SEO 页面，结果它顺手改了路由结构。\n\n后面排查起来非常浪费时间。\n\n现在我基本只让 Codex 一次做一个很小的任务。\n\n比如只优化首页 Hero：\n\n```text\n只优化首页 Hero 区域。\n不要改其他页面。\n不要改全局样式。\n不要动登录、支付、积分、数据库逻辑。\n\n目标：\n1. H1 更清晰\n2. 按钮更统一\n3. 留白更舒服\n4. 移动端不要拥挤\n\n完成后告诉我改了哪些文件。\n```\n\n如果我要做一个完整页面，也会拆成几轮：\n\n第一轮：只做页面结构。\n第二轮：只优化视觉。\n第三轮：只做移动端。\n第四轮：只补 SEO metadata。\n第五轮：只补 loading / error 状态。\n\n这样看起来慢一点，但实际更快。\n\n因为你不需要反复返工。\n\nCodex 最怕的不是任务复杂，而是边界不清楚。\n\n---\n\n## 3. 需求要写验收标准，不要只写感觉\n\n这是做 UI 时最容易踩的坑。\n\n我之前经常会说：\n\n```text\n这个页面不够高级，帮我优化一下。\n```\n\n结果 Codex 很容易理解成：多加一点设计元素。\n\n然后页面上就会出现：\n\n渐变背景。\n大阴影。\n发光边框。\n多层卡片。\n很多小图标。\n一堆装饰线。\n\n最后页面更复杂了，但不一定更高级。\n\n我发现，Codex 对“高级”“精致”“有质感”这种词理解不稳定。它会努力做设计，但很容易做成那种 AI 模板站。\n\n后面我就不只说感觉，而是写具体验收标准。\n\n比如：\n\n```text\n只优化首页 Hero 区域。\n\n验收标准：\n- H1 桌面端 64px，移动端 40px\n- H1 最多 2 行\n- 副标题最大宽度 640px\n- 主按钮高度 48px\n- 按钮圆角 999px\n- 不要新增渐变背景\n- 不要新增装饰图标\n- 不要使用多层卡片嵌套\n- 移动端改成上下结构\n```\n\n这种效果会好很多。\n\n因为 Codex 终于知道什么叫“完成”。\n\n我现在做视觉优化，一般都会直接写：\n\n```text\n不要加复杂背景。\n不要堆装饰元素。\n不要使用多层卡片嵌套。\n不要把页面做得很重。\n保持干净、清晰、留白充足。\n```\n\n如果有具体参数，我会直接写参数。\n\n比如字号、间距、按钮高度、圆角、最大宽度、移动端布局。\n\n对 Codex 来说，“高级”太抽象，具体参数才是约束。\n\n---\n\n## 4. 一定要写 AGENTS.md\n\n这个是我后面才开始重视的。\n\nAGENTS.md 可以理解成写给 Codex 的项目规则。\n\n它不是写给用户看的，也不是普通说明文档，而是告诉 AI coding agent：\n\n这个项目是什么。\n哪些东西不能乱动。\n哪些逻辑不能随便改。\n遇到任务应该怎么读文件。\n改完以后怎么总结。\n\n我前期没有 AGENTS.md，Codex 经常会做一些让我很崩溃的事情。\n\n比如：\n\n让它改一个页面，它全项目搜索。\n让它修一个样式，它动了公共组件。\n让它新增一个页面，它顺手重构了 layout。\n让它优化视觉，它把全局样式也改了。\n\n后面我给项目加了 AGENTS.md，情况明显好了很多。\n\n可以直接让 Codex 创建：\n\n```text\n在项目根目录创建 AGENTS.md。\n\n要求：\n- 项目是 Next.js + TypeScript\n- 产品是 KnowLens.ai，一个 AI infographic generator\n- 不要删除、移动、重命名文件\n- 不要重构无关代码\n- 不要全项目乱搜\n- 不要修改登录、支付、积分、数据库、部署逻辑，除非我明确要求\n- UI 保持简洁、高级、干净，不要做成很重的 AI 模板风格\n- 每次修改后总结改了哪些文件\n```\n\n生成出来可以类似这样：\n\n````md\n# AGENTS.md\n\n## Project\n\nKnowLens.ai is a Next.js + TypeScript product for generating AI infographics from text.\n\nThe product includes:\n- Landing pages\n- AI infographic generation workflow\n- Google login\n- Stripe payment\n- User credits\n- SEO pages\n- Blog and example pages\n\n## Working Rules\n\n- Do not delete, move, or rename files unless explicitly requested.\n- Do not refactor unrelated code.\n- Do not rewrite the whole project.\n- Do not run broad project-wide searches unless necessary.\n- Read only the files related to the current task.\n- Keep changes small and easy to review.\n- If the task is large, split it into smaller steps.\n- Always explain which files were changed.\n\n## UI Rules\n\n- Keep the UI clean, premium, and simple.\n- Avoid heavy gradients, too many background blocks, and nested cards.\n- Use clear typography, spacing, and hierarchy.\n- Prefer mobile-readable layouts.\n- Do not add random decorative elements.\n- Do not make the site look like a generic AI template.\n\n## Product Rules\n\n- Do not change login, payment, credit, database, or deployment logic unless requested.\n- Keep the generation flow simple.\n- Preserve existing routes and user flows.\n- For SEO pages, keep metadata, H1, FAQ, internal links, and CTA sections.\n- For generation tasks, keep the flow stable: input → prompt → image generation → save result → deduct credits → download.\n\n## Commands\n\nUse the package manager already used by the project.\n\nCommon commands:\n\n```bash\npnpm install\npnpm dev\npnpm lint\npnpm build\n````\n\nIf pnpm is not available, check package.json before using npm.\n\n## After Changes\n\nAfter every task, summarize:\n\n* Files changed\n* What changed\n* Any risk or follow-up needed\n\n````\n\nAGENTS.md 不需要写很长。\n\n我之前试过写特别复杂的规则，结果效果反而不好。\n\n太长了，Codex 也抓不住重点。\n\n核心就是几句话：\n\n```text\n不要乱删文件。\n不要乱重构。\n不要改无关代码。\n不要碰关键业务逻辑。\n只做当前任务。\n````\n\n这几个规则比长篇大论更有用。\n\n---\n\n## 5. 登录、支付、积分、数据库要单独保护\n\n这是我觉得最重要的经验之一。\n\n页面坏了，一眼能看出来。\n\n但登录、支付、积分、数据库逻辑坏了，可能线上跑一段时间才发现。\n\n我在开发 KnowLens.ai 的时候，就发现这些模块一定不能让 Codex 随便碰。\n\n比如：\n\n用户支付成功了，但积分没加。\n图片生成失败了，但积分没退。\n用户没登录，却能访问不该访问的页面。\nStripe webhook 被改坏了，但当时没发现。\n数据库字段被改了，结果旧数据读不出来。\n\n这些问题都比 UI 问题严重。\n\n所以我现在只要做页面任务，都会加一句：\n\n```text\n不要修改 Google 登录逻辑。\n不要修改 Stripe webhook。\n不要修改积分扣除逻辑。\n不要修改数据库 schema。\n只做当前页面展示。\n```\n\n比如优化 pricing 页面，我会这样写：\n\n```text\n只优化 pricing section 的前端展示。\n\n不要修改 Stripe API。\n不要修改 webhook。\n不要修改环境变量。\n不要修改数据库。\n不要修改积分逻辑。\n\n只调整页面展示、文案、布局和按钮样式。\n```\n\n这个非常重要。\n\nCodex 有时候太热心了。\n\n你只是让它优化 pricing，它可能顺手帮你“优化”支付逻辑。\n\n你只是让它改登录页面文案，它可能顺手动 auth 逻辑。\n\n这种都很危险。\n\n我的建议是：凡是涉及钱、账号、积分、数据库的地方，一定要单独开任务。\n\n不要和 UI 优化混在一起。\n\n---\n\n## 6. 不要让 Codex 一直全项目搜索\n\nCodex 卡顿，很多时候不是代码写不出来，而是它一直在搜索。\n\n项目小的时候无所谓。\n\n但项目一大，文件一多，它可能为了改一个按钮，把整个项目翻一遍。\n\n我遇到过很典型的情况：\n\n只是让它改首页 Hero，它去读支付文件。\n只是让它改登录页，它去看生成接口。\n只是让它做 SEO 页面，它去扫数据库逻辑。\n\n然后它就一直读文件、分析、搜索，最后非常慢。\n\n后面我会直接限制它的读取范围。\n\n比如改首页：\n\n```text\n只查看首页文件和首页用到的组件。\n不要读取支付、数据库、API 相关文件。\n不要扫描整个项目。\n```\n\n比如改登录页：\n\n```text\n只查看 login 页面、auth button 组件和相关路由。\n不要读取 Stripe、credit、generation 相关代码。\n```\n\n比如改 pricing：\n\n```text\n只查看 pricing 组件和页面文件。\n不要读取 Stripe webhook。\n不要读取数据库文件。\n不要修改支付 API。\n```\n\n这个技巧非常实用。\n\nCodex 不是不能搜索，而是不要无目的搜索。\n\n越大的项目，越要限制它读哪些文件。\n\n否则 token 会消耗很快，效率也会变低。\n\n---\n\n## 7. GitHub 和 Vercel 要形成固定开发节奏\n\nCodex 改代码很快，但也正因为快，所以更需要版本管理。\n\n我前期有个问题，就是连续让 Codex 改很多需求，最后才看整体效果。\n\n结果一旦出问题，很难知道是哪一步改坏的。\n\n现在我会用更固定的节奏：\n\n```text\n一个小任务\n↓\n看修改文件\n↓\n本地运行\n↓\n提交 GitHub\n↓\nVercel 自动部署\n↓\n线上检查\n↓\n再做下一个任务\n```\n\n每次也会要求 Codex 总结：\n\n```text\n完成后告诉我：\n1. 修改了哪些文件\n2. 每个文件改了什么\n3. 有没有影响登录、支付、数据库、生成流程\n4. 有没有需要我手动配置的环境变量\n```\n\n这个习惯能帮你及时发现问题。\n\n尤其是 Vercel 部署时，最容易出问题的是环境变量。\n\n比如：\n\nGoogle OAuth Client ID。\nGoogle OAuth Secret。\nStripe Secret Key。\nStripe Webhook Secret。\nDatabase URL。\n图像模型 API Key。\n图片存储 Token。\n\n这些东西本地和线上都要配置对。\n\n我的坑是，本地跑通了，不代表线上没问题。\n\n有时候 Vercel 报错，不是代码问题，而是环境变量没配，或者 callback URL 不一致。\n\n所以涉及 Vercel、Google、Stripe 的任务，我都会让 Codex 最后列出：\n\n```text\n需要检查哪些环境变量？\n本地和线上分别要配置什么？\n有没有需要手动在 Vercel 后台设置的地方？\n```\n\n不要让 Codex 猜你的线上配置。\n\n它只能帮你检查和提醒，真正的密钥和后台配置还是要自己确认。\n\n---\n\n## 8. Google、Stripe 这类外部服务要分阶段接，不要一次全做\n\n这是更深一点的坑。\n\n独立开发者很容易一上来就想把所有东西接完。\n\nGoogle 登录。\nStripe 支付。\n积分。\n数据库。\n生成记录。\n用户中心。\nSEO。\n邮件通知。\n\n但这些东西耦合起来之后，Bug 会很难排查。\n\n我前期就遇到过这种问题：\n\n登录还没完全稳定，就开始做积分。\n积分逻辑还没完全稳定，又去接 Stripe。\nStripe 还没完全验证，又去做 pricing 页面和 SEO 页面。\n\n结果一旦出问题，不知道到底是登录状态问题、支付 webhook 问题、数据库问题，还是环境变量问题。\n\n现在我会分阶段做。\n\n第一阶段，只做核心生成：\n\n```text\n输入文本 → 生成图片 → 下载\n```\n\n第二阶段，加 Google 登录：\n\n```text\n登录 → 生成 → 保存记录\n```\n\n第三阶段，加积分：\n\n```text\n登录用户 → 检查积分 → 生成成功扣积分 → 失败退积分\n```\n\n第四阶段，加 Stripe：\n\n```text\n积分不足 → 跳转 Stripe → 支付成功 → webhook 加积分\n```\n\n第五阶段，再做 SEO 和增长页面：\n\n```text\nSEO 页面 → 引导用户进入生成流程\n```\n\n每一阶段都单独验证。\n\n比如接 Google 登录时，我会这样给 Codex：\n\n```text\n这次只接 Google 登录。\n不要接 Stripe。\n不要做积分。\n不要修改生成逻辑。\n\n完成后只验证：\n1. 用户可以点击 Google 登录\n2. 登录后能看到用户状态\n3. 退出登录正常\n```\n\n接 Stripe 时，我会单独开任务：\n\n```text\n这次只接 Stripe checkout 和 webhook。\n不要修改 UI 页面之外的其他功能。\n不要修改 Google 登录。\n不要修改生成 prompt。\n\n完成后说明：\n1. 支付成功后如何加积分\n2. webhook 如何验证\n3. 需要配置哪些环境变量\n4. 本地和 Vercel 分别要检查什么\n```\n\n外部服务一定要分阶段接。\n\n不要为了快，把所有东西一次性塞给 Codex。\n\n这不是效率高，这是给后面挖坑。\n\n---\n\n## 总结\n\n这两周用 Codex 做 KnowLens.ai，我最大的感受是：\n\nCodex 很强，但不要让它自由发挥。\n\n你越具体，它越好用。\n\n你越模糊，它越容易把项目改乱。\n\n我花了差不多 20 亿 token，其中至少一半都浪费在重构、修 bug、恢复错误改动上。\n\n现在回头看，最大的问题不是 Codex 能力不够，而是我前期没有把产品流程和任务边界设计清楚。\n\n如果重新来一次，我会一开始就做这几件事：\n\n```text\n先写主流程。\n每次只做一个小任务。\n需求写验收标准。\n提前创建 AGENTS.md。\n保护登录、支付、积分、数据库。\n限制 Codex 全项目搜索。\n用 GitHub 和 Vercel 固定开发节奏。\nGoogle、Stripe 这类外部服务分阶段接入。\n```\n\nAI Coding 不是让你不用思考产品和架构了。\n\n恰恰相反，它会放大产品架构的重要性。\n\n以前你自己写代码，可能慢一点，但你知道自己改了哪里。\n\n现在 Codex 写得很快，但如果你没有规则，它也会很快地把项目搞乱。\n\n所以我的结论很简单：\n\nCodex 可以帮你写代码。\n但你要负责把产品流程、代码边界和验收标准讲清楚。\n\n否则它确实能帮你生成很多代码，也会帮你制造很多返工。";
+const knowlensCodexTipsMarkdown = "# 20 亿 Token 后，我用 Codex 开发 KnowLens.ai 的 8 个技巧\n\n过去两周，我基本都在用 Codex 开发 KnowLens.ai。\n\n累计差不多花了 20 亿 token。\n\n说实话，这里面至少 50% 都浪费在重构、修 bug、恢复错误改动上。\n\n不是 Codex 不行，而是我一开始太乐观了。我以为只要不停把需求丢给它，它就能一路把产品做出来。结果真正做下来才发现，如果前期没有设计好产品工作流，Codex 会很努力地写代码，也会很努力地把项目改乱。\n\nKnowLens.ai 最开始只是一个很简单的想法：\n\n用户输入一段文本，AI 自动生成一张专业的信息可视化图片。\n\n比如科普内容、新闻热点、财报摘要、历史知识、流程说明，都可以变成一张更适合传播的 infographic。\n\n但真正做起来之后，功能很快就变多了。\n\nGoogle 登录要做。\n积分要做。\nStripe 支付要做。\n生成记录要保存。\n图片要能下载。\nSEO 页面要批量做。\n博客页、案例页、错误页、loading 状态都要补。\nVercel 环境变量、数据库、图片存储、支付回调也都要处理。\n\n一开始如果没有主线，后面就会不断重构。\n\n我前期最大的问题就是：想到哪里做到哪里。\n\n今天让 Codex 改生成流程，明天让它改登录，后天让它接 Stripe，再后面又让它做 SEO 页面。页面、组件、API、数据库、支付逻辑全部混在一起改，很快项目就开始变乱。\n\n后面我才慢慢总结出一套比较稳定的使用方式。\n\n下面是我用 Codex 开发 KnowLens.ai 后，总结出来的 8 个技巧。顺序是由浅入深，从最基础的任务拆分，到后面更容易出问题的登录、支付、部署链路。\n\n---\n\n## 1. 先写产品主流程，不要一上来就让 Codex 写功能\n\n这是我踩的第一个坑。\n\n我一开始太想快速看到效果了。\n\n想到一个功能，就直接丢给 Codex 做。\n\n比如：\n\n```text\n帮我做一个 AI infographic generator。\n```\n\n然后又继续加：\n\n```text\n增加登录。\n增加支付。\n增加积分。\n增加生成历史。\n增加 SEO 页面。\n增加博客页面。\n增加案例页面。\n```\n\n看起来每天都在推进，但其实项目越来越乱。\n\n因为我没有先定义清楚 KnowLens.ai 的核心工作流。\n\n后面我重新收敛了一下，发现真正最核心的流程其实就这一条：\n\n```text\n用户输入文本\n↓\nAI 理解内容\n↓\n生成 infographic 提示词\n↓\n调用图像模型\n↓\n生成图片\n↓\n保存生成记录\n↓\n扣除积分\n↓\n用户下载图片\n```\n\n这条主流程稳定之前，不应该同时做太多分支。\n\n我后来会先把这个主流程发给 Codex：\n\n```text\n这是 KnowLens.ai 当前最核心的产品流程：\n\n用户输入文本\n↓\nAI 理解内容\n↓\n生成 infographic 提示词\n↓\n调用图像模型\n↓\n生成图片\n↓\n保存生成记录\n↓\n扣除积分\n↓\n用户下载图片\n\n后续所有功能都围绕这个流程做。\n不要新增复杂分支。\n不要提前做 PPT、视频、博客、案例库等功能。\n先保证文本生成 infographic 的主链路稳定。\n```\n\n这样 Codex 执行起来会稳定很多。\n\n我现在的感受是，Codex 不怕写代码，它怕你没有主线。\n\n你不给它主线，它就会按自己的理解扩展。最后功能可能做了很多，但产品会越来越散。\n\n---\n\n## 2. 每次只让 Codex 做一个小任务\n\n第二个坑，是我一开始特别喜欢一次性给大需求。\n\n比如我会说：\n\n```text\n帮我整体优化一下网站，看起来更高级一点，顺便把移动端、SEO、交互、组件都处理下。\n```\n\n这种需求看起来很省事，但结果基本都会失控。\n\nCodex 可能会同时改首页、组件、全局样式、layout、SEO、按钮、卡片，甚至还会顺手改一些和当前任务没关系的逻辑。\n\n我遇到过很多次这种情况：\n\n我只是想优化一个页面的视觉，结果它改了公共组件。\n我只是想调整一个按钮，结果它动了全局 CSS。\n我只是想做一个 SEO 页面，结果它顺手改了路由结构。\n\n后面排查起来非常浪费时间。\n\n现在我基本只让 Codex 一次做一个很小的任务。\n\n比如只优化首页 Hero：\n\n```text\n只优化首页 Hero 区域。\n不要改其他页面。\n不要改全局样式。\n不要动登录、支付、积分、数据库逻辑。\n\n目标：\n1. H1 更清晰\n2. 按钮更统一\n3. 留白更舒服\n4. 移动端不要拥挤\n\n完成后告诉我改了哪些文件。\n```\n\n如果我要做一个完整页面，也会拆成几轮：\n\n第一轮：只做页面结构。\n第二轮：只优化视觉。\n第三轮：只做移动端。\n第四轮：只补 SEO metadata。\n第五轮：只补 loading / error 状态。\n\n这样看起来慢一点，但实际更快。\n\n因为你不需要反复返工。\n\nCodex 最怕的不是任务复杂，而是边界不清楚。\n\n---\n\n## 3. 需求要写验收标准，不要只写感觉\n\n这是做 UI 时最容易踩的坑。\n\n我之前经常会说：\n\n```text\n这个页面不够高级，帮我优化一下。\n```\n\n结果 Codex 很容易理解成：多加一点设计元素。\n\n然后页面上就会出现：\n\n渐变背景。\n大阴影。\n发光边框。\n多层卡片。\n很多小图标。\n一堆装饰线。\n\n最后页面更复杂了，但不一定更高级。\n\n我发现，Codex 对“高级”“精致”“有质感”这种词理解不稳定。它会努力做设计，但很容易做成那种 AI 模板站。\n\n后面我就不只说感觉，而是写具体验收标准。\n\n比如：\n\n```text\n只优化首页 Hero 区域。\n\n验收标准：\n- H1 桌面端 64px，移动端 40px\n- H1 最多 2 行\n- 副标题最大宽度 640px\n- 主按钮高度 48px\n- 按钮圆角 999px\n- 不要新增渐变背景\n- 不要新增装饰图标\n- 不要使用多层卡片嵌套\n- 移动端改成上下结构\n```\n\n这种效果会好很多。\n\n因为 Codex 终于知道什么叫“完成”。\n\n我现在做视觉优化，一般都会直接写：\n\n```text\n不要加复杂背景。\n不要堆装饰元素。\n不要使用多层卡片嵌套。\n不要把页面做得很重。\n保持干净、清晰、留白充足。\n```\n\n如果有具体参数，我会直接写参数。\n\n比如字号、间距、按钮高度、圆角、最大宽度、移动端布局。\n\n对 Codex 来说，“高级”太抽象，具体参数才是约束。\n\n---\n\n## 4. 一定要写 AGENTS.md\n\n这个是我后面才开始重视的。\n\nAGENTS.md 可以理解成写给 Codex 的项目规则。\n\n它不是写给用户看的，也不是普通说明文档，而是告诉 AI coding agent：\n\n这个项目是什么。\n哪些东西不能乱动。\n哪些逻辑不能随便改。\n遇到任务应该怎么读文件。\n改完以后怎么总结。\n\n我前期没有 AGENTS.md，Codex 经常会做一些让我很崩溃的事情。\n\n比如：\n\n让它改一个页面，它全项目搜索。\n让它修一个样式，它动了公共组件。\n让它新增一个页面，它顺手重构了 layout。\n让它优化视觉，它把全局样式也改了。\n\n后面我给项目加了 AGENTS.md，情况明显好了很多。\n\n可以直接让 Codex 创建：\n\n```text\n在项目根目录创建 AGENTS.md。\n\n要求：\n- 项目是 Next.js + TypeScript\n- 产品是 KnowLens.ai，一个 AI infographic generator\n- 不要删除、移动、重命名文件\n- 不要重构无关代码\n- 不要全项目乱搜\n- 不要修改登录、支付、积分、数据库、部署逻辑，除非我明确要求\n- UI 保持简洁、高级、干净，不要做成很重的 AI 模板风格\n- 每次修改后总结改了哪些文件\n```\n\n生成出来可以类似这样：\n\n````md\n# AGENTS.md\n\n## Project\n\nKnowLens.ai is a Next.js + TypeScript product for generating AI infographics from text.\n\nThe product includes:\n- Landing pages\n- AI infographic generation workflow\n- Google login\n- Stripe payment\n- User credits\n- SEO pages\n- Blog and example pages\n\n## Working Rules\n\n- Do not delete, move, or rename files unless explicitly requested.\n- Do not refactor unrelated code.\n- Do not rewrite the whole project.\n- Do not run broad project-wide searches unless necessary.\n- Read only the files related to the current task.\n- Keep changes small and easy to review.\n- If the task is large, split it into smaller steps.\n- Always explain which files were changed.\n\n## UI Rules\n\n- Keep the UI clean, premium, and simple.\n- Avoid heavy gradients, too many background blocks, and nested cards.\n- Use clear typography, spacing, and hierarchy.\n- Prefer mobile-readable layouts.\n- Do not add random decorative elements.\n- Do not make the site look like a generic AI template.\n\n## Product Rules\n\n- Do not change login, payment, credit, database, or deployment logic unless requested.\n- Keep the generation flow simple.\n- Preserve existing routes and user flows.\n- For SEO pages, keep metadata, H1, FAQ, internal links, and CTA sections.\n- For generation tasks, keep the flow stable: input → 提示词 → image generation → save result → deduct credits → download.\n\n## Commands\n\nUse the package manager already used by the project.\n\nCommon commands:\n\n```bash\npnpm install\npnpm dev\npnpm lint\npnpm build\n````\n\nIf pnpm is not available, check package.json before using npm.\n\n## After Changes\n\nAfter every task, summarize:\n\n* Files changed\n* What changed\n* Any risk or follow-up needed\n\n````\n\nAGENTS.md 不需要写很长。\n\n我之前试过写特别复杂的规则，结果效果反而不好。\n\n太长了，Codex 也抓不住重点。\n\n核心就是几句话：\n\n```text\n不要乱删文件。\n不要乱重构。\n不要改无关代码。\n不要碰关键业务逻辑。\n只做当前任务。\n````\n\n这几个规则比长篇大论更有用。\n\n---\n\n## 5. 登录、支付、积分、数据库要单独保护\n\n这是我觉得最重要的经验之一。\n\n页面坏了，一眼能看出来。\n\n但登录、支付、积分、数据库逻辑坏了，可能线上跑一段时间才发现。\n\n我在开发 KnowLens.ai 的时候，就发现这些模块一定不能让 Codex 随便碰。\n\n比如：\n\n用户支付成功了，但积分没加。\n图片生成失败了，但积分没退。\n用户没登录，却能访问不该访问的页面。\nStripe webhook 被改坏了，但当时没发现。\n数据库字段被改了，结果旧数据读不出来。\n\n这些问题都比 UI 问题严重。\n\n所以我现在只要做页面任务，都会加一句：\n\n```text\n不要修改 Google 登录逻辑。\n不要修改 Stripe webhook。\n不要修改积分扣除逻辑。\n不要修改数据库 schema。\n只做当前页面展示。\n```\n\n比如优化 pricing 页面，我会这样写：\n\n```text\n只优化 pricing section 的前端展示。\n\n不要修改 Stripe API。\n不要修改 webhook。\n不要修改环境变量。\n不要修改数据库。\n不要修改积分逻辑。\n\n只调整页面展示、文案、布局和按钮样式。\n```\n\n这个非常重要。\n\nCodex 有时候太热心了。\n\n你只是让它优化 pricing，它可能顺手帮你“优化”支付逻辑。\n\n你只是让它改登录页面文案，它可能顺手动 auth 逻辑。\n\n这种都很危险。\n\n我的建议是：凡是涉及钱、账号、积分、数据库的地方，一定要单独开任务。\n\n不要和 UI 优化混在一起。\n\n---\n\n## 6. 不要让 Codex 一直全项目搜索\n\nCodex 卡顿，很多时候不是代码写不出来，而是它一直在搜索。\n\n项目小的时候无所谓。\n\n但项目一大，文件一多，它可能为了改一个按钮，把整个项目翻一遍。\n\n我遇到过很典型的情况：\n\n只是让它改首页 Hero，它去读支付文件。\n只是让它改登录页，它去看生成接口。\n只是让它做 SEO 页面，它去扫数据库逻辑。\n\n然后它就一直读文件、分析、搜索，最后非常慢。\n\n后面我会直接限制它的读取范围。\n\n比如改首页：\n\n```text\n只查看首页文件和首页用到的组件。\n不要读取支付、数据库、API 相关文件。\n不要扫描整个项目。\n```\n\n比如改登录页：\n\n```text\n只查看 login 页面、auth button 组件和相关路由。\n不要读取 Stripe、credit、generation 相关代码。\n```\n\n比如改 pricing：\n\n```text\n只查看 pricing 组件和页面文件。\n不要读取 Stripe webhook。\n不要读取数据库文件。\n不要修改支付 API。\n```\n\n这个技巧非常实用。\n\nCodex 不是不能搜索，而是不要无目的搜索。\n\n越大的项目，越要限制它读哪些文件。\n\n否则 token 会消耗很快，效率也会变低。\n\n---\n\n## 7. GitHub 和 Vercel 要形成固定开发节奏\n\nCodex 改代码很快，但也正因为快，所以更需要版本管理。\n\n我前期有个问题，就是连续让 Codex 改很多需求，最后才看整体效果。\n\n结果一旦出问题，很难知道是哪一步改坏的。\n\n现在我会用更固定的节奏：\n\n```text\n一个小任务\n↓\n看修改文件\n↓\n本地运行\n↓\n提交 GitHub\n↓\nVercel 自动部署\n↓\n线上检查\n↓\n再做下一个任务\n```\n\n每次也会要求 Codex 总结：\n\n```text\n完成后告诉我：\n1. 修改了哪些文件\n2. 每个文件改了什么\n3. 有没有影响登录、支付、数据库、生成流程\n4. 有没有需要我手动配置的环境变量\n```\n\n这个习惯能帮你及时发现问题。\n\n尤其是 Vercel 部署时，最容易出问题的是环境变量。\n\n比如：\n\nGoogle OAuth Client ID。\nGoogle OAuth Secret。\nStripe Secret Key。\nStripe Webhook Secret。\nDatabase URL。\n图像模型 API Key。\n图片存储 Token。\n\n这些东西本地和线上都要配置对。\n\n我的坑是，本地跑通了，不代表线上没问题。\n\n有时候 Vercel 报错，不是代码问题，而是环境变量没配，或者 callback URL 不一致。\n\n所以涉及 Vercel、Google、Stripe 的任务，我都会让 Codex 最后列出：\n\n```text\n需要检查哪些环境变量？\n本地和线上分别要配置什么？\n有没有需要手动在 Vercel 后台设置的地方？\n```\n\n不要让 Codex 猜你的线上配置。\n\n它只能帮你检查和提醒，真正的密钥和后台配置还是要自己确认。\n\n---\n\n## 8. Google、Stripe 这类外部服务要分阶段接，不要一次全做\n\n这是更深一点的坑。\n\n独立开发者很容易一上来就想把所有东西接完。\n\nGoogle 登录。\nStripe 支付。\n积分。\n数据库。\n生成记录。\n用户中心。\nSEO。\n邮件通知。\n\n但这些东西耦合起来之后，Bug 会很难排查。\n\n我前期就遇到过这种问题：\n\n登录还没完全稳定，就开始做积分。\n积分逻辑还没完全稳定，又去接 Stripe。\nStripe 还没完全验证，又去做 pricing 页面和 SEO 页面。\n\n结果一旦出问题，不知道到底是登录状态问题、支付 webhook 问题、数据库问题，还是环境变量问题。\n\n现在我会分阶段做。\n\n第一阶段，只做核心生成：\n\n```text\n输入文本 → 生成图片 → 下载\n```\n\n第二阶段，加 Google 登录：\n\n```text\n登录 → 生成 → 保存记录\n```\n\n第三阶段，加积分：\n\n```text\n登录用户 → 检查积分 → 生成成功扣积分 → 失败退积分\n```\n\n第四阶段，加 Stripe：\n\n```text\n积分不足 → 跳转 Stripe → 支付成功 → webhook 加积分\n```\n\n第五阶段，再做 SEO 和增长页面：\n\n```text\nSEO 页面 → 引导用户进入生成流程\n```\n\n每一阶段都单独验证。\n\n比如接 Google 登录时，我会这样给 Codex：\n\n```text\n这次只接 Google 登录。\n不要接 Stripe。\n不要做积分。\n不要修改生成逻辑。\n\n完成后只验证：\n1. 用户可以点击 Google 登录\n2. 登录后能看到用户状态\n3. 退出登录正常\n```\n\n接 Stripe 时，我会单独开任务：\n\n```text\n这次只接 Stripe checkout 和 webhook。\n不要修改 UI 页面之外的其他功能。\n不要修改 Google 登录。\n不要修改生成提示词。\n\n完成后说明：\n1. 支付成功后如何加积分\n2. webhook 如何验证\n3. 需要配置哪些环境变量\n4. 本地和 Vercel 分别要检查什么\n```\n\n外部服务一定要分阶段接。\n\n不要为了快，把所有东西一次性塞给 Codex。\n\n这不是效率高，这是给后面挖坑。\n\n---\n\n## 总结\n\n这两周用 Codex 做 KnowLens.ai，我最大的感受是：\n\nCodex 很强，但不要让它自由发挥。\n\n你越具体，它越好用。\n\n你越模糊，它越容易把项目改乱。\n\n我花了差不多 20 亿 token，其中至少一半都浪费在重构、修 bug、恢复错误改动上。\n\n现在回头看，最大的问题不是 Codex 能力不够，而是我前期没有把产品流程和任务边界设计清楚。\n\n如果重新来一次，我会一开始就做这几件事：\n\n```text\n先写主流程。\n每次只做一个小任务。\n需求写验收标准。\n提前创建 AGENTS.md。\n保护登录、支付、积分、数据库。\n限制 Codex 全项目搜索。\n用 GitHub 和 Vercel 固定开发节奏。\nGoogle、Stripe 这类外部服务分阶段接入。\n```\n\nAI Coding 不是让你不用思考产品和架构了。\n\n恰恰相反，它会放大产品架构的重要性。\n\n以前你自己写代码，可能慢一点，但你知道自己改了哪里。\n\n现在 Codex 写得很快，但如果你没有规则，它也会很快地把项目搞乱。\n\n所以我的结论很简单：\n\nCodex 可以帮你写代码。\n但你要负责把产品流程、代码边界和验收标准讲清楚。\n\n否则它确实能帮你生成很多代码，也会帮你制造很多返工。";
 
 export const learningContent = [
   {
@@ -127,19 +127,19 @@ export const learningContent = [
     "notice": "本文为 Uicoding 基于外部文章整理的中文精读稿，不是原文全文搬运。原文来自 X Article，中文参考宝玉的公开整理稿；请访问原始来源查看完整上下文。",
     "sections": [
       {
-        "heading": "这篇文章真正想说明什么",
+        "heading": "本文真正想说明什么",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "很多人刚开始使用 Codex 时，会把它当成一个更聪明的代码编辑助手：让它读代码库，生成 diff，跑测试，修 bug，最后提交 PR。这当然是 Codex 的核心能力，但这篇文章提醒我们，Codex 的价值已经不止于“写代码”。"
+            "content": "很多人刚开始使用 Codex 时，会把它当成一个更聪明的代码编辑助手：让它读代码库，生成 diff，跑测试，修 bug，最后提交 PR。这当然是 Codex 的核心能力，但本文提醒我们，Codex 的价值已经不止于“写代码”。"
           },
           {
             "type": "paragraph",
-            "content": "现实工作里，大量任务虽然最后会落到代码上，但过程并不只发生在代码库里。你可能要查网页、看文档、整理 Slack 里的线索、导出 PDF、检查表格、操作浏览器、等待反馈、触发自动化流程。Codex 如果能连接这些上下文，就不再只是帮你补代码，而是能协助完成一整段电脑工作。"
+            "content": "现实工作里，大量任务虽然最后会落到代码上，但过程并不只发生在代码库里。常见动作包括查网页、看文档、整理 Slack 线索、导出 PDF、检查表格、操作浏览器、等待反馈、触发自动化流程。Codex 如果能连接这些上下文，就不再只是补代码，而是能协助完成一整段电脑工作。"
           },
           {
             "type": "paragraph",
-            "content": "这篇文章的核心，是把 Codex 当成一个可持续协作的工作流系统来用，而不是一次性聊天框。持久对话流、语音输入、任务干预、工具连接、自动化、Goals、侧边栏和共享记忆，都是为了让 Codex 更稳定地在真实工作中接力。"
+            "content": "本文的核心，是把 Codex 当成一个可持续协作的工作流系统来用，而不是一次性聊天框。持久对话流、语音输入、任务干预、工具连接、自动化、Goals、侧边栏和共享记忆，都是为了让 Codex 更稳定地在真实工作中接力。"
           }
         ],
         "image": "/learn-images/codex-maximizing-hero.jpg",
@@ -150,15 +150,15 @@ export const learningContent = [
         "blocks": [
           {
             "type": "paragraph",
-            "content": "文章首先讲的是 durable threads，也就是可以长期保存上下文的对话流。普通聊天的缺点是每次都像重新开始，你要反复解释项目背景、偏好、当前进度和之前做过的决定。持久对话流则像一个长期工作空间，适合反复推进同一类任务。"
+            "content": "文章首先讲的是 durable threads，也就是可以长期保存上下文的对话流。普通聊天的缺点是每次都像重新开始，需要反复解释项目背景、偏好、当前进度和之前做过的决定。持久对话流则像一个长期工作空间，适合反复推进同一类任务。"
           },
           {
             "type": "paragraph",
-            "content": "你可以把常用对话流固定下来，例如一个专门处理日常事务的线程，一个负责产品发布的线程，一个审查文档的线程，一个监控外部数据的线程。它们不是一次性提问窗口，而是长期存在的工作台。随着时间推移，Codex 可以在同一个线程里回到之前的上下文，继续处理未完成的工作。"
+            "content": "可以把常用对话流固定下来，例如一个专门处理日常事务的线程，一个负责产品发布的线程，一个审查文档的线程，一个监控外部数据的线程。它们不是一次性提问窗口，而是长期存在的工作台。随着时间推移，Codex 可以在同一个线程里回到之前的上下文，继续处理未完成的工作。"
           },
           {
             "type": "paragraph",
-            "content": "对独立开发者来说，这一点非常实用。你可以为一个产品建立长期线程，比如“Uicoding.ai 内容维护”“KnowLens.ai 发布准备”“每周检查网站问题”。每个线程只处理一类任务，长期积累上下文，避免所有事情混在一个聊天里。"
+            "content": "对独立开发者来说，这一点很实用。可以为一个产品建立长期线程，比如“Uicoding.ai 内容维护”“KnowLens.ai 发布准备”“每周检查网站问题”。每个线程只处理一类任务，长期积累上下文，避免所有事情混在一个聊天里。"
           }
         ]
       },
@@ -167,15 +167,15 @@ export const learningContent = [
         "blocks": [
           {
             "type": "paragraph",
-            "content": "文章接着提到语音输入。它的价值不在于让输入更酷，而是能捕捉那些还没有被你整理成清晰文字的想法。很多时候，我们脑子里有一个方向，但还没来得及组织成正式 prompt。直接说出来，反而能保留更多上下文。"
+            "content": "文章接着提到语音输入。它的价值不在于让输入更酷，而是捕捉尚未整理成清晰文字的想法。很多方向在一开始并不完整，直接口述反而能保留更多上下文。"
           },
           {
             "type": "paragraph",
-            "content": "比如你只记得某个人在 Slack 里提过一个问题，但不记得细节。你可以先把模糊记忆说给 Codex，让它去帮你搜索、收集线索、整理成可执行任务。对于一个能自己查找上下文的 Agent 来说，粗糙但完整的口述，往往比一句精炼但缺少背景的指令更有用。"
+            "content": "比如只记得某个人在 Slack 里提过一个问题，但不记得细节。可以先把模糊记忆说给 Codex，让它搜索、收集线索、整理成可执行任务。对于能主动查找上下文的 Agent 来说，粗糙但完整的口述，往往比一句精炼但缺少背景的指令更有用。"
           },
           {
             "type": "paragraph",
-            "content": "会议录音、临时想法、产品复盘、视觉反馈，都适合先用语音输入收集。不要急着把它变成完美 prompt。先把想法说完整，再让 Codex 帮你整理成任务清单、修改计划或可执行步骤。"
+            "content": "会议录音、临时想法、产品复盘、视觉反馈，都适合先用语音输入收集。不要急着把它变成完美提示词。先把想法说完整，再让 Codex 帮助整理成任务清单、修改计划或可执行步骤。"
           }
         ]
       },
@@ -188,11 +188,11 @@ export const learningContent = [
           },
           {
             "type": "paragraph",
-            "content": "比如你让 Codex 审查一个网页时，看到侧边栏里的页面间距不对，可以直接打断它，告诉它把某个元素调小，或者提醒它某段文案理解错了。这种干预能避免它沿着错误方向越跑越远。"
+            "content": "比如让 Codex 审查网页时，发现侧边栏里的页面间距不对，可以直接打断它，要求调小某个元素，或者纠正某段文案理解。这种干预能避免它沿着错误方向越跑越远。"
           },
           {
             "type": "paragraph",
-            "content": "任务排队则适合安排后续动作。比如当前修复完成后，让它把预览链接发给审核人，或者等构建完成后再检查截图。简单理解：干预是改变它正在做什么，排队是安排它接下来做什么。这两者让你在自动化过程中仍然保留主导权。"
+            "content": "任务排队则适合安排后续动作。比如当前修复完成后，让它把预览链接发给审核人，或者等构建完成后再检查截图。可以理解为：干预是改变它正在做什么，排队是安排它接下来做什么。这两者让使用者在自动化过程中仍然保留主导权。"
           }
         ]
       },
@@ -205,7 +205,7 @@ export const learningContent = [
           },
           {
             "type": "paragraph",
-            "content": "浏览器适合在侧边栏里审查网页，尤其是本地开发页面、UI 预览、交互流程和视觉问题。Chrome 适合需要你个人账号登录态的工作，例如只能在你的浏览器会话中打开的后台或工具。电脑控制则适合那些没有 API，只能通过桌面界面完成的任务。"
+            "content": "浏览器适合在侧边栏里审查网页，尤其是本地开发页面、UI 预览、交互流程和视觉问题。Chrome 适合需要个人账号登录态的工作，例如只能在个人浏览器会话中打开的后台或工具。电脑控制则适合那些没有 API、只能通过桌面界面完成的任务。"
           },
           {
             "type": "paragraph",
@@ -222,11 +222,11 @@ export const learningContent = [
         "blocks": [
           {
             "type": "paragraph",
-            "content": "文章也强调了跨设备协作。一个任务可以在你的本地电脑上启动，使用本地文件、权限和环境运行。当你离开电脑时，你仍然可以通过手机查看进度，回答 Codex 的问题，批准下一步行动，或者在回到工位前补充新的方向。"
+            "content": "文章也强调了跨设备协作。一个任务可以在本地电脑上启动，使用本地文件、权限和环境运行。离开电脑后，仍然可以通过手机查看进度，回答 Codex 的问题，批准下一步行动，或者在回到工位前补充新的方向。"
           },
           {
             "type": "paragraph",
-            "content": "这对长任务很有意义。比如跑测试、生成素材、整理反馈、重构模块、生成报告，这些任务不需要你一直坐在电脑前盯着。你可以让 Codex 在本地环境里继续推进，而你用移动端保持决策权。"
+            "content": "这对长任务很有意义。比如跑测试、生成素材、整理反馈、重构模块、生成报告，这些任务不需要一直坐在电脑前盯着。Codex 可以在本地环境里继续推进，人通过移动端保持决策权。"
           }
         ]
       },
@@ -239,7 +239,7 @@ export const learningContent = [
           },
           {
             "type": "paragraph",
-            "content": "文章把 thread automation 形容成一种心跳机制：它会按照设定时间回到同一个线程里继续工作，直到满足某个条件。比如一个日常助理线程可以每隔一段时间检查 Slack 和 Gmail，找出还没处理的重要消息，帮你整理优先级，甚至先起草回复。"
+            "content": "文章把 thread automation 形容成一种心跳机制：它会按照设定时间回到同一个线程里继续工作，直到满足某个条件。比如一个日常助理线程可以每隔一段时间检查 Slack 和 Gmail，找出还没处理的重要消息，帮助整理优先级，甚至先起草回复。"
           },
           {
             "type": "paragraph",
@@ -269,11 +269,11 @@ export const learningContent = [
         "blocks": [
           {
             "type": "paragraph",
-            "content": "侧边栏是这篇文章里非常实用的一部分。它让 Codex 生成的成果和聊天窗口并排出现，你不需要把文件导出到别的软件里再检查。生成成果可以是代码，也可以是网页、PDF、幻灯片、表格、Markdown 文档或其他文件。"
+            "content": "侧边栏是本文里很实用的一部分。它让 Codex 生成的成果和聊天窗口并排出现，不需要把文件导出到别的软件里再检查。生成成果可以是代码，也可以是网页、PDF、幻灯片、表格、Markdown 文档或其他文件。"
           },
           {
             "type": "paragraph",
-            "content": "侧边栏主要适合四类工作：检查生成文件，在文件上标注需要修改的地方，操作网页界面，审查代码或文件变更。对设计师和产品经理来说，这意味着你可以像审稿一样看 Codex 的产物，而不是只看文字回复。"
+            "content": "侧边栏主要适合四类工作：检查生成文件，在文件上标注需要修改的地方，操作网页界面，审查代码或文件变更。对设计师和产品经理来说，这意味着可以像审稿一样看 Codex 的产物，而不是只看文字回复。"
           }
         ],
         "image": "/learn-images/codex-side-panel-pdf.jpg",
@@ -284,7 +284,7 @@ export const learningContent = [
         "blocks": [
           {
             "type": "paragraph",
-            "content": "当侧边栏和应用内浏览器结合起来，网页既是 Codex 的输出，也可以成为控制面板。Codex 可以生成一个页面，在侧边栏打开，检查渲染效果，发现 bug，再继续修复。你在网页上的标注和反馈也能留在同一个闭环里。"
+            "content": "当侧边栏和应用内浏览器结合起来，网页既是 Codex 的输出，也可以成为控制面板。Codex 可以生成一个页面，在侧边栏打开，检查渲染效果，发现 bug，再继续修复。网页上的标注和反馈也能留在同一个闭环里。"
           },
           {
             "type": "paragraph",
@@ -318,11 +318,11 @@ export const learningContent = [
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这篇文章最后的判断是：Codex 仍然以写代码为核心，但围绕代码发生的许多周边工作，正在进入同一个系统。MCP、网页、桌面控制、自动化、侧边栏文件审查，都让 Codex 不再只是代码补全工具。"
+            "content": "本文最后的判断是：Codex 仍然以写代码为核心，但围绕代码发生的许多周边工作，正在进入同一个系统。MCP、网页、桌面控制、自动化、侧边栏文件审查，都让 Codex 不再只是代码补全工具。"
           },
           {
             "type": "paragraph",
-            "content": "这也改变了人控制 AI 的方式。你可以在任务中途干预，让它排队执行下一步，用自动化在人不在时继续推进，用 Goals 给长任务设定终点线，用侧边栏直接审查最终文件。一个完整工作流从听取指令、执行任务到审查产物，都可以在 Codex 里形成闭环。"
+            "content": "这也改变了人控制 AI 的方式。可以在任务中途干预，让它排队执行下一步，用自动化在人不在时继续推进，用 Goals 给长任务设定终点线，用侧边栏直接审查最终文件。一个完整工作流从听取指令、执行任务到审查产物，都可以在 Codex 里形成闭环。"
           },
           {
             "type": "paragraph",
@@ -355,7 +355,7 @@ export const learningContent = [
     "sections": parseLearningMarkdown(knowlensCodexTipsMarkdown)
   },
   {
-    "id": "ai-coding-full-workflow-prompt-chain",
+    "id": "ai-coding-full-workflow-提示词-chain",
     "sourceUrl": "https://github.com/vlad-ko/claude-wizard",
     "translationMode": "guidedTranslation",
     "title": "让 Claude Code / Codex 先思考再写代码：一套可复制的完整链路提示词",
@@ -363,7 +363,7 @@ export const learningContent = [
     "notice": "本文为 Uicoding.ai 基于 Claude Wizard、Addy Osmani 的 AI Agent Spec 写法和 OpenAI Codex 官方提示词建议整理的中文学习笔记，不是原文全文翻译。主要参考：https://github.com/vlad-ko/claude-wizard、https://addyosmani.com/blog/good-spec/、https://developers.openai.com/codex/prompting。",
     "sections": [
       {
-        "heading": "为什么这篇资料值得收录",
+        "heading": "为什么本文值得收录",
         "paragraphs": [
           "很多人使用 Claude Code 或 Codex 时，习惯直接输入一句“帮我做这个功能”。这当然能跑起来，但越到真实项目，越容易出现三个问题：AI 没弄清需求就开始写、没有验证标准、改完之后不知道有没有影响其它模块。",
           "Claude Wizard 这类资料的价值在于，它把 AI Coding 从“写代码”变成了一条工程链路：先理解需求，再探索代码，然后写测试或验证标准，接着最小实现，最后运行验证、自我审查和总结交付。",
@@ -373,16 +373,16 @@ export const learningContent = [
       {
         "heading": "适合什么时候使用",
         "paragraphs": [
-          "这套提示词适合中等以上复杂度的任务，比如新增一个页面、重构一个组件、接入一个 API、修复一个线上问题、优化一段核心流程，或者让 AI 帮你完成一轮带测试的功能开发。",
-          "如果只是改一句文案，没必要套完整流程。真正需要它的场景是：你担心 AI 改太多文件、担心它凭空假设、担心它不跑验证、担心它动到登录、支付、数据库这类高风险逻辑。",
-          "你可以把它理解成给 Claude Code / Codex 的“开发纪律”：不是限制它能力，而是让它先想清楚、再下手。对独立开发者尤其有用，因为你没有完整工程团队帮你做 Code Review，AI 自己的审查流程就更重要。"
+          "这套提示词适合中等以上复杂度的任务，比如新增一个页面、重构一个组件、接入一个 API、修复一个线上问题、优化一段核心流程，或者让 AI 帮助完成一轮带测试的功能开发。",
+          "如果只是改一句文案，没必要套完整流程。真正需要它的场景是：担心 AI 改太多文件、担心它凭空假设、担心它不跑验证、担心它动到登录、支付、数据库这类高风险逻辑。",
+          "可以理解为给 Claude Code / Codex 的“开发纪律”：不是限制它能力，而是让它先想清楚、再下手。对独立开发者尤其有用，因为缺少完整工程团队帮助做代码审查，AI 自己的审查流程就更重要。"
         ]
       },
       {
         "heading": "一套完整链路提示词",
         "paragraphs": [
-          "下面这段可以直接复制到 Claude Code、Codex 或 Cursor Agent 中使用。建议在一个具体任务开始前粘贴，然后把“本次任务”替换成你真正要做的事情。",
-          "如果你的项目有 AGENTS.md、CLAUDE.md、README 或内部开发规范，一定要让 AI 先读这些文件。这样它不会只凭当前对话猜项目结构。"
+          "下面这段可以直接复制到 Claude Code、Codex 或 Cursor Agent 中使用。建议在一个具体任务开始前粘贴，然后把“本次任务”替换成实际任务。",
+          "如果项目有 AGENTS.md、CLAUDE.md、README 或内部开发规范，一定要让 AI 先读这些文件。这样它不会只凭当前对话猜项目结构。"
         ],
         "code": {
           "label": "完整链路提示词",
@@ -517,7 +517,7 @@ export const learningContent = [
       {
         "heading": "第四阶段：限制 AI 只做最小实现",
         "paragraphs": [
-          "AI 很容易过度热心。你只是让它修一个按钮，它可能顺手重构样式；你只是让它接一个字段，它可能顺手改数据结构。所以实现阶段一定要写边界。",
+          "AI 很容易过度热心。只是让它修一个按钮，它可能顺手重构样式；只是让它接一个字段，它可能顺手改数据结构。所以实现阶段一定要写边界。",
           "这里的核心是三句话：只做当前任务、复用已有模式、不要动无关模块。尤其是登录、支付、权限、数据库、环境变量这类地方，除非任务明确要求，否则要写进禁止范围。"
         ],
         "code": {
@@ -536,7 +536,7 @@ export const learningContent = [
         }
       },
       {
-        "heading": "第五阶段：让 AI 自己做一次 Code Review",
+        "heading": "第五阶段：让 AI 自己做一次代码审查",
         "paragraphs": [
           "很多 AI 生成代码的问题，不是语法错误，而是边界情况、隐性副作用和维护成本。自我审查不能保证万无一失，但能显著减少低级问题。",
           "这一段适合放在每次实现之后。它会逼 AI 从“完成任务”的状态切换到“审查改动”的状态。"
@@ -560,9 +560,9 @@ export const learningContent = [
         }
       },
       {
-        "heading": "第六阶段：交付总结要能帮你复盘",
+        "heading": "第六阶段：交付总结要能帮助复盘",
         "paragraphs": [
-          "最后的总结不是形式主义。它能帮你快速判断 AI 有没有改到不该改的地方，也方便你之后提交 Git、写 PR 或回滚。",
+          "最后的总结不是形式主义。它能帮助快速判断 AI 有没有改到不该改的地方，也方便后续提交 Git、写 PR 或回滚。",
           "一个好的交付总结应该包含文件、行为、验证、风险和后续动作。不要只让 AI 说“已完成”。"
         ],
         "code": {
@@ -581,39 +581,39 @@ export const learningContent = [
         }
       },
       {
-        "heading": "把这套流程变成你的固定工作法",
+        "heading": "把这套流程变成固定工作法",
         "paragraphs": [
-          "这套提示词最适合沉淀到项目规则里。你可以把完整链路放进 AGENTS.md、CLAUDE.md 或团队的工作流文档里，让 AI 每次进入项目时都按同一套节奏工作。",
-          "真正的变化不是提示词更长，而是你开始用工程流程管理 AI：需求先变成 Spec，代码先经过探索，修改先有边界，结果必须验证，最后必须自审。",
-          "当你用这套方式工作一段时间，会发现 AI Coding 的体验会稳定很多。AI 依然可以很快，但它不再是自由发挥，而是在一条清楚的产品和工程链路里加速你。"
+          "这套提示词最适合沉淀到项目规则里。可以把完整链路放进 AGENTS.md、CLAUDE.md 或团队的工作流文档里，让 AI 每次进入项目时都按同一套节奏工作。",
+          "真正的变化不是提示词更长，而是开始用工程流程管理 AI：需求先变成 Spec，代码先经过探索，修改先有边界，结果必须验证，最后必须自审。",
+          "使用这套方式工作一段时间，会发现 AI Coding 的体验会稳定很多。AI 依然可以很快，但它不再是自由发挥，而是在一条清楚的产品和工程链路里加速交付。"
         ]
       }
     ]
   },
   {
-    "id": "claude-code-official-prompt-library-copyable-workflows",
+    "id": "claude-code-official-提示词-library-copyable-workflows",
     "sourceUrl": "https://code.claude.com/docs/en/prompt-library",
     "translationMode": "guidedTranslation",
-    "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制 Prompt",
+    "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制提示词",
     "originalTitle": "Claude Code Prompt Library / Common Workflows",
-    "notice": "本文为 Uicoding.ai 基于 Claude Code 官方 Prompt Library 和 Common Workflows 整理的中文学习笔记，不是原文全文翻译。主要参考：https://code.claude.com/docs/en/prompt-library 和 https://docs.anthropic.com/en/docs/claude-code/common-workflows。",
+    "notice": "本文为 Uicoding.ai 基于 Claude Code 官方提示词库 和 常用工作流整理的中文学习笔记，不是原文全文翻译。主要参考：https://code.claude.com/docs/en/prompt-library 和 https://docs.anthropic.com/en/docs/claude-code/common-workflows。",
     "sections": [
       {
-        "heading": "这篇不是提示词片段，而是完整工作提示词",
+        "heading": "本文不是提示词片段，而是完整工作提示词",
         "paragraphs": [
-          "Claude Code 官方 Prompt Library 的重点不是教你写一句万能咒语，而是把任务说清楚：让 Agent 先理解上下文，再按目标修改，最后给出可验证结果。Common Workflows 也强调从理解代码库、查找相关代码、修 Bug、写测试到提交总结的一整套流程。",
-          "所以这篇资料不整理成零散句子，而是把官方推荐的模式改写成可以直接复制的完整中文 Prompt。每个代码块都可以单独复制到 Claude Code，也可以改一下工具名后用于 Codex、Cursor Agent 或其它 AI Coding 工具。",
+          "Claude Code 官方提示词库 的重点不是讲解写一句万能咒语，而是把任务说清楚：让 Agent 先理解上下文，再按目标修改，最后给出可验证结果。常用工作流也强调从理解代码库、查找相关代码、修 Bug、写测试到提交总结的一整套流程。",
+          "所以本文不整理成零散句子，而是把官方推荐的模式改写成可以直接复制的完整中文提示词。每个代码块都可以单独复制到 Claude Code，也可以改一下工具名后用于 Codex、Cursor Agent 或其它 AI Coding 工具。",
           "使用时只需要替换方括号里的内容，例如页面路径、Bug 描述、验收标准、允许修改范围。其它约束建议保留，因为这些约束能减少 AI 误改、过度重构和没有验证就结束的情况。"
         ]
       },
       {
-        "heading": "完整总控 Prompt：从探索代码到验证结果",
+        "heading": "完整总控提示词：从探索代码到验证结果",
         "paragraphs": [
-          "如果你只想复制一段最完整的 Prompt，就用下面这一段。它适合中等复杂度任务：新增页面、修复问题、优化组件、补测试、调整工作流。",
-          "这段 Prompt 的核心是：先探索，不急着改；先定义验收标准，再实现；实现后必须验证；最后要输出风险和检查项。"
+          "如果只想复制一段最完整的提示词，就用下面这一段。它适合中等复杂度任务：新增页面、修复问题、优化组件、补测试、调整工作流。",
+          "这段提示词的核心是：先探索，不急着改；先定义验收标准，再实现；实现后必须验证；最后要输出风险和检查项。"
         ],
         "code": {
-          "label": "完整总控 Prompt",
+          "label": "完整总控提示词",
           "content": `你现在是我的 Claude Code 结对工程师。请按“探索代码 -> 制定计划 -> 最小实现 -> 验证结果 -> 总结交付”的流程完成任务。
 
 任务目标：
@@ -669,13 +669,13 @@ export const learningContent = [
         }
       },
       {
-        "heading": "探索代码库 Prompt：先弄清楚项目再动手",
+        "heading": "探索代码库提示词：先弄清楚项目再动手",
         "paragraphs": [
-          "这是最适合新项目、新页面、新需求开始前使用的 Prompt。它不会要求 AI 立刻改代码，而是先让它建立代码地图。",
-          "如果你经常遇到 AI 改错文件、找不到真实入口、凭空假设组件存在，先运行这一段会稳很多。"
+          "这是最适合新项目、新页面、新需求开始前使用的提示词。它不会要求 AI 立刻改代码，而是先让它建立代码地图。",
+          "如果经常遇到 AI 改错文件、找不到真实入口、凭空假设组件存在，先运行这一段会稳很多。"
         ],
         "code": {
-          "label": "探索代码库 Prompt",
+          "label": "探索代码库提示词",
           "content": `请先探索当前代码库，不要修改任何文件。
 
 我想完成的任务是：
@@ -701,13 +701,13 @@ export const learningContent = [
         }
       },
       {
-        "heading": "修 Bug Prompt：带复现、范围和验证",
+        "heading": "修 Bug 提示词：带复现、范围和验证",
         "paragraphs": [
           "修 Bug 最怕的问题是 AI 只根据报错文字猜原因。更稳的方式是把现象、复现步骤、期望结果、限制范围和验证方式都写进去。",
-          "下面这段适合 UI Bug、交互 Bug、接口 Bug 和构建报错。你可以把截图描述、终端报错或浏览器控制台报错粘到对应位置。"
+          "下面这段适合 UI Bug、交互 Bug、接口 Bug 和构建报错。可以把截图描述、终端报错或浏览器控制台报错粘到对应位置。"
         ],
         "code": {
-          "label": "修 Bug 完整 Prompt",
+          "label": "修 Bug 完整提示词",
           "content": `请帮我修复一个 Bug。先分析，不要马上改代码。
 
 Bug 现象：
@@ -748,13 +748,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "安全重构 Prompt：保持行为不变",
+        "heading": "安全重构提示词：保持行为不变",
         "paragraphs": [
           "重构时要特别强调“行为不变”。如果不写清楚，AI 可能把重构理解成重新设计功能，最后改出新 Bug。",
-          "这段 Prompt 适合整理重复代码、拆组件、移动样式、命名清理、抽工具函数。"
+          "这段提示词适合整理重复代码、拆组件、移动样式、命名清理、抽工具函数。"
         ],
         "code": {
-          "label": "安全重构 Prompt",
+          "label": "安全重构提示词",
           "content": `请帮我做一次小范围安全重构。
 
 重构目标：
@@ -785,13 +785,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "补测试 Prompt：让 AI 先定义测试目标",
+        "heading": "补测试提示词：让 AI 先定义测试目标",
         "paragraphs": [
           "官方工作流里经常会把测试作为任务的一部分。重点不是让 AI 随便补几个测试，而是先说明测试要保护什么行为。",
           "这段适合已有测试框架的项目。如果项目暂时没有测试，也可以让 AI 输出手动验证清单。"
         ],
         "code": {
-          "label": "补测试 Prompt",
+          "label": "补测试提示词",
           "content": `请为当前功能补充测试。先不要写实现代码，先制定测试计划。
 
 要保护的功能：
@@ -819,13 +819,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "验证交付 Prompt：不要让任务停在“我改完了”",
+        "heading": "验证交付提示词：不要让任务停在“我改完了”",
         "paragraphs": [
-          "很多 AI Coding 的问题发生在最后一步：代码改了，但没有说明怎么验，也没有告诉你风险在哪里。",
+          "很多 AI Coding 的问题发生在最后一步：代码改了，但没有说明怎么验，也没有说明风险在哪里。",
           "这段适合每次改完后复制使用。它会强制 AI 把验证、浏览器检查、风险和后续动作讲清楚。"
         ],
         "code": {
-          "label": "验证交付 Prompt",
+          "label": "验证交付提示词",
           "content": `请对刚才的修改做一次完整交付检查。
 
 请按以下结构输出，不要省略：
@@ -858,39 +858,39 @@ Bug 现象：
         }
       },
       {
-        "heading": "如何把这些 Prompt 用在真实项目里",
+        "heading": "如何把这些提示词用在真实项目里",
         "paragraphs": [
-          "最稳的用法不是每次都把所有 Prompt 全部复制一遍，而是按任务阶段选择。刚进入项目时用“探索代码库 Prompt”，遇到问题时用“修 Bug Prompt”，想整理代码时用“安全重构 Prompt”，改完以后用“验证交付 Prompt”。",
-          "如果你希望团队长期复用，可以把这些 Prompt 放进 CLAUDE.md、AGENTS.md 或项目内部文档。更进一步，还可以把它们拆成 Claude Code slash commands，比如 /explore-task、/fix-bug、/verify-change。",
+          "最稳的用法不是每次都把所有提示词全部复制一遍，而是按任务阶段选择。刚进入项目时用“探索代码库提示词”，遇到问题时用“修 Bug 提示词”，想整理代码时用“安全重构提示词”，改完以后用“验证交付提示词”。",
+          "如果希望团队长期复用，可以把这些提示词放进 CLAUDE.md、AGENTS.md 或项目内部文档。更进一步，还可以把它们拆成 Claude Code slash commands，比如 /explore-task、/fix-bug、/verify-change。",
           "真正重要的是让 AI 形成固定节奏：先理解，再计划，再改动，再验证，再交付。只要这个节奏稳定，Claude Code 和 Codex 都会比“想到什么说什么”的使用方式可靠很多。"
         ]
       }
     ]
   },
   {
-    "id": "codex-official-workflows-copyable-prompts",
+    "id": "codex-official-workflows-copyable-提示词",
     "sourceUrl": "https://developers.openai.com/codex/workflows",
     "translationMode": "guidedTranslation",
-    "title": "Codex 官方工作流：7 个可直接复制的实战 Prompt",
+    "title": "Codex 官方工作流：7 个可直接复制的实战提示词",
     "originalTitle": "Workflows",
-    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex 官方 Workflows 整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/workflows。",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex 官方工作流整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/workflows。",
     "sections": [
       {
-        "heading": "为什么这篇适合做 Codex 实战学习页",
+        "heading": "为什么本文适合做 Codex 实战学习页",
         "paragraphs": [
-          "OpenAI Codex 官方 Workflows 不是只讲“提示词怎么写”，而是把 Codex 放到真实开发任务里：理解代码、修 Bug、写测试、根据截图做原型、迭代 UI、做本地 code review，以及在 GitHub PR 上做 review。",
-          "这几个场景基本覆盖了独立开发者每天会遇到的工作：先弄懂项目，再动手改；改完要验证；提交前要审查；别人提 PR 时，也可以让 Codex 先帮你看一轮。",
-          "下面每个代码块都是完整 Prompt。你可以直接复制到 Codex 里使用，只需要替换方括号中的页面路径、Bug 描述、截图信息或 PR 信息。"
+          "OpenAI Codex 官方工作流不是只讲“提示词怎么写”，而是把 Codex 放到真实开发任务里：理解代码、修 Bug、写测试、根据截图做原型、迭代 UI、做本地 code review，以及在 GitHub PR 上做 review。",
+          "这几个场景基本覆盖了独立开发者每天会遇到的工作：先弄懂项目，再动手改；改完要验证；提交前要审查；别人提 PR 时，也可以让 Codex 先帮助看一轮。",
+          "下面每个代码块都是完整提示词。可以直接复制到 Codex 里使用，只需要替换方括号中的页面路径、Bug 描述、截图信息或 PR 信息。"
         ]
       },
       {
         "heading": "1. 解释代码流：先让 Codex 讲清楚系统怎么跑",
         "paragraphs": [
-          "这个 Prompt 适合接手新项目、理解一个页面、读接口链路或梳理某个功能的执行路径。重点是让 Codex 先解释，而不是马上修改。",
-          "如果你是零基础用户，这也是最安全的第一步：先知道文件在哪里、数据怎么走、用户操作会触发哪些代码。"
+          "这个提示词适合接手新项目、理解一个页面、读接口链路或梳理某个功能的执行路径。重点是让 Codex 先解释，而不是马上修改。",
+          "如果是零基础用户，这也是最安全的第一步：先知道文件在哪里、数据怎么走、用户操作会触发哪些代码。"
         ],
         "code": {
-          "label": "解释代码流 Prompt",
+          "label": "解释代码流提示词",
           "content": `请帮我解释当前项目中的一条代码流，不要修改任何文件。
 
 我想理解的功能或页面是：
@@ -914,11 +914,11 @@ Bug 现象：
       {
         "heading": "2. 修 Bug：给现象、复现步骤和验收标准",
         "paragraphs": [
-          "修 Bug 时，最重要的是不要只给一句“这里坏了”。你需要告诉 Codex：现象是什么、如何复现、期望结果是什么、哪些模块不能碰。",
+          "修 Bug 时，最重要的是不要只给一句“这里坏了”。需要告诉 Codex：现象是什么、如何复现、期望结果是什么、哪些模块不能碰。",
           "下面这段适合 UI Bug、构建错误、状态错误和数据展示错误。"
         ],
         "code": {
-          "label": "修 Bug Prompt",
+          "label": "修 Bug 提示词",
           "content": `请帮我修复一个 Bug。先分析根因，再做最小修改。
 
 Bug 现象：
@@ -958,14 +958,14 @@ Bug 现象：
         "heading": "3. 写测试：让 Codex 先理解要保护的行为",
         "paragraphs": [
           "写测试不是让 Codex 随便补几个断言，而是先说清楚“这个测试保护什么行为”。如果项目没有测试框架，也可以要求它先输出手动验证方案。",
-          "这段 Prompt 适合给核心函数、组件状态、表单逻辑、接口处理和回归 Bug 补测试。"
+          "这段提示词适合给核心函数、组件状态、表单逻辑、接口处理和回归 Bug 补测试。"
         ],
         "code": {
-          "label": "写测试 Prompt",
+          "label": "写测试提示词",
           "content": `请为当前功能补充测试。先制定测试计划，不要马上写代码。
 
 要测试的功能：
-[描述功能，例如：学习资料详情页可以正确渲染代码块，并且复制按钮能复制完整 Prompt。]
+[描述功能，例如：学习资料详情页可以正确渲染代码块，并且复制按钮能复制完整提示词。]
 
 需要保护的行为：
 1. 正常数据下应该如何表现；
@@ -993,11 +993,11 @@ Bug 现象：
       {
         "heading": "4. 根据截图做原型：把图片变成可运行页面",
         "paragraphs": [
-          "Codex Workflows 里一个很实用的场景，是基于截图快速做原型。这里的关键不是“照着做一个差不多的页面”，而是写清楚还原范围、交互、响应式和不允许新增的复杂度。",
-          "如果你给 Codex 截图，最好同时描述：这是哪个页面、哪些元素必须还原、哪些只是参考、移动端怎么处理。"
+          "Codex 工作流里一个很实用的场景，是基于截图快速做原型。这里的关键不是“照着做一个差不多的页面”，而是写清楚还原范围、交互、响应式和不允许新增的复杂度。",
+          "如果给 Codex 截图，最好同时描述：这是哪个页面、哪些元素必须还原、哪些只是参考、移动端怎么处理。"
         ],
         "code": {
-          "label": "根据截图做原型 Prompt",
+          "label": "根据截图做原型提示词",
           "content": `请根据我提供的截图，为当前项目实现一个可运行的前端原型。
 
 截图说明：
@@ -1035,10 +1035,10 @@ Bug 现象：
         "heading": "5. UI 迭代：不要让 Codex 一次性大改视觉",
         "paragraphs": [
           "UI 迭代最容易失控：一句“优化一下”可能导致全局样式被重写。更稳的做法是让 Codex 只围绕一个页面、三个问题、明确验收标准做最小调整。",
-          "这段 Prompt 适合你已经有页面，但觉得层级、留白、卡片、按钮或移动端不够好时使用。"
+          "这段提示词适合已经有页面，但觉得层级、留白、卡片、按钮或移动端不够好时使用。"
         ],
         "code": {
-          "label": "UI 迭代 Prompt",
+          "label": "UI 迭代提示词",
           "content": `请帮我对当前页面做一轮小范围 UI 迭代。
 
 目标页面：
@@ -1074,13 +1074,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "6. 本地 Code Review：提交前让 Codex 先审一轮",
+        "heading": "6. 本地代码审查：提交前让 Codex 先审一轮",
         "paragraphs": [
-          "Codex 支持本地审查工作流。你可以在提交前让它检查当前 diff，重点看 bug、回归风险、测试缺口和无关改动。",
-          "这段 Prompt 适合在你已经改完代码、准备提交之前使用。"
+          "Codex 支持本地审查工作流。可以在提交前让它检查当前 diff，重点看 bug、回归风险、测试缺口和无关改动。",
+          "这段提示词适合在已经改完代码、准备提交之前使用。"
         ],
         "code": {
-          "label": "本地 Code Review Prompt",
+          "label": "本地代码审查提示词",
           "content": `请对我当前本地改动做一次 code review。
 
 审查范围：
@@ -1107,13 +1107,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "7. PR Review：让 Codex 帮你读 Pull Request",
+        "heading": "7. PR 审查：让 Codex 帮助读 Pull Request",
         "paragraphs": [
-          "当团队协作时，Codex 可以用于 PR Review：总结改动、找风险、检查测试、提出问题。重点是不要只让它“看看”，而是明确审查维度。",
-          "如果你使用 GitHub，可以把 PR 链接、diff 摘要、测试结果或 CI 报错一起给 Codex。"
+          "当团队协作时，Codex 可以用于 PR 审查：总结改动、找风险、检查测试、提出问题。重点是不要只让它“看看”，而是明确审查维度。",
+          "如果使用 GitHub，可以把 PR 链接、diff 摘要、测试结果或 CI 报错一起给 Codex。"
         ],
         "code": {
-          "label": "PR Review Prompt",
+          "label": "PR 审查提示词",
           "content": `请帮我 review 这个 Pull Request。
 
 PR 链接或编号：
@@ -1142,47 +1142,47 @@ PR 目标：
         }
       },
       {
-        "heading": "怎么选择这 7 个 Prompt",
+        "heading": "怎么选择这 7 个提示词",
         "paragraphs": [
-          "如果你刚进入项目，用“解释代码流”。如果线上或页面出问题，用“修 Bug”。如果要避免回归，用“写测试”。如果从截图开始做页面，用“根据截图做原型”。如果页面已经有了但不够好，用“UI 迭代”。如果准备提交，用“本地 Code Review”。如果团队有人开 PR，用“PR Review”。",
-          "这 7 个 Prompt 的共同点是：都要求 Codex 先理解上下文，再明确范围，然后执行，最后验证。它们不是为了让提示词显得复杂，而是为了让 AI Coding 更接近真实工程流程。",
-          "你也可以把它们沉淀成自己的常用命令，比如 /explain-flow、/fix-bug、/write-tests、/prototype-from-screenshot、/ui-iterate、/local-review、/pr-review。每次复用同一套结构，项目会稳定很多。"
+          "刚进入项目，用“解释代码流”。如果线上或页面出问题，用“修 Bug”。如果要避免回归，用“写测试”。如果从截图开始做页面，用“根据截图做原型”。如果页面已经有了但不够好，用“UI 迭代”。如果准备提交，用“本地代码审查”。如果团队有人开 PR，用“PR 审查”。",
+          "这 7 个提示词的共同点是：都要求 Codex 先理解上下文，再明确范围，然后执行，最后验证。它们不是为了让提示词显得复杂，而是为了让 AI Coding 更接近真实工程流程。",
+          "也可以把它们沉淀成自己的常用命令，比如 /explain-flow、/fix-bug、/write-tests、/prototype-from-screenshot、/ui-iterate、/local-review、/pr-review。每次复用同一套结构，项目会稳定很多。"
         ]
       }
     ]
   },
   {
-    "id": "codex-real-webpage-prompt-case-library",
+    "id": "codex-real-webpage-提示词-case-library",
     "sourceUrl": "https://developers.openai.com/codex/use-cases",
     "translationMode": "guidedTranslation",
-    "title": "Codex 真实网页案例 Prompt 库：从网页拆解到验证套件",
-    "originalTitle": "Codex prompt examples and real web workflow cases",
+    "title": "Codex 真实网页案例提示词库：从网页拆解到验证套件",
+    "originalTitle": "Codex 提示词 examples and real web workflow cases",
     "notice": "本文为 Uicoding.ai 基于公开资料整理的中文学习笔记，不是原文全文翻译。参考来源包括 OpenAI Codex Use Cases：https://developers.openai.com/codex/use-cases，OpenAI Codex Figma to code 用例：https://developers.openai.com/codex/use-cases/figma-designs-to-code，以及 Jose Casanova Codex Prompts：https://www.josecasanova.com/prompts/for/codex。",
     "sections": [
       {
-        "heading": "这篇资料解决什么问题",
+        "heading": "本文解决什么问题",
         "paragraphs": [
-          "很多 AI Coding 教程只讲“写清楚需求”，但真实做产品时，你经常面对的是一个真实网页、一个截图、一个竞品页面、一个 Figma 设计、一个已经上线但有问题的页面。你需要 Codex 不只是写代码，而是先拆解网页，再做实现计划，最后用验证套件检查结果。",
-          "这篇把几个真实网页来源组合起来：OpenAI Codex 官方 Use Cases 提供真实用例方向，Figma to code 用例说明如何把设计转成代码，Jose Casanova 的 Codex Prompts 则偏向验证、执行计划和提交前检查。",
-          "下面所有 Prompt 都是完整可复制版本。你可以把真实网页 URL、截图描述、目标页面路径和验收标准填进去，然后直接交给 Codex 执行。"
+          "很多 AI Coding 教程只讲“写清楚需求”，但真实做产品时，常见输入往往是一个真实网页、一个截图、一个竞品页面、一个 Figma 设计、一个已经上线但有问题的页面。需要 Codex 不只是写代码，而是先拆解网页，再做实现计划，最后用验证套件检查结果。",
+          "本文把几个真实网页来源组合起来：OpenAI Codex 官方 Use Cases 提供真实用例方向，Figma to code 用例说明如何把设计转成代码，Jose Casanova 的 Codex 提示词则偏向验证、执行计划和提交前检查。",
+          "下面所有提示词都是完整可复制版本。可以把真实网页 URL、截图描述、目标页面路径和验收标准填进去，然后直接交给 Codex 执行。"
         ]
       },
       {
         "heading": "可以用来练习的真实网页来源",
         "paragraphs": [
-          "网页案例一：OpenAI Codex Use Cases，地址：https://developers.openai.com/codex/use-cases。这个页面适合学习 Codex 在 PR review、Figma to code、数据分析、反馈整理等真实任务中的应用方向。",
+          "网页案例一：OpenAI Codex Use Cases，地址：https://developers.openai.com/codex/use-cases。这个页面适合学习 Codex 在 PR 审查、Figma to code、数据分析、反馈整理等真实任务中的应用方向。",
           "网页案例二：OpenAI Codex Figma designs to code，地址：https://developers.openai.com/codex/use-cases/figma-designs-to-code。这个案例适合练习“从设计稿或截图到可运行页面”的工作流。",
-          "网页案例三：Jose Casanova Codex Prompts，地址：https://www.josecasanova.com/prompts/for/codex。这个页面适合学习把验证套件、执行计划、Git commit 分析、跨 Agent Review 这类任务做成可复用 Prompt。"
+          "网页案例三：Jose Casanova Codex Prompts，地址：https://www.josecasanova.com/prompts/for/codex。这个页面适合学习把验证套件、执行计划、Git commit 分析、跨智能体审查这类任务做成可复用提示词。"
         ]
       },
       {
-        "heading": "Prompt 1：真实网页拆解，先把网页变成实现清单",
+        "heading": "提示词 1：真实网页拆解，先把网页变成实现清单",
         "paragraphs": [
-          "当你看到一个好网页，不要马上让 Codex“仿一个”。更稳的方式是先让它拆解页面：信息架构、布局、组件、视觉层级、交互状态、移动端策略。",
-          "这段 Prompt 适合输入一个真实网页 URL，或者你已经打开网页后，把页面结构描述给 Codex。"
+          "看到一个好网页，不要马上让 Codex“仿一个”。更稳的方式是先让它拆解页面：信息架构、布局、组件、视觉层级、交互状态、移动端策略。",
+          "这段提示词适合输入一个真实网页 URL，或者已经打开网页后，把页面结构描述给 Codex。"
         ],
         "code": {
-          "label": "真实网页拆解 Prompt",
+          "label": "真实网页拆解提示词",
           "content": `请基于下面这个真实网页，帮我做一次产品和前端实现拆解。先不要写代码。
 
 真实网页 URL：
@@ -1233,20 +1233,20 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 2：从真实网页或截图复刻一个原型页面",
+        "heading": "提示词 2：从真实网页或截图复刻一个原型页面",
         "paragraphs": [
-          "网页复刻最怕两个极端：要么只抄表面，要么过度设计。这个 Prompt 会要求 Codex 先还原结构和层级，再实现可运行原型，并明确哪些地方可以简化。",
-          "适合练习 OpenAI 的 Figma to code 思路，也适合你把竞品网页、截图、设计稿转成项目里的一个新页面。"
+          "网页复刻最怕两个极端：要么只抄表面，要么过度设计。这个提示词会要求 Codex 先还原结构和层级，再实现可运行原型，并明确哪些地方可以简化。",
+          "适合练习 OpenAI 的 Figma to code 思路，也适合把竞品网页、截图、设计稿转成项目里的一个新页面。"
         ],
         "code": {
-          "label": "真实网页/截图复刻 Prompt",
+          "label": "真实网页/截图复刻提示词",
           "content": `请根据我提供的真实网页或截图，帮我在当前项目中实现一个可运行的原型页面。
 
 参考网页或截图：
 [粘贴 URL，或用文字描述截图内容。]
 
 目标路由：
-[例如 /learn/codex-prompt-case-study 或 /cases/new-example]
+[例如 /learn/codex-提示词-case-study 或 /cases/new-example]
 
 复刻目标：
 - 复刻页面的信息架构；
@@ -1283,13 +1283,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 3：执行计划 Prompt，把拆解结果变成可落地任务",
+        "heading": "提示词 3：执行计划提示词，把拆解结果变成可落地任务",
         "paragraphs": [
           "网页拆解之后，不要一次性让 Codex 全部实现。更稳的是把它拆成可执行任务：先页面结构，再内容数据，再样式，再移动端，再验证。",
-          "这个 Prompt 适合把上一段拆解结果变成任务清单，也适合在真实项目里控制 Codex 的修改范围。"
+          "这个提示词适合把上一段拆解结果变成任务清单，也适合在真实项目里控制 Codex 的修改范围。"
         ],
         "code": {
-          "label": "执行计划 Prompt",
+          "label": "执行计划提示词",
           "content": `请把前面的网页拆解结果整理成一个可执行开发计划。先不要写代码。
 
 项目目标：
@@ -1335,13 +1335,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 4：验证套件 Prompt，检查页面不是只做到表面相似",
+        "heading": "提示词 4：验证套件提示词，检查页面不是只做到表面相似",
         "paragraphs": [
           "页面做完以后，最容易出现的问题是：桌面端看起来还行，移动端溢出；标题能显示，但按钮被遮挡；代码块能出现，但复制不完整。",
-          "这段 Prompt 参考验证套件的思路，把视觉、内容、交互、响应式、性能和无关改动都纳入检查。"
+          "这段提示词参考验证套件的思路，把视觉、内容、交互、响应式、性能和无关改动都纳入检查。"
         ],
         "code": {
-          "label": "验证套件 Prompt",
+          "label": "验证套件提示词",
           "content": `请为刚才实现的页面执行一轮验证套件检查。
 
 目标页面：
@@ -1354,7 +1354,7 @@ PR 目标：
 
 1. 内容完整性
 - 标题、副标题、正文、来源链接是否完整；
-- 代码块或 Prompt 是否完整显示；
+- 代码块或提示词是否完整显示；
 - 是否存在文字被截断、重叠或半行显示。
 
 2. 结构一致性
@@ -1377,7 +1377,7 @@ PR 目标：
 5. 响应式
 - 桌面端是否正常；
 - 移动端是否单列可读；
-- 长标题、长 URL、长 Prompt 是否会撑破布局；
+- 长标题、长 URL、长提示词是否会撑破布局；
 - 图片和代码块是否会横向溢出。
 
 6. 工程验证
@@ -1395,13 +1395,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 5：Git Commit 分析 Prompt，提交前确认改动范围",
+        "heading": "提示词 5：Git Commit 分析提示词，提交前确认改动范围",
         "paragraphs": [
           "当一个页面做完以后，不要立刻提交。先让 Codex 看一遍 diff，确认改动范围、风险和验证结果，再决定是否提交。",
-          "这个 Prompt 适合准备 commit 前使用，尤其是你让 Codex 连续做了几轮页面和内容改动之后。"
+          "这个提示词适合准备 commit 前使用，尤其是在 Codex 连续做了几轮页面和内容改动之后。"
         ],
         "code": {
-          "label": "Git Commit 分析 Prompt",
+          "label": "Git Commit 分析提示词",
           "content": `请在提交前分析当前本地改动，但先不要 stage，也不要 commit。
 
 请检查：
@@ -1443,11 +1443,11 @@ PR 目标：
         }
       },
       {
-        "heading": "这套案例 Prompt 怎么用",
+        "heading": "这套案例提示词怎么用",
         "paragraphs": [
-          "如果你要学习一个真实网页，先用“真实网页拆解 Prompt”。如果你要把网页或截图做成页面，用“真实网页/截图复刻 Prompt”。如果页面较复杂，用“执行计划 Prompt”拆阶段。做完以后，用“验证套件 Prompt”检查。准备提交前，用“Git Commit 分析 Prompt”。",
-          "这套流程的重点是：真实网页不是让你照抄，而是帮助你拆解产品表达、页面结构和工程实现。Codex 最适合做的不是凭空生成，而是在你给出真实参考和明确验收标准后，把页面落地出来。",
-          "你也可以把这些 Prompt 做成自己的项目 Skill，例如 /analyze-webpage、/prototype-page、/plan-implementation、/verify-page、/commit-analysis。这样以后每次看到一个好网页，都能稳定地从参考变成可实现任务。"
+          "如果需要学习一个真实网页，先用“真实网页拆解提示词”。如果需要把网页或截图做成页面，用“真实网页/截图复刻提示词”。如果页面较复杂，用“执行计划提示词”拆阶段。做完以后，用“验证套件提示词”检查。准备提交前，用“Git Commit 分析提示词”。",
+          "这套流程的重点是：真实网页不是让使用者照抄，而是帮助拆解产品表达、页面结构和工程实现。Codex 最适合做的不是凭空生成，而是在给出真实参考和明确验收标准后，把页面落地出来。",
+          "也可以把这些提示词做成自己的项目 Skill，例如 /analyze-webpage、/prototype-page、/plan-implementation、/verify-page、/commit-analysis。这样以后每次看到一个好网页，都能稳定地从参考变成可实现任务。"
         ]
       }
     ]
@@ -1461,17 +1461,17 @@ PR 目标：
     "notice": "本文为 Uicoding.ai 基于 OpenAI Codex 官方 Best practices 整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/learn/best-practices。",
     "sections": [
       {
-        "heading": "这篇最佳实践真正讲的是什么",
+        "heading": "本文最佳实践真正讲的是什么",
         "paragraphs": [
-          "Codex 很强，但它不是读心工具。官方最佳实践的核心不是“写更长的 Prompt”，而是把任务讲成一个可执行工程任务：目标是什么、上下文在哪里、不能改什么、做到什么算完成。",
+          "Codex 很强，但它不是读心工具。官方最佳实践的核心不是“写更长的提示词”，而是把任务讲成一个可执行工程任务：目标是什么、上下文在哪里、不能改什么、做到什么算完成。",
           "对复杂任务，官方建议先让 Codex 制定计划，甚至反问澄清问题，而不是一上来就改代码。对长期项目，则应该把常用规则沉淀到 AGENTS.md，让 Codex 每次进入项目都知道项目习惯。",
-          "这篇把官方思路整理成 5 个可以直接复制的模板：任务总模板、Plan first 模板、AGENTS.md 模板、验证清单模板和交付 review 模板。"
+          "本文把官方思路整理成 5 个可以直接复制的模板：任务总模板、Plan first 模板、AGENTS.md 模板、验证清单模板和交付 review 模板。"
         ]
       },
       {
-        "heading": "Prompt 1：Codex 任务总模板",
+        "heading": "提示词 1：Codex 任务总模板",
         "paragraphs": [
-          "这是最通用的一段。适合新增功能、修 Bug、优化页面、补内容、重构小模块。你只需要替换方括号里的信息。",
+          "这是最通用的一段。适合新增功能、修 Bug、优化页面、补内容、重构小模块。只需要替换方括号里的信息。",
           "它对应官方最佳实践里的四个要素：Goal、Context、Constraints、Done when。"
         ],
         "code": {
@@ -1506,7 +1506,7 @@ Done when / 完成标准：
         }
       },
       {
-        "heading": "Prompt 2：Plan first，让 Codex 先计划再动手",
+        "heading": "提示词 2：Plan first，让 Codex 先计划再动手",
         "paragraphs": [
           "复杂需求不要直接让 Codex 写代码。先让它做计划，能暴露很多问题：它是否理解了范围、是否会误改文件、是否需要更多信息。",
           "这个模板适合需求还不完全清楚，或者涉及多个页面、组件、数据、样式、测试时使用。"
@@ -1553,7 +1553,7 @@ Done when / 完成标准：
         "heading": "模板 3：AGENTS.md，让项目规则长期生效",
         "paragraphs": [
           "AGENTS.md 适合放项目长期规则：项目是什么、如何运行、不要改什么、完成后怎么验证。它比每次在对话里重复规则更稳定。",
-          "下面这个模板适合前端内容站、产品原型站、案例库、学习资料站。可以复制到项目根目录的 AGENTS.md，再根据你的项目改。"
+          "下面这个模板适合前端内容站、产品原型站、案例库、学习资料站。可以复制到项目根目录的 AGENTS.md，再根据项目改。"
         ],
         "code": {
           "label": "AGENTS.md 模板",
@@ -1594,7 +1594,7 @@ Do not modify these areas unless the user explicitly asks:
 - Do not make labels more visually dominant than titles.
 - Make sure text does not overflow, overlap, or show half lines.
 - Check desktop and mobile layouts when UI changes.
-- Use existing design tokens and page patterns where possible.
+- Use existing 设计变量 and page patterns where possible.
 
 ## Verification
 
@@ -1618,7 +1618,7 @@ Always summarize:
         }
       },
       {
-        "heading": "Prompt 4：可验证交付清单",
+        "heading": "提示词 4：可验证交付清单",
         "paragraphs": [
           "很多 AI Coding 出问题不是因为没写代码，而是没有把“完成”定义清楚。这个模板适合每次实现前让 Codex 先写 Done criteria。",
           "它能让 Codex 从“写完代码”切换到“交付一个可验证结果”。"
@@ -1659,13 +1659,13 @@ Always summarize:
         }
       },
       {
-        "heading": "Prompt 5：交付前 Review",
+        "heading": "提示词 5：交付前审查",
         "paragraphs": [
           "Codex 官方最佳实践也强调验证和 review。这个模板适合任务完成后使用：让 Codex 站在 reviewer 视角检查自己刚才的改动。",
-          "它不会替代人工 review，但可以帮你提前发现无关改动、测试缺口、边界问题和风险模块。"
+          "它不会替代人工 review，但可以帮助提前发现无关改动、测试缺口、边界问题和风险模块。"
         ],
         "code": {
-          "label": "交付前 Review Prompt",
+          "label": "交付前审查提示词",
           "content": `请对你刚才完成的改动做一次交付前 review。
 
 请检查：
@@ -1708,8 +1708,8 @@ Always summarize:
       {
         "heading": "怎么把这套最佳实践用起来",
         "paragraphs": [
-          "如果你只是做一个小改动，用“任务总模板”就够了。如果任务有点复杂，先用“Plan first 模板”。如果这是长期项目，把 AGENTS.md 模板放进项目根目录。实现前用 Done criteria 模板，完成后用交付前 Review。",
-          "这套流程看起来比一句“帮我做一下”麻烦，但它能减少返工。你给 Codex 的不是一段愿望，而是一张带边界、验证和交付标准的任务卡。",
+          "如果只是做一个小改动，用“任务总模板”就够了。如果任务有点复杂，先用“Plan first 模板”。如果这是长期项目，把 AGENTS.md 模板放进项目根目录。实现前用 Done criteria 模板，完成后用交付前审查。",
+          "这套流程看起来比一句“帮我做一下”麻烦，但它能减少返工。给 Codex 的不是一段愿望，而是一张带边界、验证和交付标准的任务卡。",
           "最好的 Codex 使用方式，不是让它自由发挥，而是把它放进稳定工程流程里：先计划、再修改、再验证、再 review。这样它会更像靠谱的协作者，而不是随机生成代码的工具。"
         ]
       }
@@ -1719,23 +1719,23 @@ Always summarize:
     "id": "codex-agent-skills-reusable-workflow-templates",
     "sourceUrl": "https://developers.openai.com/codex/skills",
     "translationMode": "guidedTranslation",
-    "title": "Codex Agent Skills：把高频 Prompt 封装成可靠工作流",
+    "title": "Codex Agent Skills：把高频提示词封装成可靠工作流",
     "originalTitle": "Agent Skills",
     "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Agent Skills 官方文档整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/skills。",
     "sections": [
       {
         "heading": "为什么 Codex 也需要 Skills",
         "paragraphs": [
-          "当你已经积累了很多好 Prompt，下一步不是继续复制粘贴，而是把它们沉淀成可复用 Skill。Codex Agent Skills 的思路就是：把一套稳定工作流写进 `SKILL.md`，让 Codex 在合适任务里自动或按名称调用。",
-          "这非常适合高频任务：页面走查、内容导入、真实网页案例整理、本地 review、交付验证、PR 摘要。它们每次都差不多，但如果每次手写 Prompt，很容易漏掉边界、验证或禁止修改范围。",
-          "你可以把 Skill 理解成“给 Codex 的专业操作手册”。普通 Prompt 是这次对话有效，AGENTS.md 是项目长期规则，Skill 则是某一类任务的可复用流程。"
+          "当你已经积累了很多好提示词，下一步不是继续复制粘贴，而是把它们沉淀成可复用 Skill。Codex Agent Skills 的思路就是：把一套稳定工作流写进 `SKILL.md`，让 Codex 在合适任务里自动或按名称调用。",
+          "这适合高频任务：页面走查、内容导入、真实网页案例整理、本地 review、交付验证、PR 摘要。它们每次都差不多，但如果每次手写提示词，很容易漏掉边界、验证或禁止修改范围。",
+          "可以把 Skill 理解成“给 Codex 的专业操作手册”。普通提示词是这次对话有效，AGENTS.md 是项目长期规则，Skill 则是某一类任务的可复用流程。"
         ]
       },
       {
         "heading": "推荐目录结构",
         "paragraphs": [
           "项目级 Skill 适合放在仓库里，让团队一起复用。对内容站、案例库、工具站来说，建议把页面走查、内容写入、验证交付这几类任务都 Skill 化。",
-          "下面是一个适合前端内容项目的目录结构。你可以直接复制目录名，也可以按自己的项目改。"
+          "下面是一个适合前端内容项目的目录结构。可以直接复制目录名，也可以按自己的项目改。"
         ],
         "code": {
           "label": "Codex Skills 目录结构",
@@ -1755,13 +1755,13 @@ Always summarize:
         "heading": "Skill 1：webpage-case-importer，导入真实网页案例",
         "paragraphs": [
           "这个 Skill 适合 UIcoding.ai 这种案例和学习站：从真实网页、截图、官方文档或外部文章里整理学习资料，再写入站内详情页。",
-          "它会要求 Codex 保留来源、避免全文搬运、生成中文解读，并且给出可复制 Prompt。"
+          "它会要求 Codex 保留来源、避免全文搬运、生成中文解读，并且给出可复制提示词。"
         ],
         "code": {
           "label": "webpage-case-importer/SKILL.md",
           "content": `---
 name: webpage-case-importer
-description: Use this skill when the user asks Codex to turn a real webpage, article, official doc, or prompt library into a structured learning detail page.
+description: Use this skill when the user asks Codex to turn a real webpage, article, official doc, or 提示词 library into a structured learning detail page.
 ---
 
 # Webpage Case Importer
@@ -1775,13 +1775,13 @@ Use this skill to create a learning page from a real external source.
 - Do not copy a full copyrighted article verbatim.
 - Summarize and explain in Chinese.
 - Keep original structure only when the user explicitly asks for translation and rights allow it.
-- If the source includes useful prompts, convert them into complete copyable prompt blocks.
+- If the source includes useful 提示词, convert them into complete copyable 提示词 blocks.
 
-## Workflow
+## 工作流
 
 1. Read the source page or repository.
 2. Identify the core learning value.
-3. Extract real use cases, prompt examples, workflows, screenshots, or code templates.
+3. Extract real use cases, 提示词 examples, workflows, screenshots, or code templates.
 4. Rewrite the material as a Chinese learning page.
 5. Include source URL, source type, author, and collection date.
 6. Create a route-friendly slug.
@@ -1798,8 +1798,8 @@ The learning page should include:
 - Who should read it
 - Original source link
 - Key ideas explained in Chinese
-- Complete copyable prompt or template blocks
-- How to use the prompts in a real project
+- Complete copyable 提示词 or template blocks
+- How to use the 提示词 in a real project
 - Risks, boundaries, and verification advice
 
 ## Constraints
@@ -1824,7 +1824,7 @@ Summarize in Chinese:
         "heading": "Skill 2：ui-polish-review，页面视觉走查",
         "paragraphs": [
           "这个 Skill 适合每次页面做完以后跑一遍，尤其适合学习页、案例页、工具页这种内容型界面。它会让 Codex 不只是说“好看”，而是按排版、阅读、响应式、文字溢出、图片状态逐项检查。",
-          "如果你经常遇到页面文字截断、卡片高度不稳、图片缺失、移动端拥挤，就可以沉淀这个 Skill。"
+          "如果经常遇到页面文字截断、卡片高度不稳、图片缺失、移动端拥挤，就可以沉淀这个 Skill。"
         ],
         "code": {
           "label": "ui-polish-review/SKILL.md",
@@ -1833,11 +1833,11 @@ name: ui-polish-review
 description: Use this skill when the user asks Codex to review or polish a frontend page for layout, typography, responsive behavior, and content readability.
 ---
 
-# UI Polish Review
+# UI Polish 审查
 
 Use this skill for frontend pages, cards, detail pages, content pages, dashboards, or tool interfaces.
 
-## Review Focus
+## 审查 Focus
 
 Check:
 
@@ -1853,7 +1853,7 @@ Check:
 - Hover and focus states
 - Consistency with existing design patterns
 
-## Workflow
+## 工作流
 
 1. Identify the target page and route.
 2. Read the page component, related card/detail components, and relevant CSS.
@@ -1917,7 +1917,7 @@ description: Use this skill after Codex has implemented a change and needs to ve
 
 Use this skill after implementation and before final response.
 
-## Workflow
+## 工作流
 
 1. Inspect git status.
 2. Identify files changed by the current task.
@@ -1935,7 +1935,7 @@ For learning/content pages:
 - Detail content exists for the same id.
 - href matches the detail route.
 - Source URL is preserved.
-- Copyable prompt blocks are complete.
+- Copyable 提示词 blocks are complete.
 - Build passes.
 - No unrelated pages were removed.
 
@@ -1989,7 +1989,7 @@ For logic changes:
         "heading": "Skill 4：local-code-review，本地提交前审查",
         "paragraphs": [
           "这个 Skill 适合准备提交前运行，专门检查 diff 是否干净、有没有无关改动、有没有遗漏验证。和 verify-delivery 不同，它更偏 review 视角。",
-          "如果你经常让 Codex 连续加多篇内容或做多轮 UI 修改，这个 Skill 可以帮你在最后收口。"
+          "如果经常让 Codex 连续加多篇内容或做多轮 UI 修改，这个 Skill 可以帮助在最后收口。"
         ],
         "code": {
           "label": "local-code-review/SKILL.md",
@@ -1998,11 +1998,11 @@ name: local-code-review
 description: Use this skill when the user asks Codex to review local changes before commit, PR, deployment, or handoff.
 ---
 
-# Local Code Review
+# Local 代码审查
 
 Use this skill to review current local changes.
 
-## Review Priorities
+## 审查 Priorities
 
 Look for:
 
@@ -2017,7 +2017,7 @@ Look for:
 - UI overflow or layout risks
 - High-risk module changes
 
-## Workflow
+## 工作流
 
 1. Inspect git status.
 2. Inspect the diff.
@@ -2025,7 +2025,7 @@ Look for:
 4. Check whether changes match the user request.
 5. Check for suspicious unrelated edits.
 6. Check whether tests/build were run.
-7. Review content routes, ids, images, and source URLs when relevant.
+7. 审查 content routes, ids, images, and source URLs when relevant.
 8. Produce findings first, ordered by severity.
 
 ## Output Format
@@ -2062,32 +2062,32 @@ If there are no findings, say:
         "heading": "怎么开始用这一组 Skills",
         "paragraphs": [
           "最简单的方式是先只做一个 Skill，比如 `verify-delivery`。当你发现它确实能帮你省掉重复检查，再继续加入 `webpage-case-importer`、`ui-polish-review` 和 `local-code-review`。",
-          "不要一开始就把所有 Prompt 都做成 Skill。Skill 的价值在于复用，不在于数量。只要某个任务你会反复做三次以上，它就值得被沉淀。",
+          "不要一开始就把所有提示词都做成 Skill。Skill 的价值在于复用，不在于数量。只要某个任务会反复做三次以上，它就值得被沉淀。",
           "对 UIcoding.ai 这种内容型网站来说，最推荐的顺序是：先做 `webpage-case-importer` 管内容导入，再做 `verify-delivery` 管交付，最后做 `ui-polish-review` 和 `local-code-review` 管质量。"
         ]
       }
     ]
   },
   {
-    "id": "codex-slack-team-workflow-prompts",
+    "id": "codex-slack-team-workflow-提示词",
     "sourceUrl": "https://developers.openai.com/codex/integrations/slack",
     "translationMode": "guidedTranslation",
-    "title": "Slack 里调用 Codex：把团队反馈变成可执行任务 Prompt",
+    "title": "Slack 里调用 Codex：把团队反馈变成可执行任务提示词",
     "originalTitle": "Use Codex in Slack",
     "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Slack 官方集成文档整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/integrations/slack。",
     "sections": [
       {
-        "heading": "为什么 Slack 场景很适合 Codex",
+        "heading": "为什么 Slack 场景适合 Codex",
         "paragraphs": [
           "很多真实需求不是从 issue 开始的，而是从 Slack 里的几句话开始：用户说页面坏了，设计师说按钮不对，产品说这个文案要改，工程师说这个 PR 需要再看一眼。",
           "Codex 的 Slack 集成价值在于：你可以在频道或线程里直接 `@Codex`，让它把上下文转成一个云端编码任务。它可以利用线程里的讨论，但你最好在最后一条消息里把目标、仓库、环境、约束和完成标准说清楚。",
-          "这篇不讲安装步骤，而是整理一组可以直接复制到 Slack 线程里的 Prompt。你可以把它们当成团队协作模板：Bug 反馈、UI 反馈、PR Review、发布前检查、把讨论整理成 issue。"
+          "本文不讲安装步骤，而是整理一组可以直接复制到 Slack 线程里的提示词。可以把它们当成团队协作模板：Bug 反馈、UI 反馈、PR 审查、发布前检查、把讨论整理成 issue。"
         ]
       },
       {
-        "heading": "Slack Prompt 的基本结构",
+        "heading": "Slack 提示词的基本结构",
         "paragraphs": [
-          "在 Slack 里给 Codex 的 Prompt 要比普通对话更明确，因为它可能从一段很长的线程里接任务。最稳的结构是：先说明仓库和环境，再总结线程结论，然后写清楚任务目标、限制范围和验收标准。",
+          "在 Slack 里给 Codex 的提示词要比普通对话更明确，因为它可能从一段很长的线程里接任务。最稳的结构是：先说明仓库和环境，再总结线程结论，然后写清楚任务目标、限制范围和验收标准。",
           "下面这个是通用模板，可以作为任何 Slack 任务的起点。"
         ],
         "code": {
@@ -2125,13 +2125,13 @@ If there are no findings, say:
         }
       },
       {
-        "heading": "Prompt 1：把用户 Bug 反馈变成修复任务",
+        "heading": "提示词 1：把用户 Bug 反馈变成修复任务",
         "paragraphs": [
-          "用户反馈经常很模糊：打不开、错位、按钮没反应、数据显示不对。你需要在 Slack 里帮 Codex 把反馈补成可复现任务。",
-          "这段 Prompt 适合客服、产品、运营把用户反馈直接转交给 Codex。"
+          "用户反馈经常很模糊：打不开、错位、按钮没反应、数据显示不对。需要在 Slack 里帮 Codex 把反馈补成可复现任务。",
+          "这段提示词适合客服、产品、运营把用户反馈直接转交给 Codex。"
         ],
         "code": {
-          "label": "Slack Bug 修复 Prompt",
+          "label": "Slack Bug 修复提示词",
           "content": `@Codex 请根据这个线程修复一个 Bug。
 
 仓库：
@@ -2171,13 +2171,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "Prompt 2：把设计反馈变成 UI 迭代任务",
+        "heading": "提示词 2：把设计反馈变成 UI 迭代任务",
         "paragraphs": [
           "设计反馈最容易变成“优化一下”。在 Slack 里交给 Codex 时，一定要明确页面、问题、视觉目标、禁止项和验收方式。",
           "这段适合设计师或产品经理在评审线程里直接发给 Codex。"
         ],
         "code": {
-          "label": "Slack UI 迭代 Prompt",
+          "label": "Slack UI 迭代提示词",
           "content": `@Codex 请根据这个设计反馈线程做一轮小范围 UI 迭代。
 
 仓库：
@@ -2215,13 +2215,13 @@ Bug 现象：
         }
       },
       {
-        "heading": "Prompt 3：把 PR 线程变成 Codex Review",
+        "heading": "提示词 3：把 PR 线程变成 Codex 审查",
         "paragraphs": [
-          "团队里常见场景是：有人在 Slack 贴了一个 PR，让大家帮忙看。你可以直接让 Codex 先做一轮结构化 Review，找风险、测试缺口和无关改动。",
+          "团队里常见场景是：有人在 Slack 贴了一个 PR，让大家帮忙看。可以直接让 Codex 先做一轮结构化审查，找风险、测试缺口和无关改动。",
           "注意：这不是让 Codex 自动合并，而是让它先给 reviewer 一份清晰检查清单。"
         ],
         "code": {
-          "label": "Slack PR Review Prompt",
+          "label": "Slack PR 审查提示词",
           "content": `@Codex 请帮我们 review 这个 PR。
 
 PR 链接：
@@ -2249,13 +2249,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 4：发布前检查",
+        "heading": "提示词 4：发布前检查",
         "paragraphs": [
-          "发布前检查非常适合交给 Codex 做第一轮。它可以从代码角度看构建、路由、环境变量、静态资源、关键页面和风险模块。",
+          "发布前检查适合交给 Codex 做第一轮。它可以从代码角度看构建、路由、环境变量、静态资源、关键页面和风险模块。",
           "这段适合在准备上线、发版、部署 preview 之前发到 Slack 发布线程。"
         ],
         "code": {
-          "label": "Slack 发布前检查 Prompt",
+          "label": "Slack 发布前检查提示词",
           "content": `@Codex 请根据当前分支做一次发布前检查。
 
 仓库：
@@ -2287,13 +2287,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 5：把 Slack 讨论整理成 Issue",
+        "heading": "提示词 5：把 Slack 讨论整理成 Issue",
         "paragraphs": [
           "并不是每个 Slack 讨论都应该马上让 Codex 改代码。有时更好的做法是先整理成一个清晰 issue，等产品或工程确认后再执行。",
-          "这段 Prompt 适合需求还没定、多人意见分散、线程很长的时候。"
+          "这段提示词适合需求还没定、多人意见分散、线程很长的时候。"
         ],
         "code": {
-          "label": "Slack 讨论转 Issue Prompt",
+          "label": "Slack 讨论转 Issue 提示词",
           "content": `@Codex 请先不要改代码。请把这个 Slack 线程整理成一个清晰的工程 issue。
 
 线程背景：
@@ -2346,29 +2346,29 @@ PR 目标：
     ]
   },
   {
-    "id": "codex-pixel-perfect-website-rebuild-prompts",
+    "id": "codex-pixel-perfect-website-rebuild-提示词",
     "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
     "translationMode": "guidedTranslation",
-    "title": "Codex 高保真网站复现 Prompt：从参考网页到像素级验证",
+    "title": "Codex 高保真网站复现提示词：从参考网页到像素级验证",
     "originalTitle": "Turn Figma designs into code",
     "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Figma-to-code 官方用例整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/use-cases/figma-designs-to-code。请仅用于自己的设计稿、授权页面、学习临摹或内部原型；不要直接复制第三方品牌页面并冒充上线。",
     "sections": [
       {
         "heading": "高保真复现不是一句“照着做”",
         "paragraphs": [
-          "很多人让 Codex 复现网站时，会直接说“帮我做一个和这个网站一样的页面”。这种提示词很容易失败：Codex 不知道你要复现哪些部分，也不知道哪些可以简化，更不知道完成后怎么判断像不像。",
+          "很多人让 Codex 复现网站时，会直接说“帮我做一个和这个网站一样的页面”。这种提示词很容易失败：Codex 不知道需要复现哪些部分，也不知道哪些可以简化，更不知道完成后怎么判断像不像。",
           "更稳定的方式是把复现拆成五步：先拆解参考页面，再收集资产和约束，然后实现页面，接着做响应式和交互，最后用截图对比继续迭代。",
-          "OpenAI Codex 的 Figma-to-code 用例也强调了类似思路：给 Codex 足够的设计上下文和资产，实现后通过浏览器截图检查，再迭代修正。下面这组 Prompt 就是把这个流程改写成可以直接复制的中文版本。"
+          "OpenAI Codex 的 Figma-to-code 用例也强调了类似思路：给 Codex 足够的设计上下文和资产，实现后通过浏览器截图检查，再迭代修正。下面这组提示词就是把这个流程改写成可以直接复制的中文版本。"
         ]
       },
       {
-        "heading": "Prompt 1：复现前拆解参考网页",
+        "heading": "提示词 1：复现前拆解参考网页",
         "paragraphs": [
           "不要一开始就写代码。先让 Codex 拆解参考页面：布局、字号、间距、颜色、图片、动效、响应式、交互状态。拆得越清楚，后面实现越稳定。",
-          "如果你有 URL，就粘 URL；如果只有截图，就用文字描述截图，或者把截图提供给 Codex。"
+          "如果有 URL，就粘 URL；如果只有截图，就用文字描述截图，或者把截图提供给 Codex。"
         ],
         "code": {
-          "label": "参考网页拆解 Prompt",
+          "label": "参考网页拆解提示词",
           "content": `请先拆解这个参考网页或截图，不要写代码。
 
 参考来源：
@@ -2425,13 +2425,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 2：高保真实现页面",
+        "heading": "提示词 2：高保真实现页面",
         "paragraphs": [
-          "拆解完成后，再让 Codex 实现页面。这个 Prompt 会明确目标路由、允许简化项、禁止项和验收标准，避免它一边复现一边重构整个项目。",
-          "如果你已经有项目设计系统，要强调复用现有组件和样式变量；如果是空项目，要让 Codex 先建立最小可运行页面。"
+          "拆解完成后，再让 Codex 实现页面。这个提示词会明确目标路由、允许简化项、禁止项和验收标准，避免它一边复现一边重构整个项目。",
+          "如果已经有项目设计系统，要强调复用现有组件和样式变量；如果是空项目，要让 Codex 先建立最小可运行页面。"
         ],
         "code": {
-          "label": "高保真实现 Prompt",
+          "label": "高保真实现提示词",
           "content": `请根据前面的页面拆解，在当前项目中实现一个高保真原型页面。
 
 目标路由：
@@ -2474,13 +2474,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 3：专门做响应式复现",
+        "heading": "提示词 3：专门做响应式复现",
         "paragraphs": [
           "很多页面桌面端看起来像，移动端就崩了。高保真复现必须单独处理响应式：导航、Hero、图片比例、卡片列数、长文本和按钮换行都要检查。",
-          "这段 Prompt 适合页面初版完成后单独运行一轮。"
+          "这段提示词适合页面初版完成后单独运行一轮。"
         ],
         "code": {
-          "label": "响应式复现 Prompt",
+          "label": "响应式复现提示词",
           "content": `请针对刚才实现的页面做一轮响应式高保真检查和修复。
 
 目标页面：
@@ -2520,13 +2520,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 4：Playwright 截图对比验证",
+        "heading": "提示词 4：Playwright 截图对比验证",
         "paragraphs": [
           "要逼近“完美复现”，不能只靠肉眼一句“差不多”。最实用的方式是让 Codex 用浏览器打开页面，截桌面和移动端截图，和参考截图逐项比较。",
-          "如果项目里已经能用 Playwright 或浏览器工具，这段 Prompt 很适合做视觉 QA。"
+          "如果项目里已经能用 Playwright 或浏览器工具，这段提示词适合做视觉 QA。"
         ],
         "code": {
-          "label": "截图对比验证 Prompt",
+          "label": "截图对比验证提示词",
           "content": `请对当前页面做一轮截图对比验证。
 
 目标页面：
@@ -2562,13 +2562,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 5：按截图差异继续迭代",
+        "heading": "提示词 5：按截图差异继续迭代",
         "paragraphs": [
           "第一版复现通常不会一次到位。更好的做法是每轮只修最影响相似度的 3 个问题，修完再截图对比。",
-          "这个 Prompt 适合你已经有截图对比结果，想让 Codex 继续微调页面。"
+          "这个提示词适合已经有截图对比结果，想让 Codex 继续微调页面。"
         ],
         "code": {
-          "label": "高保真迭代 Prompt",
+          "label": "高保真迭代提示词",
           "content": `请根据上一轮截图对比结果，继续做高保真迭代。
 
 上一轮最主要差异：
@@ -2597,13 +2597,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 6：复现交付检查",
+        "heading": "提示词 6：复现交付检查",
         "paragraphs": [
-          "当你觉得页面已经很像了，最后要做一次交付检查：版权素材是否替换、移动端是否可用、链接是否正常、构建是否通过、是否误改其它页面。",
+          "当页面已经页面已经很像了，最后要做一次交付检查：版权素材是否替换、移动端是否可用、链接是否正常、构建是否通过、是否误改其它页面。",
           "这一步能避免“看起来像，但不能上线”的问题。"
         ],
         "code": {
-          "label": "复现交付检查 Prompt",
+          "label": "复现交付检查提示词",
           "content": `请对这个高保真复现页面做最终交付检查。
 
 目标页面：
@@ -2632,20 +2632,20 @@ PR 目标：
         }
       },
       {
-        "heading": "怎么用这套 Prompt 才稳定",
+        "heading": "怎么用这套提示词才稳定",
         "paragraphs": [
-          "不要把 6 段 Prompt 一次性全丢给 Codex。最稳的顺序是：先拆解，再实现，再响应式，再截图对比，再小步迭代，最后交付检查。",
-          "如果你有 Figma 或截图，效果通常比只给 URL 更稳定。因为截图能提供明确视觉目标，Codex 可以用浏览器截图反复对比。URL 适合拆解结构，截图适合校准视觉。",
+          "不要把 6 段提示词一次性全丢给 Codex。最稳的顺序是：先拆解，再实现，再响应式，再截图对比，再小步迭代，最后交付检查。",
+          "如果有 Figma 或截图，效果通常比只给 URL 更稳定。因为截图能提供明确视觉目标，Codex 可以用浏览器截图反复对比。URL 适合拆解结构，截图适合校准视觉。",
           "最后再强调一次：高保真复现适合学习、内部原型、授权项目和自己的设计稿。真正上线时，要替换第三方品牌、图片和专有文案，保留参考里的结构思路，而不是照搬别人的商业页面。"
         ]
       }
     ]
   },
   {
-    "id": "codex-cinematic-web-effects-prompts",
+    "id": "codex-cinematic-web-effects-提示词",
     "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
     "translationMode": "guidedTranslation",
-    "title": "Codex 酷炫网页效果 Prompt：3D、滚动叙事和高级动效",
+    "title": "Codex 酷炫网页效果提示词：3D、滚动叙事和高级动效",
     "originalTitle": "Build cinematic web experiences with Codex",
     "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Figma-to-code 用例、Three.js 官方文档和 GSAP ScrollTrigger 官方资料整理的中文学习笔记，不是原文全文翻译。参考来源：https://developers.openai.com/codex/use-cases/figma-designs-to-code、https://threejs.org/docs/、https://gsap.com/docs/v3/Plugins/ScrollTrigger/。",
     "sections": [
@@ -2654,17 +2654,17 @@ PR 目标：
         "paragraphs": [
           "让 Codex 做酷炫网页时，最危险的提示词就是“做得炫一点”。它可能会堆渐变、发光、粒子、动效、阴影和随机装饰，最后页面确实动起来了，但不高级、不稳定，也不一定能在手机上正常运行。",
           "更好的方式是把酷炫效果拆成可实现模块：沉浸式 Hero、3D 背景、滚动叙事、粒子动效、微交互、性能降级和浏览器验证。每个模块都要写清楚视觉目标、技术约束、响应式策略和验收标准。",
-          "下面这组 Prompt 适合给 Codex、Claude Code 或 Cursor Agent 使用。你可以复制完整代码块，把项目名称、目标页面、视觉参考和技术栈替换掉。"
+          "下面这组提示词适合给 Codex、Claude Code 或 Cursor Agent 使用。可以复制完整代码块，把项目名称、目标页面、视觉参考和技术栈替换掉。"
         ]
       },
       {
-        "heading": "Prompt 1：酷炫网页效果总控 Prompt",
+        "heading": "提示词 1：酷炫网页效果总控提示词",
         "paragraphs": [
-          "如果你只想复制一段完整 Prompt，就用这一段。它适合从零做一个带视觉冲击力的页面，也适合重做一个普通首页。",
+          "如果只想复制一段完整提示词，就用这一段。它适合从零做一个带视觉冲击力的页面，也适合重做一个普通首页。",
           "它会约束 Codex：先做计划，不要堆装饰；优先保证可读、可用和性能；最后必须验证。"
         ],
         "code": {
-          "label": "酷炫网页效果总控 Prompt",
+          "label": "酷炫网页效果总控提示词",
           "content": `请帮我为当前项目实现一个高级、酷炫但可用的网页效果页面。先制定计划，不要马上写代码。
 
 目标页面：
@@ -2715,13 +2715,13 @@ PR 目标：
         }
       },
       {
-        "heading": "Prompt 2：沉浸式 Hero + 3D 背景",
+        "heading": "提示词 2：沉浸式 Hero + 3D 背景",
         "paragraphs": [
-          "酷炫网页最重要的是首屏。首屏要有记忆点，但不能牺牲标题可读性。这个 Prompt 适合做 Three.js 背景、粒子场、动态网格、漂浮几何或光线效果。",
+          "酷炫网页最重要的是首屏。首屏要有记忆点，但不能牺牲标题可读性。这个提示词适合做 Three.js 背景、粒子场、动态网格、漂浮几何或光线效果。",
           "如果项目没有 Three.js，可以让 Codex 先用 CSS + Canvas 做轻量版。"
         ],
         "code": {
-          "label": "沉浸式 Hero Prompt",
+          "label": "沉浸式 Hero 提示词",
           "content": `请为目标页面实现一个沉浸式 Hero 区域，包含高级动态背景，但不要影响文字可读性。
 
 目标页面：
@@ -2764,13 +2764,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 3：滚动叙事和视差转场",
+        "heading": "提示词 3：滚动叙事和视差转场",
         "paragraphs": [
           "很多高级网站的酷，不是元素一直乱动，而是滚动时有节奏：标题出现、图片推进、卡片错位、背景层慢慢切换。",
-          "这个 Prompt 适合用 GSAP ScrollTrigger、IntersectionObserver 或轻量 CSS 动画实现滚动叙事。"
+          "这个提示词适合用 GSAP ScrollTrigger、IntersectionObserver 或轻量 CSS 动画实现滚动叙事。"
         ],
         "code": {
-          "label": "滚动叙事 Prompt",
+          "label": "滚动叙事提示词",
           "content": `请为当前页面加入高级滚动叙事效果，让内容随着滚动有节奏地出现。
 
 目标页面：
@@ -2813,13 +2813,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 4：粒子、流体和动态网格效果",
+        "heading": "提示词 4：粒子、流体和动态网格效果",
         "paragraphs": [
           "粒子和流体效果很容易变土。关键是少而准：数量可控、色彩克制、运动慢、不要挡住内容、移动端降级。",
           "这段适合做背景氛围、产品展示区或创意工具的视觉记忆点。"
         ],
         "code": {
-          "label": "粒子/动态网格 Prompt",
+          "label": "粒子/动态网格提示词",
           "content": `请为页面实现一个克制但高级的动态背景效果，可以是粒子场、动态网格、柔和光带或流体感背景。
 
 目标区域：
@@ -2863,13 +2863,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 5：高级微交互和按钮动效",
+        "heading": "提示词 5：高级微交互和按钮动效",
         "paragraphs": [
           "酷炫网页不一定都靠大背景。有时按钮、卡片、导航、输入框这些小交互更能让页面有质感。",
-          "这个 Prompt 适合在页面结构已经完成后，单独加一轮微交互。"
+          "这个提示词适合在页面结构已经完成后，单独加一轮微交互。"
         ],
         "code": {
-          "label": "微交互 Prompt",
+          "label": "微交互提示词",
           "content": `请为当前页面做一轮高级微交互优化，只处理交互质感，不重做页面结构。
 
 目标页面：
@@ -2913,13 +2913,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 6：酷炫效果 QA 和性能验证",
+        "heading": "提示词 6：酷炫效果 QA 和性能验证",
         "paragraphs": [
           "高级动效做完以后，一定要单独 QA。酷炫页面最常见的问题是：手机卡、文字被挡、滚动抖、截图空白、Canvas 没 fallback、动画影响点击。",
-          "这段 Prompt 适合最后一轮检查。"
+          "这段提示词适合最后一轮检查。"
         ],
         "code": {
-          "label": "酷炫效果 QA Prompt",
+          "label": "酷炫效果 QA 提示词",
           "content": `请对当前酷炫网页效果做一轮 QA 和性能验证。
 
 目标页面：
@@ -2981,29 +2981,29 @@ Hero 内容：
     ]
   },
   {
-    "id": "codex-design-system-consistency-prompts",
+    "id": "codex-design-system-consistency-提示词",
     "sourceUrl": "https://m3.material.io/foundations/design-tokens",
     "translationMode": "guidedTranslation",
-    "title": "Codex 设计规范一致性 Prompt：从 Tokens 到组件治理",
+    "title": "Codex 设计规范一致性提示词：从 Tokens 到组件治理",
     "originalTitle": "Design systems and design tokens consistency workflows",
-    "notice": "本文为 Uicoding.ai 基于公开设计系统资料整理的中文学习笔记，不是原文全文翻译。参考来源包括 Material Design Tokens：https://m3.material.io/foundations/design-tokens，Figma Design Systems：https://www.figma.com/design-systems/，W3C Design Tokens Community Group：https://www.w3.org/community/design-tokens/。",
+    "notice": "本文为 Uicoding.ai 基于公开设计系统资料整理的中文学习笔记，不是原文全文翻译。参考来源包括 Material 设计变量：https://m3.material.io/foundations/design-tokens，Figma 设计系统s：https://www.figma.com/design-systems/，W3C 设计变量 Community Group：https://www.w3.org/community/design-tokens/。",
     "sections": [
       {
         "heading": "为什么网站越做越不一致",
         "paragraphs": [
           "很多网站一开始看起来还不错，但页面越多越乱：按钮高度不一样、卡片圆角不一样、标题字号随手写、颜色越来越多、间距没有节奏、移动端每个页面都靠临时修补。",
           "这不是单纯审美问题，而是设计规范没有沉淀成可执行系统。设计系统资料里经常强调 tokens、组件、样式规则和复用模式，本质上都是为了让产品在增长时仍然保持一致。",
-          "Codex 很适合做这类治理工作，但不能只说“统一一下设计”。你要让它先审计，再收敛 tokens，再统一组件，最后做页面级 QA。下面这组 Prompt 可以直接复制使用。"
+          "Codex 适合做这类治理工作，但不能只说“统一一下设计”。需要让它先审计，再收敛 tokens，再统一组件，最后做页面级 QA。下面这组提示词可以直接复制使用。"
         ]
       },
       {
-        "heading": "Prompt 1：设计系统一致性审计",
+        "heading": "提示词 1：设计系统一致性审计",
         "paragraphs": [
           "第一步不是改代码，而是审计。让 Codex 找出颜色、字号、间距、圆角、阴影、按钮、卡片、表单和页面节奏里的不一致。",
-          "这个 Prompt 适合项目已经有多个页面、多个 CSS 文件、多个组件之后使用。"
+          "这个提示词适合项目已经有多个页面、多个 CSS 文件、多个组件之后使用。"
         ],
         "code": {
-          "label": "设计系统一致性审计 Prompt",
+          "label": "设计系统一致性审计提示词",
           "content": `请对当前项目做一次设计系统一致性审计。先不要修改代码。
 
 审计目标：
@@ -3058,13 +3058,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 2：收敛 Design Tokens",
+        "heading": "提示词 2：收敛设计变量",
         "paragraphs": [
           "设计一致性最核心的是 tokens。颜色、字体、字号、间距、圆角、阴影和容器宽度不要散落在页面里，而应该进入统一变量。",
-          "这段 Prompt 适合在审计之后使用，让 Codex 把散乱值收敛到已有 tokens 或新增少量必要 tokens。"
+          "这段提示词适合在审计之后使用，让 Codex 把散乱值收敛到已有 tokens 或新增少量必要 tokens。"
         ],
         "code": {
-          "label": "Design Tokens 收敛 Prompt",
+          "label": "设计变量收敛提示词",
           "content": `请帮我收敛当前项目的设计 tokens，但不要做大规模视觉重设计。
 
 目标：
@@ -3102,13 +3102,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 3：统一按钮、卡片和标签组件",
+        "heading": "提示词 3：统一按钮、卡片和标签组件",
         "paragraphs": [
           "按钮、卡片和标签是最容易暴露不一致的地方。一个网站如果有 5 种按钮高度、6 种卡片圆角、4 种标签样式，很快就会显得像拼出来的。",
-          "这段 Prompt 适合统一核心组件，但不要求 Codex 重写所有页面。"
+          "这段提示词适合统一核心组件，但不要求 Codex 重写所有页面。"
         ],
         "code": {
-          "label": "核心组件一致性 Prompt",
+          "label": "核心组件一致性提示词",
           "content": `请帮我统一当前项目中的核心 UI 组件样式，重点是 Button、Card、Badge / Tag。
 
 目标：
@@ -3148,13 +3148,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 4：统一页面节奏和布局规范",
+        "heading": "提示词 4：统一页面节奏和布局规范",
         "paragraphs": [
           "设计一致性不只是组件长得一样，还包括页面节奏：容器宽度、section 间距、标题和正文关系、列表密度、详情页阅读宽度。",
-          "这段 Prompt 适合内容站、案例站、学习资料站，能让页面像同一个产品，而不是不同页面拼在一起。"
+          "这段提示词适合内容站、案例站、学习资料站，能让页面像同一个产品，而不是不同页面拼在一起。"
         ],
         "code": {
-          "label": "页面节奏统一 Prompt",
+          "label": "页面节奏统一提示词",
           "content": `请帮我统一当前项目的页面布局节奏。先审查，不要马上修改。
 
 目标：
@@ -3196,13 +3196,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 5：清理散乱 CSS 和临时样式",
+        "heading": "提示词 5：清理散乱 CSS 和临时样式",
         "paragraphs": [
           "长期项目里经常会出现一次性 class、重复选择器、页面专属 hack、同一个颜色写十几次。清理这些东西能显著提升一致性。",
-          "这个 Prompt 要求 Codex 小步清理，避免它为了“整洁”大规模重构。"
+          "这个提示词要求 Codex 小步清理，避免它为了“整洁”大规模重构。"
         ],
         "code": {
-          "label": "散乱 CSS 清理 Prompt",
+          "label": "散乱 CSS 清理提示词",
           "content": `请帮我清理当前项目里的散乱 CSS 和临时样式，但必须保持视觉和行为基本不变。
 
 清理目标：
@@ -3243,13 +3243,13 @@ Hero 内容：
         }
       },
       {
-        "heading": "Prompt 6：设计一致性 QA",
+        "heading": "提示词 6：设计一致性 QA",
         "paragraphs": [
           "治理之后要做 QA，不然很容易以为统一了，实际页面上仍然有截断、溢出、按钮不一致、移动端变形。",
-          "这段 Prompt 适合每次设计系统治理后运行。"
+          "这段提示词适合每次设计系统治理后运行。"
         ],
         "code": {
-          "label": "设计一致性 QA Prompt",
+          "label": "设计一致性 QA 提示词",
           "content": `请对当前项目做一轮设计一致性 QA。
 
 检查页面：
@@ -3312,26 +3312,784 @@ Hero 内容：
     ]
   },
   {
-    "id": "claude-code-skills-reusable-prompt-workflows",
+    "id": "ai-coding-team-collaboration-operating-model",
+    "sourceUrl": "https://dora.dev/research/2025/dora-report/",
+    "translationMode": "guidedTranslation",
+    "title": "AI Coding 团队协作落地方法论：角色分工、产出物和流程",
+    "originalTitle": "AI-assisted software development operating model",
+    "notice": "本文为 Uicoding.ai 基于多份专业报告和公开资料整理的中文学习笔记，不是原文全文翻译。主要参考：DORA 2025 AI-assisted Software Development Report：https://dora.dev/research/2025/dora-report/，McKinsey 生成式 AI 软件开发生产力研究：https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/unleashing-developer-productivity-with-generative-ai，Faros AI Engineering Productivity Paradox：https://www.faros.ai/reports/ai-engineering-productivity-paradox，Atlassian State of DevEx 2025：https://www.atlassian.com/reports/state-of-developer-experience。",
+    "sections": [
+      {
+        "heading": "先说结论：AI Coding 是组织系统问题，不是工具采购问题",
+        "paragraphs": [
+          "很多团队引入 Codex、Claude Code、Cursor、GitHub Copilot 后，第一反应是让每个工程师自己试。个人很快会感觉变快：写样板代码更快、补测试更快、查 API 更快、解释代码更快。但团队层面的交付不一定同步变快。",
+          "DORA、McKinsey、Faros AI 和 Atlassian 这些报告共同提醒了一件事：AI 对软件交付的影响不是线性的。它会放大已有系统的优点，也会放大已有系统的问题。如果团队本来需求不清、review 慢、环境难跑、测试不稳、知识分散，AI 只会让更多代码更快进入这些瓶颈。",
+          "成熟落地的方法不是“所有人都装一个 AI 编程工具”，而是重做协作系统：谁负责把需求变成 Spec，谁负责让 Agent 执行，谁负责 review，谁负责测试和安全，谁负责沉淀提示词 / skill，谁负责看指标和优化流程。"
+        ]
+      },
+      {
+        "heading": "成熟团队的六阶段落地模型",
+        "paragraphs": [
+          "一个可持续的 AI Coding 落地流程，可以拆成六个阶段：战略和治理、用例选择、工作流设计、角色分工、质量门禁、度量和改进。",
+          "第一阶段是战略和治理：明确为什么用 AI Coding，是为了缩短交付周期、减少重复劳动、提升测试覆盖，还是改善代码理解和新人 onboarding。这个阶段的产出不是代码，而是团队 AI 使用原则、数据安全边界、允许和禁止的任务类型。",
+          "第二阶段是用例选择：不要一上来让 AI 接管所有开发。先选低风险高频任务，例如解释代码、生成测试、修小 Bug、迁移样式、整理文档、生成 PR 摘要。高风险任务，如支付、权限、数据库迁移、生产事故修复，需要更严格的人工审查。",
+          "第三阶段是工作流设计：把 AI 放进现有 SDLC，而不是另起炉灶。需求仍然要有 Spec，设计仍然要有验收标准，代码仍然要 review，测试仍然要通过，发布仍然要有回滚方案。AI 只是加速某些环节，不替代质量系统。",
+          "第四阶段是角色分工：每个角色都要知道自己什么时候使用 AI，什么时候不要用，产出物是什么，交给下游什么。否则团队会变成每个人各自和 Agent 聊天，最后没有统一上下文。",
+          "第五阶段是质量门禁：AI 生成的代码不能因为“看起来能跑”就合并。必须定义测试、lint、build、security scan、review、手动验收、浏览器检查这些门槛。",
+          "第六阶段是度量和改进：不要只看生成了多少代码，也不要只看个人感受。要看端到端指标：需求到上线周期、PR 等待时间、review 返工、缺陷逃逸、测试稳定性、部署频率、开发者满意度。"
+        ]
+      },
+      {
+        "heading": "角色 1：业务负责人 / Sponsor",
+        "paragraphs": [
+          "业务负责人不是来挑工具的，而是定义 AI Coding 的业务目标。比如三个月内把小需求交付周期缩短 20%，把测试补齐任务时间减半，或者让新成员理解老代码的时间从两周降到一周。",
+          "他需要决定哪些团队先试点，试点成功的标准是什么，哪些风险不能接受。比如客户数据不能进入外部工具，核心支付链路不能由 Agent 独立改动，所有 AI 生成代码必须经过人工 review。",
+          "业务负责人还要保护试点团队，不要让 AI Coding 变成额外 KPI 压力。成熟落地不是要求工程师“必须多交付 30%”，而是移除流程阻塞，让团队真实变快。"
+        ],
+        "code": {
+          "label": "Sponsor 产出物清单",
+          "content": `业务负责人 / Sponsor 需要产出：
+
+1. AI Coding 北极星目标
+- 为什么要引入 AI Coding；
+- 希望改善哪个业务或工程指标；
+- 试点周期多长；
+- 成功和失败如何判断。
+
+2. 使用边界
+- 哪些任务允许 AI 参与；
+- 哪些任务必须人工主导；
+- 哪些数据、代码和客户信息禁止输入 AI 工具；
+- 哪些模块属于高风险区。
+
+3. 试点团队选择
+- 选择 1 到 2 个有代表性的团队；
+- 明确试点范围；
+- 给团队预留学习和复盘时间。
+
+4. 投入承诺
+- 工具预算；
+- 培训时间；
+- 安全和法务支持；
+- 平台和 DevEx 支持。
+
+5. 复盘机制
+- 每两周看一次 adoption 和质量数据；
+- 每月决定是否扩大试点；
+- 不用“生成代码行数”作为成功指标。`
+        }
+      },
+      {
+        "heading": "角色 2：AI Coding 负责人 / Enablement Owner",
+        "paragraphs": [
+          "AI Coding 负责人是整个落地的产品经理。他不一定是最高级工程师，但要懂研发流程、工具链、培训、知识沉淀和指标。",
+          "这个角色负责把零散使用变成组织能力：建立提示词 library、skill library、AGENTS.md 模板、任务边界、培训材料、试点复盘、风险清单、常见问题和最佳实践。",
+          "如果没有这个角色，AI Coding 很容易变成个人技巧：某几个高手用得很好，其他人不知道怎么复用，团队也不知道到底哪里变快了。"
+        ],
+        "code": {
+          "label": "AI Coding 负责人产出物",
+          "content": `AI Coding 负责人需要产出：
+
+1. AI Coding Playbook
+- 团队如何使用 Codex、Claude Code、Cursor；
+- 哪些任务适合 Agent；
+- 哪些任务需要人工主导；
+- 不同工具适合什么场景。
+
+2. 提示词库
+- 解释代码提示词；
+- 修 Bug 提示词；
+- 写测试提示词；
+- PR 审查提示词；
+- UI 迭代提示词；
+- 发布前检查提示词。
+
+3. Skill / Command Library
+- summarize-changes；
+- fix-issue；
+- verify-delivery；
+- local-code-review；
+- ui-polish-review；
+- pr-summary。
+
+4. AGENTS.md / CLAUDE.md 模板
+- 项目规则；
+- 禁止修改范围；
+- 验证命令；
+- 代码风格；
+- 最终交付格式。
+
+5. 培训和复盘
+- 新人 onboarding；
+- 每周 AI coding clinic；
+- 失败案例复盘；
+- 高质量案例沉淀。
+
+6. 指标看板
+- 采用率；
+- PR cycle time；
+- 审查等待时间；
+- 缺陷逃逸；
+- 返工率；
+- 开发者满意度。`
+        }
+      },
+      {
+        "heading": "角色 3：产品经理 / PM",
+        "paragraphs": [
+          "PM 在 AI Coding 流程里最重要的变化，是不能再只写模糊需求。以前一个模糊需求可以靠工程师讨论澄清，现在如果直接交给 Agent，会快速生成错误方向的代码。",
+          "PM 的核心产出应该是 AI-ready Spec：用户场景、目标、非目标、验收标准、边界条件、数据来源、埋点需求、上线判断。AI-ready 的意思不是写给机器看的冷冰冰格式，而是让工程师和 Agent 都能准确执行。",
+          "PM 还要参与验收。AI 生成速度越快，PM 越需要快速判断结果是否符合真实用户目标，而不是只看界面有没有出现。"
+        ],
+        "code": {
+          "label": "PM 的 AI-ready Spec 模板",
+          "content": `# AI-ready Spec
+
+## 背景
+- 用户遇到什么问题；
+- 为什么现在要做；
+- 这个需求和业务目标的关系。
+
+## 用户场景
+- 谁在什么情况下使用；
+- 用户当前的替代方案是什么；
+- 成功体验是什么。
+
+## 目标
+- 本次要解决什么；
+- 用户最终能看到或做到什么；
+- 需要影响哪些指标。
+
+## 非目标
+- 本次不做什么；
+- 哪些需求以后再做；
+- 哪些方向明确不要碰。
+
+## 功能范围
+- 页面或入口；
+- 用户操作流程；
+- 数据展示；
+- 状态变化；
+- 权限或角色差异。
+
+## 验收标准
+1. 正常场景：
+2. 空状态：
+3. 错误状态：
+4. 移动端：
+5. 性能或加载：
+6. 埋点或数据：
+
+## 约束
+- 不修改哪些模块；
+- 不接哪些外部服务；
+- 不改变哪些现有行为。
+
+## 交付物
+- 页面；
+- 接口；
+- 测试；
+- 文档；
+- 截图或录屏；
+- 发布说明。`
+        }
+      },
+      {
+        "heading": "角色 4：设计师 / Designer",
+        "paragraphs": [
+          "设计师在 AI Coding 团队里不是只交 Figma。设计师要把视觉规范、组件状态、响应式、动效和验收标准说清楚，否则 Agent 会按自己的默认审美补细节。",
+          "设计师应该提供 Design Brief、关键截图、组件状态、token 对照、交互说明、移动端规则和设计 QA 清单。对于高保真页面，还应该明确哪些地方必须像，哪些地方可以由工程实现时合理简化。",
+          "设计师还应该参与 AI 产物的视觉审查，重点看层级、节奏、文字溢出、状态缺失和设计系统偏离。"
+        ],
+        "code": {
+          "label": "设计师交付物清单",
+          "content": `设计师需要交付：
+
+1. Design Brief
+- 页面目标；
+- 用户情绪；
+- 品牌气质；
+- 视觉参考；
+- 不希望出现的反向参考。
+
+2. Figma / Screenshot Context
+- 关键画板；
+- 桌面端和移动端；
+- 首屏和关键状态；
+- 可导出的图片资源；
+- 字体和图标来源。
+
+3. Component States
+- default；
+- hover；
+- focus；
+- active；
+- disabled；
+- loading；
+- empty；
+- error。
+
+4. 设计变量
+- 颜色；
+- 字号；
+- 行高；
+- 间距；
+- 圆角；
+- 阴影；
+- 容器宽度。
+
+5. Design QA Checklist
+- 标题是否符合层级；
+- 卡片是否统一；
+- 按钮是否一致；
+- 移动端是否可读；
+- 是否有文字溢出；
+- 动效是否过度；
+- 是否符合品牌气质。`
+        }
+      },
+      {
+        "heading": "角色 5：技术负责人 / Tech Lead",
+        "paragraphs": [
+          "Tech Lead 负责把 AI Coding 放进架构边界里。他要定义哪些目录可以让 Agent 改，哪些模块必须人工主导，哪些命令必须运行，哪些代码风格必须遵守。",
+          "Tech Lead 还要设计任务拆分方式。不是把一个大需求直接丢给 Agent，而是拆成可验证的小任务：先数据结构，再组件，再样式，再测试，再清理。",
+          "他最重要的产出是项目级上下文文件：AGENTS.md、架构说明、目录职责、危险区域、验证命令、review checklist。"
+        ],
+        "code": {
+          "label": "Tech Lead 的项目规则模板",
+          "content": `# Project AI Coding Rules
+
+## Project Architecture
+- src/pages：页面入口；
+- src/components：可复用组件；
+- src/data：静态数据；
+- src/content：长内容；
+- src/styles：全局样式和设计系统；
+- public：静态资源。
+
+## Allowed Changes By Task Type
+
+Content task:
+- 可以改 data/content/public assets；
+- 不要改 layout、auth、routing。
+
+UI task:
+- 可以改 page component、shared component、CSS；
+- 不要改数据结构和业务逻辑。
+
+Logic task:
+- 可以改相关函数和测试；
+- 必须补验证；
+- 不要同时做 UI 重构。
+
+High-risk modules:
+- auth；
+- payment；
+- permissions；
+- database；
+- deployment；
+- env vars。
+
+## Required Verification
+- npm run build；
+- npm run test when logic changes；
+- npm run lint when linting exists；
+- manual browser check for UI changes。
+
+## 审查 Rules
+- AI generated code must be reviewed by a human.
+- Large diffs should be split.
+- Unrelated refactors are rejected.
+- Verification results must be included in final summary.`
+        }
+      },
+      {
+        "heading": "角色 6：工程师 / Developer",
+        "paragraphs": [
+          "工程师不是把任务丢给 AI 就结束。成熟团队里，工程师更像 Agent 的导演和 reviewer：提供上下文、约束、检查计划、拆任务、审 diff、跑验证。",
+          "工程师要学会把任务分成适合 Agent 的颗粒度。比如“做完整支付系统”不适合直接交给 Agent，但“为 pricing 页面增加一个静态 plan 卡片，并保持现有 Stripe 逻辑不变”就适合。",
+          "工程师还要对最终代码负责。AI 生成代码不能成为质量问题的借口。合并之前，工程师必须理解改动。"
+        ],
+        "code": {
+          "label": "Developer 日常工作流",
+          "content": `开发者使用 AI Coding 的标准流程：
+
+1. 接收 Spec
+- 确认目标；
+- 确认非目标；
+- 确认验收标准。
+
+2. 拆任务
+- 把大需求拆成 30 到 90 分钟可验证小任务；
+- 每个任务只涉及有限文件；
+- 每个任务都有验证方式。
+
+3. 给 Agent 下任务
+- 提供目标；
+- 提供上下文；
+- 提供允许修改范围；
+- 提供禁止修改范围；
+- 提供 Done criteria。
+
+4. 审查 Agent 输出
+- 看 diff；
+- 看是否改了无关文件；
+- 看是否符合项目风格；
+- 看是否有边界问题。
+
+5. 验证
+- 跑 build/test/lint；
+- 手动检查页面；
+- 修复失败项。
+
+6. 提交
+- 写清 PR 摘要；
+- 标注 AI 辅助部分；
+- 提供验证结果；
+- 请求对应 reviewer。`
+        }
+      },
+      {
+        "heading": "角色 7：QA / 测试负责人",
+        "paragraphs": [
+          "AI Coding 会让代码变化更快，QA 的价值反而更高。QA 需要把隐性经验转成可执行验收清单和自动化测试策略。",
+          "QA 不只是最后点页面，而是要提前参与 Spec，定义正常流、异常流、空状态、权限边界、回归路径、浏览器和设备覆盖。",
+          "成熟团队会把 QA 的清单变成提示词和测试模板，让 Agent 在实现阶段就知道哪些边界不能漏。"
+        ],
+        "code": {
+          "label": "QA 产出物清单",
+          "content": `QA 需要产出：
+
+1. Test Strategy
+- 哪些功能必须自动化测试；
+- 哪些适合手动验收；
+- 哪些风险需要回归测试。
+
+2. Acceptance Checklist
+- 正常状态；
+- 空状态；
+- 错误状态；
+- 加载状态；
+- 权限差异；
+- 移动端；
+- 浏览器兼容。
+
+3. Regression Suite
+- 核心用户路径；
+- 关键页面截图；
+- 关键 API 响应；
+- 过去出现过的 Bug。
+
+4. AI Verification 提示词
+- 让 Agent 先列测试计划；
+- 让 Agent 补测试；
+- 让 Agent 运行验证；
+- 让 Agent 总结未覆盖风险。
+
+5. Release Sign-off
+- 是否可发布；
+- 哪些风险可接受；
+- 哪些问题必须阻塞。`
+        }
+      },
+      {
+        "heading": "角色 8：安全 / 法务 / 合规",
+        "paragraphs": [
+          "AI Coding 落地必须有安全边界。团队需要明确什么代码、数据、日志、客户信息、密钥、商业资料不能输入工具，也要明确 AI 生成代码如何审查许可证和安全风险。",
+          "安全团队不应该只在最后否决，而应该提供可执行政策：哪些仓库可用、哪些工具可用、哪些模型可用、敏感数据如何脱敏、依赖如何审查、生成代码如何记录。",
+          "合规要求越明确，工程师越敢用。模糊的“注意安全”反而会让团队要么不用，要么乱用。"
+        ],
+        "code": {
+          "label": "安全合规产出物",
+          "content": `安全 / 法务 / 合规需要产出：
+
+1. AI Tool Policy
+- 允许使用的工具；
+- 允许使用的代码仓库；
+- 禁止输入的数据类型；
+- 敏感信息处理规则；
+- 日志和审计要求。
+
+2. Data Classification
+- Public；
+- Internal；
+- Confidential；
+- Restricted；
+- Secret。
+
+3. Secure Coding Checklist
+- 输入校验；
+- 权限检查；
+- 密钥处理；
+- SQL / XSS / SSRF 等风险；
+- 依赖安全；
+- 日志脱敏。
+
+4. AI-generated 代码审查 Rules
+- 所有 AI 生成代码必须 review；
+- 高风险模块需要安全 reviewer；
+- 新依赖必须检查许可证和安全风险；
+- 不允许凭 AI 输出修改生产密钥或权限策略。
+
+5. Incident Protocol
+- 如果 AI 工具误用了敏感信息怎么办；
+- 如果生成代码引入漏洞怎么办；
+- 谁负责响应和复盘。`
+        }
+      },
+      {
+        "heading": "角色 9：平台 / DevEx / DevOps",
+        "paragraphs": [
+          "平台团队负责让 AI Coding 在工程环境里顺畅运行。很多团队 AI 效率上不去，不是模型不行，而是本地环境难装、测试慢、CI 不稳、文档过期、仓库结构复杂。",
+          "平台团队要把开发环境、验证命令、预览环境、日志、测试、CI 和权限都整理清楚，让 Agent 和人都能快速跑起来。",
+          "一个成熟的 AI Coding 团队，通常会有标准 devcontainer、快速 build/test 命令、可靠 preview、清晰错误日志和自动化质量门禁。"
+        ],
+        "code": {
+          "label": "平台团队产出物",
+          "content": `平台 / DevEx / DevOps 需要产出：
+
+1. Local Setup
+- 一键安装；
+- devcontainer 或环境说明；
+- 常见错误处理；
+- 测试数据准备。
+
+2. Verification Commands
+- build；
+- test；
+- lint；
+- typecheck；
+- e2e；
+- visual regression。
+
+3. CI Quality Gates
+- 必跑检查；
+- 可选检查；
+- 阻塞规则；
+- flaky test 处理。
+
+4. Preview 工作流
+- 每个 PR 的预览环境；
+- 页面链接；
+- 日志入口；
+- 回滚方式。
+
+5. Agent-friendly Documentation
+- 项目结构；
+- 常用命令；
+- 环境变量说明；
+- 禁止修改区域；
+- 调试指南。`
+        }
+      },
+      {
+        "heading": "端到端协作流程：从需求到上线",
+        "paragraphs": [
+          "成熟 AI Coding 团队的流程不是“PM 提需求，工程师叫 AI 写代码”。更合理的是一个端到端链路：Intake、Spec、Design、Plan、Implementation、审查、QA、Release、Retro。",
+          "Intake 阶段，PM 收集团队讨论、用户反馈和业务目标，判断是否适合 AI 辅助。产出是需求摘要和风险初判。",
+          "Spec 阶段，PM 写 AI-ready Spec，设计师补设计上下文，Tech Lead 补技术边界。产出是可执行任务卡。",
+          "Plan 阶段，工程师让 Codex 先读代码、提出计划、列文件、列风险。产出是实施计划和验证计划。",
+          "Implementation 阶段，Agent 负责小步实现，工程师负责监督和分段审查。产出是 diff、测试、截图或预览链接。",
+          "审查阶段，人工 reviewer 看设计、代码、安全、测试和业务验收。产出是 review comments 和修复清单。",
+          "QA 阶段，QA 执行回归和边界检查。产出是测试报告和发布建议。",
+          "Release 阶段，DevOps 或工程师发布，PM 和 QA 验收。产出是发布说明和回滚方案。",
+          "Retro 阶段，AI Coding 负责人复盘哪些提示词、Skill、规则可以沉淀。产出是更新后的 playbook。"
+        ],
+        "code": {
+          "label": "AI Coding 端到端流程",
+          "content": `AI Coding Team 工作流
+
+1. Intake
+Owner: PM
+Input: 用户反馈 / 业务目标 / Slack 讨论
+Output: 需求摘要、风险初判、是否适合 AI 辅助
+
+2. Spec
+Owner: PM + Designer + Tech Lead
+Input: 需求摘要
+Output: AI-ready Spec、设计上下文、技术边界
+
+3. Plan
+Owner: Developer
+Input: Spec + 项目规则
+Output: 实施计划、修改文件清单、验证计划
+
+4. Implementation
+Owner: Developer + Codex / Claude Code
+Input: 实施计划
+Output: 代码 diff、测试、截图、预览
+
+5. 审查
+Owner: Code Owner + Designer + Security when needed
+Input: PR / diff / 验证结果
+Output: review comments、修复清单、通过或阻塞结论
+
+6. QA
+Owner: QA
+Input: 预览环境、验收标准
+Output: 测试结果、回归结论、发布建议
+
+7. Release
+Owner: DevOps / Developer
+Input: 通过的 PR、发布计划
+Output: 上线版本、回滚方案、发布说明
+
+8. Retro
+Owner: AI Coding Enablement Owner
+Input: 本次任务数据、失败点、成功提示词
+Output: 更新后的提示词 library、skill library、AGENTS.md、流程改进项`
+        }
+      },
+      {
+        "heading": "团队必须维护的 12 个产出物",
+        "paragraphs": [
+          "如果一个团队想长期使用 AI Coding，不能只靠聊天记录。成熟团队会把关键上下文沉淀成固定产物，让新人、Agent 和 reviewer 都能复用。",
+          "这些产物不一定一开始全做，但至少要逐步建立。否则每个任务都要重新解释项目，AI 输出也会越来越不稳定。"
+        ],
+        "code": {
+          "label": "AI Coding 团队产出物清单",
+          "content": `团队级产出物：
+
+1. AI Coding Charter
+- 为什么使用 AI Coding；
+- 目标；
+- 边界；
+- 风险。
+
+2. Tool Matrix
+- Codex 做什么；
+- Claude Code 做什么；
+- Cursor 做什么；
+- GitHub Copilot 做什么；
+- 哪些场景不用 AI。
+
+3. Use Case Backlog
+- 适合 AI 的任务；
+- 风险等级；
+- 试点状态；
+- 成功案例。
+
+4. 提示词库
+- 按任务分类的可复制提示词；
+- 每个提示词的适用场景；
+- 成功和失败示例。
+
+5. Skill / Command Library
+- 可复用工作流；
+- 安装位置；
+- 调用方式；
+- 维护人。
+
+6. AGENTS.md / CLAUDE.md
+- 项目规则；
+- 验证命令；
+- 禁止修改范围；
+- 交付格式。
+
+7. AI-ready Spec Template
+- PM 和设计师共同使用的需求模板。
+
+8. Design QA Checklist
+- 设计师验收 AI 产物的标准。
+
+9. 代码审查 Checklist
+- 工程 reviewer 的检查项。
+
+10. Security Policy
+- 数据输入边界；
+- 高风险模块；
+- 审计要求。
+
+11. 指标看板
+- 交付周期；
+- review 等待；
+- rework；
+- defect；
+- adoption；
+- developer satisfaction。
+
+12. Retrospective Log
+- 哪些提示词有用；
+- 哪些失败；
+- 哪些规则需要更新；
+- 哪些任务不适合 AI。`
+        }
+      },
+      {
+        "heading": "例会和协作节奏",
+        "paragraphs": [
+          "AI Coding 落地需要轻量但稳定的协作节奏。不要开太多会，但要有固定复盘和知识沉淀。",
+          "推荐三个节奏：每周 AI Coding Clinic、每两周试点复盘、每月治理评审。Clinic 解决具体问题，试点复盘看流程和指标，治理评审看安全、工具、预算和扩展。",
+          "日常开发里，还可以设置 Agent Task Queue：工程师把适合 AI 的小任务排队，Tech Lead 或 senior engineer 定期 review 输出质量。"
+        ],
+        "code": {
+          "label": "AI Coding 团队节奏",
+          "content": `Weekly AI Coding Clinic
+Owner: AI Coding Enablement Owner
+Participants: Developers, PM, Designer, QA
+Agenda:
+- 展示 1 个成功案例；
+- 复盘 1 个失败案例；
+- 更新提示词 / skill；
+- 解决工具和流程问题。
+
+Bi-weekly Pilot 审查
+Owner: Engineering Manager
+Participants: Sponsor, Tech Lead, PM, QA, Security when needed
+Agenda:
+- 看交付周期和质量指标；
+- 看 adoption；
+- 看风险和阻塞；
+- 决定是否扩大试点。
+
+Monthly Governance 审查
+Owner: Sponsor + Security + Platform
+Agenda:
+- 工具使用情况；
+- 成本；
+- 安全事件；
+- 政策更新；
+- 需要新增的训练和平台能力。
+
+Daily Agent Task Queue
+Owner: Developer
+Usage:
+- 把小任务拆成 Agent 可执行项；
+- 每个任务都有 Spec、范围和验证；
+- 完成后由人 review。`
+        }
+      },
+      {
+        "heading": "指标怎么设：不要只看代码行数",
+        "paragraphs": [
+          "专业报告普遍提醒，不要只用代码行数、生成次数、个人速度来判断 AI Coding 成功。这些指标容易让团队生成更多代码，但不一定交付更多价值。",
+          "更好的指标是端到端指标和质量指标：从需求到上线多久，PR 等多久，review 返工几次，缺陷有没有增加，测试是否更稳定，开发者是否更容易进入项目。",
+          "DORA 一直强调软件交付性能要看系统；Faros AI 也指出 AI 可能让局部生产率提升，但端到端吞吐未必同步提升。团队要关注瓶颈有没有转移，比如代码写得更快了，但 review 队列更堵了。"
+        ],
+        "code": {
+          "label": "AI Coding 指标体系",
+          "content": `不要作为核心指标：
+- AI 生成代码行数；
+- 使用 AI 的次数；
+- 单个工程师主观感觉快了多少；
+- 提示词数量；
+- commit 数量。
+
+建议跟踪：
+
+1. Flow Metrics
+- 需求到上线 Lead Time；
+- PR cycle time；
+- 审查 wait time；
+- 部署频率；
+- 任务阻塞时间。
+
+2. Quality Metrics
+- escaped defects；
+- rollback rate；
+- rework rate；
+- test pass rate；
+- flaky test rate；
+- security findings。
+
+3. DevEx Metrics
+- 本地环境启动时间；
+- build/test 等待时间；
+- 新人理解代码时间；
+- 工程师满意度；
+- 工具使用阻塞。
+
+4. AI-specific Metrics
+- 适合 AI 的任务占比；
+- AI 输出被接受比例；
+- AI 输出需要大改比例；
+- 高质量提示词 / skill 复用次数；
+- 因 AI 引入的问题数量。
+
+5. Business Metrics
+- 功能交付速度；
+- 用户反馈处理时间；
+- 实验上线速度；
+- 关键业务目标改善。`
+        }
+      },
+      {
+        "heading": "一套可复制的团队启动计划",
+        "paragraphs": [
+          "如果团队还没有系统使用 AI Coding，可以按 30 天启动。不要第一天就推广到全公司，先选一个团队、一个仓库、三类低风险任务。",
+          "第一周建立边界和模板，第二周开始试点，第三周沉淀提示词和 skill，第四周看指标和决定是否扩大。这个节奏足够轻，也能避免混乱扩散。",
+          "最重要的是，AI Coding 的成熟度不是工具安装率，而是团队能否稳定把需求变成高质量交付，并持续复盘改进。"
+        ],
+        "code": {
+          "label": "30 天 AI Coding 试点计划",
+          "content": `第 1 周：准备
+- 选择试点团队和仓库；
+- 明确允许和禁止的任务；
+- 建立 AGENTS.md；
+- 建立 AI-ready Spec 模板；
+- 建立基础提示词 library；
+- 定义质量门禁和指标。
+
+第 2 周：低风险试点
+- 解释代码；
+- 补测试；
+- 修小 Bug；
+- 整理文档；
+- 生成 PR 摘要；
+- 每个任务记录输入、输出、验证和问题。
+
+第 3 周：沉淀工作流
+- 把成功提示词做成 skill / command；
+- 建立 fix-issue、verify-delivery、summarize-changes；
+- 更新 review checklist；
+- 训练 PM、设计师、QA 如何写 AI-ready 输入。
+
+第 4 周：评估和扩展
+- 看 Lead Time、PR cycle time、rework、defect；
+- 访谈工程师和 reviewer；
+- 找出新的瓶颈；
+- 决定继续试点、扩大范围或暂停调整。
+
+试点结束必须产出：
+- AI Coding Playbook；
+- 提示词库；
+- Skill Library；
+- AGENTS.md 模板；
+- 指标报告；
+- 风险和治理建议。`
+        }
+      },
+      {
+        "heading": "最后的判断",
+        "paragraphs": [
+          "团队使用 Codex、Claude Code、Cursor 这类 AI Coding 工具，真正成熟的标志不是“大家都会用”，而是“团队知道什么时候用、谁来用、怎么验收、怎么复盘”。",
+          "AI 会让个人更快，但只有当需求、设计、工程、测试、安全、平台和管理都围绕新的工作方式调整时，团队才会真正变快。",
+          "最值得先做的不是买更多工具，而是建立一套小而清晰的协作系统：AI-ready Spec、AGENTS.md、提示词库、Skill Library、审查 Checklist、Verification Gates 和 指标看板。有了这些，AI Coding 才会从个人技巧变成团队能力。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "claude-code-skills-reusable-提示词-workflows",
     "sourceUrl": "https://docs.anthropic.com/en/docs/claude-code/skills",
     "translationMode": "guidedTranslation",
-    "title": "Claude Code Skills 官方指南：把一次性 Prompt 沉淀成可复用工作流",
+    "title": "Claude Code Skills 官方指南：把一次性提示词沉淀成可复用工作流",
     "originalTitle": "Claude Code Skills",
     "notice": "本文为 Uicoding.ai 基于 Anthropic Claude Code Skills 官方文档整理的中文学习笔记，不是原文全文翻译。原文地址：https://docs.anthropic.com/en/docs/claude-code/skills。",
     "sections": [
       {
-        "heading": "为什么要把 Prompt 沉淀成 Skill",
+        "heading": "为什么要把提示词沉淀成 Skill",
         "paragraphs": [
-          "一次性 Prompt 适合临时任务，但真实项目里有很多动作会反复出现：总结当前改动、修复 issue、生成 PR 摘要、做提交前检查、审查 UI 改动。如果每次都重新写一遍，不仅浪费时间，还容易漏掉验证步骤。",
-          "Claude Code Skills 的价值，就是把这些高频工作流写进一个固定的 SKILL.md 文件。以后你只需要调用对应 Skill，Claude Code 就会按同一套步骤执行。",
+          "一次性提示词适合临时任务，但真实项目里有很多动作会反复出现：总结当前改动、修复 issue、生成 PR 摘要、做提交前检查、审查 UI 改动。如果每次都重新写一遍，不仅浪费时间，还容易漏掉验证步骤。",
+          "Claude Code Skills 的价值，就是把这些高频工作流写进一个固定的 SKILL.md 文件。以后只需要调用对应 Skill，Claude Code 就会按同一套步骤执行。",
           "官方文档里也强调，Skills 可以把任务说明、约束、允许工具和动态上下文组织在一起。旧的 slash commands 仍然可用，但官方更推荐把复杂工作流迁移到 Skills。"
         ]
       },
       {
         "heading": "一个 Skill 最小长什么样",
         "paragraphs": [
-          "一个 Skill 通常就是一个文件夹，里面放一个 SKILL.md。文件开头是元数据，下面是具体工作流说明。你可以把它理解成：一份专门写给 Claude Code 的可复用操作手册。",
-          "下面这个是最小模板。复制后，把 name、description 和正文替换成你的工作流即可。"
+          "一个 Skill 通常就是一个文件夹，里面放一个 SKILL.md。文件开头是元数据，下面是具体工作流说明。可以理解为：一份专门写给 Claude Code 的可复用操作手册。",
+          "下面这个是最小模板。复制后，把 name、description 和正文替换成项目的工作流即可。"
         ],
         "code": {
           "label": "最小 SKILL.md 模板",
@@ -3347,7 +4105,7 @@ Use this skill when the user asks for:
 - A task that should follow the same checklist every time
 - A task that needs project-specific rules
 
-## Workflow
+## 工作流
 
 1. Read the relevant project files.
 2. Identify the smallest safe change.
@@ -3367,8 +4125,8 @@ Use this skill when the user asks for:
       {
         "heading": "保存在哪里，怎么调用",
         "paragraphs": [
-          "如果是项目专属 Skill，建议放在当前项目的 .claude/skills/ 目录下。这样它跟项目一起走，适合团队共享。如果是个人通用 Skill，可以放在你的用户级 Claude Code 配置目录里。",
-          "调用时通常可以用 slash command 形式，例如 /summarize-changes、/fix-issue、/pr-summary。具体是否立即生效，取决于你的 Claude Code 版本和当前会话是否重新加载了 Skills。"
+          "如果是项目专属 Skill，建议放在当前项目的 .claude/skills/ 目录下。这样它跟项目一起走，适合团队共享。如果是个人通用 Skill，可以放在用户级 Claude Code 配置目录里。",
+          "调用时通常可以用 slash command 形式，例如 /summarize-changes、/fix-issue、/pr-summary。具体是否立即生效，取决于当前 Claude Code 版本和当前会话是否重新加载了 Skills。"
         ],
         "code": {
           "label": "项目级 Skill 文件结构",
@@ -3386,7 +4144,7 @@ Use this skill when the user asks for:
         "heading": "Skill 1：summarize-changes，自动总结当前改动",
         "paragraphs": [
           "这个 Skill 适合每次改完代码后使用。它不会继续改代码，只负责查看当前 diff、总结文件变化、验证状态和风险点。",
-          "你可以把它做成 /summarize-changes，在提交 Git 或发给别人 review 前运行。"
+          "可以把它做成 /summarize-changes，在提交 Git 或发给别人 review 前运行。"
         ],
         "code": {
           "label": "summarize-changes/SKILL.md",
@@ -3401,7 +4159,7 @@ Use this skill after code has already been modified.
 
 The goal is to explain what changed, why it changed, how it was verified, and what risks remain.
 
-## Workflow
+## 工作流
 
 1. Inspect the current git status.
 2. Inspect the relevant diff.
@@ -3472,7 +4230,7 @@ Before editing, identify:
 
 If key information is missing and cannot be inferred from the repo, ask a focused question before editing.
 
-## Workflow
+## 工作流
 
 1. Read project rules such as AGENTS.md, CLAUDE.md, README, or package.json.
 2. Locate files most likely related to the issue.
@@ -3525,10 +4283,10 @@ Before final response, verify:
         }
       },
       {
-        "heading": "Skill 3：pr-summary，生成 PR 摘要和 Review 说明",
+        "heading": "Skill 3：pr-summary，生成 PR 摘要和审查说明",
         "paragraphs": [
           "这个 Skill 适合准备提交 PR 时使用。它会把当前改动整理成 reviewer 容易读的结构：背景、改动、验证、风险、截图或检查方式。",
-          "如果你的团队经常要求 PR 描述清楚，这个模板会非常省时间。"
+          "如果团队经常要求 PR 描述清楚，这个模板会很省时间。"
         ],
         "code": {
           "label": "pr-summary/SKILL.md",
@@ -3541,7 +4299,7 @@ description: Use this skill when the user asks to draft a pull request summary, 
 
 Use this skill when code changes are ready to be described for review.
 
-## Workflow
+## 工作流
 
 1. Inspect git status and the current diff.
 2. Identify the user-facing goal of the change.
@@ -3582,7 +4340,7 @@ Use this skill when code changes are ready to be described for review.
 - 如果是 UI 改动，提醒需要附截图。
 - 如果当前没有截图，写“待补充”。
 
-## Review Checklist
+## 审查 Checklist
 
 - [ ] 主要页面表现符合预期
 - [ ] 移动端布局可用
@@ -3601,7 +4359,7 @@ Use this skill when code changes are ready to be described for review.
       {
         "heading": "Skill 4：verify-change，改完后强制验证",
         "paragraphs": [
-          "很多 AI Coding 的问题不是不会写代码，而是写完后没有验证。你可以把验证流程单独做成 Skill，每次改完都跑一遍。",
+          "很多 AI Coding 的问题不是不会写代码，而是写完后没有验证。可以把验证流程单独做成 Skill，每次改完都跑一遍。",
           "这个 Skill 适合前端项目、静态内容站、工具页、学习页、案例页等场景。"
         ],
         "code": {
@@ -3615,7 +4373,7 @@ description: Use this skill after implementation to verify build health, user-fa
 
 Use this skill after files have been modified.
 
-## Workflow
+## 工作流
 
 1. Inspect the changed files.
 2. Decide the smallest meaningful verification set.
@@ -3670,11 +4428,11 @@ For UI changes:
         }
       },
       {
-        "heading": "什么时候用 Skill，什么时候只用 Prompt",
+        "heading": "什么时候用 Skill，什么时候只用提示词",
         "paragraphs": [
-          "如果某个任务只会做一次，用普通 Prompt 就够了。比如临时解释一段代码、一次性改一段文案、问一个概念问题，没有必要做成 Skill。",
-          "如果某个任务会反复出现，而且你希望每次都按同样流程执行，就应该做成 Skill。比如 summarize-changes、fix-issue、pr-summary、verify-change、ui-review、release-note 这类任务。",
-          "判断标准很简单：只要你发现自己第三次复制同一段提示词，就应该考虑把它沉淀成 Skill。这样 Claude Code 不再依赖你每次把规则说完整，而是自动按项目约定工作。"
+          "如果某个任务只会做一次，用普通提示词就够了。比如临时解释一段代码、一次性改一段文案、问一个概念问题，没有必要做成 Skill。",
+          "如果某个任务会反复出现，而且希望每次都按同样流程执行，就应该做成 Skill。比如 summarize-changes、fix-issue、pr-summary、verify-change、ui-review、release-note 这类任务。",
+          "判断标准很简单：只要发现自己第三次复制同一段提示词，就应该考虑把它沉淀成 Skill。这样 Claude Code 不再依赖每次手动补全规则，而是自动按项目约定工作。"
         ]
       }
     ]
@@ -3689,15 +4447,15 @@ For UI changes:
     "sections": [
       {
         "heading": "先别急着输入命令",
-        "content": "如果你从来没用过终端，不要担心。终端只是电脑里的一个文字操作窗口：平时我们点按钮打开软件，在终端里则是输入一行文字让电脑做事。Codex CLI 就是在这个文字窗口里运行的 Codex。你可以把它理解成：在项目文件夹旁边打开一个对话窗口，让 Codex 帮你看文件、改文件和检查结果。"
+        "content": "如果从来没用过终端，不要担心。终端只是电脑里的一个文字操作窗口：平时我们点按钮打开软件，在终端里则是输入一行文字让电脑做事。Codex CLI 就是在这个文字窗口里运行的 Codex。可以理解为：在项目文件夹旁边打开一个对话窗口，让 Codex 帮助看文件、改文件和检查结果。"
       },
       {
         "heading": "终端在哪里打开",
-        "content": "Mac 用户可以打开“终端 Terminal”，Windows 用户通常会用 PowerShell、Windows Terminal 或 VS Code 里的 Terminal。最简单的方式是：如果你已经用 VS Code 打开项目，就在 VS Code 顶部菜单找到 Terminal，再选择 New Terminal。这样打开的终端通常就在当前项目附近，更不容易走错文件夹。"
+        "content": "Mac 用户可以打开“终端 Terminal”，Windows 用户通常会用 PowerShell、Windows Terminal 或 VS Code 里的 Terminal。最简单的方式是：如果已经用 VS Code 打开项目，就在 VS Code 顶部菜单找到 Terminal，再选择 New Terminal。这样打开的终端通常就在当前项目附近，更不容易走错文件夹。"
       },
       {
         "heading": "什么是命令",
-        "content": "命令就是你输入给电脑的一句话。比如 pwd 是“告诉我现在在哪个文件夹”，ls 是“列出当前文件夹里的文件”，cd 是“进入某个文件夹”。你不需要背很多命令，只要先理解这几个基础命令，就能开始使用 Codex CLI。",
+        "content": "命令就是输入给电脑的一句话。比如 pwd 是“告诉我现在在哪个文件夹”，ls 是“列出当前文件夹里的文件”，cd 是“进入某个文件夹”。不需要背很多命令，只要先理解这几个基础命令，就能开始使用 Codex CLI。",
         "code": {
           "label": "最基础的三个命令",
           "content": "pwd   # 显示当前所在文件夹\nls    # 查看当前文件夹里有什么\ncd 文件夹路径   # 进入某个文件夹"
@@ -3709,7 +4467,7 @@ For UI changes:
       },
       {
         "heading": "先确认自己在正确位置",
-        "content": "打开终端后，先不要马上运行 Codex。你可以先输入 pwd 看当前位置，再输入 ls 看当前文件夹里有什么。如果能看到 package.json、src、index.html 之类的文件，通常说明你已经在项目目录里了。",
+        "content": "打开终端后，先不要马上运行 Codex。可以先输入 pwd 看当前位置，再输入 ls 看当前文件夹里有什么。如果能看到 package.json、src、index.html 之类的文件，通常说明已经在项目目录里了。",
         "code": {
           "label": "位置检查命令",
           "content": "pwd\nls"
@@ -3717,7 +4475,7 @@ For UI changes:
       },
       {
         "heading": "如果不在项目目录怎么办",
-        "content": "如果 ls 之后看不到项目文件，说明你可能还没有进入项目目录。需要用 cd 进入项目文件夹。比如项目在桌面的 web 文件夹里，就输入 cd ~/Desktop/web。这里的 cd 可以理解成“走进这个文件夹”。",
+        "content": "如果 ls 之后看不到项目文件，说明当前还没有进入项目目录。需要用 cd 进入项目文件夹。比如项目在桌面的 web 文件夹里，就输入 cd ~/Desktop/web。这里的 cd 可以理解成“走进这个文件夹”。",
         "code": {
           "label": "进入项目目录示例",
           "content": "cd ~/Desktop/web\npwd\nls"
@@ -3725,7 +4483,7 @@ For UI changes:
       },
       {
         "heading": "再启动 Codex CLI",
-        "content": "确认位置正确后，再输入 codex 启动 Codex CLI。启动后，你就可以像聊天一样输入中文任务。第一次不要让它修改代码，先让它解释项目，这样你能确认它看到了正确文件。",
+        "content": "确认位置正确后，再输入 codex 启动 Codex CLI。启动后，可以像聊天一样输入中文任务。第一次不要让它修改代码，先让它解释项目，这样能确认它看到了正确文件。",
         "code": {
           "label": "启动 Codex",
           "content": "codex"
@@ -3733,7 +4491,7 @@ For UI changes:
       },
       {
         "heading": "第一次只让它解释项目",
-        "content": "新手第一次使用 Codex CLI，最稳的任务不是“帮我做页面”，而是“请解释这个项目”。这一步会让你知道项目大概由哪些文件组成，也能让 Codex 先熟悉上下文。",
+        "content": "新手第一次使用 Codex CLI，最稳的任务不是“帮我做页面”，而是“请解释这个项目”。这一步会让使用者知道项目大概由哪些文件组成，也能让 Codex 先熟悉上下文。",
         "code": {
           "label": "复制到 Codex 输入框",
           "content": "请先阅读当前项目，不要修改任何文件。\n请用非常适合零基础用户的语言解释：\n1. 这个项目是什么；\n2. 主要文件夹和文件分别有什么作用；\n3. 首页或当前页面在哪里；\n4. 如果我要改一段文案，应该先看哪个文件；\n5. 如果我要运行这个项目，通常会用什么命令。"
@@ -3741,7 +4499,7 @@ For UI changes:
       },
       {
         "heading": "npm 是什么，不要被吓到",
-        "content": "npm 是前端项目常用的工具，可以理解成“安装和运行项目的助手”。npm install 通常用来安装项目需要的依赖，npm run build 通常用来检查项目能不能成功打包。你不需要理解所有细节，只要知道：install 是准备材料，build 是检查能不能做成成品。",
+        "content": "npm 是前端项目常用的工具，可以理解成“安装和运行项目的助手”。npm install 通常用来安装项目需要的依赖，npm run build 通常用来检查项目能不能成功打包。不需要理解所有细节，只要知道：install 是准备材料，build 是检查能不能做成成品。",
         "code": {
           "label": "常见 npm 命令",
           "content": "npm install      # 安装项目需要的依赖\nnpm run build    # 检查项目能不能成功打包"
@@ -3749,18 +4507,18 @@ For UI changes:
       },
       {
         "heading": "交互模式是什么",
-        "content": "输入 codex 进入后，你会进入交互模式。交互模式就像持续聊天：你提一个问题，Codex 回答；你确认后，它再继续下一步。新手应该优先使用交互模式，因为你可以一步步确认，不容易让 Codex 一次改太多。"
+        "content": "输入 codex 进入后，会进入交互模式。交互模式就像持续聊天：输入一个问题，Codex 回答；确认后，它再继续下一步。新手应该优先使用交互模式，因为可以一步步确认，不容易让 Codex 一次改太多。"
       },
       {
         "heading": "不要一开始就让它改代码",
-        "content": "很多新手第一次会直接说“帮我优化网站”。这句话太大了，Codex 可能会改很多文件。更安全的方法是先让它提出计划，不要马上修改。你确认计划没问题，再让它执行。",
+        "content": "很多新手第一次会直接说“帮我优化网站”。这句话太大了，Codex 可能会改很多文件。更安全的方法是先让它提出计划，不要马上修改。确认计划没问题，再让它执行。",
         "code": {
           "label": "先提计划的提示词",
           "content": "请先不要修改文件。\n我想优化学习资料卡片，但我是零基础用户。\n请先告诉我：\n1. 你需要看哪些文件；\n2. 每个文件大概负责什么；\n3. 你建议最小修改哪几个地方；\n4. 修改后我应该如何检查结果。\n等我确认后再执行。"
         }
       },
       {
-        "heading": "再做一个非常小的修改",
+        "heading": "再做一个很小的修改",
         "content": "确认计划后，只让 Codex 做一个小改动。比如只改一段文案、只调整一个卡片、只修一个按钮。小任务更容易成功，也更容易理解 Codex 到底做了什么。",
         "code": {
           "label": "小任务提示词",
@@ -3769,7 +4527,7 @@ For UI changes:
       },
       {
         "heading": "diff 是修改记录，不是考试题",
-        "content": "diff 是代码修改前后的对比记录。你不需要完全看懂每一行，但可以看出 Codex 改了哪些文件、改动多不多、有没有碰到不该碰的地方。如果不懂，可以直接让 Codex 解释 diff。",
+        "content": "diff 是代码修改前后的对比记录。不需要完全看懂每一行，但可以看出 Codex 改了哪些文件、改动多不多、有没有碰到不该碰的地方。如果不懂，可以直接让 Codex 解释 diff。",
         "code": {
           "label": "让 Codex 解释修改",
           "content": "请用中文解释这次 diff：\n1. 哪些文件被修改了；\n2. 每个文件为什么要改；\n3. 有没有可能影响其他页面；\n4. 我应该重点检查哪里。"
@@ -3781,7 +4539,7 @@ For UI changes:
       },
       {
         "heading": "一套适合零基础用户的完整流程",
-        "content": "你可以每次都按这个顺序来：打开项目，打开终端，确认位置，启动 Codex，让它解释项目，让它提计划，确认后做小修改，看 diff，运行 build，最后打开浏览器检查页面。这就是最基础但最稳的 AI Coding 工作流。",
+        "content": "可以每次都按这个顺序来：打开项目，打开终端，确认位置，启动 Codex，让它解释项目，让它提计划，确认后做小修改，看 diff，运行 build，最后打开浏览器检查页面。这就是最基础但最稳的 AI Coding 工作流。",
         "code": {
           "label": "完整流程提示词",
           "content": "我是零基础用户，请你按非常稳妥的方式协助我：\n1. 先解释当前项目，不要修改文件；\n2. 再提出最小修改计划；\n3. 等我确认后，只做一个小改动；\n4. 修改后运行 npm run build；\n5. 用中文解释修改了什么、为什么这样改、我应该检查哪里。"
@@ -3799,11 +4557,11 @@ For UI changes:
     "sections": [
       {
         "heading": "为什么“帮我优化一下”不够",
-        "content": "Codex 可以做很多事，但它不能自动知道你心里的审美、业务目标和边界条件。“帮我优化一下”太宽泛，容易导致它重写结构、改动无关文件，或者只做表面样式。更好的提示词应该说明目标、范围、约束、验收标准和停止条件。"
+        "content": "Codex 可以做很多事，但它不能自动知道业务审美、业务目标和边界条件。“帮我优化一下”太宽泛，容易导致它重写结构、改动无关文件，或者只做表面样式。更好的提示词应该说明目标、范围、约束、验收标准和停止条件。"
       },
       {
         "heading": "好任务的六个要素",
-        "content": "一个适合交给 Codex 的任务，通常包含六个信息：你要解决什么问题，允许改哪些文件，不能改什么，用户会看到什么变化，完成后如何验证，以及构建成功后是否停止。信息越具体，Codex 越容易稳定执行。"
+        "content": "一个适合交给 Codex 的任务，通常包含六个信息：需要解决什么问题，允许改哪些文件，不能改什么，用户会看到什么变化，完成后如何验证，以及构建成功后是否停止。信息越具体，Codex 越容易稳定执行。"
       },
       {
         "heading": "把模糊需求改成清晰任务",
@@ -3815,7 +4573,7 @@ For UI changes:
       },
       {
         "heading": "让 Codex 先提计划",
-        "content": "如果任务稍微复杂，比如涉及多个页面或多个组件，先让 Codex 只给计划。你确认计划后再让它改代码。这样可以减少返工，也能避免它一上来就做大范围修改。",
+        "content": "如果任务稍微复杂，比如涉及多个页面或多个组件，先让 Codex 只给计划。确认计划后再让它改代码。这样可以减少返工，也能避免它一上来就做大范围修改。",
         "code": {
           "label": "复制到 Codex 输入框",
           "content": "请先不要修改文件。\n请阅读相关代码后，给出一个最小修改计划。\n计划里说明：\n1. 需要修改哪些文件；\n2. 每个文件改什么；\n3. 哪些内容不能改；\n4. 如何验证结果。\n等我确认后再执行。"
@@ -3848,11 +4606,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这篇官方资料适合两类人：一类是刚开始使用 Codex 的新手，另一类是已经能让 Codex 改代码，但经常遇到“改动太大、上下文说不清、验证不稳定、反复返工”的使用者。它真正讨论的不是某个单一命令，而是如何把 Codex 当成一个可以规划、执行、验证、沉淀经验的 coding agent 来协作。"
+            "content": "本文官方资料适合两类人：一类是刚开始使用 Codex 的新手，另一类是已经能让 Codex 改代码，但经常遇到“改动太大、上下文说不清、验证不稳定、反复返工”的使用者。它真正讨论的不是某个单一命令，而是如何把 Codex 当成一个可以规划、执行、验证、沉淀经验的 coding agent 来协作。"
           },
           {
             "type": "paragraph",
-            "content": "你可以把它理解成一套从输入到交付的工作流：先说清楚任务，再让 Codex 规划，再限定修改范围，然后通过构建、测试、预览和人工检查完成验收。等流程稳定后，把项目规则写进 AGENTS.md，把重复流程沉淀成 Skill，把外部系统接入 MCP 或连接器，最后再考虑自动化。"
+            "content": "可以把它理解成一套从输入到交付的工作流：先说清楚任务，再让 Codex 规划，再限定修改范围，然后通过构建、测试、预览和人工检查完成验收。等流程稳定后，把项目规则写进 AGENTS.md，把重复流程沉淀成 Skill，把外部系统接入 MCP 或连接器，最后再考虑自动化。"
           }
         ]
       },
@@ -3865,7 +4623,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这也意味着，你给它的不是一句“帮我优化一下”，而是一份小型任务说明。任务说明越像真实工程协作，Codex 越稳定：目标是什么，为什么要做，允许改哪里，不能碰哪里，成功标准是什么，完成后如何验证。"
+            "content": "这也意味着，交给 Codex 的不该是一句“帮我优化一下”，而是一份小型任务说明。任务说明越像真实工程协作，Codex 越稳定：目标是什么，为什么要做，允许改哪里，不能碰哪里，成功标准是什么，完成后如何验证。"
           },
           {
             "type": "paragraph",
@@ -3896,11 +4654,11 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "官方最佳实践里非常重要的一点，是先讨论计划。复杂任务不要一开始就让 Codex 修改文件，而是先让它读代码、提出方案、列出可能修改的文件和风险。你确认计划后，再让它执行。"
+            "content": "官方最佳实践里很重要的一点，是先讨论计划。复杂任务不要一开始就让 Codex 修改文件，而是先让它读代码、提出方案、列出可能修改的文件和风险。计划确认后，再进入执行。"
           },
           {
             "type": "paragraph",
-            "content": "Plan mode 的价值不是拖慢速度，而是让方向提前暴露。比如你只想调整详情页内容，但 Codex 的计划里出现了重构路由、拆分组件库、换 CSS 架构，这时你就能在动手前纠正它。对真实项目来说，前面多花一分钟，后面少返工半小时。"
+            "content": "Plan mode 的价值不是拖慢速度，而是让方向提前暴露。比如任务只是调整详情页内容，但 Codex 的计划里出现重构路由、拆分组件库、换 CSS 架构，就能在动手前纠正方向。对真实项目来说，前面多花一分钟，后面少返工半小时。"
           },
           {
             "type": "code",
@@ -3910,7 +4668,7 @@ For UI changes:
         ]
       },
       {
-        "heading": "让 Codex 先采访你",
+        "heading": "让 Codex 先提问",
         "blocks": [
           {
             "type": "paragraph",
@@ -3918,7 +4676,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这对非工程背景用户尤其有用。你不需要一上来就写出完美技术描述，可以先用自然语言讲大概方向，再让 Codex 帮你把它整理成任务边界。"
+            "content": "这对非工程背景用户尤其有用。不需要一上来就写出完美技术描述，可以先用自然语言讲大概方向，再让 Codex 帮助把它整理成任务边界。"
           },
           {
             "type": "code",
@@ -3950,7 +4708,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "如果某些约束会反复出现，就不要每次都写在 prompt 里。官方资料强调，可以把项目级规则写进 AGENTS.md。这个文件相当于项目里的协作说明，Codex 在处理代码时会参考它。"
+            "content": "如果某些约束会反复出现，就不要每次都写在提示词里。官方资料强调，可以把项目级规则写进 AGENTS.md。这个文件相当于项目里的协作说明，Codex 在处理代码时会参考它。"
           },
           {
             "type": "paragraph",
@@ -3959,7 +4717,7 @@ For UI changes:
           {
             "type": "code",
             "label": "AGENTS.md 示例",
-            "content": "# Project Rules\n\n- This project uses React, Vite and npm.\n- Keep UI changes consistent with src/styles.css.\n- Do not add backend, database, auth or upload features unless requested.\n- Do not introduce new dependencies without explaining why.\n- Keep each task scoped to the files named in the prompt when possible.\n- After code changes, run npm run build and report the result.\n- For visual changes, check desktop and mobile layouts before finishing."
+            "content": "# Project Rules\n\n- This project uses React, Vite and npm.\n- Keep UI changes consistent with src/styles.css.\n- Do not add backend, database, auth or upload features unless requested.\n- Do not introduce new dependencies without explaining why.\n- Keep each task scoped to the files named in the 提示词 when possible.\n- After code changes, run npm run build and report the result.\n- For visual changes, check desktop and mobile layouts before finishing."
           }
         ]
       },
@@ -3968,7 +4726,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "除了 AGENTS.md，Codex 还可以通过配置来调整默认行为。对于普通使用者来说，最重要的不是记住所有配置项，而是理解配置和 prompt 的区别：prompt 适合当前任务，AGENTS.md 适合项目规则，配置适合更底层的默认行为。"
+            "content": "除了 AGENTS.md，Codex 还可以通过配置来调整默认行为。对于普通使用者来说，最重要的不是记住所有配置项，而是理解配置和提示词的区别：提示词适合当前任务，AGENTS.md 适合项目规则，配置适合更底层的默认行为。"
           },
           {
             "type": "paragraph",
@@ -3985,7 +4743,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "验证闭环还包括看 diff。diff 能告诉你 Codex 到底改了哪些文件。新手不需要完全看懂每一行代码，但至少要判断：文件数量是否合理，是否修改了不相关页面，是否新增了奇怪依赖，是否动了配置或数据结构。"
+            "content": "验证闭环还包括看 diff。diff 能说明 Codex 到底改了哪些文件。即使不完全看懂每一行代码，也至少要判断：文件数量是否合理，是否修改了不相关页面，是否新增了奇怪依赖，是否动了配置或数据结构。"
           },
           {
             "type": "code",
@@ -3999,7 +4757,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "当任务只发生在代码库里，Codex 读取本地文件就足够了。但真实工作经常需要外部上下文：GitHub issue、设计文档、内部知识库、数据库、浏览器页面、项目管理工具。MCP 和连接器的价值，就是把这些上下文接进来，让 Codex 不用只凭你复制粘贴的信息工作。"
+            "content": "当任务只发生在代码库里，Codex 读取本地文件就足够了。但真实工作经常需要外部上下文：GitHub issue、设计文档、内部知识库、数据库、浏览器页面、项目管理工具。MCP 和连接器的价值，就是把这些上下文接进来，让 Codex 不必只依赖复制粘贴的信息工作。"
           },
           {
             "type": "paragraph",
@@ -4007,7 +4765,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "对学习者来说，可以先从 GitHub、浏览器预览和官方文档这类低风险上下文开始。等你熟悉审批和验证之后，再接入更敏感的系统。"
+            "content": "学习阶段可以先从 GitHub、浏览器预览和官方文档这类低风险上下文开始。熟悉审批和验证之后，再接入更敏感的系统。"
           }
         ]
       },
@@ -4016,11 +4774,11 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "当你发现自己反复让 Codex 做同一类事，就可以考虑把流程写成 Skill。Skill 不是一段神奇 prompt，而是一套可复用的工作说明：什么时候使用，先读什么文件，按什么步骤检查，修改后如何验证。"
+            "content": "当同一类任务反复出现，就可以考虑把流程写成 Skill。Skill 不是一段神奇提示词，而是一套可复用的工作说明：什么时候使用，先读什么文件，按什么步骤检查，修改后如何验证。"
           },
           {
             "type": "paragraph",
-            "content": "例如这个网站里，学习文章整理、案例详情页补全、前端设计审查、构建后浏览器检查，都可以变成 Skill。这样每次执行时，Codex 不需要重新猜你的标准，而是按固定流程走。"
+            "content": "例如这个网站里，学习文章整理、案例详情页补全、前端设计审查、构建后浏览器检查，都可以变成 Skill。这样每次执行时，Codex 不需要重新猜项目的标准，而是按固定流程走。"
           },
           {
             "type": "paragraph",
@@ -4033,11 +4791,11 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "自动化适合那些会定期发生、流程清楚、验收方式明确的任务。例如每天检查依赖更新、定期扫描构建失败、每周整理未处理 issue、在 PR 有新反馈后提醒你。"
+            "content": "自动化适合那些定期发生、流程清楚、验收方式明确的任务。例如每天检查依赖更新、定期扫描构建失败、每周整理未处理 issue、在 PR 有新反馈后提醒负责人。"
           },
           {
             "type": "paragraph",
-            "content": "但自动化不应该过早使用。如果一个任务你还不知道怎么人工跑通，就不要马上让它自动执行。先把手动流程跑稳定：输入是什么，输出是什么，失败怎么办，需要你批准哪些动作。流程清楚后，再让 Codex 定期唤醒或排队执行。"
+            "content": "但自动化不应该过早使用。如果一个任务还没人工跑通，就不要马上自动执行。先把手动流程跑稳定：输入是什么，输出是什么，失败怎么办，哪些动作需要批准。流程清楚后，再让 Codex 定期唤醒或排队执行。"
           },
           {
             "type": "code",
@@ -4051,11 +4809,11 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "第一个坑，是把任务说得太大。比如“帮我优化网站”“重构这个项目”“做一个完整应用”。这类指令会让 Codex 自己填补太多空白，结果可能改动很大，却不一定符合你的真实目标。"
+            "content": "第一个坑，是把任务说得太大。比如“帮我优化网站”“重构这个项目”“做一个完整应用”。这类指令会让 Codex 自己填补太多空白，结果可能改动很大，却不一定符合项目的真实目标。"
           },
           {
             "type": "paragraph",
-            "content": "第二个坑，是没有限制修改范围。你只想改一个页面，却没有说明不能改全局样式、路由和依赖，Codex 可能会为了完成目标顺手改更多东西。"
+            "content": "第二个坑，是没有限制修改范围。任务可能只需要改一个页面，但如果没有说明不能改全局样式、路由和依赖，Codex 可能会为了完成目标顺手改更多东西。"
           },
           {
             "type": "paragraph",
@@ -4063,7 +4821,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "第四个坑，是把所有规则都堆进同一个 prompt。更好的方式是分层：当前任务写在 prompt，长期项目约束写在 AGENTS.md，稳定重复流程写成 Skill，外部数据通过 MCP 或连接器接入。"
+            "content": "第四个坑，是把所有规则都堆进同一个提示词。更好的方式是分层：当前任务写在提示词，长期项目约束写在 AGENTS.md，稳定重复流程写成 Skill，外部数据通过 MCP 或连接器接入。"
           }
         ]
       },
@@ -4072,20 +4830,20 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "第一步，只读项目。让 Codex 解释项目结构、入口文件、样式文件、运行方式，不要修改任何文件。第二步，让它针对一个很小的需求写计划，例如修改一个来源提示、调整一个按钮文案或补一段静态内容。第三步，你确认计划后再让它执行。"
+            "content": "第一步，只读项目。让 Codex 解释项目结构、入口文件、样式文件、运行方式，不要修改任何文件。第二步，让它针对一个很小的需求写计划，例如修改一个来源提示、调整一个按钮文案或补一段静态内容。第三步，确认计划后再让它执行。"
           },
           {
             "type": "paragraph",
-            "content": "第四步，看 diff，让 Codex 解释它改了什么。第五步，运行构建。第六步，打开页面检查视觉和交互。第七步，把你觉得以后会重复出现的规则写进 AGENTS.md。"
+            "content": "第四步，看 diff，让 Codex 解释它改了什么。第五步，运行构建。第六步，打开页面检查视觉和交互。第七步，把后续会重复出现的规则写进 AGENTS.md。"
           },
           {
             "type": "paragraph",
-            "content": "这套路径看起来慢，但它能帮你建立判断力。AI Coding 的关键不是一次生成多大，而是每一轮都知道自己为什么这样改、改了哪里、怎么证明它真的完成了。"
+            "content": "这套路径看起来慢，但它能帮助建立判断力。AI Coding 的关键不是一次生成多大，而是每一轮都知道自己为什么这样改、改了哪里、怎么证明它真的完成了。"
           }
         ]
       },
       {
-        "heading": "这篇官方最佳实践的核心结论",
+        "heading": "这套官方最佳实践的核心结论",
         "blocks": [
           {
             "type": "paragraph",
@@ -4093,11 +4851,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你是设计师、产品经理或独立开发者，最应该先掌握的是任务边界和验收方式。你不需要变成专业工程师才能使用 Codex，但你需要学会像一个清楚的协作者那样描述目标。"
+            "content": "设计师、产品经理和独立开发者最应该先掌握任务边界和验收方式。不需要变成专业工程师才能使用 Codex，但需要像一个清楚的协作者那样描述目标。"
           },
           {
             "type": "paragraph",
-            "content": "真正把 Codex 用好，不是让它替你一次性做完所有决定，而是让它在清晰规则下持续推进。越是复杂的任务，越要拆小；越是长期的项目，越要沉淀规则；越是自动化，越要先有可靠验证。"
+            "content": "真正把 Codex 用好，不是让它一次性做完所有决定，而是让它在清晰规则下持续推进。越是复杂的任务，越要拆小；越是长期的项目，越要沉淀规则；越是自动化，越要先有可靠验证。"
           }
         ]
       }
@@ -4113,15 +4871,15 @@ For UI changes:
     "sections": [
       {
         "heading": "先安装 Claude Code",
-        "content": "官方新手指南建议先准备好 Node.js 和终端环境，然后安装 Claude Code。零基础用户可以把这一步理解为“把 Claude 放进你的电脑开发环境里”。安装完成后，后续操作都在具体项目目录中进行，而不是在任意位置随便运行。",
+        "content": "官方新手指南建议先准备好 Node.js 和终端环境，然后安装 Claude Code。零基础用户可以把这一步理解为“把 Claude 放进本地电脑开发环境里”。安装完成后，后续操作都在具体项目目录中进行，而不是在任意位置随便运行。",
         "code": {
           "label": "终端命令",
           "content": "npm install -g @anthropic-ai/claude-code\nclaude"
         }
       },
       {
-        "heading": "进入你的项目目录",
-        "content": "Claude Code 最重要的上下文来自当前文件夹。你应该先进入要修改的项目目录，再启动 Claude。比如你的网站项目放在桌面上的 my-site 文件夹，就先切换到这个目录。这样 Claude 看到的是你的真实项目文件，而不是一个空环境。",
+        "heading": "进入项目目录",
+        "content": "Claude Code 最重要的上下文来自当前文件夹。应该先进入要修改的项目目录，再启动 Claude。比如项目的网站项目放在桌面上的 my-site 文件夹，就先切换到这个目录。这样 Claude 看到的是真实项目文件，而不是一个空环境。",
         "code": {
           "label": "终端命令",
           "content": "cd ~/Desktop/my-site\nclaude"
@@ -4129,7 +4887,7 @@ For UI changes:
       },
       {
         "heading": "第一个任务不要太大",
-        "content": "新手最容易犯的错误，是第一次就让 Claude “帮我做一个完整网站”。更稳的方式是从一个很小、可以验证的任务开始，比如改文案、修一个按钮样式、解释某个文件、补一个简单组件。任务越小，你越容易判断结果是否正确，也更容易学习 Claude 是怎么工作的。",
+        "content": "新手最容易犯的错误，是第一次就让 Claude “帮我做一个完整网站”。更稳的方式是从一个很小、可以验证的任务开始，比如改文案、修一个按钮样式、解释某个文件、补一个简单组件。任务越小，结果越容易判断，也更容易理解 Claude 的工作方式。",
         "code": {
           "label": "复制到 Claude Code 输入框",
           "content": "请先阅读当前项目结构，告诉我这个项目是用什么技术栈搭建的。\n不要修改任何文件。\n请只总结：入口文件、主要页面、样式文件、运行和构建命令。"
@@ -4137,7 +4895,7 @@ For UI changes:
       },
       {
         "heading": "先让它读懂，再让它修改",
-        "content": "Claude Code 的强项是结合项目上下文工作。第一次修改前，最好先让它读相关文件并复述理解，再让它给出修改计划。这样可以减少它误改无关文件的概率。你也能通过它的复述判断：它是否真的理解了页面结构和你的目标。",
+        "content": "Claude Code 的强项是结合项目上下文工作。第一次修改前，最好先让它读相关文件并复述理解，再让它给出修改计划。这样可以减少它误改无关文件的概率。也能通过它的复述判断：它是否真的理解了页面结构和目标。",
         "code": {
           "label": "复制到 Claude Code 输入框",
           "content": "请阅读首页相关文件，先不要修改。\n目标：我想让首页案例卡片更清晰。\n请先告诉我：\n1. 首页案例卡片由哪些组件组成；\n2. 样式主要在哪个 CSS 文件里；\n3. 如果只做最小修改，你建议改哪 3 个地方。"
@@ -4145,7 +4903,7 @@ For UI changes:
       },
       {
         "heading": "开始一个可验证的小修改",
-        "content": "当你确认 Claude 的理解没有偏差后，再让它执行修改。注意要限制范围：允许改哪些文件、不要改哪些功能、完成后要运行什么验证命令。对零基础用户来说，这比“帮我优化一下”稳定得多。",
+        "content": "当确认 Claude 的理解没有偏差后，再让它执行修改。注意要限制范围：允许改哪些文件、不要改哪些功能、完成后要运行什么验证命令。对零基础用户来说，这比“帮我优化一下”稳定得多。",
         "code": {
           "label": "复制到 Claude Code 输入框",
           "content": "请只优化首页案例卡片的视觉细节。\n允许修改：src/components/Cards.jsx、src/styles.css。\n不要修改数据，不要新增页面，不要重构目录。\n要求：图片区域保持 16:9；标题更清晰；描述统一两行；标签视觉弱化；浏览和点赞与“查看案例”形成稳定底栏。\n完成后运行 npm run build，并告诉我构建结果。"
@@ -4153,7 +4911,7 @@ For UI changes:
       },
       {
         "heading": "看 diff，而不是只看它说完成了",
-        "content": "Claude Code 修改完成后，不要只看它的总结。你应该检查它到底改了哪些文件，最好看一下 diff，再打开页面确认视觉结果。如果你不懂代码，也可以让 Claude 用中文解释每个改动的目的。这个习惯能避免“看起来完成了，但其实改坏别的页面”的问题。",
+        "content": "Claude Code 修改完成后，不要只看它的总结。应该检查它到底改了哪些文件，最好看一下 diff，再打开页面确认视觉结果。如果不懂代码时，也可以让 Claude 用中文解释每个改动的目的。这个习惯能避免“看起来完成了，但改坏别的页面”的问题。",
         "code": {
           "label": "终端命令",
           "content": "git diff\nnpm run build"
@@ -4170,8 +4928,8 @@ For UI changes:
     "notice": "本文为 UIcoding 基于外部资料整理的中文学习笔记，不是原文全文翻译。请访问原始来源查看完整内容。",
     "sections": [
       {
-        "heading": "这篇文章解决什么问题",
-        "content": "很多新手装好 Claude Code 后，第一反应是让它“帮我优化项目”。这句话太大，容易让它改很多文件。本文教你一套更稳的日常工作流：先让 Claude Code 读懂项目，再让它定位问题，最后只做一个小修改并验证结果。"
+        "heading": "本文解决什么问题",
+        "content": "很多新手装好 Claude Code 后，第一反应是让它“帮我优化项目”。这句话太大，容易让它改很多文件。本文讲解一套更稳的日常工作流：先让 Claude Code 读懂项目，再让它定位问题，最后只做一个小修改并验证结果。"
       },
       {
         "heading": "先理解工作流是什么意思",
@@ -4179,15 +4937,15 @@ For UI changes:
       },
       {
         "heading": "第一步：让 Claude 先读懂项目",
-        "content": "你可以把这一步理解成“让 Claude 先熟悉现场”。不要让它修改文件，只让它解释项目结构。这样你能确认它看到了正确目录，也能顺便学习这个项目是怎么组织的。",
+        "content": "可以把这一步理解为“让 Claude 先熟悉现场”。不要让它修改文件，只让它解释项目结构。这样能确认它看到了正确目录，也能顺便学习这个项目是怎么组织的。",
         "code": {
           "label": "复制到 Claude Code 输入框",
           "content": "请先阅读当前项目，不要修改任何文件。\n我是零基础用户，请用中文解释：\n1. 这个项目主要做什么；\n2. 哪些文件是入口文件；\n3. 页面组件通常放在哪里；\n4. 样式文件通常放在哪里；\n5. 如果我要修改当前页面，最应该先看哪些文件。"
         }
       },
       {
-        "heading": "第二步：让它帮你找相关文件",
-        "content": "新手经常不知道应该改哪个文件。这个时候不要自己乱找，也不要让 Claude 直接改。你可以先让它列出和问题相关的文件，并说明每个文件的作用。",
+        "heading": "第二步：让它帮助找相关文件",
+        "content": "新手经常不知道应该改哪个文件。这个时候不要自己乱找，也不要让 Claude 直接改。可以先让它列出和问题相关的文件，并说明每个文件的作用。",
         "code": {
           "label": "找文件提示词",
           "content": "我想修改学习资料详情页，但不知道相关文件在哪里。\n请先不要修改文件。\n请帮我找出：\n1. 页面组件文件；\n2. 学习资料数据文件；\n3. 正文内容文件；\n4. 样式文件；\n5. 哪些文件本次不应该修改。"
@@ -4199,7 +4957,7 @@ For UI changes:
       },
       {
         "heading": "第四步：先让它给计划",
-        "content": "计划的作用是防止 Claude Code 直接改乱项目。你可以要求它说明准备改哪些文件、为什么改、风险是什么。你看完计划再决定是否执行。",
+        "content": "计划的作用是防止 Claude Code 直接改乱项目。可以要求它说明准备改哪些文件、为什么改、风险是什么。看完计划再决定是否执行。",
         "code": {
           "label": "计划提示词",
           "content": "请先给出修改计划，不要立即修改文件。\n问题：学习详情页顶部信息有点重复。\n请说明：\n1. 你准备修改哪些文件；\n2. 每个文件为什么要改；\n3. 有没有可能影响其他页面；\n4. 修改后如何验证。"
@@ -4207,11 +4965,11 @@ For UI changes:
       },
       {
         "heading": "第五步：只执行一个小修改",
-        "content": "确认计划后，再让它执行。一次只修一个问题，这样你能看清楚修改效果。如果一次修很多问题，即使页面变好了，你也不知道到底是哪一步起作用。"
+        "content": "确认计划后，再让它执行。一次只修一个问题，这样能看清楚修改效果。如果一次修很多问题，即使页面变好了，也很难知道到底是哪一步起作用。"
       },
       {
         "heading": "第六步：看 diff",
-        "content": "diff 是代码修改记录。你不需要完全懂代码，也可以看出它改了几个文件、改动是否过大。如果它改了和任务无关的文件，就要停下来让它解释。",
+        "content": "diff 是代码修改记录。不需要完全懂代码，也可以看出它改了几个文件、改动是否过大。如果它改了和任务无关的文件，就要停下来让它解释。",
         "code": {
           "label": "在终端里执行",
           "content": "git diff"
@@ -4231,11 +4989,11 @@ For UI changes:
       },
       {
         "heading": "常见问题",
-        "content": "如果 Claude Code 找不到文件，先检查你是否在项目根目录启动。若它准备改太多文件，让它重新给最小方案。若 build 失败，把报错完整复制给它，并要求只修构建错误。若页面变丑，不要继续追加大段要求，先让它解释这次 diff，再决定回退还是小修。"
+        "content": "如果 Claude Code 找不到文件，先检查是否在项目根目录启动。若它准备改太多文件，让它重新给最小方案。若 build 失败，把报错完整复制给它，并要求只修构建错误。若页面变丑，不要继续追加大段要求，先让它解释这次 diff，再决定回退还是小修。"
       },
       {
         "heading": "可以反复使用的工作流",
-        "content": "以后每次遇到页面问题，都可以按这个顺序来：读懂项目，找相关文件，把问题说小，先给计划，只做一个小修改，看 diff，运行 build，打开浏览器检查。这个流程虽然慢一点，但非常适合零基础用户建立控制感。"
+        "content": "以后每次遇到页面问题，都可以按这个顺序来：读懂项目，找相关文件，把问题说小，先给计划，只做一个小修改，看 diff，运行 build，打开浏览器检查。这个流程虽然慢一点，但适合零基础用户建立控制感。"
       }
     ]
   },
@@ -4248,20 +5006,20 @@ For UI changes:
     "notice": "本文为 UIcoding 基于外部资料整理的中文学习笔记，不是原文全文翻译。请访问原始来源查看完整内容。",
     "sections": [
       {
-        "heading": "这篇文章解决什么问题",
-        "content": "很多新手使用 Claude Code 时，会反复解释同样的事情：这是 React 项目、不要改路由、按钮要复用组件、改完要运行 build。项目越大，重复解释越累。这篇文章教你理解 Claude Code 的“记忆”概念，并把长期规则沉淀下来。"
+        "heading": "本文解决什么问题",
+        "content": "很多新手使用 Claude Code 时，会反复解释同样的事情：这是 React 项目、不要改路由、按钮要复用组件、改完要运行 build。项目越大，重复解释越累。本文讲解理解 Claude Code 的“记忆”概念，并把长期规则沉淀下来。"
       },
       {
         "heading": "先理解什么是记忆",
-        "content": "记忆不是让 Claude 永远记住你所有聊天内容。更准确地说，它是给 Claude Code 的项目上下文说明。你可以把它理解成放在项目里的“工作说明书”：这个项目是什么、有哪些规则、哪些文件不能乱改、完成后应该怎么验证。"
+        "content": "记忆不是让 Claude 永远记住所有聊天内容。更准确地说，它是给 Claude Code 的项目上下文说明。可以理解为放在项目里的“工作说明书”：这个项目是什么、有哪些规则、哪些文件不能乱改、完成后应该怎么验证。"
       },
       {
         "heading": "什么是上下文",
-        "content": "上下文就是 Claude 做任务时能参考的信息。比如项目目标、目录结构、技术栈、已有组件、设计规范、构建命令、你上一次反馈的问题。上下文越清楚，Claude 越不容易猜错。记忆的作用，就是把一些长期有效的上下文保存下来。"
+        "content": "上下文就是 Claude 做任务时能参考的信息。比如项目目标、目录结构、技术栈、已有组件、设计规范、构建命令、上一次反馈的问题。上下文越清楚，Claude 越不容易猜错。记忆的作用，就是把一些长期有效的上下文保存下来。"
       },
       {
         "heading": "什么时候需要写项目规则",
-        "content": "如果你发现自己每次都在重复说“不要新增后端”“不要重构目录”“只改相关文件”“改完运行 npm run build”，就说明这些内容适合写成项目规则。规则不是一次性需求，而是每次任务都应该遵守的约束。"
+        "content": "如果发现自己每次都在重复说“不要新增后端”“不要重构目录”“只改相关文件”“改完运行 npm run build”，就说明这些内容适合写成项目规则。规则不是一次性需求，而是每次任务都应该遵守的约束。"
       },
       {
         "heading": "项目规则应该写什么",
@@ -4269,7 +5027,7 @@ For UI changes:
       },
       {
         "heading": "可以写入的规则示例",
-        "content": "下面是适合新手项目的规则示例。它不包含复杂代码，只告诉 Claude Code 做事边界。你可以根据自己的项目改掉项目名称和技术栈。",
+        "content": "下面是适合新手项目的规则示例。它不包含复杂代码，只告诉 Claude Code 做事边界。可以根据自己的项目改掉项目名称和技术栈。",
         "code": {
           "label": "项目规则示例",
           "content": "项目规则：\n- 这是一个 React + Vite 前端项目。\n- 使用 npm，不使用 pnpm 或 yarn。\n- 不要新增后端、数据库、真实登录或上传功能。\n- 页面按钮复用已有 Button 组件，卡片复用已有 Card 组件。\n- 不要新增第二套按钮、标签或卡片基础样式。\n- 修改 CSS 时优先维护 tokens、base、layout、components、pages 这些层级。\n- 每次修改后运行 npm run build。\n- 如果任务不清楚，先提问或给计划，不要直接大改。"
@@ -4281,11 +5039,11 @@ For UI changes:
       },
       {
         "heading": "如何验证规则是否有用",
-        "content": "你可以给 Claude Code 一个小任务，看它是否主动遵守规则。比如让它优化一个卡片，如果它没有新增第二套样式、没有改无关文件、最后运行了 build，说明规则开始发挥作用。"
+        "content": "可以给 Claude Code 一个小任务，看它是否主动遵守规则。比如让它优化一个卡片，如果它没有新增第二套样式、没有改无关文件、最后运行了 build，说明规则开始发挥作用。"
       },
       {
         "heading": "让 Claude 先复述规则",
-        "content": "新手最稳的做法，是每次重要任务开始前，让 Claude Code 先复述它理解到的项目规则。你看它复述得对不对，再让它修改文件。",
+        "content": "新手最稳的做法，是每次重要任务开始前，让 Claude Code 先复述它理解到的项目规则。检查复述是否准确，再让它修改文件。",
         "code": {
           "label": "规则确认提示词",
           "content": "请先不要修改文件。\n请阅读当前项目规则，并用中文复述：\n1. 这个项目的技术栈；\n2. 哪些事情不能做；\n3. 组件和 CSS 应该如何复用；\n4. 修改后应该如何验证。\n等我确认后，再继续执行任务。"
@@ -4293,15 +5051,15 @@ For UI changes:
       },
       {
         "heading": "常见问题",
-        "content": "如果 Claude 仍然乱改，通常是规则太抽象或任务太大。先把规则改得更具体，再把任务拆小。如果规则太长，Claude 可能抓不住重点。优先保留最重要的 6 到 10 条。如果你不确定当前 Claude Code 版本使用哪种记忆文件或机制，优先查看官方 Memory 文档。"
+        "content": "如果 Claude 仍然乱改，通常是规则太抽象或任务太大。先把规则改得更具体，再把任务拆小。如果规则太长，Claude 可能抓不住重点。优先保留最重要的 6 到 10 条。如果不确定当前 Claude Code 版本使用哪种记忆文件或机制，优先查看官方 Memory 文档。"
       },
       {
         "heading": "新手可以怎么练习",
-        "content": "找一个小项目，先写 6 条项目规则。然后让 Claude Code 只改一个按钮或一段文案。修改前让它复述规则，修改后检查 diff 和 build。这样你能很快感受到：规则不是形式主义，而是在帮你减少 AI 乱改。"
+        "content": "找一个小项目，先写 6 条项目规则。然后让 Claude Code 只改一个按钮或一段文案。修改前让它复述规则，修改后检查 diff 和 build。这样能很快感受到：规则不是形式主义，而是在帮助减少 AI 乱改。"
       },
       {
         "heading": "最后记住这个原则",
-        "content": "Claude Code 的记忆不是为了替你做决定，而是为了减少重复沟通。长期规则写进项目记忆，当次需求写进提示词，修改后用 diff 和 build 验证。这个分工清楚后，AI Coding 会稳定很多。"
+        "content": "Claude Code 的记忆不是为了替人做决定，而是为了减少重复沟通。长期规则写进项目记忆，当次需求写进提示词，修改后用 diff 和 build 验证。这个分工清楚后，AI Coding 会稳定很多。"
       }
     ]
   },
@@ -4314,12 +5072,12 @@ For UI changes:
     "notice": "本文为 UIcoding 基于外部资料整理的中文学习笔记，不是原文全文翻译。请访问原始来源查看完整内容。",
     "sections": [
       {
-        "heading": "这篇资料重点学什么",
-        "content": "这篇资料适合把 Codex CLI 当成第一个 AI Coding 工具来学习。重点不是记住所有命令，而是理解三个基础能力：在本地项目中启动 Codex、让它读取和修改文件、通过审批和验证控制风险。对零基础用户来说，先建立这个工作闭环，比追求复杂技巧更重要。"
+        "heading": "本文重点学什么",
+        "content": "本文适合把 Codex CLI 当成第一个 AI Coding 工具来学习。重点不是记住所有命令，而是理解三个基础能力：在本地项目中启动 Codex、让它读取和修改文件、通过审批和验证控制风险。对零基础用户来说，先建立这个工作闭环，比追求复杂技巧更重要。"
       },
       {
         "heading": "先理解审批模式",
-        "content": "Codex CLI 的一个关键点是审批模式。新手不要一开始就让工具自动修改所有内容，更稳的方式是先使用默认或受限模式，让它提出修改建议、展示 diff，再由你确认执行。这样可以避免因为任务描述不清导致项目结构被大幅重写。",
+        "content": "Codex CLI 的一个关键点是审批模式。新手不要一开始就让工具自动修改所有内容，更稳的方式是先使用默认或受限模式，让它提出修改建议、展示 diff，再由确认执行。这样可以避免因为任务描述不清导致项目结构被大幅重写。",
         "code": {
           "label": "终端命令示例",
           "content": "npm install -g @openai/codex\ncodex"
@@ -4331,7 +5089,7 @@ For UI changes:
       },
       {
         "heading": "图片输入前要先补文字说明",
-        "content": "只给截图不够，因为截图只能表达视觉，不能说明业务目标、交互状态和技术限制。比如一张 dashboard 截图，AI 不知道你要做真实数据、静态页面还是视觉复刻。最好同时写清楚页面用途、技术栈、允许修改的文件和最终验收标准。",
+        "content": "只给截图不够，因为截图只能表达视觉，不能说明业务目标、交互状态和技术限制。比如一张工作台截图，AI 不知道需要做真实数据、静态页面还是视觉复刻。最好同时写清楚页面用途、技术栈、允许修改的文件和最终验收标准。",
         "code": {
           "label": "图片输入配套提示词",
           "content": "请参考我提供的截图，做一个静态前端页面。\n目标用户：设计师和产品经理。\n技术栈：React + Vite + 普通 CSS。\n要求：只做前端，不做后端、登录、数据库和上传。\n请先描述页面结构，再生成代码。\n完成后运行 npm run build。"
@@ -4339,11 +5097,11 @@ For UI changes:
       },
       {
         "heading": "生成页面后要检查什么",
-        "content": "图片生成页面后，不要只看第一眼像不像。你要检查：移动端是否溢出，文字是否可读，按钮是否能点击，图片比例是否正确，是否新增了不必要依赖，构建是否成功。如果是学习项目，还要让 Codex 解释每个组件的作用。"
+        "content": "图片生成页面后，不要只看第一眼像不像。需要检查：移动端是否溢出，文字是否可读，按钮是否能点击，图片比例是否正确，是否新增了不必要依赖，构建是否成功。如果是学习项目，还要让 Codex 解释每个组件的作用。"
       },
       {
         "heading": "新手练习建议",
-        "content": "第一次练习可以选一个非常小的页面：一个登录弹窗、一张案例卡片、一个工具卡片或一个 Hero 区域。不要一开始就让 Codex 根据截图做完整应用。先练小页面，你会更快理解提示词、文件修改和验证流程。"
+        "content": "第一次练习可以选一个很小的页面：一个登录弹窗、一张案例卡片、一个工具卡片或一个 Hero 区域。不要一开始就让 Codex 根据截图做完整应用。先练小页面，会更快理解提示词、文件修改和验证流程。"
       },
       {
         "heading": "可以直接复用的练习流程",
@@ -4365,11 +5123,11 @@ For UI changes:
     "sections": [
       {
         "heading": "先理解什么是任务交代",
-        "content": "任务交代就是告诉 Codex：你要解决什么问题、它可以看哪些文件、可以改哪些文件、不能改什么、完成后怎么验证。它不是一句命令，而是一份小型工作说明书。"
+        "content": "任务交代就是告诉 Codex：需要解决什么问题、它可以看哪些文件、可以改哪些文件、不能改什么、完成后怎么验证。它不是一句命令，而是一份小型工作说明书。"
       },
       {
         "heading": "为什么边界比灵感更重要",
-        "content": "Codex 很擅长执行清楚的工程任务，但它不会自动知道你的项目规则。如果你不写边界，它可能会新增依赖、重构目录或改动无关页面。清楚的边界能让它像团队成员一样按规则工作。"
+        "content": "Codex 很擅长执行清楚的工程任务，但它不会自动知道项目规则。如果不写边界，它可能会新增依赖、重构目录或改动无关页面。清楚的边界能让它像团队成员一样按规则工作。"
       },
       {
         "heading": "一个完整任务应该包含什么",
@@ -4381,7 +5139,7 @@ For UI changes:
       },
       {
         "heading": "让 Codex 自己复述理解",
-        "content": "复杂任务开始前，可以让 Codex 先复述它的理解。你只要看它是否遗漏了关键约束，就能提前发现风险。确认无误后再让它修改文件。"
+        "content": "复杂任务开始前，可以让 Codex 先复述它的理解。只要检查它是否遗漏关键约束，就能提前发现风险。确认无误后再让它修改文件。"
       }
     ]
   },
@@ -4399,7 +5157,7 @@ For UI changes:
       },
       {
         "heading": "先让 Agent 找文件",
-        "content": "新手不要直接让 Agent 改代码。第一步应该让它找出相关文件，比如页面组件、数据文件、样式文件。这样你会知道项目结构，也能判断它有没有找错地方。",
+        "content": "新手不要直接让 Agent 改代码。第一步应该让它找出相关文件，比如页面组件、数据文件、样式文件。这样会知道项目结构，也能判断它有没有找错地方。",
         "code": {
           "label": "Cursor Agent 模板",
           "content": "请先不要修改代码。\n请帮我找到当前学习资料页面相关文件，并说明：\n1. 页面组件在哪里；\n2. 卡片组件在哪里；\n3. 数据在哪里；\n4. 样式在哪里；\n5. 如果要优化排版，最小修改范围是什么。"
@@ -4411,7 +5169,7 @@ For UI changes:
       },
       {
         "heading": "每轮都检查 diff",
-        "content": "diff 是修改前后的差异。即使你不完全懂代码，也可以看出它改了哪些文件、改动是否过大。新手要养成习惯：AI 修改后先看 diff，再看页面。"
+        "content": "diff 是修改前后的差异。即使不完全懂代码，也可以看出它改了哪些文件、改动是否过大。新手要养成习惯：AI 修改后先看 diff，再看页面。"
       }
     ]
   },
@@ -4419,7 +5177,7 @@ For UI changes:
     "id": "cursor-rules-project-standards",
     "sourceUrl": "https://docs.cursor.com/context/rules",
     "translationMode": "guidedTranslation",
-    "title": "Cursor Rules 项目规范：让 AI 按你的方式写代码",
+    "title": "Cursor Rules 项目规范：让 AI 按既定方式写代码",
     "originalTitle": "Cursor Rules Documentation",
     "notice": "本文为 UIcoding 基于外部资料整理的中文学习笔记，不是原文全文翻译。请访问原始来源查看完整内容。",
     "sections": [
@@ -4455,11 +5213,11 @@ For UI changes:
     "sections": [
       {
         "heading": "先理解 Claude Code 的角色",
-        "content": "Claude Code 是命令行里的 Coding Agent。它能在项目目录中读取文件、修改代码、执行命令。对零基础用户来说，它像一个会操作终端的协作者，但你仍然需要给它边界和验收标准。"
+        "content": "Claude Code 是命令行里的 Coding Agent。它能在项目目录中读取文件、修改代码、执行命令。对零基础用户来说，它像一个会操作终端的协作者，但仍然需要给它边界和验收标准。"
       },
       {
         "heading": "先建立上下文",
-        "content": "上下文就是 Claude Code 需要知道的信息：项目目标、相关文件、技术栈、不能改的内容、你希望看到的结果。上下文越清楚，它越不容易做无关修改。"
+        "content": "上下文就是 Claude Code 需要知道的信息：项目目标、相关文件、技术栈、不能改的内容、希望看到的结果。上下文越清楚，它越不容易做无关修改。"
       },
       {
         "heading": "让任务小步推进",
@@ -4492,24 +5250,24 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这篇文章讨论的是：当我们开始构建真正可用的 AI Agent 时，重点不再只是写一个漂亮的 prompt，而是持续管理 Agent 能看到、能调用、能记住、能反馈的信息。Anthropic 把这种能力称为 context engineering，也就是上下文工程。"
+            "content": "本文讨论的是：当我们开始构建真正可用的 AI Agent 时，重点不再只是写一个漂亮的提示词，而是持续管理 Agent 能看到、能调用、能记住、能反馈的信息。Anthropic 把这种能力称为 context engineering，也就是上下文工程。"
           },
           {
             "type": "paragraph",
-            "content": "对 AI Coding 来说，这个概念非常关键。Codex、Claude Code 或其他 coding agent 的表现，往往不是由一句提示词决定，而是由完整上下文决定：项目目标、相关文件、代码约束、工具权限、历史决策、测试结果、错误日志、用户反馈，以及 Agent 自己在执行过程中收集到的新信息。"
+            "content": "对 AI Coding 来说，这个概念很关键。Codex、Claude Code 或其他 coding agent 的表现，往往不是由一句提示词决定，而是由完整上下文决定：项目目标、相关文件、代码约束、工具权限、历史决策、测试结果、错误日志、用户反馈，以及 Agent 自己在执行过程中收集到的新信息。"
           },
           {
             "type": "paragraph",
-            "content": "如果只把 Agent 当成“会写代码的聊天框”，你会不断遇到跑偏、忘记约束、改动过大、验证不足的问题。上下文工程的目标，是让 Agent 在每一步都看到正确的信息，并能随着任务推进不断调整这些信息。"
+            "content": "如果只把 Agent 当成“会写代码的聊天框”，会不断遇到跑偏、忘记约束、改动过大、验证不足的问题。上下文工程的目标，是让 Agent 在每一步都看到正确的信息，并能随着任务推进不断调整这些信息。"
           }
         ]
       },
       {
-        "heading": "Context engineering vs. prompt engineering",
+        "heading": "Context engineering vs. 提示词 engineering",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "文章首先区分了 prompt engineering 和 context engineering。Prompt engineering 更像是在单次输入里写清楚指令，让模型按照预期输出。它仍然重要，但对复杂 Agent 来说远远不够。"
+            "content": "文章首先区分了提示词 engineering 和 context engineering。提示词 engineering 更像是在单次输入里写清楚指令，让模型按照预期输出。它仍然重要，但对复杂 Agent 来说远远不够。"
           },
           {
             "type": "paragraph",
@@ -4517,11 +5275,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "用 AI Coding 的例子理解：prompt engineering 是你告诉 Codex“修复这个 bug”；context engineering 是你让它看到 bug 复现步骤、相关文件、测试命令、项目规则、历史修改原因，以及哪些文件不能动。前者是请求，后者是工作环境。"
+            "content": "用 AI Coding 的例子理解：提示词 engineering 是告诉 Codex“修复这个 bug”；context engineering 是让它看到 bug 复现步骤、相关文件、测试命令、项目规则、历史修改原因，以及哪些文件不能动。前者是请求，后者是工作环境。"
           }
         ],
-        "image": "/learn-images/context-engineering-prompt-vs-context.png",
-        "imageAlt": "原文配图：Prompt engineering 与 context engineering 的对比"
+        "image": "/learn-images/context-engineering-提示词-vs-context.png",
+        "imageAlt": "原文配图：提示词 engineering 与 context engineering 的对比"
       },
       {
         "heading": "Why context engineering is important to building capable agents",
@@ -4568,7 +5326,7 @@ For UI changes:
             "content": "原文还强调，系统提示词需要持续校准。不是写一次就结束，而是根据 Agent 的真实表现不断调整：哪里容易误解，哪里权限过大，哪里输出格式不稳定，哪里需要补充边界。"
           }
         ],
-        "image": "/learn-images/context-engineering-system-prompt.png",
+        "image": "/learn-images/context-engineering-system-提示词.png",
         "imageAlt": "原文配图：在上下文工程中校准系统提示词"
       },
       {
@@ -4584,7 +5342,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "放到代码场景里，这意味着 Agent 不应该只读你点名的一个文件。它应该能根据错误信息追踪调用链，根据组件名查找样式文件，根据测试失败定位相关实现，根据文档链接确认 API 用法。"
+            "content": "放到代码场景里，这意味着 Agent 不应该只读被点名的一个文件。它应该能根据错误信息追踪调用链，根据组件名查找样式文件，根据测试失败定位相关实现，根据文档链接确认 API 用法。"
           },
           {
             "type": "paragraph",
@@ -4609,7 +5367,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "文章的核心启发是：长任务不是靠更长的 prompt 解决，而是靠持续更新上下文解决。好的 Agent 工作流应该像真实工程协作一样，有阶段、有反馈、有记录、有验收。"
+            "content": "文章的核心启发是：长任务不是靠更长的提示词解决，而是靠持续更新上下文解决。好的 Agent 工作流应该像真实工程协作一样，有阶段、有反馈、有记录、有验收。"
           }
         ]
       },
@@ -4622,11 +5380,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "对 AI Coding 学习者来说，这篇文章最值得带走的不是某个具体模板，而是一种工作方式：把需求、代码、规则、工具、记忆、反馈和验证组织成一个闭环。这样 Agent 才能从“帮你写一段代码”升级为“协助你推进一个真实项目”。"
+            "content": "对 AI Coding 学习者来说，本文最值得带走的不是某个具体模板，而是一种工作方式：把需求、代码、规则、工具、记忆、反馈和验证组织成一个闭环。这样 Agent 才能从“帮助写一段代码”升级为“协助推进一个真实项目”。"
           },
           {
             "type": "paragraph",
-            "content": "如果你正在用 Codex 或 Claude Code，可以先从最小动作开始实践：每次任务前说明目标和边界，每次任务中让 Agent 主动找相关上下文，每次任务后把构建结果、截图反馈和人工判断继续喂回下一轮。"
+            "content": "如果正在用 Codex 或 Claude Code，可以先从最小动作开始实践：每次任务前说明目标和边界，每次任务中让 Agent 主动找相关上下文，每次任务后把构建结果、截图反馈和人工判断继续喂回下一轮。"
           }
         ]
       },
@@ -4635,7 +5393,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "原文最后感谢了参与讨论和反馈的相关人员。对读者来说，这也提醒我们：Agent 工作流不是单人闭门写 prompt，而是需要在真实项目、真实反馈和团队经验中不断打磨。"
+            "content": "原文最后感谢了参与讨论和反馈的相关人员。对读者来说，这也提醒我们：Agent 工作流不是单人闭门写提示词，而是需要在真实项目、真实反馈和团队经验中不断打磨。"
           }
         ]
       }
@@ -4645,12 +5403,12 @@ For UI changes:
     "id": "codex-cli-first-days-terminal-workflow",
     "sourceUrl": "https://amanhimself.dev/blog/first-few-days-with-codex-cli/",
     "translationMode": "guidedTranslation",
-    "title": "Codex CLI 初体验：把 AI Agent 放进你的终端工作流",
+    "title": "Codex CLI 初体验：把 AI Agent 放进终端工作流",
     "originalTitle": "First few days with Codex CLI",
     "notice": "本文为 UIcoding 基于 Aman Mittal 英文文章整理的中文学习稿，不是原文逐字全文翻译。原文配图已保存到本地并用于辅助理解，请访问原文查看完整上下文。",
     "sections": [
       {
-        "heading": "原文地址与这篇文章的重点",
+        "heading": "原文地址与本文的重点",
         "blocks": [
           {
             "type": "paragraph",
@@ -4658,11 +5416,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这篇文章很适合把 Codex CLI 当成“终端里的本地 AI Agent”来理解。作者最初长期使用 Cursor 写代码，但在处理 Obsidian 笔记时遇到一个问题：如果所有笔记本来就是本地 Markdown 文件，为什么还要把它们搬进另一个编辑器里，才能让 AI 帮忙整理？"
+            "content": "本文适合把 Codex CLI 当成“终端里的本地 AI Agent”来理解。作者最初长期使用 Cursor 写代码，但在处理 Obsidian 笔记时遇到一个问题：如果所有笔记本来就是本地 Markdown 文件，为什么还要把它们搬进另一个编辑器里，才能让 AI 帮忙整理？"
           },
           {
             "type": "paragraph",
-            "content": "Codex CLI 的价值就在这里：它运行在终端中，天然可以进入某个目录，读取那里的文件，按照你的规则修改、整理或生成内容。换句话说，它不只是写代码，也可以帮你处理任何以文件形式存在的工作流。"
+            "content": "Codex CLI 的价值就在这里：它运行在终端中，天然可以进入某个目录，读取那里的文件，按照项目的规则修改、整理或生成内容。换句话说，它不只是写代码，也可以帮助处理任何以文件形式存在的工作流。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-01.webp",
@@ -4673,15 +5431,15 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "Codex CLI 是 OpenAI 的本地 coding agent，运行在终端里。你可以用自然语言和它对话，让它读取文件、修改文件、运行命令，并通过 MCP 连接本机上的外部工具。"
+            "content": "Codex CLI 是 OpenAI 的本地 coding agent，运行在终端里。可以用自然语言和它对话，让它读取文件、修改文件、运行命令，并通过 MCP 连接本机上的外部工具。"
           },
           {
             "type": "paragraph",
-            "content": "原文里最重要的洞察是：终端本来就能访问你电脑上的文件。像 Obsidian 这样的工具，本质上把笔记保存在本地 Markdown 文件里。只要进入对应目录，Codex CLI 就能直接处理这些笔记，不需要额外插件，也不一定需要把整个笔记库塞进某个代码编辑器。"
+            "content": "原文里最重要的洞察是：终端本来就能访问本地电脑上的文件。像 Obsidian 这样的工具，本质上把笔记保存在本地 Markdown 文件里。只要进入对应目录，Codex CLI 就能直接处理这些笔记，不需要额外插件，也不一定需要把整个笔记库塞进某个代码编辑器。"
           },
           {
             "type": "paragraph",
-            "content": "这也是 AI Coding 工具的一个延展方向：不只帮你写代码，而是帮你处理本地文件系统里的真实工作。代码、笔记、会议记录、任务清单、文章草稿，都可以变成 Agent 能理解和整理的材料。"
+            "content": "这也是 AI Coding 工具的一个延展方向：不只帮助写代码，而是帮助处理本地文件系统里的真实工作。代码、笔记、会议记录、任务清单、文章草稿，都可以变成 Agent 能理解和整理的材料。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-02.webp",
@@ -4696,11 +5454,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这和普通聊天工具最大的区别是：上下文不只是留在某个对话窗口里，而是变成了项目的一部分。你可以把写作风格、目录规则、输出格式、禁止事项写进 AGENTS.md，让 Codex 每次进入这个目录时都知道该怎么工作。"
+            "content": "这和普通聊天工具最大的区别是：上下文不只是留在某个对话窗口里，而是变成了项目的一部分。可以把写作风格、目录规则、输出格式、禁止事项写进 AGENTS.md，让 Codex 每次进入这个目录时都知道该怎么工作。"
           },
           {
             "type": "paragraph",
-            "content": "对于长期项目来说，这比反复复制粘贴聊天记录更稳定。尤其是你有多个文件夹、多个工作流时，每个目录都可以拥有自己的规则。"
+            "content": "对于长期项目来说，这比反复复制粘贴聊天记录更稳定。尤其是在多个文件夹、多个工作流并行时，每个目录都可以拥有自己的规则。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-03.webp",
@@ -4715,7 +5473,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你是零基础用户，可以先把这一步理解成：终端需要一个运行环境，Codex CLI 通过 npm 安装到你的电脑上。安装完成后，你就能在任意项目目录或笔记目录中启动它。"
+            "content": "零基础用户可以先把这一步理解成：终端需要一个运行环境，Codex CLI 通过 npm 安装到本地电脑上。安装完成后，就能在任意项目目录或笔记目录中启动它。"
           },
           {
             "type": "code",
@@ -4735,7 +5493,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "进入 Codex 之后，你可以直接用自然语言描述任务。新手第一次不要急着让它大改项目，可以先让它解释当前目录、读取某个文件，或者帮你总结一份笔记。"
+            "content": "进入 Codex 之后，可以直接用自然语言描述任务。新手第一次不要急着让它大改项目，可以先让它解释当前目录、读取某个文件，或者帮助总结一份笔记。"
           },
           {
             "type": "code",
@@ -4751,11 +5509,11 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "如果你退出了 Codex，但后来发现任务还没做完，可以通过 session ID 恢复上一次会话。退出时，Codex 会显示一个 session ID，复制它再运行 resume 命令即可。"
+            "content": "如果退出了 Codex，但后来发现任务还没做完，可以通过 session ID 恢复上一次会话。退出时，Codex 会显示一个 session ID，复制它再运行 resume 命令即可。"
           },
           {
             "type": "paragraph",
-            "content": "这个能力对长任务很重要。比如你正在整理一个 Obsidian 笔记库、同步 Linear 任务，或者让 Codex 多轮修改一篇文章，恢复会话能让上下文更连续。"
+            "content": "这个能力对长任务很重要。比如整理一个 Obsidian 笔记库、同步 Linear 任务，或者让 Codex 多轮修改一篇文章，恢复会话能让上下文更连续。"
           },
           {
             "type": "code",
@@ -4775,7 +5533,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这些命令看起来像小功能，但对长期使用很重要。你需要知道 Codex 当前处于什么权限、是否能执行命令、是否能改文件，以及它正在消耗多少上下文。"
+            "content": "这些命令看起来像小功能，但对长期使用很重要。需要知道 Codex 当前处于什么权限、是否能执行命令、是否能改文件，以及它正在消耗多少上下文。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-07.webp",
@@ -4790,7 +5548,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "Codex 支持用 @filename 的方式引用当前目录里的具体文件。这样你可以让它只读某一篇草稿、某个会议记录或某个索引文件，而不是让它扫描整个笔记库。"
+            "content": "Codex 支持用 @filename 的方式引用当前目录里的具体文件。这样可以让它只读某一篇草稿、某个会议记录或某个索引文件，而不是让它扫描整个笔记库。"
           },
           {
             "type": "paragraph",
@@ -4809,7 +5567,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "他直接让 Codex 创建索引文件，并链接所有会议笔记。几十秒后，一个格式正确、链接可用的 index 文件就生成了。这个任务不是写代码，但非常适合终端 Agent：读取文件列表，理解命名，生成 Markdown。"
+            "content": "他直接让 Codex 创建索引文件，并链接所有会议笔记。几十秒后，一个格式正确、链接可用的 index 文件就生成了。这个任务不是写代码，但适合终端 Agent：读取文件列表，理解命名，生成 Markdown。"
           },
           {
             "type": "code",
@@ -4844,7 +5602,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果自然语言指令不能执行，需要检查当前项目目录的 approval 模式。原文提到可以通过 /approval 选择 Agent 相关权限。这里的关键是：Codex 能做事，但你需要清楚它当前被允许做什么。"
+            "content": "如果自然语言指令不能执行，需要检查当前项目目录的 approval 模式。原文提到可以通过 /approval 选择 Agent 相关权限。这里的关键是：Codex 能做事，但必须清楚它当前被允许做什么。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-11.webp",
@@ -4859,7 +5617,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这个限制非常真实。很多 Agent 看起来能“控制浏览器”，但如果没有合适的浏览器工具，它只能做很有限的动作。要让 Codex 更可靠地处理网页，就需要 MCP server。"
+            "content": "这个限制很真实。很多 Agent 看起来能“控制浏览器”，但如果没有合适的浏览器工具，它只能做很有限的动作。要让 Codex 更可靠地处理网页，就需要 MCP server。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-12.webp",
@@ -4870,7 +5628,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "MCP 是一种让 AI 模型连接外部工具的开放标准。你可以把它理解成通用适配器：通过 MCP，Codex 可以和浏览器、Figma、文档站点、内部工具等系统交互。"
+            "content": "MCP 是一种让 AI 模型连接外部工具的开放标准。可以把它理解成通用适配器：通过 MCP，Codex 可以和浏览器、Figma、文档站点、内部工具等系统交互。"
           },
           {
             "type": "paragraph",
@@ -4905,7 +5663,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "Playwright MCP Bridge 是 Chrome 和 Edge 的扩展。它可以让 AI Agent 使用你已有的浏览器 profile。这样访问 Linear、内部系统或需要登录的网站时，不必重新登录。"
+            "content": "Playwright MCP Bridge 是 Chrome 和 Edge 的扩展。它可以让 AI Agent 使用已有浏览器 profile。这样访问 Linear、内部系统或需要登录的网站时，不必重新登录。"
           },
           {
             "type": "paragraph",
@@ -4924,7 +5682,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这个流程很像真实办公自动化：从一个网页工具读取任务，再同步到本地笔记。关键是你要告诉 Codex 输出文件放在哪里，以及要保存成什么格式。"
+            "content": "这个流程很像真实办公自动化：从一个网页工具读取任务，再同步到本地笔记。关键是需要告诉 Codex 输出文件放在哪里，以及要保存成什么格式。"
           },
           {
             "type": "code",
@@ -4944,7 +5702,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你每次都要让 Codex 打开 Linear、读取 Todo、写入 Obsidian，那就不应该每次重新写提示词。把流程固化成 Skill 后，Codex 就能按固定步骤执行，减少遗漏和返工。"
+            "content": "如果每次都要让 Codex 打开 Linear、读取 Todo、写入 Obsidian，那就不应该每次重新写提示词。把流程固化成 Skill 后，Codex 就能按固定步骤执行，减少遗漏和返工。"
           },
           {
             "type": "paragraph",
@@ -4963,11 +5721,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这篇文章展示的工作流只是起点。一旦理解 Skills，就可以把许多重复流程自动化：读取文件、修改文件、创建文件、同步外部任务、整理笔记、生成索引。"
+            "content": "本文展示的工作流只是起点。一旦理解 Skills，就可以把许多重复流程自动化：读取文件、修改文件、创建文件、同步外部任务、整理笔记、生成索引。"
           },
           {
             "type": "paragraph",
-            "content": "对 AI Coding 学习者来说，这篇文章最重要的启发是：2025 年的 Agent 不只是用来做 toy apps，而是开始进入日常工作流。Codex CLI 的价值，正是在那些无聊、重复、但每天消耗时间的任务里体现出来。"
+            "content": "对 AI Coding 学习者来说，本文最重要的启发是：2025 年的 Agent 不只是用来做 toy apps，而是开始进入日常工作流。Codex CLI 的价值，正是在那些无聊、重复、但每天消耗时间的任务里体现出来。"
           }
         ],
         "image": "/learn-images/codex-cli-first-days-22.webp",
@@ -4992,11 +5750,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这篇官方资料不是单纯教你输入几个命令，而是在讲怎样把 Claude Code 用成一个可靠的 coding agent。它覆盖了验证、计划、上下文、项目记忆、权限、CLI 工具、MCP、Hooks、Skills、子代理、会话管理和自动化等完整工作流。"
+            "content": "本文官方资料不是单纯教授几个命令，而是在讲怎样把 Claude Code 用成一个可靠的 coding agent。它覆盖了验证、计划、上下文、项目记忆、权限、CLI 工具、MCP、Hooks、Skills、子代理、会话管理和自动化等完整工作流。"
           },
           {
             "type": "paragraph",
-            "content": "如果你已经会让 Claude Code 改代码，但经常遇到“它没看对文件、改动太大、忘记约束、验证不完整、长任务跑偏”，这篇文章非常值得系统读一遍。它真正要解决的是：如何让 AI 编程从一次性对话，变成可重复、可验证、可扩展的工程协作流程。"
+            "content": "已经会让 Claude Code 改代码，但经常遇到“它没看对文件、改动太大、忘记约束、验证不完整、长任务跑偏”，本文很值得系统读一遍。它真正要解决的是：如何让 AI 编程从一次性对话，变成可重复、可验证、可扩展的工程协作流程。"
           }
         ]
       },
@@ -5023,7 +5781,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "官方建议不要一上来就让 Claude 直接改代码。更稳的流程是：先让它探索代码库，理解相关文件和约束；然后让它提出计划；你确认方向之后，再让它执行。"
+            "content": "官方建议不要一上来就让 Claude 直接改代码。更稳的流程是：先让它探索代码库，理解相关文件和约束；然后让它提出计划；方向确认之后，再让它执行。"
           },
           {
             "type": "paragraph",
@@ -5041,7 +5799,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "Claude Code 很依赖上下文。你不能只说“优化一下”，而要告诉它为什么优化、面向谁、允许改哪里、不能碰哪里、完成后怎样验收。越具体，Agent 越不容易自由发挥。"
+            "content": "Claude Code 很依赖上下文。不能只说“优化一下”，而要告诉它为什么优化、面向谁、允许改哪里、不能碰哪里、完成后怎样验收。越具体，Agent 越不容易自由发挥。"
           },
           {
             "type": "paragraph",
@@ -5080,7 +5838,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "这类文件的价值是长期记忆。你不需要每次都重新告诉 Claude“不要乱改路由”“不要碰支付逻辑”“样式要复用 tokens”“构建命令是 npm run build”。把稳定规则写进去，后续任务就更容易保持一致。"
+            "content": "这类文件的价值是长期记忆。不需要每次都重新告诉 Claude“不要乱改路由”“不要碰支付逻辑”“样式要复用 tokens”“构建命令是 npm run build”。把稳定规则写进去，后续任务就更容易保持一致。"
           },
           {
             "type": "code",
@@ -5098,7 +5856,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "在小练习项目里，你可以给 Agent 更高自由度；在生产项目、支付系统、数据库迁移或大规模重构里，就应该更谨慎。审批、沙盒和权限边界能让你在效率和安全之间取得平衡。"
+            "content": "在小练习项目里，可以给 Agent 更高自由度；在生产项目、支付系统、数据库迁移或大规模重构里，就应该更谨慎。审批、沙盒和权限边界能让使用者在效率和安全之间取得平衡。"
           },
           {
             "type": "paragraph",
@@ -5119,7 +5877,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "但工具越多，越需要规则。你要告诉 Agent 什么时候该用搜索，什么时候该读文档，什么时候该跑测试，什么时候应该停下来问你，而不是无限制地探索。"
+            "content": "但工具越多，越需要规则。需要告诉 Agent 什么时候该用搜索，什么时候该读文档，什么时候该跑测试，什么时候应该停下来向人确认，而不是无限制地探索。"
           }
         ]
       },
@@ -5149,11 +5907,11 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "官方也强调让 Claude 反过来询问你。很多需求一开始并不清楚，与其让 Agent 猜，不如让它先问三五个关键问题：目标用户是谁、边界在哪里、是否要兼容旧行为、完成后怎么验收。"
+            "content": "官方也强调让 Claude 反过来提问。很多需求一开始并不清楚，与其让 Agent 猜，不如让它先问三五个关键问题：目标用户是谁、边界在哪里、是否要兼容旧行为、完成后怎么验收。"
           },
           {
             "type": "paragraph",
-            "content": "这也是 AI Coding 和传统写 prompt 的区别。你不是一次性把完美需求写出来，而是在一个协作过程中持续校准方向。"
+            "content": "这也是 AI Coding 和传统写提示词的区别。不是一次性把完美需求写出来，而是在一个协作过程中持续校准方向。"
           }
         ]
       },
@@ -5170,7 +5928,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "对日常使用来说，一句简单的“请先总结当前状态，再继续下一步”就很有用。它能帮 Agent 重新整理任务边界，也方便你判断它有没有跑偏。"
+            "content": "对日常使用来说，一句简单的“请先总结当前状态，再继续下一步”就很有用。它能帮助 Agent 重新整理任务边界，也方便判断它有没有跑偏。"
           }
         ]
       },
@@ -5204,7 +5962,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "当你开始能预判 Claude 在什么情况下会犯错，就说明你正在形成自己的 Agentic Coding 直觉。这个直觉比记住某个提示词模板更重要。"
+            "content": "当开始能预判 Claude 在什么情况下会犯错，就说明 Agentic Coding 直觉正在形成。这个直觉比记住某个提示词模板更重要。"
           }
         ]
       },
@@ -5213,7 +5971,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这篇官方最佳实践的核心可以概括为一句话：不要把 Claude Code 当成一个“自动写代码按钮”，而要把它当成一个需要上下文、工具、规则、反馈和验证的工程协作者。"
+            "content": "本文官方最佳实践的核心可以概括为一句话：不要把 Claude Code 当成一个“自动写代码按钮”，而要把它当成一个需要上下文、工具、规则、反馈和验证的工程协作者。"
           },
           {
             "type": "paragraph",
@@ -5232,12 +5990,12 @@ For UI changes:
     "sourceUrl": "https://martinfowler.com/articles/exploring-gen-ai/context-engineering-coding-agents.html",
     "translationMode": "guidedTranslation",
     "title": "Coding Agent 的上下文工程：让 AI 看见正确的信息",
-    "originalTitle": "Context engineering for coding agents",
+    "originalTitle": "Context engineering for AI 编程智能体",
     "notice": "本文为 UIcoding 基于外部资料整理的中文学习笔记，不是原文全文翻译。请访问原始来源查看完整内容。",
     "sections": [
       {
         "heading": "先理解上下文",
-        "content": "上下文就是 AI 做任务时能看到和理解的信息。它不只是一句提示词，还包括项目文件、需求目标、已有规则、报错信息、截图反馈、构建结果和你对输出的评价。"
+        "content": "上下文就是 AI 做任务时能看到和理解的信息。它不只是一句提示词，还包括项目文件、需求目标、已有规则、报错信息、截图反馈、构建结果以及人工对输出的评价。"
       },
       {
         "heading": "为什么上下文会影响结果",
@@ -5253,33 +6011,33 @@ For UI changes:
       },
       {
         "heading": "把反馈也当作上下文",
-        "content": "截图、报错、构建失败信息、用户反馈，都是上下文。比如你告诉 AI“卡片太挤、标签太重、图片有黑边”，它下一轮就能更准确地修改。不要只说“不好看”，要描述具体问题。"
+        "content": "截图、报错、构建失败信息、用户反馈，都是上下文。比如反馈“卡片太挤、标签太重、图片有黑边”，AI 下一轮就能更准确地修改。不要只说“不好看”，要描述具体问题。"
       }
     ]
   },
   {
-    "id": "copyable-prompts-for-stunning-ai-websites",
+    "id": "copyable-提示词-for-stunning-ai-websites",
     "sourceUrl": "https://developers.openai.com/showcase",
     "translationMode": "guidedTranslation",
-    "title": "5 个带可复制 Prompt 的酷炫网页案例：照着还原首页",
-    "originalTitle": "Copyable prompts for stunning AI websites",
-    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附官网链接、官方 Prompt 页面，以及适合直接拿去还原网页的中文提示词。",
+    "title": "5 个带可复制提示词的酷炫网页案例：照着还原首页",
+    "originalTitle": "Copyable 提示词 for stunning AI websites",
+    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附官网链接，以及适合直接拿去还原网页的中文提示词。",
     "sections": [
       {
-        "heading": "先怎么用这篇文章",
+        "heading": "先怎么用本文",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这篇不是单纯列链接，而是把 5 个明确带有官方 Prompt 页面、并且首页视觉足够惊艳的 AI 生成网站整理成一套可练习素材。建议先选一个案例，只还原首页第一屏和主视觉；做出气质之后，再补动效、滚动和响应式。"
+            "content": "本文不是单纯列链接，而是把 5 个首页视觉足够惊艳的 AI 生成网站整理成一套可练习素材。建议先选一个案例，只还原首页第一屏和主视觉；做出气质之后，再补动效、滚动和响应式。"
           },
           {
             "type": "paragraph",
-            "content": "每个案例下面我都放了两个可直接复制的 Prompt。第一个负责把结构和画面气质先搭准，第二个负责补视觉、交互和收尾。你可以直接丢给 Codex，也可以按自己的技术栈稍作改写。"
+            "content": "每个案例下面我都放了两个可直接复制的提示词。第一个负责把结构和画面气质先搭准，第二个负责补视觉、交互和收尾。可以直接丢给 Codex，也可以按自己的技术栈稍作改写。"
           },
           {
             "type": "code",
             "label": "通用使用方法",
-            "content": "使用方式建议：\n1. 先打开案例官网，观察首屏结构、字体、主视觉、按钮位置和滚动节奏。\n2. 先复制 Prompt 1，让 Codex 只把首页骨架和视觉方向做出来。\n3. 构建成功后，再复制 Prompt 2，补动画、质感和响应式。\n4. 每一轮都要求它运行 npm run build，并在成功后停止。\n5. 如果页面开始变成普通 SaaS 模板，就提醒它：不要卡片堆叠、不要默认功能区块、不要模板化卖点布局。"
+            "content": "使用方式建议：\n1. 先打开案例官网，观察首屏结构、字体、主视觉、按钮位置和滚动节奏。\n2. 先复制提示词 1，让 Codex 只把首页骨架和视觉方向做出来。\n3. 构建成功后，再复制提示词 2，补动画、质感和响应式。\n4. 每一轮都要求它运行 npm run build，并在成功后停止。\n5. 如果页面开始变成普通 SaaS 模板，就提醒它：不要卡片堆叠、不要默认功能区块、不要模板化卖点布局。"
           }
         ]
       },
@@ -5290,7 +6048,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这是一个非常适合练 3D 品牌首页气质的案例。它不是传统电商站那种信息密集的首屏，而是用极少文案、强主视觉、滚动叙事和沉浸式光影，先把品牌氛围打进用户脑子里。"
+            "content": "这是一个适合练 3D 品牌首页气质的案例。它不是传统电商站那种信息密集的首屏，而是用极少文案、强主视觉、滚动叙事和沉浸式光影，先把品牌氛围打进用户脑子里。"
           },
           {
             "type": "paragraph",
@@ -5302,37 +6060,33 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://katana-3d-5mdo.vercel.app"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/forged-in-silence"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先搭首屏骨架",
+            "label": "提示词 1 · 先搭首屏骨架",
             "content": "请创建一个 React + Vite 单页网页，还原一个高质感武士刀品牌首页，视觉气质参考 Forged in Silence。\n\n目标：\n- 第一屏就建立强烈的品牌压迫感\n- 页面像奢侈品视觉官网，不像普通 SaaS 模板\n- 以黑色、冷白、金属灰和少量暗金为主\n\n页面要求：\n1. 顶部导航极简，左侧品牌名，右侧少量菜单和一个克制的 CTA。\n2. 首屏中央使用超大标题，文案极少，允许上下分层排版。\n3. 背景必须很深，保留微弱纹理或空气感，不要彩色渐变。\n4. 首屏中心放一个悬浮的主视觉对象占位，后续可替换为 3D 武士刀或高质感金属物件。\n5. 页面整体保留大量留白，不要做功能卡片宫格。\n6. 向下滚动前，首屏必须完整、克制、沉浸。\n\n技术要求：\n- React\n- Vite\n- 普通 CSS\n- 先不要引入 UI 组件库\n- 代码结构清晰，样式集中\n\n完成后运行 npm run build，构建成功后停止。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补 3D 气质和滚动叙事",
-            "content": "继续完善当前页面，把它推进到接近 Forged in Silence 的沉浸式品牌首页效果。\n\n本轮目标：\n- 增加 scroll-driven 叙事感\n- 强化主视觉物件的存在感\n- 让页面更像 cinematic landing page\n\n请实现：\n1. 使用 Three.js 或 React Three Fiber 做一个高质感金属主视觉，可先用程序化几何体模拟，不依赖外部 3D 模型也可以。\n2. 首屏到第二屏之间建立滚动联动：主视觉有轻微旋转、位移、镜头推进或光影变化。\n3. 补充 3 到 5 个章节，每个章节只有少量文字，让内容像视觉旁白，不要写成卖点卡片。\n4. 加入更克制的细节效果，例如微粒、暗角、金属反光、极轻的扫描质感，但不要过度炫技。\n5. 移动端保持首屏张力，标题允许换行，但不要破坏中心构图。\n6. 不要引入夸张 hover，不要把后续内容做成普通电商组件堆叠。\n\n最后运行 npm run build；如果构建成功，就停止并总结修改了哪些文件。"
+            "label": "提示词 2 · 补 3D 气质和滚动叙事",
+            "content": "继续完善当前页面，把它推进到接近 Forged in Silence 的沉浸式品牌首页效果。\n\n本轮目标：\n- 增加 scroll-driven 叙事感\n- 强化主视觉物件的存在感\n- 让页面更像 cinematic 着陆页\n\n请实现：\n1. 使用 Three.js 或 React Three Fiber 做一个高质感金属主视觉，可先用程序化几何体模拟，不依赖外部 3D 模型也可以。\n2. 首屏到第二屏之间建立滚动联动：主视觉有轻微旋转、位移、镜头推进或光影变化。\n3. 补充 3 到 5 个章节，每个章节只有少量文字，让内容像视觉旁白，不要写成卖点卡片。\n4. 加入更克制的细节效果，例如微粒、暗角、金属反光、极轻的扫描质感，但不要过度炫技。\n5. 移动端保持首屏张力，标题允许换行，但不要破坏中心构图。\n6. 不要引入夸张 hover，不要把后续内容做成普通电商组件堆叠。\n\n最后运行 npm run build；如果构建成功，就停止并总结修改了哪些文件。"
           }
         ]
       },
       {
-        "heading": "案例 2：Watchmaker Landing Page",
+        "heading": "案例 2：Watchmaker 着陆页",
         "image": "/case-screenshots/watchmaker-home.png",
-        "imageAlt": "Watchmaker Landing Page 网站首页截图",
+        "imageAlt": "Watchmaker 着陆页网站首页截图",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这个案例适合练“高奢品牌官网”的克制感。它最迷人的地方不是特效很多，而是版式、留白、数字章节、精密部件展示和高端商品叙事做得非常稳。"
+            "content": "这个案例适合练“高奢品牌官网”的克制感。它最迷人的地方不是特效很多，而是版式、留白、数字章节、精密部件展示和高端商品叙事做得很稳。"
           },
           {
             "type": "paragraph",
-            "content": "如果你经常把高端官网做成重营销模板，这个案例很值得反复拆。重点不只是手表图本身，而是标题、序号、图文错位、视差和章节节奏怎么一起工作。"
+            "content": "经常把高端官网做成重营销模板，这个案例很值得反复拆。重点不只是手表图本身，而是标题、序号、图文错位、视差和章节节奏怎么一起工作。"
           },
           {
             "type": "links",
@@ -5340,33 +6094,29 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-landing-page-examples.vercel.app/haute-horlogerie"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/watchmaker-landing-page"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做高奢首屏和章节结构",
-            "content": "请创建一个 React + Vite 品牌官网首页，主题是一家高端制表品牌，视觉方向参考 Watchmaker Landing Page。\n\n要求：\n- 首屏气质必须高端、克制、精密\n- 不要做成普通产品营销页\n- 排版以大留白、细字体、章节数字和高质量产品图为核心\n\n页面结构：\n1. 极简导航，品牌名左侧，菜单极少。\n2. Hero 区域使用非常大的标题和少量说明文案。\n3. 首屏右侧或中央放精密腕表主视觉，图像要有收藏品质感。\n4. 下方分成多个章节，每个章节像一本奢侈品画册中的段落。\n5. 使用编号章节标题，例如 01、02、03，但样式要克制。\n6. 全站避免默认卡片列表、避免功能卖点图标区。\n\n风格要求：\n- 象牙白、暖灰、深黑、金属银、少量金色点缀\n- 字体优雅，有呼吸感\n- 边框和阴影很轻\n\n完成后运行 npm run build，成功后停止。"
+            "label": "提示词 1 · 先做高奢首屏和章节结构",
+            "content": "请创建一个 React + Vite 品牌官网首页，主题是一家高端制表品牌，视觉方向参考 Watchmaker 着陆页。\n\n要求：\n- 首屏气质必须高端、克制、精密\n- 不要做成普通产品营销页\n- 排版以大留白、细字体、章节数字和高质量产品图为核心\n\n页面结构：\n1. 极简导航，品牌名左侧，菜单极少。\n2. Hero 区域使用非常大的标题和少量说明文案。\n3. 首屏右侧或中央放精密腕表主视觉，图像要有收藏品质感。\n4. 下方分成多个章节，每个章节像一本奢侈品画册中的段落。\n5. 使用编号章节标题，例如 01、02、03，但样式要克制。\n6. 全站避免默认卡片列表、避免功能卖点图标区。\n\n风格要求：\n- 象牙白、暖灰、深黑、金属银、少量金色点缀\n- 字体优雅，有呼吸感\n- 边框和阴影很轻\n\n完成后运行 npm run build，成功后停止。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补视差、图文错位和精密质感",
-            "content": "继续完善这个高端制表品牌首页，让视觉更接近 Watchmaker Landing Page。\n\n请重点增强：\n1. 主视觉腕表或零件图的分层感，可以做 exploded view、部件悬浮或轻微 parallax。\n2. 文本章节与图片之间使用错位布局，让页面更像编辑型叙事，不要整齐排成模板区块。\n3. 加入细微滚动过渡：文字淡入、部件慢速移动、章节切换时的节奏变化。\n4. 调整标题和段落的字重、字号、行距，让画面更像 luxury editorial site。\n5. CTA 数量保持极少，避免强销售感。\n6. 移动端优先保证构图稳定和阅读节奏，不要为了响应式把页面压成普通竖排模块。\n\n不要新增复杂功能，不要引入沉重组件库。最后运行 npm run build。"
+            "label": "提示词 2 · 补视差、图文错位和精密质感",
+            "content": "继续完善这个高端制表品牌首页，让视觉更接近 Watchmaker 着陆页。\n\n请重点增强：\n1. 主视觉腕表或零件图的分层感，可以做 exploded view、部件悬浮或轻微 parallax。\n2. 文本章节与图片之间使用错位布局，让页面更像编辑型叙事，不要整齐排成模板区块。\n3. 加入细微滚动过渡：文字淡入、部件慢速移动、章节切换时的节奏变化。\n4. 调整标题和段落的字重、字号、行距，让画面更像 luxury editorial site。\n5. CTA 数量保持极少，避免强销售感。\n6. 移动端优先保证构图稳定和阅读节奏，不要为了响应式把页面压成普通竖排模块。\n\n不要新增复杂功能，不要引入沉重组件库。最后运行 npm run build。"
           }
         ]
       },
       {
-        "heading": "案例 3：Arcade Bar Landing Page",
+        "heading": "案例 3：Arcade Bar 着陆页",
         "image": "/case-screenshots/arcade-bar-home.png",
-        "imageAlt": "Arcade Bar Landing Page 网站首页截图",
+        "imageAlt": "Arcade Bar 着陆页网站首页截图",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "如果你想练一个风格非常鲜明、又不至于失控的娱乐型首页，这个案例很好用。它把霓虹、暗色背景、活动感和游戏厅气氛结合得很直接，但整体信息还是清楚的。"
+            "content": "想要练一个风格很鲜明、又不至于失控的娱乐型首页，这个案例很好用。它把霓虹、暗色背景、活动感和游戏厅气氛结合得很直接，但整体信息还是清楚的。"
           },
           {
             "type": "paragraph",
@@ -5378,22 +6128,18 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-landing-page-examples.vercel.app/tilt-signal-arcade-bar/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/arcade-landing-page"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做霓虹娱乐场所首页",
-            "content": "请创建一个 React + Vite 单页 landing page，主题是一家霓虹风格的街机与弹珠酒吧，视觉参考 Arcade Bar Landing Page。\n\n目标：\n- 一眼看出是夜间娱乐场所\n- 页面有很强的品牌气氛，但结构依然清楚\n- 不要做成普通餐厅官网模板\n\n页面要求：\n1. Hero 使用大标题、霓虹风主视觉和一个主要 CTA。\n2. 背景以深色为主，加入紫红、蓝青、橙色等霓虹点缀，但要控制层次。\n3. 首页往下包含活动、饮品、小食、游戏项目、到店信息等模块。\n4. 模块可以有海报感，但不要全部做成同尺寸卡片宫格。\n5. 标题字体和装饰细节需要有 arcade vibe。\n6. 页面第一屏必须足够抓人，像一家真实会想去的潮流场地。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 不做后端\n- 构图优先，不要先堆功能组件\n\n完成后运行 npm run build。"
+            "label": "提示词 1 · 先做霓虹娱乐场所首页",
+            "content": "请创建一个 React + Vite 单页着陆页，主题是一家霓虹风格的街机与弹珠酒吧，视觉参考 Arcade Bar 着陆页。\n\n目标：\n- 一眼看出是夜间娱乐场所\n- 页面有很强的品牌气氛，但结构依然清楚\n- 不要做成普通餐厅官网模板\n\n页面要求：\n1. Hero 使用大标题、霓虹风主视觉和一个主要 CTA。\n2. 背景以深色为主，加入紫红、蓝青、橙色等霓虹点缀，但要控制层次。\n3. 首页往下包含活动、饮品、小食、游戏项目、到店信息等模块。\n4. 模块可以有海报感，但不要全部做成同尺寸卡片宫格。\n5. 标题字体和装饰细节需要有 arcade vibe。\n6. 页面第一屏必须足够抓人，像一家真实会想去的潮流场地。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 不做后端\n- 构图优先，不要先堆功能组件\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补霓虹细节和版式控制",
-            "content": "继续打磨这个街机酒吧首页，让它更接近 Arcade Bar Landing Page 的完成度。\n\n请增强：\n1. 霓虹招牌感的排版和边缘发光，但发光范围要可控，不要糊成一片。\n2. 不同区块之间建立节奏变化，例如海报区、菜单区、活动区、游戏区可以有不同构图。\n3. 为 CTA、分隔线、图像边框和标签加入街机视觉语言，但保持信息可读。\n4. 为首屏和关键区块加入轻微 hover 或滚动反馈，让页面更有现场感。\n5. 检查配色，避免整页只剩一种紫蓝；要有暖色作为点亮点。\n6. 移动端保持强风格，不要退化成普通白底列表页。\n\n最后运行 npm run build，构建成功后停止。"
+            "label": "提示词 2 · 补霓虹细节和版式控制",
+            "content": "继续打磨这个街机酒吧首页，让它更接近 Arcade Bar 着陆页的完成度。\n\n请增强：\n1. 霓虹招牌感的排版和边缘发光，但发光范围要可控，不要糊成一片。\n2. 不同区块之间建立节奏变化，例如海报区、菜单区、活动区、游戏区可以有不同构图。\n3. 为 CTA、分隔线、图像边框和标签加入街机视觉语言，但保持信息可读。\n4. 为首屏和关键区块加入轻微 hover 或滚动反馈，让页面更有现场感。\n5. 检查配色，避免整页只剩一种紫蓝；要有暖色作为点亮点。\n6. 移动端保持强风格，不要退化成普通白底列表页。\n\n最后运行 npm run build，构建成功后停止。"
           }
         ]
       },
@@ -5408,7 +6154,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你想做更酷一点的作品集首页、游戏活动页、或者可玩的 AI Demo，这种案例特别有参考价值。哪怕你不真的做 FPS，也可以学它的标题、配色、HUD 和开场界面语言。"
+            "content": "想要做更酷一点的作品集首页、游戏活动页、或者可玩的 AI Demo，这种案例特别有参考价值。哪怕不真的做 FPS，也可以学它的标题、配色、HUD 和开场界面语言。"
           },
           {
             "type": "links",
@@ -5416,21 +6162,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-minigames-examples.vercel.app/fps/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/rift-vox"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做赛博朋克游戏入口页",
+            "label": "提示词 1 · 先做赛博朋克游戏入口页",
             "content": "请创建一个 React + Vite 的游戏网页首页，主题是赛博朋克体素风第一人称射击游戏，视觉参考 Neon FPS。\n\n目标：\n- 首页像可玩的独立游戏入口页\n- 第一眼就有 neon cyberpunk atmosphere\n- 不要做成普通游戏官网营销模板\n\n页面要求：\n1. 使用全屏 hero，带有强烈标题、简短背景设定、开始按钮。\n2. 视觉上要有体素、霓虹、工业感、夜间 megablock 气质。\n3. 页面叠加 HUD 风格元素，例如状态字、小型指示、扫描线、准星感组件，但不要影响阅读。\n4. 可以加入一张主视觉图或 canvas 场景占位，营造游戏世界入口。\n5. 文案保持少而硬朗，像游戏开场界面。\n6. 不要出现常规 SaaS 的 feature cards、pricing 区和团队介绍区。\n\n技术要求：\n- React + Vite\n- 普通 CSS，必要时可加入 canvas 或 WebGL 占位\n- 优先把氛围和构图做对\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补 HUD、光效和可玩气氛",
+            "label": "提示词 2 · 补 HUD、光效和可玩气氛",
             "content": "继续完善这个赛博朋克游戏首页，让它更接近 Neon FPS 的完成度。\n\n请重点处理：\n1. 让画面更像游戏启动界面，而不是静态海报页。\n2. 增加 HUD 式 UI 细节：角标、状态文本、扫描框、微弱噪点、目标标记等。\n3. 背景中的主视觉加入更强层次，例如体素建筑、走廊、敌人剪影、霓虹标识或雾感光束。\n4. CTA 和交互控件要像游戏按钮，不要像通用网页按钮。\n5. 颜色以黑、蓝青、紫、电光粉为主，但控制对比，避免花掉。\n6. 如果加入动效，请优先做轻量入场、闪烁和漂浮，不要引入卡顿的复杂动画。\n\n最后运行 npm run build，并总结哪些部分最能体现游戏氛围。"
           }
         ]
@@ -5446,7 +6188,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你想做 AI 生成小游戏、教育交互页、或者带一点产品实验感的首页，这个方向很值得学。它的优秀之处在于复杂规则没有把界面压垮，反而形成了清楚、可探索的体验。"
+            "content": "想要做 AI 生成小游戏、教育交互页、或者带一点产品实验感的首页，这个方向很值得学。它的优秀之处在于复杂规则没有把界面压垮，反而形成了清楚、可探索的体验。"
           },
           {
             "type": "links",
@@ -5454,21 +6196,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://codextimetofly.com/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/time-to-fly"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做宇宙谜题首页和主玩法区",
+            "label": "提示词 1 · 先做宇宙谜题首页和主玩法区",
             "content": "请创建一个 React + Vite 的网页游戏首页，主题是宇宙重力谜题，视觉和玩法表达参考 Time to Fly。\n\n目标：\n- 首页既像一个可玩的产品，也像一个被精心设计的实验性网页\n- 用户一眼就能理解“拖动行星、调整发射角度、把火箭送到目标”的核心概念\n- 界面轻盈、清楚、带一点太空童话感\n\n页面要求：\n1. 首屏展示标题、简短玩法说明和一个主玩法区域。\n2. 主玩法区域用圆形轨道、行星、火箭、目标点来构成一个 miniature solar system。\n3. 界面信息简洁，不要出现复杂仪表盘。\n4. 用少量发光、轨道线和星空背景表现宇宙感。\n5. 交互区旁边可以有开始按钮、重置按钮和关卡提示。\n6. 不要把页面做成游戏介绍长文页，核心是“马上想点一下试试”。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 可以用 SVG、Canvas 或 DOM 实现轨道和星体\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补规则表达、动画和细节",
+            "label": "提示词 2 · 补规则表达、动画和细节",
             "content": "继续完善这个宇宙重力谜题首页，让体验更接近 Time to Fly。\n\n请增强：\n1. 行星、轨道、重力场和火箭路径的视觉表达，让用户不看教程也能理解玩法。\n2. 加入轻量动画，例如星体缓慢漂浮、按钮反馈、发射前后状态切换。\n3. 为界面补充更细腻的太空层次，比如柔和光晕、粒子、遥远星点和颜色深浅变化。\n4. 保持整体简洁，避免加入多余说明卡片。\n5. 如果实现可玩演示，允许用户拖动行星位置、点击发射、立即重试。\n6. 移动端优先保证主玩法区域完整可见，不要被说明文案挤压。\n\n最后运行 npm run build，成功后停止并总结实现了哪些可玩交互。"
           }
         ]
@@ -5478,15 +6216,15 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "很多人第一次复制 Prompt 后，页面会“有点像，但还是模板味很重”。通常不是代码能力不够，而是 Prompt 没把气质约束写清楚。真正决定像不像的，往往是构图、留白、内容密度、动效节奏和对“不要什么”的限制。"
+            "content": "很多人第一次复制提示词后，页面会“有点像，但还是模板味很重”。通常不是代码能力不够，而是提示词没把气质约束写清楚。真正决定像不像的，往往是构图、留白、内容密度、动效节奏和对“不要什么”的限制。"
           },
           {
             "type": "paragraph",
-            "content": "如果你发现 Codex 开始自动加功能卡片、价格区、团队介绍、过多按钮，就说明它退回了常见模板。这个时候最有效的做法不是重来，而是补一轮收尾 Prompt，把不该出现的模式明确排除掉。"
+            "content": "如果发现 Codex 开始自动加功能卡片、价格区、团队介绍、过多按钮，就说明它退回了常见模板。这个时候最有效的做法不是重来，而是补一轮收尾提示词，把不该出现的模式明确排除掉。"
           },
           {
             "type": "code",
-            "label": "通用收尾 Prompt",
+            "label": "通用收尾提示词",
             "content": "请继续优化当前页面，但不要改变核心结构。\n\n本轮只做视觉和体验收尾：\n1. 减少模板感，删除或弱化普通 SaaS 风格区块。\n2. 强化首屏构图、标题层级、留白和品牌气质。\n3. 检查颜色是否过杂，保留 1 到 2 个主色系和少量强调色。\n4. 调整按钮、标签、边框和阴影，让它们更克制。\n5. 让图片、主视觉或 canvas 成为第一视线焦点，而不是一堆说明文字。\n6. 检查移动端，确保标题、主视觉和按钮不会互相挤压。\n7. 不要新增无关功能，不要把页面改成通用营销模板。\n\n完成后运行 npm run build，并用一句话总结当前页面最接近原案例的地方，和仍然不够像的地方。"
           }
         ]
@@ -5494,19 +6232,19 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-prompts-for-playable-ai-websites",
+    "id": "copyable-提示词-for-playable-ai-websites",
     "sourceUrl": "https://developers.openai.com/showcase",
     "translationMode": "guidedTranslation",
     "title": "5 个更偏游戏感的 AI 网页案例：直接照着做首页和交互入口",
-    "originalTitle": "Copyable prompts for playable AI websites",
-    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址、官方 Prompt 页面，以及适合直接拿去还原网页首页和交互入口的中文提示词。",
+    "originalTitle": "Copyable 提示词 for playable AI websites",
+    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址，以及适合直接拿去还原网页首页和交互入口的中文提示词。",
     "sections": [
       {
-        "heading": "这篇更适合谁看",
+        "heading": "本文更适合谁看",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "如果你已经会让 Codex 生成普通 landing page，但总觉得作品还不够酷、不够有记忆点，这篇会更对路。这里挑的 5 个案例都不是标准产品营销页，而是更强调场景、氛围、可玩性和“第一屏就想点一下”的网页。"
+            "content": "已经会让 Codex 生成普通着陆页，但总觉得作品还不够酷、不够有记忆点，本文会更对路。这里挑的 5 个案例都不是标准产品营销页，而是更强调场景、氛围、可玩性和“第一屏就想点一下”的网页。"
           },
           {
             "type": "paragraph",
@@ -5530,7 +6268,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你想练“沉浸式场景首页”，它比普通 3D hero 更有参考价值，因为它不只是摆一个物体，而是让场景和控制面板一起工作。"
+            "content": "想要练“沉浸式场景首页”，它比普通 3D hero 更有参考价值，因为它不只是摆一个物体，而是让场景和控制面板一起工作。"
           },
           {
             "type": "links",
@@ -5538,21 +6276,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://petergpt.github.io/london-train/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/london-train"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做可探索 3D 城市首页",
+            "label": "提示词 1 · 先做可探索 3D 城市首页",
             "content": "请创建一个 React + Vite 的互动网页首页，主题是一个可探索的伦敦城市轨道世界，视觉方向参考 London Dream Railway。\n\n目标：\n- 首页本身就是体验，不是传统介绍页\n- 第一屏就出现城市模型、轨道线路和控制入口\n- 用户进入页面后会立刻想拖动、切换或观察场景\n\n页面要求：\n1. 使用全屏或接近全屏的主场景区域，展示抽象化的伦敦城市与轨道系统。\n2. 保留标题和简短说明，但文字必须克制，不能盖过场景本身。\n3. 场景旁边或上方叠加一个轻量控制面板，包含线路切换、时间、视角或模式控制。\n4. 视觉上要有模型感、交通感、未来演示感，但不要做成企业数据后台。\n5. 页面结构优先围绕“观察和探索”，不要加产品卖点卡片。\n6. 移动端允许弱化控制项，但要保留场景沉浸感。\n\n技术要求：\n- React + Vite\n- 可用 Three.js 或 React Three Fiber\n- 不引入重型 UI 组件库\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补场景控制和导览感",
+            "label": "提示词 2 · 补场景控制和导览感",
             "content": "继续完善这个城市轨道互动首页，让它更接近 London Dream Railway 的可探索感。\n\n请增强：\n1. 让主场景具备轻量交互，例如镜头缓慢移动、场景旋转、线路高亮、车体移动或 hover 提示。\n2. 控制面板要更像体验控制台，而不是普通网页筛选器。\n3. 加入少量信息标记，例如站点名、线路标签、当前模式说明，但不要变成信息噪声。\n4. 通过层次、雾感、灯光和景深增强 miniature city 气质。\n5. 首屏仍然以场景为主，避免后续内容抢走注意力。\n6. 不要加入模板化 feature section，不要把页面变成普通产品官网。\n\n最后运行 npm run build，并总结哪些交互最能体现“首页就是体验”。"
           }
         ]
@@ -5568,7 +6302,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "它很适合参考“体验型品牌页”和“可视化交互页”的中间形态：既有强视觉主场景，也保留了可操作的仪表感。"
+            "content": "它适合参考“体验型品牌页”和“可视化交互页”的中间形态：既有强视觉主场景，也保留了可操作的仪表感。"
           },
           {
             "type": "links",
@@ -5576,21 +6310,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-miniapps-examples.vercel.app/bridge-5p5/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/golden-gate-flight-experience"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做飞行体验首屏",
+            "label": "提示词 1 · 先做飞行体验首屏",
             "content": "请创建一个 React + Vite 的沉浸式网页首页，主题是飞越金门大桥的互动体验，视觉方向参考 Golden Gate Experience。\n\n目标：\n- 第一屏像电影海报和体验入口的结合体\n- 用户一眼看到主场景、标题和开始体验按钮\n- 页面重心是空间感和沉浸感，不是功能说明\n\n页面要求：\n1. Hero 采用大幅场景图或 3D 场景，金门大桥必须成为绝对视觉中心。\n2. 文案要很少，只保留标题、简短副标题和一个开始按钮。\n3. 在场景边缘叠加轻量控制元素或状态信息，让页面有“可操作”暗示。\n4. 颜色以雾蓝、海水灰、桥梁暖红和高光白为主。\n5. 保留大量留白和纵深，不要做模块化卡片拼接。\n6. 页面打开后要像一个体验入口，而不是旅游官网或 SaaS 首页。\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补电影感和控制叠层",
+            "label": "提示词 2 · 补电影感和控制叠层",
             "content": "继续完善这个飞越金门大桥的首页，让它更接近 Golden Gate Experience 的完成度。\n\n请重点增强：\n1. 场景纵深和镜头感，例如轻微漂移、海雾、远景淡化、桥体透视。\n2. 控制叠层要更自然地贴在场景之上，像体验面板而不是网页表单。\n3. 给按钮和状态条加入克制但高级的交互反馈。\n4. 文本层级要像预告片式体验页，避免普通宣传页语气。\n5. 如果补充后续区块，也要延续 cinematic 叙事，不要落回普通卡片布局。\n6. 移动端优先保留桥体构图和按钮可点性。\n\n最后运行 npm run build，并用一句话总结当前页面的主情绪。"
           }
         ]
@@ -5606,7 +6336,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "如果你想做游戏风格作品集、策略类 demo、或者有强规则感的网页工具，这种结构非常值得照着拆。"
+            "content": "想要做游戏风格作品集、策略类 demo、或者有强规则感的网页工具，这种结构很值得照着拆。"
           },
           {
             "type": "links",
@@ -5614,21 +6344,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://trpg-demo-codex.vercel.app/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/turn-based-rpg"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做战棋式可玩首页",
+            "label": "提示词 1 · 先做战棋式可玩首页",
             "content": "请创建一个 React + Vite 的网页首页，主题是回合制策略 RPG，视觉和界面组织参考 Ember Tactics。\n\n目标：\n- 首页直接进入战场情境\n- 地图、角色、状态面板和操作按钮同屏出现\n- 用户一眼就知道这是可玩的策略体验，而不是普通游戏官网\n\n页面要求：\n1. 第一屏包含俯视角战场区域，至少有地格、角色单位和目标区域的视觉暗示。\n2. 画面侧边或底部保留一个轻量 HUD，展示角色状态、技能按钮或回合信息。\n3. 顶部可以有标题和一句世界观说明，但不要喧宾夺主。\n4. 配色偏奇幻、战术、略带独立游戏质感，不要做成卡通手游广告页。\n5. 页面必须让人感觉“已经开局”，而不是“准备介绍”。\n6. 不要加入价格、团队、FAQ 这类官网结构。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 可以用 CSS Grid、Canvas 或 SVG 模拟地图\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补战场 HUD 和操作反馈",
+            "label": "提示词 2 · 补战场 HUD 和操作反馈",
             "content": "继续完善这个回合制 RPG 首页，让它更接近 Ember Tactics 的可玩质感。\n\n请增强：\n1. 地格、单位、攻击范围、高亮选中和悬停反馈，让战术感更清楚。\n2. HUD 元素要有游戏面板气质，但布局仍然清晰易读。\n3. 给技能按钮、回合提示和状态区加入轻量交互反馈。\n4. 场景中的光影、地形和单位轮廓要更明确，让首页更像试玩版开局画面。\n5. 不要为了“网页化”而削弱玩法感。\n6. 移动端可以精简 HUD，但必须保留核心战场构图。\n\n最后运行 npm run build，并总结当前页面最像游戏启动界面的部分。"
           }
         ]
@@ -5644,7 +6370,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "它最有价值的地方不是单纯好看，而是入口非常明确。用户不会犹豫下一步做什么，因为所有视觉都在把人往“开始”这件事上推。"
+            "content": "它最有价值的地方不是单纯好看，而是入口很明确。用户不会犹豫下一步做什么，因为所有视觉都在把人往“开始”这件事上推。"
           },
           {
             "type": "links",
@@ -5652,21 +6378,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-minigames-examples.vercel.app/fps/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/rift-vox"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做赛博朋克 FPS 入口页",
+            "label": "提示词 1 · 先做赛博朋克 FPS 入口页",
             "content": "请创建一个 React + Vite 的网页首页，主题是赛博朋克体素风第一人称射击游戏，视觉方向参考 Neon Voxel Breach。\n\n目标：\n- 第一屏像硬核游戏启动界面\n- 强调 neon、夜景、工业感和即将开战的气氛\n- 用户进入页面后，第一反应是点击开始而不是阅读说明\n\n页面要求：\n1. 使用全屏 hero，背景可以是场景图、插画或轻量 3D/canvas 场景。\n2. 放置巨大标题、极短玩法文案和一个强 CTA。\n3. 叠加少量 HUD 元素，例如状态字、角标、准星感图形或按键提示。\n4. 颜色以黑、蓝青、紫、电光粉为主，但控制对比，不要糊。\n5. 页面要像游戏入口，不要出现普通 feature cards。\n6. 保持强风格，但文字必须仍可读。\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补 HUD、光效和战场预热感",
+            "label": "提示词 2 · 补 HUD、光效和战场预热感",
             "content": "继续完善这个赛博朋克 FPS 首页，让它更接近 Neon Voxel Breach 的完成度。\n\n请增强：\n1. 增加 HUD 风格元素，例如警告条、目标标识、模式说明和轻微扫描线。\n2. 背景主场景要更像即将进入的战场，而不是静态壁纸。\n3. 按钮、标题和关键标签要像游戏 UI，而不是普通网页控件。\n4. 使用轻量动效增加预热感，例如霓虹闪烁、远景漂浮、标题细微位移。\n5. 控制视觉节奏，不要把所有元素都做得同样亮。\n6. 移动端依然要保留“强入口”特征，避免退化成普通宣传页。\n\n最后运行 npm run build，并总结你用了哪些手法避免页面变脏。"
           }
         ]
@@ -5678,11 +6400,11 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这个案例更偏复古街机感。它不是靠复杂 3D 或粒子撑场面，而是靠像素场景、月夜屋顶、角色站位和极短信息，把“马上开玩”的信号打得非常干净。"
+            "content": "这个案例更偏复古街机感。它不是靠复杂 3D 或粒子撑场面，而是靠像素场景、月夜屋顶、角色站位和极短信息，把“马上开玩”的信号打得很干净。"
           },
           {
             "type": "paragraph",
-            "content": "如果你想做更轻、更小、更容易完成的游戏网页练习，它是很好的切入口。难度比 3D 场景低，但气质依然鲜明。"
+            "content": "想要做更轻、更小、更容易完成的游戏网页练习，它是很好的切入口。难度比 3D 场景低，但气质依然鲜明。"
           },
           {
             "type": "links",
@@ -5690,31 +6412,27 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-minigames-examples.vercel.app/brick-platformer/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/brick-platformer"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做复古平台跳跃首页",
+            "label": "提示词 1 · 先做复古平台跳跃首页",
             "content": "请创建一个 React + Vite 的网页游戏首页，主题是复古像素风平台跳跃，视觉方向参考 Brickbound Climb。\n\n目标：\n- 首页直接呈现关卡开局画面\n- 用户一眼就能理解这是跳跃攀登类玩法\n- 画面轻巧、复古、带一点月夜冒险感\n\n页面要求：\n1. 第一屏使用像素风屋顶、砖块平台、月亮和角色站位构成完整场景。\n2. 顶部或角落保留少量 UI 信息，例如时间、得分、生命或提示键位。\n3. 文案必须极少，按钮可只有一个开始或重试入口。\n4. 不要做成手机游戏广告页或普通独立游戏官网。\n5. 重点是“场景本身就能说明玩法”。\n6. 移动端要优先保持主关卡构图完整。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 可用 CSS 像素画、SVG 或 Sprite 风格实现\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补像素 HUD 和开局反馈",
+            "label": "提示词 2 · 补像素 HUD 和开局反馈",
             "content": "继续完善这个复古平台跳跃首页，让它更接近 Brickbound Climb 的完成度。\n\n请重点处理：\n1. 让角色、平台和危险区更像真的可玩关卡，而不是装饰场景。\n2. 为 HUD 加入像素风边框、计时器、分数或简单提示，但保持克制。\n3. 增加轻量动态，例如角色待机、月光闪烁、云层移动或平台高亮。\n4. 标题和按钮要延续复古街机语言，不要变成现代 SaaS 按钮样式。\n5. 保持整个首页干净，不要额外补一堆说明模块。\n6. 如果实现试玩 demo，优先做左右移动和跳跃反馈。\n\n最后运行 npm run build，并总结哪些元素最有效地传达了玩法。"
           }
         ]
       },
       {
-        "heading": "最后怎么用这些 Prompt",
+        "heading": "最后怎么用这些提示词",
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这组案例和上一篇最大的区别，是它们更依赖“情境成立”。普通 landing page 可以先搭文字结构再补视觉，但这种游戏感网页如果主场景不成立，后面再怎么补按钮和说明都不会像。"
+            "content": "这组案例和上一篇最大的区别，是它们更依赖“情境成立”。普通着陆页可以先搭文字结构再补视觉，但这种游戏感网页如果主场景不成立，后面再怎么补按钮和说明都不会像。"
           },
           {
             "type": "paragraph",
@@ -5722,7 +6440,7 @@ For UI changes:
           },
           {
             "type": "code",
-            "label": "通用收尾 Prompt",
+            "label": "通用收尾提示词",
             "content": "请继续优化当前页面，但不要改变核心玩法方向。\n\n本轮只做可玩型首页收尾：\n1. 强化主场景，让用户第一眼就进入情境。\n2. 删除或弱化模板化网页模块，例如 feature cards、团队介绍、FAQ、价格区。\n3. 让 CTA 更明确，但不要破坏画面氛围。\n4. 检查 HUD、状态信息和标题之间的视觉优先级。\n5. 调整颜色和光效，避免脏、乱、全亮或全灰。\n6. 移动端优先保留主场景、标题和主按钮。\n7. 如果页面还是像官网而不像体验入口，请继续减少解释性文案。\n\n完成后运行 npm run build，并总结当前页面最像“可玩首页”的 2 个地方。"
           }
         ]
@@ -5730,12 +6448,12 @@ For UI changes:
     ]
   },
   {
-    "id": "copyable-prompts-for-ai-tool-surfaces",
+    "id": "copyable-提示词-for-ai-tool-surfaces",
     "sourceUrl": "https://developers.openai.com/showcase",
     "translationMode": "guidedTranslation",
     "title": "5 个工具型 AI 网页案例：照着做生成器、控制面板和 3D 场景界面",
-    "originalTitle": "Copyable prompts for AI tool surfaces",
-    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址、官方 Prompt 页面，以及适合直接拿去还原网页首页、工具表面和控制面板的中文提示词。",
+    "originalTitle": "Copyable 提示词 for AI tool surfaces",
+    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址，以及适合直接拿去还原网页首页、工具表面和控制面板的中文提示词。",
     "sections": [
       {
         "heading": "为什么要单独学工具型首页",
@@ -5746,7 +6464,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "工具型首页的重点是让用户立刻理解三件事：这个工具能产出什么、我怎么操作它、结果会在什么地方出现。所以这篇案例都偏向“首页即工具表面”的方向，适合练生成器、参数控制器、可视化界面和带 3D 场景的交互工具。"
+            "content": "工具型首页的重点是让用户立刻理解三件事：这个工具能产出什么、我怎么操作它、结果会在什么地方出现。所以本文案例都偏向“首页即工具表面”的方向，适合练生成器、参数控制器、可视化界面和带 3D 场景的交互工具。"
           },
           {
             "type": "code",
@@ -5762,7 +6480,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "这是最典型的“首页直接暴露核心工具界面”的案例。用户一进来就能看到程序化城市模型、参数面板和调整结果，而不是先读一堆产品故事。它非常适合学生成器类产品怎么组织第一屏。"
+            "content": "这是最典型的“首页直接暴露核心工具界面”的案例。用户一进来就能看到程序化城市模型、参数面板和调整结果，而不是先读一堆产品故事。它适合学生成器类产品怎么组织第一屏。"
           },
           {
             "type": "paragraph",
@@ -5774,21 +6492,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-city-generator-demo.vercel.app/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/procedural-city-generator"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做生成器首页骨架",
+            "label": "提示词 1 · 先做生成器首页骨架",
             "content": "请创建一个 React + Vite 的工具型首页，主题是程序化城市生成器，视觉和信息结构参考 Procedural City Generator。\n\n目标：\n- 首页一打开就像真实工具界面\n- 结果区和控制区必须同屏出现\n- 用户一眼就知道这是“调参数 -> 看城市结果”的产品\n\n页面要求：\n1. 主区域展示一个 3D 城市或程序化城市结果预览，可先用简化几何体占位。\n2. 右侧或左侧放一个参数控制面板，包含密度、高度、街区、道路、灯光等控制项。\n3. 顶部只保留极少量品牌和模式切换，不要做营销型导航。\n4. 结果区必须是第一视线焦点，不能被说明文案压过去。\n5. 页面不要做功能卖点卡片，不要先讲故事再进入工具。\n6. 整体气质偏现代、实验性、带一点模拟器和生成器感觉。\n\n技术要求：\n- React + Vite\n- 可使用 Three.js 或 React Three Fiber\n- 普通 CSS\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补参数反馈和工具质感",
+            "label": "提示词 2 · 补参数反馈和工具质感",
             "content": "继续完善这个城市生成器首页，让它更接近 Procedural City Generator 的工具气质。\n\n请增强：\n1. 参数调节与结果区之间要有更明确的因果关系，例如数值变化、开关状态、模式标签。\n2. 让 3D 城市结果更像实时生成产物，而不是静态背景图。\n3. 加入轻量状态区，例如当前 seed、模式、渲染级别或导出入口。\n4. 控制面板要清晰、紧凑、专业，不要做成普通表单页。\n5. 用少量光影、网格感或技术感细节增强工具氛围，但不要过度赛博装饰。\n6. 移动端优先保证“结果先看到、参数还能操作”的基本逻辑。\n\n最后运行 npm run build，并总结当前首页最像真实工具的两个地方。"
           }
         ]
@@ -5812,21 +6526,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://petergpt.github.io/london-train/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/london-train"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做场景化工具首页",
+            "label": "提示词 1 · 先做场景化工具首页",
             "content": "请创建一个 React + Vite 的互动工具首页，主题是一个可探索的伦敦城市轨道系统，视觉方向参考 London Dream Railway。\n\n目标：\n- 首页既像一个小型世界，也像一个可操作工具\n- 城市轨道场景和控制入口必须同时成立\n- 用户进入页面后，会自然想切换线路、调整视角或探索场景\n\n页面要求：\n1. 使用占主导地位的 3D 场景区域，展示抽象化城市、轨道和地标。\n2. 在场景边缘叠加轻量控制面板，例如线路选择、昼夜、速度、视角等。\n3. 文本说明必须非常少，不能破坏探索感。\n4. 页面结构应该围绕“看场景 + 控制场景”展开，而不是常规产品官网结构。\n5. 顶部导航极简，只保留品牌和少量操作入口。\n6. 移动端允许简化控件，但不要失去场景主导地位。\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补轨道控制和探索反馈",
+            "label": "提示词 2 · 补轨道控制和探索反馈",
             "content": "继续完善这个城市轨道互动工具首页，让它更接近 London Dream Railway 的完成度。\n\n请增强：\n1. 场景里的轨道、列车、节点或站点要更像可探索对象，而不是装饰。\n2. 控制面板要更像体验控制台，带有当前状态、模式提示和明确分组。\n3. 通过镜头移动、线路高亮、车体移动或悬停信息强化“正在观察系统”的感觉。\n4. 页面整体要像互动演示工具，不像营销首页。\n5. 结果区和控制区的对比层级要清楚，避免都一样抢眼。\n6. 不要加入模板化卖点区块或 FAQ。\n\n最后运行 npm run build，并总结当前首页最成功的交互入口。"
           }
         ]
@@ -5842,7 +6552,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "它很适合拿来练“体验型产品界面”而不是纯工具界面。尤其适合做飞行、地图、预览、导览类交互产品。"
+            "content": "它适合拿来练“体验型产品界面”而不是纯工具界面。尤其适合做飞行、地图、预览、导览类交互产品。"
           },
           {
             "type": "links",
@@ -5850,21 +6560,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://openai-miniapps-examples.vercel.app/bridge-5p5/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/golden-gate-flight-experience"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做体验型场景首页",
+            "label": "提示词 1 · 先做体验型场景首页",
             "content": "请创建一个 React + Vite 的沉浸式体验首页，主题是飞越金门大桥的可视化场景体验，视觉方向参考 Golden Gate Experience。\n\n目标：\n- 首页以空间感和场景体验为核心\n- 主场景和轻量控制层同时出现\n- 页面像体验入口，而不是普通图文介绍页\n\n页面要求：\n1. 使用大幅主场景作为首屏核心，桥体、海面和纵深空间必须明显。\n2. 保留少量标题、说明和主操作按钮，避免文本过多。\n3. 在场景上叠加轻量控制层，例如模式、视角、状态、信息卡片或开始体验按钮。\n4. 页面整体应该偏 cinematic、导览感、体验感。\n5. 不要加入通用 feature cards，不要做旅游官网结构。\n6. 保持视觉呼吸感，让场景本身说话。\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补叠层控件和电影感",
+            "label": "提示词 2 · 补叠层控件和电影感",
             "content": "继续完善这个飞越金门大桥的体验页，让它更接近 Golden Gate Experience 的完成度。\n\n请增强：\n1. 控制层要更自然地贴在场景上方，像飞行体验面板，而不是普通表单。\n2. 增加景深、雾感、远景层次和镜头移动感，让主场景更有空间张力。\n3. 按钮、状态条和信息块要克制，但必须清楚可点。\n4. 页面首屏要像“正在进入一个体验”，而不是“正在阅读一个网站”。\n5. 如果补充后续区块，也要延续体验叙事，不要转成模板化营销区。\n6. 移动端要优先保住主场景构图和关键控件可操作性。\n\n最后运行 npm run build，并用一句话概括当前页面的核心情绪。"
           }
         ]
@@ -5876,7 +6582,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "虽然它看起来更像游戏，但从界面结构上看，它其实也是一个很典型的“首页即操作面板”案例。地图是结果区，侧边和底部 HUD 是控制区，用户无需滚动就能理解系统状态。"
+            "content": "虽然它看起来更像游戏，但从界面结构上看，它也是一个很典型的“首页即操作面板”案例。地图是结果区，侧边和底部 HUD 是控制区，用户无需滚动就能理解系统状态。"
           },
           {
             "type": "paragraph",
@@ -5888,21 +6594,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://trpg-demo-codex.vercel.app/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/turn-based-rpg"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做地图 + HUD 工具表面",
+            "label": "提示词 1 · 先做地图 + HUD 工具表面",
             "content": "请创建一个 React + Vite 的高密度工具型首页，主题是回合制战术地图界面，结构参考 Ember Tactics。\n\n目标：\n- 首页直接展示核心地图和状态面板\n- 用户进入页面后立刻理解系统当前状态和可操作入口\n- 页面像真正的操作界面，而不是介绍页\n\n页面要求：\n1. 第一屏包含主地图区域，地图承担结果区角色。\n2. 侧边或底部保留 HUD 区，展示状态、模式、技能或操作信息。\n3. 信息密度可以高，但层级必须清楚，不能乱成一片。\n4. 顶部只保留少量品牌或模式标题，不做营销导航。\n5. 页面整体偏战术、模拟、系统界面感。\n6. 不要加入 FAQ、品牌故事和卖点卡片。\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补状态层级和面板反馈",
+            "label": "提示词 2 · 补状态层级和面板反馈",
             "content": "继续完善这个战术地图型首页，让它更接近 Ember Tactics 的工具表面感。\n\n请增强：\n1. 地图、单位、选中态、范围高亮和当前回合信息之间要有清楚关系。\n2. HUD 面板需要更专业，按钮、状态文本和标签要有明显主次。\n3. 让整个界面看起来像一个可操作系统，而不是一张带说明的海报。\n4. 强化反馈，例如 hover、active、selected、cooldown 或状态变化。\n5. 控制画面密度，不要为了信息量牺牲可读性。\n6. 移动端可以折叠部分 HUD，但核心地图和主操作按钮必须保留。\n\n最后运行 npm run build，并总结你是怎么让高密度界面仍然清楚的。"
           }
         ]
@@ -5918,7 +6620,7 @@ For UI changes:
           },
           {
             "type": "paragraph",
-            "content": "对需要同时展示可视化结果和轻量规则的工具来说，这个结构非常有参考价值，比如教育工具、模拟器、实验性产品或可玩式引导页面。"
+            "content": "对需要同时展示可视化结果和轻量规则的工具来说，这个结构很有参考价值，比如教育工具、模拟器、实验性产品或可玩式引导页面。"
           },
           {
             "type": "links",
@@ -5926,21 +6628,17 @@ For UI changes:
               {
                 "label": "网站首页",
                 "url": "https://codextimetofly.com/"
-              },
-              {
-                "label": "官方 Prompt 页",
-                "url": "https://developers.openai.com/showcase/time-to-fly"
               }
             ]
           },
           {
             "type": "code",
-            "label": "Prompt 1 · 先做可视化规则首页",
+            "label": "提示词 1 · 先做可视化规则首页",
             "content": "请创建一个 React + Vite 的交互型首页，主题是宇宙重力谜题或轨道模拟体验，结构参考 Time to Fly。\n\n目标：\n- 首页同时展示主场景、规则暗示和控制入口\n- 用户不读长文也能理解这是一个可交互系统\n- 页面像实验性产品或轻量模拟器，而不是普通官网\n\n页面要求：\n1. 第一屏包含太空主场景，轨道、星球、火箭或目标点必须明确。\n2. 右侧或下方放一个轻量控制面板，展示开始、重置、角度、强度或关卡提示。\n3. 文案必须很少，以“引导理解玩法”为主，而不是营销介绍。\n4. 结果区和控制区要有明确分工，但视觉上保持统一。\n5. 整体气质轻盈、未来感、实验性，不要做沉重后台风格。\n6. 不要加入与玩法无关的大段说明区块。\n\n完成后运行 npm run build。"
           },
           {
             "type": "code",
-            "label": "Prompt 2 · 补规则表达和控制细节",
+            "label": "提示词 2 · 补规则表达和控制细节",
             "content": "继续完善这个宇宙规则可视化首页，让它更接近 Time to Fly 的完成度。\n\n请增强：\n1. 轨道、星体、重力场和目标关系要更直观，让用户一眼读懂规则。\n2. 控制面板中的按钮、标签和状态说明要更清楚，像可用产品而不是装饰。\n3. 主场景加入轻量动画，例如漂浮、轨迹、光晕或发射前后状态变化。\n4. 结果区必须保持第一焦点，避免控制区反客为主。\n5. 保持整体简洁，不要往页面里补一堆营销区块。\n6. 移动端优先保证主场景完整和主控制入口可点。\n\n最后运行 npm run build，并总结当前页面最像“实验性工具”的两个细节。"
           }
         ]
@@ -5950,7 +6648,7 @@ For UI changes:
         "blocks": [
           {
             "type": "paragraph",
-            "content": "工具型页面最容易被 AI 自动拉回“标准官网模板”。一旦 Codex 开始给你加卖点卡片、客户评价、FAQ、团队介绍、价格区，就说明它把任务理解成营销首页了。"
+            "content": "工具型页面最容易被 AI 自动拉回“标准官网模板”。一旦 Codex 开始自动加卖点卡片、客户评价、FAQ、团队介绍、价格区，就说明它把任务理解成营销首页了。"
           },
           {
             "type": "paragraph",
@@ -5958,8 +6656,1984 @@ For UI changes:
           },
           {
             "type": "code",
-            "label": "通用收尾 Prompt",
+            "label": "通用收尾提示词",
             "content": "请继续优化当前页面，但不要改变它作为工具型首页的核心结构。\n\n本轮只做工具表面收尾：\n1. 强化结果区、控制区和状态区的层级关系。\n2. 删除或弱化营销型网页模块，例如 feature cards、品牌故事、FAQ、价格区。\n3. 确保用户进入页面后，第一眼就知道能操作什么、结果在哪。\n4. 调整按钮、输入控件、标签和面板样式，让它们更像真实工具。\n5. 如果有 3D 或主场景，让它继续保持第一焦点。\n6. 控制颜色和装饰，不要把工具页做成赛博风展示板。\n7. 移动端优先保住主结果区和主操作入口。\n\n完成后运行 npm run build，并总结当前页面最像真实产品界面的 2 个地方。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "copyable-提示词-for-knowledge-and-education-ai-websites",
+    "sourceUrl": "https://www.uicoding.ai/cases",
+    "translationMode": "guidedTranslation",
+    "title": "5 个教育与知识表达的 AI 网页案例：照着做信息图、教学和内容解释界面",
+    "originalTitle": "Copyable 提示词 for knowledge and education AI websites",
+    "notice": "本文为 UIcoding 基于真实网站与已收录案例整理的中文学习稿。这一组更偏真实产品与公开站点，因此我给出的提示词是面向还原首页与核心交互的拆解版中文提示词。",
+    "sections": [
+      {
+        "heading": "这类网页为什么值得单独学",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "教育、知识解释和信息可视化类网页，难点通常不在于动效，而在于“怎么让人快速看懂”。如果首页只追求视觉冲击，却没有把输入、处理和输出讲清楚，用户通常会很快失去耐心。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以本文挑的 5 个案例，不是单纯为了好看，而是为了学它们如何组织知识型产品的第一屏。可以看到不同路径：有的强调文本转视觉，有的强调教学流程，有的强调专业知识解释，有的强调把复杂信息整理成结构化界面。"
+          },
+          {
+            "type": "code",
+            "label": "通用练习方式",
+            "content": "推荐顺序：\n1. 先观察首页最先让用户理解的是什么。\n2. 第一轮只还原结构，不急着追求花哨效果。\n3. 第二轮再补视觉风格、状态反馈和内容密度。\n4. 如果产品有输入区、结果区或解释区，优先把这三块关系做清楚。\n5. 每轮都要求 Codex 在完成后运行 npm run build，并在成功后停止。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 1：KnowLens.ai",
+        "image": "/case-screenshots/knowlens-ai-home.webp",
+        "imageAlt": "KnowLens.ai 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "KnowLens.ai 特别适合学“文本如何变成信息图”这件事。它的首页很清楚地告诉用户：可以输入一个主题、想法或学习文本，系统会把它转成可读的信息可视化结果。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它的价值不只是视觉风格，而是把输入框、示例提示词、案例预览和生成按钮组织成一条很直接的体验路径。用户还没往下滚，就已经知道产品怎么用。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://knowlens.ai/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/content-tool/knowlens-ai-infographic-generator"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做文本转信息图首页",
+            "content": "请创建一个 React + Vite 的 AI 工具首页，主题是把普通文本生成结构化信息图，视觉和信息结构参考 KnowLens.ai。\n\n目标：\n- 用户进入页面后立刻理解“输入文本 -> 生成信息图”\n- 首页重点是输入区、示例提示词和精选案例预览\n- 页面像真实产品首页，不像普通营销模板\n\n页面要求：\n1. Hero 区域中心放一个大输入框，支持输入主题、学习笔记或一段普通文本。\n2. 输入框附近保留一个明确的生成按钮和少量说明文案。\n3. 输入框下方展示若干示例提示词标签，帮助用户快速开始。\n4. 往下展示精选案例预览，让用户理解输出会长什么样。\n5. 整体界面要干净、克制、偏知识工具，不要重渐变和重阴影。\n6. 不要先做一堆卖点卡片，第一屏必须服务于开始生成。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补案例预览和生成体验",
+            "content": "继续完善这个文本转信息图首页，让它更接近 KnowLens.ai 的产品体验。\n\n请增强：\n1. 示例提示词标签要更像真正可点击的起始话题，而不是装饰。\n2. 精选案例区要展示多种信息图风格，让用户一眼看懂产品输出边界。\n3. 输入区、按钮和案例区之间要形成清晰的操作路径。\n4. 整体视觉保持简洁和可信，不要把知识工具做成潮流海报站。\n5. 如果补充后续区块，优先解释输入材料、输出形式和使用场景。\n6. 移动端要优先保住输入框和主按钮的可用性。\n\n最后运行 npm run build，并总结当前页面最能说明产品价值的两个部分。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 2：Maieutic",
+        "image": "/case-screenshots/maieutic-home.png",
+        "imageAlt": "Maieutic 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Maieutic 适合学的是“教学型 AI 产品怎么讲清学习流程”。它并不是强调一键生成答案，而是把先写 specification、再编码、再检查偏差这条教学链路讲得很清楚。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类产品最怕的是讲得太抽象，而 Maieutic 的首页会让使用者很快明白它在训练什么能力、服务谁、以及学生和教师各自会看到什么。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://maieutic.dev/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/education/maieutic-programming-education"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做编程教育产品首页",
+            "content": "请创建一个 React + Vite 的教育类产品首页，主题是帮助学生先写程序规格说明，再进入编码和调试，信息结构参考 Maieutic。\n\n目标：\n- 首页清楚解释产品在训练什么能力\n- 用户一眼看懂这是教学工具，不是普通代码生成器\n- 页面要同时照顾学生与教师两类角色\n\n页面要求：\n1. Hero 用清楚标题解释核心理念：先写 specification，再写 code。\n2. 第一屏保留一句到两句说明，解释产品如何帮助学生学习，而不是替学生完成答案。\n3. 往下用清晰区块介绍学生流程、教师观察和课堂反馈。\n4. 页面整体要克制、可信、偏教育产品，不要做成强营销页。\n5. 不要加太多炫技视觉，重点是流程和认知价值表达清楚。\n6. 按钮数量要少，避免强销售语气。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补学习流程和教师视图",
+            "content": "继续完善这个编程教育产品首页，让它更接近 Maieutic 的完成度。\n\n请增强：\n1. 学生学习流程要更清楚，表现出“写规格 -> 编码 -> 对比偏差”的路径。\n2. 教师视图要体现课堂观察和每个学生 reasoning 的能力。\n3. 页面文案和结构要强调教学价值，而不是技术炫耀。\n4. 通过版式、图示或流程块让复杂理念更容易被第一次访问的人理解。\n5. 保持教育产品的可信与冷静，不要加入过度炫目的特效。\n6. 移动端优先保证标题、流程和角色区块可读。\n\n最后运行 npm run build，并总结当前页面最能解释教学方法的两个地方。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 3：Medkit",
+        "image": "/case-screenshots/medkit-home.png",
+        "imageAlt": "Medkit 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Medkit 适合用来学习“专业知识型产品怎么降低信息门槛”。医疗类工具的难点不是做酷，而是把复杂指南、临床路径和建议组织成可快速浏览的界面。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类产品首页需要先解决信任和清晰度，而不是先做花哨视觉。用户要先知道它服务什么场景、帮我节省什么理解成本。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://medkit-app.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/other/medkit-clinical-guide"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做医学知识解释首页",
+            "content": "请创建一个 React + Vite 的专业知识工具首页，主题是帮助医护人员快速理解临床指南与诊疗流程，信息结构参考 Medkit。\n\n目标：\n- 页面第一屏传达专业、清晰、可信\n- 用户一眼理解这是“查询指南 / 获取解释 / 找到下一步”的工具\n- 首页重点是场景价值，而不是营销文案\n\n页面要求：\n1. Hero 用清楚标题说明产品能帮助医护人员快速定位和理解临床信息。\n2. 第一屏可加入一个查询入口、搜索框或典型问题示例。\n3. 往下展示产品如何组织症状、指南内容、解释和下一步建议。\n4. 视觉要简洁、克制、专业，不要做成消费级娱乐工具。\n5. 用结构化区块解释工作流，而不是堆很多漂亮插图。\n6. 不要加入与专业场景无关的夸张交互。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补查询路径和可信感",
+            "content": "继续完善这个临床知识工具首页，让它更接近 Medkit 的产品表达。\n\n请增强：\n1. 首页的查询路径要更明确，让用户知道从什么问题开始。\n2. 解释区和建议区要有专业秩序感，避免像普通博客页面。\n3. 通过卡片、标签、状态或引用块增强“来自指南和流程”的可信感。\n4. 保持视觉冷静，避免过多装饰色和娱乐化交互。\n5. 如果加入后续区块，优先说明适用场景、信息来源和行动路径。\n6. 移动端优先保住搜索入口和核心解释结构。\n\n最后运行 npm run build，并总结当前页面最能建立信任感的两个细节。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 4：Poneglyph",
+        "image": "/case-screenshots/poneglyph-home.png",
+        "imageAlt": "Poneglyph 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Poneglyph 适合用来练“复杂知识如何被拆成更容易追问的结构”。这类产品的关键不是一次把所有信息倒给用户，而是给出主题入口、解释层级和继续探索的可能性。"
+          },
+          {
+            "type": "paragraph",
+            "content": "想要做知识解读工具、研究助手或长内容拆解界面，这种结构比普通文章页更有启发。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://poneglyph-chi.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/content-tool/poneglyph-knowledge-tool"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做知识解读首页",
+            "content": "请创建一个 React + Vite 的知识解读工具首页，主题是帮助用户理解复杂内容、建立主题结构并继续探索，信息组织参考 Poneglyph。\n\n目标：\n- 首页让用户知道可以从主题入口进入知识内容\n- 页面像一个可探索的知识工具，而不是普通文章列表\n- 结构重点是主题、解释层级和继续追问的空间\n\n页面要求：\n1. 首屏要有清楚的主题入口，可以是搜索框、问题输入框或主题卡片。\n2. 页面需要表现“复杂内容会被拆解成更好理解的结构”。\n3. 往下可以展示解释层级、关联模块或继续追问的路径。\n4. 视觉保持安静、理性、偏知识工作台，不要过度营销化。\n5. 不要堆太多卖点卡片，重点是知识入口和信息结构。\n6. 移动端也要保留主题入口的优先级。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补层级和继续探索路径",
+            "content": "继续完善这个知识解读工具首页，让它更接近 Poneglyph 的内容组织方式。\n\n请增强：\n1. 让主题入口、解释层级和延伸探索之间关系更清楚。\n2. 页面要更像“帮助理解复杂知识”的工具，而不是静态信息页。\n3. 可以加入关联主题、问题线索或知识树式结构，但要保持简洁。\n4. 文案和布局要强调帮助用户思考，而不是只展示内容。\n5. 避免重装饰，优先提高内容组织和可追问性。\n6. 移动端要优先保住搜索、主题入口和主解释区块。\n\n最后运行 npm run build，并总结当前页面最像知识工具的两个结构设计。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 5：Postmortem",
+        "image": "/case-screenshots/postmortem-home.png",
+        "imageAlt": "Postmortem 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Postmortem 这一类产品适合学“非结构化信息如何被整理成可执行文档”。它不只是内容展示，而是要把时间线、根因、影响范围和行动项收束成一个清晰结构。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类页面的关键不是让人觉得酷，而是让人觉得“这能帮我把混乱事件整理清楚”。在做复盘工具、研究助手、项目记录器，这个方向很值得拆。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://postmortem-mauve.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/content-tool/postmortem-incident-analysis"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做事故复盘工具首页",
+            "content": "请创建一个 React + Vite 的内容工具首页，主题是把事故线索、时间线、根因和行动项整理成结构化复盘，信息结构参考 Postmortem。\n\n目标：\n- 用户一眼理解这是“把混乱事件整理成复盘文档”的工具\n- 首页需要同时传达收集信息、组织时间线和输出结论的能力\n- 页面像工作流工具，而不是普通博客页\n\n页面要求：\n1. Hero 区域清楚说明产品如何帮助团队完成 postmortem。\n2. 首页可以展示时间线、根因分析和行动项这三种典型输出结构。\n3. 页面整体偏工程团队工具感，简洁、理性、可执行。\n4. 不要做过多品牌营销文案，重点是结构化复盘的路径。\n5. 可以加入输入材料、分析过程和输出结果的流程说明。\n6. 保持信息清楚，不要把页面做成密密麻麻文档列表。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补时间线和行动项结构",
+            "content": "继续完善这个事故复盘工具首页，让它更接近 Postmortem 的工作流表达。\n\n请增强：\n1. 时间线、根因和 action items 之间的逻辑关系要更清楚。\n2. 通过版式和组件让页面更像“可输出复盘”的产品，而不是文章摘要页。\n3. 输入材料、处理中和结果区要有明确阶段感。\n4. 保持工程工具的冷静气质，不要做娱乐化视觉。\n5. 如果加案例演示，优先展示结构化复盘结果，而不是空泛卖点。\n6. 移动端优先保住关键流程和代表性输出结构。\n\n最后运行 npm run build，并总结当前页面最能体现“结构化复盘”的两个地方。"
+          }
+        ]
+      },
+      {
+        "heading": "最后一条经验：知识型产品先解释，再美化",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这类页面最常见的问题是把首页做得很漂亮，但用户仍然不知道产品具体帮他做什么。真正好的知识型、教育型产品首页，第一步不是证明审美，而是降低理解成本。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以在让 Codex 还原这类站点时，最重要的提示不是“高级一点”，而是“把输入、处理和输出讲清楚”。只要结构清楚，页面自然会更像真实产品，而不是漂亮模板。"
+          },
+          {
+            "type": "code",
+            "label": "通用收尾提示词",
+            "content": "请继续优化当前页面，但不要改变它作为知识型产品首页的核心结构。\n\n本轮只做信息表达收尾：\n1. 强化输入、处理和输出三者的关系。\n2. 删除或弱化和理解任务无关的营销型区块。\n3. 确保用户进入页面后，第一眼就知道这个产品解决什么理解问题。\n4. 调整标题、说明、标签和案例区块，让信息层级更清楚。\n5. 视觉上保持简洁可信，不要为了好看牺牲解释效率。\n6. 移动端优先保住主入口、主说明和代表性结果区。\n7. 如果页面仍然像普通官网，请继续减少空泛文案，增加结构化示例。\n\n完成后运行 npm run build，并总结当前页面最能降低理解门槛的两个设计。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "copyable-提示词-for-enterprise-ai-workflows",
+    "sourceUrl": "https://www.uicoding.ai/cases",
+    "translationMode": "guidedTranslation",
+    "title": "5 个企业工作流 AI 网页案例：照着做安全、合规和团队工具界面",
+    "originalTitle": "Copyable 提示词 for enterprise AI workflow websites",
+    "notice": "本文为 UIcoding 基于真实网站与已收录案例整理的中文学习稿。这一组案例更偏企业工作流、安全、合规和团队工具，因此我给出的提示词会更强调任务入口、信息层级、状态反馈和专业场景可信感。",
+    "sections": [
+      {
+        "heading": "为什么企业工具页面更难做",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "企业工作流页面最难的地方，不是把界面做漂亮，而是把复杂流程说清楚。安全、合规、复盘、团队工作台这类产品，如果首页只剩抽象卖点和大标题，用户通常很难立刻理解它到底帮谁解决什么问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类页面真正有价值的地方，是把角色、任务、状态和下一步动作组织得很明确。换句话说，它要像一个真实会被使用的工具，而不是只有品牌语气的宣传页。"
+          },
+          {
+            "type": "code",
+            "label": "通用练习方式",
+            "content": "推荐顺序：\n1. 先定义首页的主要用户是谁。\n2. 先把任务入口、状态区和结果区做清楚。\n3. 第一轮只保证信息层级和操作路径成立。\n4. 第二轮再补图表、面板、标签、状态反馈和视觉细节。\n5. 每轮都要求 Codex 在完成后运行 npm run build，并在成功后停止。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 1：Blacklight",
+        "image": "/case-screenshots/blacklight-home.png",
+        "imageAlt": "Blacklight 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Blacklight 特别适合用来学“复杂安全产品怎么讲清楚自己的系统边界”。它不是简单说自己更安全，而是把 agentic defense、现有 Linux 安全工具链和自动响应能力组织成一个明确叙事。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类案例的重点是：产品概念很复杂，但页面仍然要让用户快速知道它服务什么系统、串联哪些工具、以及能替团队承担哪些防御动作。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://rfxn.com/blacklight"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/other/blacklight-agentic-defense"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做安全工作流首页",
+            "content": "请创建一个 React + Vite 的企业安全产品首页，主题是为 Linux 防御工具链增加 agentic defense layer，信息结构参考 Blacklight。\n\n目标：\n- 首页一眼说明产品面向什么系统、处理什么风险、如何协同现有工具\n- 页面要像真实安全产品，不像普通 SaaS 营销模板\n- 重点是能力边界、流程价值和可信感\n\n页面要求：\n1. Hero 清楚说明产品定位，例如连接现有安全工具并进行推理与响应。\n2. 第一屏要快速提到适用场景、主要系统对象和核心动作。\n3. 往下组织成几个清晰区块：工具链接入、事件分析、自动响应、团队信任。\n4. 界面气质要专业、克制、偏安全产品，不要花哨渐变。\n5. 可以使用系统图、流程块或能力卡片，但不要堆太多营销语。\n6. 不要出现与专业场景无关的装饰性炫技组件。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补系统视图和可信感",
+            "content": "继续完善这个安全产品首页，让它更接近 Blacklight 的专业表达。\n\n请增强：\n1. 把 Linux 工具链、分析层和响应层之间的关系表现得更清楚。\n2. 页面要更像真实安全控制面，而不是停留在概念介绍。\n3. 通过标签、流程图、状态块或结构图区强化可信感和系统边界。\n4. 控制视觉重量，避免过度赛博风和夸张发光。\n5. 如果加入后续区块，优先说明适配对象、工作流程和输出动作。\n6. 移动端优先保证核心定位和主要能力区块可读。\n\n最后运行 npm run build，并总结当前页面最能建立专业信任的两个部分。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 2：MasterBorder",
+        "image": "/case-screenshots/masterborder-home.png",
+        "imageAlt": "MasterBorder 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "MasterBorder 这类产品适合学“复杂规则型业务怎么被解释成可执行流程”。跨境合规本身就很难讲明白，所以首页必须很克制地把问题分类、规则解释和下一步行动组织出来。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它的价值不在于酷炫，而在于让人感觉这个系统真的能帮我穿过复杂流程。对于合规、法律、财务或流程审批类产品，这种表达方式很值得借。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://masterborder.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/saas/masterborder-trade-compliance"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做合规流程首页",
+            "content": "请创建一个 React + Vite 的企业合规产品首页，主题是帮助用户理解跨境贸易、边境规则和所需文件，信息结构参考 MasterBorder。\n\n目标：\n- 首页要把复杂规则翻译成用户可理解的流程\n- 用户进入页面后，能快速知道自己从哪个问题开始\n- 页面像可信的业务工具，不像普通模板站\n\n页面要求：\n1. Hero 清楚说明产品解决的是哪类复杂合规问题。\n2. 第一屏可以有问题入口、流程入口或业务场景分类。\n3. 往下展示规则解释、所需材料、下一步动作或风险提示。\n4. 页面语气要冷静、专业、偏业务支持系统。\n5. 不要堆太多品牌口号，重点是降低规则理解门槛。\n6. 版式要清楚，不要让大量文本压垮界面。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补规则层级和行动路径",
+            "content": "继续完善这个跨境合规产品首页，让它更接近 MasterBorder 的信息表达。\n\n请增强：\n1. 场景分类、规则解释和文件准备之间的关系要更清楚。\n2. 页面要让用户感觉自己可以从复杂问题里找到下一步行动。\n3. 通过标签、流程步骤、清单块或状态提示增强可执行感。\n4. 保持视觉专业和克制，不要把合规工具做成营销海报。\n5. 如果补充后续区块，优先展示典型任务路径。\n6. 移动端优先保住问题入口、说明和关键清单结构。\n\n最后运行 npm run build，并总结当前页面最像业务工具的两个结构设计。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 3：NERIUM",
+        "image": "/case-screenshots/nerium-home.png",
+        "imageAlt": "NERIUM 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "NERIUM 适合学的是“AI 工作空间怎么组织上下文和任务”。这类产品最容易做成泛泛的 AI 助手官网，但真正有价值的首页，应该让用户看见任务、上下文、状态和持续推进的感觉。"
+          },
+          {
+            "type": "paragraph",
+            "content": "在做工作台、协作面板、任务流或 Agent 工作空间，这种结构会比普通聊天框首页更有参考价值。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://nerium-one.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/saas/nerium-ai-workspace"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做 AI 工作空间首页",
+            "content": "请创建一个 React + Vite 的 AI 工作空间首页，主题是组织任务、上下文和生成结果的工作台，信息结构参考 NERIUM。\n\n目标：\n- 首页让用户理解这不是普通聊天工具，而是可持续推进任务的工作空间\n- 页面要体现任务入口、上下文材料和结果承接\n- 界面像真实工作台，而不是通用 AI 着陆页\n\n页面要求：\n1. 第一屏清楚说明产品帮助用户管理任务、上下文和执行状态。\n2. Hero 或主展示区可以出现工作台截图、任务流或上下文面板。\n3. 往下展示任务入口、上下文管理、结果区和后续操作路径。\n4. 界面要安静、清晰、偏生产力工具，不要过度装饰。\n5. 不要把页面做成纯聊天产品介绍页。\n6. 保证信息层级稳定，让用户知道“任务如何被推进”。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补工作台结构和状态感",
+            "content": "继续完善这个 AI 工作空间首页，让它更接近 NERIUM 的产品表达。\n\n请增强：\n1. 任务、上下文材料和结果之间的承接关系要更清楚。\n2. 页面要更像工作台界面，而不是抽象概念页。\n3. 通过面板、状态条、列表、标签或流程块增强“持续推进任务”的感觉。\n4. 视觉上保持生产力工具气质，不要做成重营销页。\n5. 如果补充后续区块，优先展示真实工作流而不是口号。\n6. 移动端优先保住任务入口和代表性面板结构。\n\n最后运行 npm run build，并总结当前页面最像工作空间的两个部分。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 4：Postmortem",
+        "image": "/case-screenshots/postmortem-home.png",
+        "imageAlt": "Postmortem 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Postmortem 在这一组里也很合适，因为它体现的是团队工作流工具如何把混乱事件收束成共识。事故复盘类产品的关键，不是展示很多功能，而是清楚呈现输入线索、时间线、根因和行动项。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类产品适合参考给工程团队、运营团队或项目团队做结构化工作流工具时的首页表达。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://postmortem-mauve.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/content-tool/postmortem-incident-analysis"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做团队复盘工具首页",
+            "content": "请创建一个 React + Vite 的团队工作流工具首页，主题是把事故线索、时间线、根因和行动项整理成结构化复盘，信息结构参考 Postmortem。\n\n目标：\n- 用户一眼理解产品如何把混乱事件整理成团队可执行文档\n- 首页要体现输入、分析和输出三个阶段\n- 页面像真实工程团队工具，而不是普通内容页\n\n页面要求：\n1. Hero 清楚说明产品如何帮助团队完成 postmortem。\n2. 首页展示时间线、根因分析和行动项这几类代表性输出。\n3. 整体界面偏工程工具气质，理性、克制、清楚。\n4. 可以加入流程图或阶段块，但不要做复杂营销叙事。\n5. 文案重点是工作流价值，而不是品牌口号。\n6. 不要让页面看起来像博客或文章模板。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补阶段感和执行路径",
+            "content": "继续完善这个团队复盘工具首页，让它更接近 Postmortem 的工作流表达。\n\n请增强：\n1. 输入线索、时间线、根因和行动项之间的阶段关系要更清楚。\n2. 页面要更像帮助团队协作的系统，而不是静态展示页。\n3. 通过时间轴、卡片、清单或状态块强化执行路径。\n4. 保持冷静、专业的工程工具气质。\n5. 如果加示例内容，优先展示结构化复盘结果。\n6. 移动端优先保住关键阶段区块和代表性输出。\n\n最后运行 npm run build，并总结当前页面最能说明团队工作流的两个设计。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 5：Medkit",
+        "image": "/case-screenshots/medkit-home.png",
+        "imageAlt": "Medkit 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "虽然 Medkit 也可以归到知识工具，但它放在这里很合适，因为它代表了一类更专业、更流程导向的工作场景产品。它不是泛泛解释知识，而是围绕临床问题、指南路径和下一步建议形成一个实用工作流。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这种产品尤其适合练“专业场景的可信首页”怎么做。重点不是华丽，而是让用户觉得这套界面能真正在关键场景里被使用。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://medkit-app.vercel.app/"
+              },
+              {
+                "label": "案例详情",
+                "url": "https://www.uicoding.ai/cases/other/medkit-clinical-guide"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 先做专业工作流首页",
+            "content": "请创建一个 React + Vite 的专业工作流工具首页，主题是帮助用户围绕复杂专业知识快速查询、理解并找到下一步建议，信息结构参考 Medkit。\n\n目标：\n- 首页让用户理解这是高风险专业场景下的支持工具\n- 页面重点是问题入口、解释结构和行动路径\n- 界面要像可信的专业产品，不像泛 AI 工具模板\n\n页面要求：\n1. Hero 清楚说明产品面向什么专业场景、帮助用户完成什么关键任务。\n2. 第一屏可以加入搜索入口、问题入口或典型场景示例。\n3. 往下展示指南解释、结构化建议和下一步动作。\n4. 视觉必须克制、专业、可信，不要娱乐化。\n5. 页面重点是帮助理解和行动，不是炫技。\n6. 保持结构化区块清楚，避免信息混乱。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 补可信结构和建议路径",
+            "content": "继续完善这个专业工作流工具首页，让它更接近 Medkit 的产品表达。\n\n请增强：\n1. 问题入口、解释区和建议区之间的关系要更清楚。\n2. 页面整体要更像专业支持工具，而不是内容站。\n3. 通过引用块、状态标签、结构化清单或流程提示增强可信感。\n4. 保持视觉冷静，不要增加无关装饰。\n5. 如果加入后续区块，优先展示适用场景和行动路径。\n6. 移动端优先保住搜索入口和核心解释结构。\n\n最后运行 npm run build，并总结当前页面最能体现专业可信感的两个细节。"
+          }
+        ]
+      },
+      {
+        "heading": "最后一条经验：企业工具先让用户知道下一步",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "企业工具和工作流产品最怕的一件事，就是页面看上去很高级，但用户完全不知道从哪里开始。只要任务入口、当前状态和下一步动作不清楚，这类产品就会很像概念展示，而不像真实工具。"
+          },
+          {
+            "type": "paragraph",
+            "content": "还原这类站点时，最关键的不是喊“做高级一点”，而是明确四件事：谁在用、要做什么、看什么状态、下一步点哪里。把这四件事讲清楚，页面就会自然像真实产品。"
+          },
+          {
+            "type": "code",
+            "label": "通用收尾提示词",
+            "content": "请继续优化当前页面，但不要改变它作为企业工作流产品首页的核心结构。\n\n本轮只做工作流表达收尾：\n1. 强化任务入口、状态区、结果区和下一步动作之间的关系。\n2. 删除或弱化泛营销型区块，例如空泛卖点卡片和口号式段落。\n3. 确保用户进入页面后，能快速知道这个产品服务谁、处理什么流程。\n4. 调整标签、卡片、流程块和按钮，让它们更像真实工具界面。\n5. 视觉上保持专业、克制和可信，不要为了“高级”增加无意义装饰。\n6. 移动端优先保住主入口、代表性状态和关键说明区块。\n7. 如果页面仍然像宣传站，请继续增加结构化流程示例，减少空话。\n\n完成后运行 npm run build，并总结当前页面最像真实工作流工具的两个部分。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ten-essential-codex-skills",
+    "sourceUrl": "https://developers.openai.com/codex/skills",
+    "translationMode": "original",
+    "title": "Codex 最该先装的 10 个 Skills",
+    "originalTitle": "10 essential skills for Codex",
+    "notice": "本文基于 OpenAI 官方 Codex Skills 文档、plugins 文档、openai/skills 仓库，以及当前 Codex 会话中已启用的 Skills 说明整理。这里的“必用”不是官方排名，而是从真实网站、工具和产品开发流程里筛出来的高频组合。",
+    "hideSourceLink": true,
+    "hideSourceNoticeLink": true,
+    "sections": [
+      {
+        "heading": "先分清：Skill 到底是什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "只靠一次次重写提示词，Codex 只能发挥一半能力。Skill 更像可复用能力包：提示词、说明、脚本、参考资料和固定工作流都能放进去。调用一个 Skill，本质上是让 Codex 进入一套已经整理好的做事方法。"
+          },
+          {
+            "type": "paragraph",
+            "content": "OpenAI 官方文档把 Skill 分成 repo、user、admin 和 system 等几类来源。日常最常见的是三种：Codex 自带的 system Skills；通过插件带进来的 plugin Skills；团队自己维护的自定义 Skills。分清来源，才能判断它是开箱即用、跟插件安装，还是应该放进项目仓库维护。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "官方 Skills 文档",
+                "url": "https://developers.openai.com/codex/skills"
+              },
+              {
+                "label": "官方 Plugins 文档",
+                "url": "https://developers.openai.com/codex/plugins"
+              },
+              {
+                "label": "openai/skills 仓库",
+                "url": "https://github.com/openai/skills"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "安装前先记住 3 条",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一，system Skill 通常开箱即用。openai-docs、imagegen、skill-installer 这类如果已出现在当前 Skills 列表，无需重复安装。第二，Browser、GitHub、Product Design 往往跟随 plugin 出现；缺失时优先安装对应 plugin。第三，impeccable 这类团队自定义或非官方 Skill，最适合放进 repo 的 `.agents/skills/<skill-name>/`，让整个项目共享同一套工作方式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "安装位置不必纠结唯一答案。团队共享 Skill 放 repo 的 `.agents/skills`，跟代码库一起演进；个人长期使用的 Skill 交给 `$skill-installer`，或写入当前 Codex 识别的个人 Skills 目录。安装完成后重启 Codex，避免新 Skill 没被加载。"
+          },
+          {
+            "type": "code",
+            "label": "先记住这两个安装位置",
+            "content": "团队共享 Skill：\n.repo-root/.agents/skills/<skill-name>/SKILL.md\n\n个人长期 Skill：\n~/.codex/skills/<skill-name>/SKILL.md\n\n不手动管理路径时，优先使用 $skill-installer。安装完成后重启 Codex。"
+          }
+        ]
+      },
+      {
+        "heading": "不要一次全装：先按工作流分层",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Skill 不适合看到就全装。更稳的顺序是按工作流分层：先装查官方资料和验证页面的基础能力，再装设计和图片能力，最后才装 GitHub、Skill 创作和 plugin 打包能力。每个 Skill 都要对应一段真实工作，而不是只增加一个名字。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第一层是“查证和验证”：openai-docs 确认官方规则，browser 检查真实页面。第二层是“设计和实现”：product-design:get-context、product-design:image-to-code、impeccable、imagegen 把想法推进成真实 UI。第三层是“协作和沉淀”：github:yeet、skill-installer、skill-creator、plugin-creator 把一次工作变成可提交、可复用、可分发的团队能力。"
+          },
+          {
+            "type": "code",
+            "label": "推荐安装顺序",
+            "content": "第 1 批：先保证不会走偏\n- openai-docs\n- browser:control-in-app-browser\n\n第 2 批：开始做真实页面\n- product-design:get-context\n- product-design:image-to-code\n- impeccable\n- imagegen\n\n第 3 批：开始团队协作\n- github:yeet\n- skill-installer\n\n第 4 批：沉淀自己的方法\n- skill-creator\n- plugin-creator"
+          }
+        ]
+      },
+      {
+        "heading": "1. openai-docs：查模型、查 Codex、查官方做法",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这是最容易被低估的一个 Skill。很多人一遇到 Codex、模型升级、Responses API、skills、plugins 之类的问题，第一反应是去搜二手博客，结果很快就会碰到过期信息。openai-docs 的价值在于，它把 Codex 往官方文档路径上拉，尽量基于 OpenAI 当前公开文档给出结论，特别适合处理“这个能力现在到底怎么用”的问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适用场景包括：确认最新模型建议、核对 Codex 当前支持的 customization 方式、查官方推荐的安装与迁移路径、判断某个说法是否来自旧版本。它一般属于 system Skill；当前 Skills 列表里已有时，直接调用即可。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它更像“官方事实检查员”，不是普通搜索引擎。写 Codex 教程、升级模型、决定 Skill 放在 repo 还是个人目录、制定团队使用规范之前，都适合先查一次。它能避免一个常见问题：文章写得认真，依据却是几个月前已经过期的接口、命令或产品形态。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $openai-docs，帮我确认当前 Codex 官方文档里关于 Skills 的 3 件事：\n1. Skill 的主要作用是什么。\n2. repo 级自定义 Skill 应该放在哪个目录。\n3. Browser 或 GitHub 这类能力更像 Skill 还是 plugin。\n\n请只引用官方文档，不要混入第三方博客。"
+          }
+        ]
+      },
+      {
+        "heading": "2. browser:control-in-app-browser：让 Codex 真正看网页",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "网站、着陆页、后台和交互页面开发中，这个 Skill 几乎必带。它最大的价值不是“打开浏览器”，而是让 Codex 在真实页面里点击、输入、滚动、截图和验证。很多 UI、布局和交互问题，只有进入真实网页才会暴露。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适用场景包括：本地页面改完后的走查、首页截图、按钮可用性验证、移动端布局检查、案例采集时抓取网页首屏图。它来自 Browser plugin；Skills 列表缺失时，先安装 Browser 插件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它和普通构建命令的区别在于：`npm run build` 只能证明代码能编译，不能证明页面好用。很多问题只有浏览器里才看得见，例如中文标题换行难看、卡片高度不一致、按钮被遮住、移动端横向溢出、图片加载失败、弹窗关闭不了。做 UI 任务时，browser 应该放在每轮收尾，而不是等到最后才看。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $browser:control-in-app-browser 打开 http://127.0.0.1:5173/ ，只检查首页首屏。\n\n请完成：\n1. 截一张桌面端首页图。\n2. 判断标题、按钮和主视觉是否在第一屏建立了清晰主次。\n3. 如果存在对齐、遮挡或首屏过空的问题，直接指出来。"
+          }
+        ]
+      },
+      {
+        "heading": "3. impeccable：把“能用”打磨成“像产品”",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "代码能生成，不等于界面像成熟产品。impeccable 这类 UI shaping Skill 的价值，是把视觉层级、布局秩序、按钮、卡片、信息密度、响应式和细节统一收紧。它不是替代设计，而是在现有实现上拉高产品完成度。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适用场景包括官网改版、AI 工具首页、工作台、列表页、详情页和复杂组件收尾优化。impeccable 属于典型团队自定义 Skill。非官方 Skill 最稳的安装方式，是放进 repo 的 `.agents/skills/impeccable/`，让整个项目共用；若托管在 GitHub，也可以交给 `$skill-installer` 从对应 repo/path 安装。"
+          },
+          {
+            "type": "paragraph",
+            "content": "使用 impeccable 时，关键是限制范围。先审查，再只改最影响质感的 2 到 3 个问题。按钮太重、卡片太像模板、标题层级不稳、移动端太挤，都比“加一点高级感”更具体。它适合在页面已经能跑之后使用，不适合在需求还没成形时提前介入。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "[$impeccable] 网站首页现在已经能用了，但还不像专业 AI 工具。\n\n请只做产品化优化：\n1. 调整品牌色、按钮、卡片、字体字号和留白。\n2. 强化标题、功能区和主 CTA 的层级。\n3. 删除像模板站的装饰，保留真正有信息价值的模块。\n4. 移动端优先保证主入口和主功能的完整性。\n5. 改完后用浏览器再检查一次。"
+          }
+        ]
+      },
+      {
+        "heading": "4. product-design:get-context：先把设计问题问明白",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多人让 Codex 做页面时，问题不是实现能力不够，而是一上来就给了一个含糊目标。product-design:get-context 的价值，是在真正开始设计和实现前，把产品对象、用户、主流程、视觉方向和交互范围先补齐。它会强迫任务从“给我做个高级网页”变成“给这个产品做一个什么样的网页”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它适合新页面、新产品、新改版的开头阶段，尤其适合方向已有雏形但需求尚未表达清楚的情况。这个 Skill 来自 Product Design plugin；当前会话缺失时，先安装 Product Design 插件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它解决的是“做之前先问清楚”。很多失败页面不是代码失败，而是 brief 失败：目标用户不清楚，主 CTA 不清楚，页面偏内容站还是工具站不清楚，首屏做品牌表达还是直接操作入口也不清楚。get-context 适合把这些模糊点整理成设计简报，再交给 Codex 或 image-to-code 实现。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $product-design:get-context，先帮我补齐这个任务的设计简报：\n\n目标：做一个面向独立开发者的 AI 工具官网。\n已知：产品可以把文本变成信息图。\n未知：视觉方向、首屏信息结构、CTA 路径、信任建立模块。\n\n请先输出一份简洁但完整的 brief，再决定后续页面应该怎么做。"
+          }
+        ]
+      },
+      {
+        "heading": "5. product-design:image-to-code：把截图或参考图真正落成页面",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这是做内容站、产品站、案例站时很好用的 Skill。它最有价值的地方，是不必把一张优秀网页截图翻译成很长的自然语言描述，而是直接围绕图片实现。参考图质量足够高时，它通常比纯文字描述更稳定，也更容易保住布局比例、视觉节奏和组件关系。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适合它的场景包括：复刻首页、把 Figma 导出图转成可运行页面、照着优秀案例做本地原型、或把已有 mockup 变成真实前端。它同样来自 Product Design plugin，因此安装方式和上一个 Skill 一样，缺失时优先补插件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个 Skill 最怕参考图本身不清楚。完整首屏截图能帮助它判断布局比例、视觉重心和响应式方向；局部截图只能提供有限上下文。实战里最好同时给参考图、目标页面、技术栈、必须复用的组件、不能照搬的地方。目标不是盲目复刻，而是把参考图翻译成适合当前项目的实现。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $product-design:image-to-code，基于我提供的首页截图实现一个响应式网页。\n\n要求：\n1. 保留首屏布局关系和主要视觉比例。\n2. 不要做成营销味太重的着陆页，要像真实 AI 工具。\n3. 按现有代码栈实现，并运行 npm run build。\n4. 桌面和移动端都要检查文字是否溢出。"
+          }
+        ]
+      },
+      {
+        "heading": "6. imagegen：缺图时，别让页面只能挂占位图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多网页做到最后卡住，不是代码问题，而是缺图。imagegen 的价值就在这里。它适合生成真正能放进网页里的位图资产，比如首屏场景图、概念插图、透明背景产品图、氛围图或社媒配图。"
+          },
+          {
+            "type": "paragraph",
+            "content": "最适合的场景是：设计上需要真实 bitmap，而不是 SVG 小图标；案例页缺少头图；需要给某个 AI 产品做更贴题的主视觉；或者要把一张已有图换背景、提清晰度、做风格统一。imagegen 通常是 system Skill，当前会话里可用时直接调用即可。"
+          },
+          {
+            "type": "paragraph",
+            "content": "使用 imagegen 时，要先判断页面缺的是“内容图”还是“装饰图”。如果是产品截图、案例头图、Hero 主视觉，生成图是有价值的；如果只是为了填空而加抽象渐变、发光球、无意义插画，反而会让页面更像模板。好的调用方式应该写清楚画面用途、尺寸比例、产品语境、禁止出现的风格，以及图片放在页面哪个位置。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $imagegen，生成一张适合 AI 信息图产品首页 Hero 的宽屏主视觉。\n\n要求：\n- 主题是把文字转成清晰信息图\n- 风格专业、克制、偏白底产品页\n- 不要抽象渐变，不要卡通插画\n- 构图适合网页首屏背景或右侧主图\n- 输出后告诉我更适合放在哪一屏使用"
+          }
+        ]
+      },
+      {
+        "heading": "7. github:yeet：把本地成果推上 GitHub，而不是停在电脑里",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多项目不是卡在开发，而是卡在发布。github:yeet 这种发布型 Skill 的价值，是把提交、推送、开 draft PR 串成一条稳定出站流程。变更范围、commit message、推送分支、PR 状态都可以按固定节奏处理。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适用场景包括：本地改动已经完成、需要推送远端、需要清晰提交记录、准备交给团队 review。这个 Skill 来自 GitHub plugin，使用前需要确认 GitHub 插件和仓库授权正常。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它不适合在改动还很乱时强行使用。正确节奏是：先完成任务，跑过 build/test，确认 diff 范围合理，再调用 github:yeet 整理提交和 PR。它是“出站发布助手”，不是唯一质量把关人。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $github:yeet，把当前项目里和学习文章相关的修改整理成一次干净提交。\n\n要求：\n1. 先确认变更范围。\n2. 写一条能说明内容主题的 commit message。\n3. 推送当前分支。\n4. 如果合适，创建一个 draft PR。"
+          }
+        ]
+      },
+      {
+        "heading": "8. skill-installer：安装和分发 Skill",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Skill 用得越多，安装和分发越容易变成负担。skill-installer 的价值，是把“去 GitHub 找、复制目录、命名、放进正确路径、避免重名覆盖”这些琐事收掉。它可以列出 curated Skills，也能从 GitHub repo/path 直接安装，适合快速补强个人工作台。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适用场景包括：查看 OpenAI 官方 curated Skills 列表、安装公开 Skill、从 GitHub repo 引入团队维护的 Skill、把实验性 Skill 快速放进个人环境。它本身通常是 system Skill，已出现时直接调用；第三方 repo 需要明确给出 repo/path。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它最大的好处是减少手动复制造成的低级错误。Skill 目录名、`SKILL.md` 路径、个人安装目录、项目安装目录、重启 Codex 这些细节，只要错一个，新 Skill 就可能不出现。优先用 skill-installer 安装和列举，比手动在文件夹里试错更稳。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $skill-installer：\n1. 先列出当前可安装的 curated Skills。\n2. 如果我给出一个 GitHub repo/path，再从那个地址安装 Skill。\n3. 安装完成后提醒我重启 Codex。"
+          }
+        ]
+      },
+      {
+        "heading": "9. skill-creator：把一次有效方法沉淀成团队能力",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "真正让 Codex 越用越强的，不是临时写出几个好提示词，而是把高命中率方法固化成 Skill。skill-creator 的价值就在这里：把目标、触发条件、说明、脚本和引用资料整理成可复用结构，让同一类任务不再从零开始。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它适合流程已经稳定的重复任务，例如 UI 审核、案例抓取、文档整理、API 接入、PR 发布。此时不必继续重复聊天，把方法收进 Skill，后续团队协作会更轻。skill-creator 通常属于 system Skill，开箱即用。"
+          },
+          {
+            "type": "paragraph",
+            "content": "判断流程是否值得做成 Skill，可以看三个信号：第一，同一段提示词已经反复复制；第二，任务有固定输入和固定输出；第三，任务中存在容易忘记但必须遵守的规则。学习文章采集、UI 走查、发布前检查、PR 摘要，都适合沉淀成 Skill。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $skill-creator，帮我把“搜索优秀 AI 网页案例并自动整理成站内内容”的流程写成一个 Skill。\n\n要求：\n1. 明确输入、输出和判断标准。\n2. 需要包含网页截图、链接、产品功能摘要和去重规则。\n3. 说明应该放哪些脚本、哪些参考说明。\n4. Skill 名称要能一眼看出用途。"
+          }
+        ]
+      },
+      {
+        "heading": "10. plugin-creator：当一个 Skill 不够时，把整套能力打包",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "当需求从“写一套方法”升级成“还要带工具、命令、MCP、hooks、marketplace 元数据”时，单个 Skill 就不够用了。这时 plugin-creator 更合适。它不负责写页面，而是搭起一整套 Codex 扩展结构，让 Skills、commands、assets 和插件清单作为完整单位安装和分发。"
+          },
+          {
+            "type": "paragraph",
+            "content": "适用场景包括：团队内部插件、多 Skill 统一打包、围绕某类工作流做 Codex 扩展。它通常也是内置 Skill 之一，直接调用即可。非官方插件场景下，plugin-creator 是稳妥起点，因为它会先把目录、manifest 和必需文件搭对。"
+          },
+          {
+            "type": "paragraph",
+            "content": "可以理解为：Skill 是具体做事方法，plugin 是一组能力的包装和分发单位。沉淀“如何做 UI review”，用 Skill 就够；提供“案例采集 + 截图 + 内容写入 + GitHub 发布”这类组合能力，通常更适合做 plugin。"
+          },
+          {
+            "type": "code",
+            "label": "怎么调用",
+            "content": "请使用 $plugin-creator，帮我创建一个围绕“网站案例采集与整理”的 Codex plugin。\n\n需要：\n1. 至少包含一个 Skill。\n2. 预留未来接入 MCP 或脚本的结构。\n3. 带上基础 plugin manifest。\n4. 命名要适合团队内部长期维护。"
+          }
+        ]
+      },
+      {
+        "heading": "非官方 Skill 怎么装最稳",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "团队维护的 Skill，最推荐直接跟项目一起放在 `.agents/skills`。这样它和代码库一起演化，成员 clone 仓库后也更容易对齐上下文。单独托管在 GitHub 的 Skill，优先交给 `$skill-installer` 处理，减少目录命名、覆盖冲突和安装位置错误。"
+          },
+          {
+            "type": "paragraph",
+            "content": "只有在目录结构很明确时，才建议手动复制 Skill 文件夹。核心原则两条：每个 Skill 都要有自己的 `SKILL.md`；文件夹必须放进 Codex 会扫描的位置。放完之后重启 Codex，否则新 Skill 可能不会立刻出现。"
+          },
+          {
+            "type": "code",
+            "label": "安装非官方 Skill 的 3 种方式",
+            "content": "方式 1：项目级共享\n.repo-root/.agents/skills/my-skill/SKILL.md\n\n方式 2：个人长期使用\n~/.codex/skills/my-skill/SKILL.md\n\n方式 3：让 Codex 代装\n请使用 $skill-installer，从 GitHub repo/path 安装这个 Skill，并告诉我安装完成后是否需要重启 Codex。"
+          }
+        ]
+      },
+      {
+        "heading": "这 10 个 Skill，最值得怎么组合",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "AI 工具官网或产品站，最顺手的一组通常是：product-design:get-context 补 brief，product-design:image-to-code 做页面骨架，impeccable 做产品化打磨，browser 做走查，imagegen 补主视觉。这样定位、设计、实现、改图和验收不会挤进同一个提示词。"
+          },
+          {
+            "type": "paragraph",
+            "content": "长期团队工作流，另一组更重要：openai-docs 查官方做法，skill-creator 把有效经验写成 Skill，plugin-creator 把多套能力打包，skill-installer 负责分发，github:yeet 负责发布。这套链条打通后，Codex 才会从“会回答问题”变成“沿着固定方法持续产出”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "内容站或学习资料站，可以用第三种组合：openai-docs 确认官方资料，browser 打开真实网页和本地页面，imagegen 或截图补视觉素材，impeccable 检查文章卡片和详情页阅读体验，最后用 github:yeet 提交。这条链路覆盖查证、采集、写入、排版和发布。"
+          },
+          {
+            "type": "code",
+            "label": "真实项目里的组合调用顺序",
+            "content": "做一个 AI 工具首页：\n1. $product-design:get-context 先补 brief\n2. $product-design:image-to-code 或 Codex 先实现页面\n3. $imagegen 补主视觉\n4. $impeccable 做设计走查\n5. $browser:control-in-app-browser 做真实页面验证\n6. $github:yeet 提交和开 PR\n\n写一篇学习资料：\n1. $openai-docs 或网页搜索确认来源\n2. Codex 写入内容数据\n3. $browser:control-in-app-browser 打开详情页检查排版\n4. $impeccable 检查阅读体验\n5. $github:yeet 发布"
+          }
+        ]
+      },
+      {
+        "heading": "核心方法",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "真正值得带走的不是 10 个名字，而是判断什么时候该用 Skill。凡是反复出现、流程稳定、容易漏规则的任务，都不该继续靠临时提示词硬撑。先找已有 Skill；没有就安装；再没有就自己写。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更直接的执行顺序是四步：先查官方，再选 skill，再进浏览器或 GitHub 做真实验证，最后把有效做法沉淀成 Skill 或 plugin。照这个顺序走，Codex 会越来越像可训练的工作台，而不是一次性代码助手。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "promptboard-codex-real-developer-case",
+    "sourceUrl": "https://levelup.gitconnected.com/i-let-codex-design-and-test-a-frontend-app-for-me-heres-what-actually-happened-a192b514f27e",
+    "translationMode": "guidedTranslation",
+    "title": "PromptBoard：真实开发者如何用 Codex 做出提示词管理产品",
+    "originalTitle": "I Let Codex Design and Test a Frontend App for Me. Here's What Actually Happened",
+    "notice": "本文基于开发者公开分享的文章、GitHub 仓库、在线演示和提示词文档整理。PromptBoard 本身是一个演示型开发者工具，但产品结构、页面实现、提示词写法和验证流程都是真实可查的。",
+    "hideSourceLink": true,
+    "hideSourceNoticeLink": true,
+    "sections": [
+      {
+        "heading": "PromptBoard 是什么产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "PromptBoard 是一个面向开发者的提示词管理产品原型。它要解决的问题并不抽象，而是很具体：当 Codex、Claude Code、Cursor 这类 AI 编程智能体同时进入工作流时，提示词很容易散落在聊天记录、文档和临时文件里，最后既难复用，也难比较效果。PromptBoard 的目标，是把这些提示词重新组织成一个更像产品而不是笔记的工作界面。"
+          },
+          {
+            "type": "paragraph",
+            "content": "从公开仓库描述来看，这个原型覆盖了几个很核心的操作：保存提示词、按标签或搜索筛选、打开详情查看用途和内容，以及继续草拟新的提示词。也就是说，它不是只做了一个展示型着陆页，而是把真正的产品表面一起做出来了。对于想学 AI 工具产品怎么落地的人来说，这一点比单纯看一个好看的首屏更有价值。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "GitHub 仓库",
+                "url": "https://github.com/sanjaynela/promptBoard"
+              },
+              {
+                "label": "在线演示",
+                "url": "https://promptboard-omega.vercel.app"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "首页为什么看起来像一个真实产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "PromptBoard 的着陆页并不是常见那种只靠大标题和几张功能卡片撑起来的 AI 工具首页。开发者在 README 里明确写了，它想同时展示两件事：一是开发者工具的品牌气质，二是这个产品背后真的存在一个可用的工作台。所以首页不是孤立存在的，它承担的是“先把产品讲清楚，再把用户带到真实工作界面”的作用。"
+          },
+          {
+            "type": "paragraph",
+            "content": "从截图和文档能看出，这个首页走的是深色、高对比、偏高级开发者工具的路线，但它没有只把视觉当装饰。Hero 区域里的浮动 UI 卡片、提示词片段、标签和流程节点，本质上都在提前预告这个产品的核心内容是什么。也正因为如此，图片、文案、按钮和页面氛围之间是连起来的，而不是一张漂亮图加一段泛 AI 文案的拼接。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果把它当作产品案例来看，这个首页最值得学的不是“深色配色”本身，而是它如何把品牌表达和功能表达放进同一个首屏。用户一进来既能感受到产品气质，也能猜到后面会看到怎样的工作台。"
+          }
+        ]
+      },
+      {
+        "heading": "工作台在解决什么工作流问题",
+        "image": "https://raw.githubusercontent.com/sanjaynela/promptBoard/main/public/screenshots/dashboard-page.png",
+        "imageAlt": "PromptBoard 工作台截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "PromptBoard 的工作台不是一个为了凑页面数量而做出来的附属页，它承担的是产品真正开始工作的地方。仓库说明里提到，这里至少要支持 保存、筛选、查看和继续编写提示词。对一个提示词管理工具来说，这四件事基本就是最核心的主流程。"
+          },
+          {
+            "type": "paragraph",
+            "content": "从作者的描述和截图来看，这个界面很像一个真实的中后台工作台：顶部有标题、搜索和过滤项；主区域是提示词列表；旁边有详情面板；同时还保留了新建提示词的入口或表单。这个结构很成熟，因为它把浏览、判断、打开和创建四种动作组织在同一屏里，而不是要求用户在很多页面之间来回跳。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更重要的是，这个工作台延续了首页的视觉语言，但没有被首页的气质拖累。它依然是深色、偏高级的开发者工具风格，不过信息层级、可扫描性和操作效率被放在了更前面。这个平衡很难得，因为很多项目一到工具界面就会只剩风格，没有工作流。"
+          }
+        ]
+      },
+      {
+        "heading": "作者是怎么把 Codex 用进设计流程的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "PromptBoard 最值得反复看的一点，是作者没有把 Codex 只当成“帮我写 React 页面”的工具，而是把整个前端过程拆成了两段。第一段叫 image-guided frontend design，重点不是立刻写代码，而是先通过图像提示词把页面气质、Hero 构图、配色和工作台氛围确定下来。第二段叫 browser-aware iteration，也就是页面出来之后，再回到浏览器里看真实效果，而不是只盯着代码。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这是在解决两个完全不同的问题。前一种问题是“页面没有气质，做出来像默认模板”；后一种问题是“页面已经能跑了，但在真实浏览器里层级不清、间距不顺、移动端拥挤”。把这两件事拆开之后，提示词就会更准确，Codex 的行为也更稳定。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 1 · 生成 3 个首页视觉方向",
+            "content": "请为一个名叫 PromptBoard 的开发者工具生成 3 个首页视觉方向。\n\n产品定位：\n- 面向开发者\n- 用于整理、测试和复用提示词\n- 服务对象包含 Codex、Claude Code、Cursor 这类 AI 编程智能体用户\n\n风格要求：\n- 深色模式优先\n- 像真实 B2B 开发者工具\n- 高级、克制、现代\n- 允许轻微玻璃质感，但不要花哨\n- 可以有少量霓虹点缀\n- 不要卡通，不要插画感过强\n\n请分别给出：\n1. Hero 视觉概念\n2. 产品情绪板方向\n3. 工作台氛围参考\n\n每个方向都要说明：主色、背景氛围、构图重点、适合的页面部位。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 2 · 生成首页 Hero 视觉",
+            "content": "请生成一个适合开发者工具官网 Hero 区域的宽幅视觉参考图。\n\n要求：\n- 产品主题是提示词管理与工作流协作\n- 深色背景，以海军蓝、石墨黑为主\n- 点缀祖母绿或紫色微光\n- 画面里可以出现浮动 UI 卡片、提示词片段、标签、流程节点\n- 气质要接近高级 SaaS 产品图，而不是概念插画\n- 构图适合放在网页首屏右侧或背景中\n\n输出时请同时说明：\n1. 哪些元素适合继续抽成网页组件\n2. 哪些元素只适合做视觉氛围，不建议直接搬进代码"
+          },
+          {
+            "type": "code",
+            "label": "提示词 3 · 按视觉参考落地首屏",
+            "content": "请基于已经确定的 PromptBoard Hero 视觉参考，完成首页首屏实现。\n\n目标：\n- 页面不要只是把图片摆上去，而是让布局、按钮、标签、文字层级和图片氛围形成统一语言\n- 产品要像真实开发者工具，而不是普通模板站\n\n页面要求：\n1. 左侧是明确价值主张、简短说明和两个主按钮。\n2. 右侧或下方承接视觉参考图，不能显得像孤立装饰图。\n3. 页面要强调提示词管理、测试和协作，而不是泛 AI 口号。\n4. 控制卡片数量和装饰层级，避免过度模板化。\n5. 完成后运行 npm run build，并总结首屏最能建立产品感的两个细节。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么浏览器验证是这个案例的关键部分",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "PromptBoard 的 README 和提示词文档里都反复强调一点：页面能写出来，不代表体验已经成立。作者专门把浏览器检查列成一条独立工作流，而且关注的问题很具体，比如移动端布局是否拥挤、标题和搜索的层级是否不够清楚、过滤项是否难用、详情面板和创建表单是不是互相抢空间。"
+          },
+          {
+            "type": "paragraph",
+            "content": "文档里还写到了几类已经通过浏览器检查修掉的问题：增加工作台页头 的留白，让搜索和标题关系更容易读；把 chip 和控件做得更清楚，提升移动端可点性；同时保住详情面板和创建表单，不让页面一挤就只剩列表；以及重新检查首页 Hero、CTA 和 pricing 区域是否真的支持那张视觉图。这里最有用的启发是，浏览器验证不是抽象地“看看有没有 bug”，而是围绕具体体验点做小而准的修正。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 4 · 先做提示词管理工作台",
+            "content": "继续开发同一个项目，请新增一个提示词管理工作台。\n\n目标：\n- 用户可以查看、筛选、打开和草拟提示词\n- 页面要像真实工具界面，不像官网延长页\n\n功能结构：\n1. 顶部有标题、搜索和关键过滤项。\n2. 左侧或主区域展示提示词列表。\n3. 右侧展示详情面板，包含标签、用途、内容和备注。\n4. 页面中要保留一个新建提示词的入口或表单。\n5. 整体延续首页的深色高级气质，但优先保证信息层级和可扫描性。\n\n不要做过度重设计。\n先把核心信息架构和操作路径做稳。\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 5 · 走查工作台真机感",
+            "content": "请运行当前项目，并在浏览器中检查 /dashboard 页面。\n\n重点只看这些问题：\n- 移动端布局是否拥挤\n- 标题、搜索和过滤项的层级是否不够清楚\n- 是否存在太紧、太小或不易点击的控件\n- 列表、详情面板和新建表单之间是否互相抢空间\n- 间距、对比度和对齐是否有明显不顺的地方\n\n只做针对性修复：\n- 不要整页重做\n- 不要改变产品定位\n- 保留当前深色高级开发者工具气质\n\n改完以后再次在浏览器中验证，并总结修了哪 3 个最关键的问题。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 6 · 走查首页首屏与 CTA",
+            "content": "请在浏览器中检查首页，重点关注首屏和 CTA 区域。\n\n请确认：\n1. Hero 图片和页面布局是否真正融为一体。\n2. 标题、说明和按钮是否有明确主次。\n3. 页面在桌面和移动宽度下是否都有足够呼吸感。\n4. 是否存在看起来像模板默认值的区块，例如过多卡片、装饰性标签或不必要的发光效果。\n5. CTA 是否清楚，不要出现多个按钮互相争抢。\n\n请只做有依据的微调，并在改完后重新验证。"
+          }
+        ]
+      },
+      {
+        "heading": "如果需要照着还原这个产品，可以按这 3 步走",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一步，先做首页气质，不要急着一上来把整个产品做完。把价值主张、视觉方向和产品氛围立住之后，再决定工作台长什么样。第二步，把提示词管理主流程压缩成一屏：搜索、筛选、列表、详情、新建，尽量不要拆得太碎。第三步，一定回到浏览器里检查真实页面，特别是标题层级、控件间距、移动端挤压和 CTA 关系。"
+          },
+          {
+            "type": "paragraph",
+            "content": "PromptBoard 这个案例最值得借的，不是某个特定配色或某个单独组件，而是它的节奏感。先把产品讲清楚，再把工作台做出来，最后用浏览器和测试把细节压实。这样做出来的网站，通常会比“一口气让 Codex 做完整站点”更像真实产品。"
+          },
+          {
+            "type": "code",
+            "label": "提示词 7 · 交付前验证清单",
+            "content": "请把当前项目作为一个准备公开展示的前端作品来做最后验证。\n\n请检查：\n- 关键路由是否都能打开\n- 图片和生成资产路径是否正常\n- 键盘 focus 是否可见\n- 主要按钮和筛选是否可操作\n- 着陆页和工作台在移动端是否仍可用\n- Playwright 或现有测试是否覆盖关键流程\n\n如果发现问题，先修最影响展示质量的部分；如果没有问题，请输出一份简洁的发布前检查总结。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "查看仓库",
+                "url": "https://github.com/sanjaynela/promptBoard"
+              },
+              {
+                "label": "打开演示",
+                "url": "https://promptboard-omega.vercel.app"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "核心方法",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个案例最值得带走的方法，可以概括成三步：先用图像提示词确定产品气质，再把着陆页和工作台拆成可实现的页面任务，最后回到浏览器里做走查和验证。不要一开始就让 Codex 同时解决风格、结构、交互和收尾问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更实用的执行原则，就是三句话：一个提示词只解决一个阶段的问题；首页必须服务真实产品界面，而不是单独存在；最后一轮一定看浏览器里的真实效果，而不是只看代码。照这个顺序做，产出通常会更像完整产品，也更容易稳定迭代。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anthropic-company-wide-claude-code-rollout",
+    "sourceUrl": "https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf",
+    "translationMode": "guidedTranslation",
+    "title": "Anthropic 跨团队使用 Claude Code 的落地方法：从个人提效到组织协作",
+    "originalTitle": "How Anthropic teams use Claude Code",
+    "notice": "本文为 UIcoding 基于 Anthropic 官方资料整理的中文学习稿，不是原文全文翻译。调研时没有找到一篇 CEO 亲自撰写、完整介绍“全员使用 Codex 或 Claude Code”的高质量长文；目前最接近且最有实操价值的是 Anthropic 官方《How Anthropic teams use Claude Code》和《Scaling agentic coding across your organization》。因此本文按公司落地方法论重组：如何从个人使用，推进到跨团队协作、质量门禁和组织复用。",
+    "sections": [
+      {
+        "heading": "先说结论：全员使用不是人人开一个聊天窗口",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "公司级 AI Coding 落地，最容易走偏的地方，是把它理解成“给每个人发一个 Codex 或 Claude Code 账号”。账号只是起点，真正困难的是：每个人给 Agent 的上下文是否一致、生成的代码是否能被 review、经验是否能复用、风险是否有边界、结果是否能度量。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Anthropic 官方资料的价值，正在于它不是只讲工程师怎么写代码，而是展示 Claude Code 如何进入数据基础设施、产品开发、安全、推理、API、增长、设计、研究和法务等团队。换句话说，AI Coding 不只是 IDE 里的插件，而是一套跨团队工作方式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果要把这套经验迁移到自己的团队，可以把目标定成一句话：让 AI 能在正确上下文里完成低风险高频任务，让人类负责目标、边界、审查和最终判断。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "Anthropic 跨团队案例 PDF",
+                "url": "https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf"
+              },
+              {
+                "label": "组织级落地 PDF",
+                "url": "https://resources.anthropic.com/hubfs/Scaling%20agentic%20coding%20across%20your%20organization.pdf"
+              },
+              {
+                "label": "Claude Code 最佳实践",
+                "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "第一阶段：先选高频低风险场景",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "成熟团队不会一开始就让 AI 接管核心业务链路。更稳的做法是先从高频、低风险、可验证的任务开始，例如解释陌生代码、整理变更摘要、写单元测试、修小 bug、迁移样式、生成文档、跑本地检查、做 PR 初审。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这些任务有三个共同点：上下文容易给清楚，结果容易被验证，失败成本相对低。等团队熟悉了提示词、上下文文件、权限和 review 方式，再逐步进入更复杂的功能开发。"
+          },
+          {
+            "type": "code",
+            "label": "团队试点场景选择模板",
+            "content": `请帮我们设计一个 Claude Code / Codex 试点范围。
+
+团队背景：
+- 团队类型：
+- 代码库规模：
+- 当前最耗时的开发环节：
+- 当前最常见的质量问题：
+
+请按以下维度评估 10 个适合试点的 AI Coding 场景：
+1. 任务描述
+2. 适合使用 AI 的原因
+3. 所需上下文
+4. 人类必须审查的内容
+5. 验证方式
+6. 风险等级：低 / 中 / 高
+7. 是否适合作为第一批试点
+
+请优先推荐低风险、高频、容易验证、能立刻改善团队体验的任务。`
+          }
+        ]
+      },
+      {
+        "heading": "第二阶段：建立共享上下文，而不是反复口头交代",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "个人使用 AI Coding 时，很多上下文都在脑子里；团队使用时，隐性知识必须写下来。Claude Code 的 CLAUDE.md、Codex 的 AGENTS.md、项目 README、架构文档、测试命令和代码规范，都是让 Agent 稳定工作的基础。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类文件不应该写成空泛说明，而应该回答 Agent 真正会犯错的问题：哪些目录可以改，哪些不能改；改完必须跑什么命令；UI 要遵循什么设计系统；新增依赖是否需要批准；安全相关代码谁来审。"
+          },
+          {
+            "type": "code",
+            "label": "项目级 AI Coding 规则模板",
+            "content": `# AI Coding Project Rules
+
+## 项目目标
+这个仓库用于：
+主要用户是：
+当前最重要的产品目标是：
+
+## 目录职责
+- src/pages：页面级入口
+- src/components：复用组件
+- src/content：长文章和学习资料
+- src/data：列表、导航和静态数据
+- public：图片和静态资源
+
+## 允许 Agent 修改的范围
+- 普通内容任务：只改 src/content、src/data、public assets
+- UI 任务：可以改相关页面、组件和 CSS
+- 逻辑任务：只能改与任务直接相关的函数和测试
+
+## 禁止默认修改
+- 登录、权限、支付、部署配置、环境变量
+- 无关文件格式化
+- 大范围重构
+- 未经确认新增重量级依赖
+
+## 必须验证
+- 内容或数据改动：npm run build
+- 逻辑改动：npm run test 或对应测试命令
+- UI 改动：本地页面走查，检查桌面端和移动端
+
+## 最终回复格式
+请说明：
+1. 改了哪些文件
+2. 做了什么行为变化
+3. 跑了哪些验证
+4. 有哪些剩余风险`
+          }
+        ]
+      },
+      {
+        "heading": "第三阶段：把好提示词沉淀成命令、Skill 和模板",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "团队里最浪费的事情，是每个人都重新发明一遍提示词。Anthropic 的资料里反复强调复用模式：把稳定工作流沉淀成 slash command、skill、脚本、检查清单和项目规则。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这一步的目标不是收集花哨提示词，而是把团队最常做的动作标准化：总结变更、修 issue、写测试、生成 PR 摘要、做本地 review、检查 UI、发布前验证。每个模板都应该包含目标、上下文、边界、验证和交付格式。"
+          },
+          {
+            "type": "code",
+            "label": "可沉淀为 slash command 的本地审查提示词",
+            "content": `你现在是我们团队的本地代码审查助手。
+
+请只做 review，不要直接修改文件。
+
+审查范围：
+- 当前 git diff
+- 与本次改动直接相关的文件
+
+请重点检查：
+1. 是否偏离需求目标
+2. 是否修改了无关文件
+3. 是否破坏现有 API、路由、数据结构或样式约定
+4. 是否缺少必要测试或验证
+5. 是否有明显安全、性能、可访问性或移动端问题
+6. 是否有可以删除的重复代码或临时代码
+
+输出格式：
+- 先列严重问题，按 P0 / P1 / P2 排序
+- 每个问题必须包含文件路径、具体位置、原因和建议修复方式
+- 如果没有发现问题，明确说“未发现阻塞问题”
+- 最后列出建议补充的验证命令
+
+不要为了显得有发现而编造问题。`
+          }
+        ]
+      },
+      {
+        "heading": "第四阶段：按角色分工，而不是所有人同一种用法",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "公司级推广时，不同角色对 AI Coding 的用法完全不同。工程师关心代码修改和验证；Tech Lead 关心架构边界和 review；PM 关心需求是否能变成可执行 Spec；设计师关心页面是否符合规范；安全和法务关心数据边界、依赖、许可证和敏感信息。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Anthropic 跨团队案例最值得借鉴的一点，是它把 Claude Code 用在非传统编程场景里：设计团队可以用它快速做原型，法务团队可以用它处理结构化文本和内部流程，安全团队可以用它辅助分析和自动化。这说明“全员使用”不是全员写代码，而是每个角色把自己的重复工作流程 agent 化。"
+          },
+          {
+            "type": "code",
+            "label": "角色分工表",
+            "content": `公司推广 AI Coding 时，每个角色应该有明确产出物：
+
+业务负责人 / Sponsor：
+- 定义引入 AI Coding 的业务目标
+- 明确试点范围和成功指标
+- 批准安全和数据边界
+
+AI Coding Owner：
+- 维护提示词 library、skill library、项目规则模板
+- 组织培训和复盘
+- 跟踪采用率、质量和效率指标
+
+PM：
+- 输出 AI-ready Spec
+- 明确目标、非目标、验收标准和边界
+- 参与最终验收
+
+设计师：
+- 输出截图、设计规范、组件状态和设计 QA 清单
+- 审查 AI 生成页面的层级、响应式和一致性
+
+Tech Lead：
+- 定义架构边界、允许修改范围和验证命令
+- 负责高风险模块审查
+- 拆分适合 Agent 执行的小任务
+
+工程师：
+- 提供上下文、执行任务、审查 diff、跑验证
+- 对最终代码质量负责
+
+QA：
+- 把验收经验变成测试清单
+- 设计回归测试和手动验收路径
+
+安全 / 法务：
+- 定义敏感数据、许可证、新依赖和高风险代码审查规则`
+          }
+        ]
+      },
+      {
+        "heading": "第五阶段：用黑客松和内部案例推动采用",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "工具推广不能只靠发通知。更有效的方式是组织短周期实践：比如 2 小时 workshop、半天 hackathon、每周一次 AI coding clinic。让团队把真实任务带来，当场拆上下文、写模板、跑验证、复盘失败案例。"
+          },
+          {
+            "type": "paragraph",
+            "content": "内部案例比外部宣传更有说服力。比如某个同事用 Claude Code 把老页面测试补齐、把本地脚本自动化、把一个重复运营流程变成命令，这些都应该沉淀到团队资料库里。推广的核心不是“AI 很强”，而是“我们团队这个真实问题已经被它稳定解决”。"
+          },
+          {
+            "type": "code",
+            "label": "半天 AI Coding Hackathon 流程",
+            "content": `目标：让团队在半天内产出可复用的 AI Coding 工作流，而不是只体验工具。
+
+准备阶段：
+1. 每人带一个真实但低风险的任务
+2. 提前准备本地环境和验证命令
+3. 准备项目规则文件模板
+
+第 1 小时：任务拆分
+- 写清目标、非目标、允许修改范围
+- 列出相关文件
+- 明确完成标准
+
+第 2 小时：Agent 执行
+- 让 Agent 先读代码并给计划
+- 人类确认计划后再允许修改
+- 每次只推进一个小任务
+
+第 3 小时：验证和修正
+- 跑 build / test / lint
+- 做本地页面或功能检查
+- 记录 Agent 犯错点
+
+第 4 小时：沉淀
+- 把成功提示词整理成模板
+- 把失败原因写进项目规则
+- 选出 3 个可复用 slash command 或 skill
+
+最终产出：
+- 一个已验证的小改动
+- 一个可复用提示词
+- 一个项目规则更新
+- 一条经验复盘`
+          }
+        ]
+      },
+      {
+        "heading": "第六阶段：设置质量门禁和安全边界",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "AI Coding 让代码产生速度变快，也会让错误产生速度变快。公司级落地必须把质量门禁写进流程：所有 AI 生成代码都要 review；高风险模块需要高级工程师或安全负责人审核；新增依赖要检查；敏感信息不能输入外部工具；构建和测试必须可复现。"
+          },
+          {
+            "type": "paragraph",
+            "content": "最健康的状态不是限制大家不用，而是让大家知道什么时候可以放心用、什么时候必须升级审查、什么时候完全不能用。边界越明确，使用越稳定。"
+          },
+          {
+            "type": "code",
+            "label": "AI Coding 发布前检查清单",
+            "content": `请对本次 AI 辅助改动做发布前检查。
+
+检查项：
+1. 需求目标是否完成
+2. 是否改动了无关文件
+3. 是否引入新依赖
+4. 是否触碰权限、支付、安全、数据迁移、环境变量
+5. 是否有敏感信息、密钥、客户数据进入代码或日志
+6. 是否通过 build / test / lint
+7. 是否需要补充手动验收
+8. 是否需要安全、法务或架构负责人 review
+
+请输出：
+- 可以发布 / 暂不建议发布
+- 阻塞问题
+- 非阻塞风险
+- 已完成验证
+- 建议补充验证`
+          }
+        ]
+      },
+      {
+        "heading": "第七阶段：用指标判断是否真的变好",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "不要只用“生成了多少代码”衡量 AI Coding。代码量可能增加，但交付质量不一定变好。更值得看的指标是：需求到上线周期、PR 等待时间、review 返工次数、测试覆盖变化、缺陷逃逸、部署频率、开发者满意度和新人上手时间。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果 AI 只是让个人写代码更快，却让 review、测试、返工和线上问题变多，那它没有真正提升组织效率。组织级落地的目标，是让整个交付系统更顺，而不是让某一个环节显得更快。"
+          },
+          {
+            "type": "code",
+            "label": "AI Coding 度量看板",
+            "content": `建议每两周复盘一次以下指标：
+
+采用指标：
+- 活跃使用人数
+- 使用场景分布
+- 复用提示词 / skill 数量
+- 新增项目规则数量
+
+效率指标：
+- 需求到 PR 时间
+- PR 到合并时间
+- 审查等待时间
+- 重复任务耗时
+
+质量指标：
+- 构建失败率
+- 测试失败率
+- 审查返工次数
+- 缺陷逃逸数
+- 高风险改动占比
+
+体验指标：
+- 开发者满意度
+- 新人上手时间
+- 团队认为最有价值的 3 个 AI 工作流
+- 团队认为最危险的 3 个 AI 使用方式`
+          }
+        ]
+      },
+      {
+        "heading": "可以直接照搬的 30 天落地计划",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果团队还没有系统使用 Codex 或 Claude Code，可以从 30 天试点开始。第一周不追求产出，只建立边界；第二周做低风险任务；第三周沉淀模板；第四周评估是否扩大范围。"
+          },
+          {
+            "type": "code",
+            "label": "30 天公司级 AI Coding 试点计划",
+            "content": `第 1 周：建立规则
+- 选 1 到 2 个试点团队
+- 明确允许和禁止使用场景
+- 建立 CLAUDE.md / AGENTS.md
+- 建立验证命令清单
+- 选定 5 个低风险任务类型
+
+第 2 周：真实任务试点
+- 每位参与者完成 2 个低风险任务
+- 每个任务必须有人工 review
+- 记录 Agent 犯错点和提示词改进
+- 每天 15 分钟同步经验
+
+第 3 周：沉淀复用资产
+- 整理 10 个可复用提示词
+- 生成 3 到 5 个 slash command 或 skill
+- 更新项目规则文件
+- 建立本地 review 和发布前检查模板
+
+第 4 周：评估和扩展
+- 统计采用率、效率、质量和体验指标
+- 选出最有效的 3 个场景
+- 列出暂不适合 AI 参与的高风险场景
+- 决定是否扩展到更多团队
+
+试点成功标准：
+- 至少 3 个工作流可稳定复用
+- 没有明显质量下降
+- 团队能说清楚什么时候该用、什么时候不该用
+- 经验能被新成员复制`
+          }
+        ]
+      },
+      {
+        "heading": "最后的判断：CEO 可以推动，但方法论必须由团队长出来",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "CEO 或管理层可以定义方向：AI Coding 是组织能力，团队需要认真采用。但真正能落地的部分，必须从团队日常工作长出来：哪些任务适合 Agent，哪些上下文最关键，哪些错误最常见，哪些验证最可靠。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以一篇 CEO 文章即使很鼓舞，也不能替代团队自己的 playbook。更成熟的路径是：领导层给目标和边界，Enablement Owner 沉淀方法，Tech Lead 守住架构和质量，工程师把真实任务跑通，QA 和安全把门禁制度化。这样 AI Coding 才不会停留在个人技巧，而会变成公司可复制的协作系统。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pallyy-74k-mrr-solo-founder-retrospective",
+    "sourceUrl": "https://www.indiehackers.com/post/heres-how-i-ve-built-pallyy-to-74k-mrr-solo-a5d9c78766",
+    "translationMode": "guidedTranslation",
+    "title": "从自学写代码到 $74K MRR：Pallyy 一人公司复盘",
+    "originalTitle": "Here's how I've built Pallyy to $74K MRR solo.",
+    "notice": "本文基于 Tim B 在 Indie Hackers 的创始人复盘，以及 Pallyy 当前官网信息整理。文中涉及的学习周期、MVP 时间、首次获客方式、功能取舍和 $74K MRR 规模，均来自作者公开分享；当前产品定位和官网表达，则对照了 Pallyy 官方网站。",
+    "sections": [
+      {
+        "heading": "Pallyy 现在是什么产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Pallyy 现在是一个 social media management platform。官网首屏的表述非常直接：用一个简单日历统一完成 plan、approve、schedule 和 publish。它服务的对象也很明确，不是只做给个人博主的小工具，而是 agencies、brands 和 creators 都能用的社媒协作平台。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这点很重要，因为 Tim B 最早做出来的并不是今天这个完整产品。他一开始做的只是一个很基础的 Instagram analytics MVP。也就是说，Pallyy 后来的结果并不是因为一开始就想清楚了全部产品形态，而是一路沿着真实用户需求，从 analytics 慢慢长成 scheduling + approval + publishing 的更完整平台。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "产品网站",
+                "url": "https://pallyy.com/"
+              },
+              {
+                "label": "创始人复盘原文",
+                "url": "https://www.indiehackers.com/post/heres-how-i-ve-built-pallyy-to-74k-mrr-solo-a5d9c78766"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "这篇复盘最打动人的地方",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Pallyy 这篇复盘最厉害的地方，是它把“高收入一人公司”的故事讲得非常不神话。Tim B 在文章开头就写得很简洁：今天是他作为 solo founder 的最后一天，然后开始回头复盘自己是怎么把 Pallyy 做到 $74K MRR 的。接着他没有先讲增长技巧，而是先讲了最基础的一步：自己先花了大约 6 个月学习 HTML、CSS、JS 和 Nuxt。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这让整个故事一下子可信了很多。很多人看到结果会以为它是一个天生会写代码的人做成的产品，但作者公开给出的第一步恰恰是“先学会写代码”。而且他的学习方式也很朴素：下班后每天晚上花几个小时，用 CodeCademy 这种免费学习平台慢慢补。它提醒人的地方在于，很多长期有效的一人公司，不是靠一夜之间的技术跃迁，而是靠一个人愿意持续把基础补起来。"
+          }
+        ]
+      },
+      {
+        "heading": "真正开始赚钱前，Pallyy 长什么样",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "学完基础以后，Tim B 花了 30 天做出第一个 MVP。这个 MVP 并不是今天官网上的完整社媒平台，而是一个 Instagram analytics 平台。它当时的“差异点”也很具体：用户可以把自己的 Instagram analytics 分享给其他人。作者自己也承认，这个产品非常基础。"
+          },
+          {
+            "type": "paragraph",
+            "content": "接着是一个很真实的上线场景：他没有观众，Product Hunt 也几乎没有带来回应。原文里写得很直接，launching was un-eventful，on Product Hunt didn't do well and got almost no response. 这段很值得记，因为它说明即使后来做到 $74K MRR，最开始也不是靠一个漂亮 launch 一炮而红。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第一批付费用户是怎么来的？作者给的答案非常具体：一个朋友手里有个免费的 IG analytics 工具，把那个入口直接重定向到了他的产品，最后给他带来了大约 100 个每月 5 美元的客户。也就是说，Pallyy 最早的付费起点，不是复杂增长系统，而是一个极其具体的流量转接。"
+          }
+        ]
+      },
+      {
+        "heading": "真正让产品长起来的，不是首个功能，而是承认它没用",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Pallyy 复盘里最值得反复看的一个瞬间，是作者主动承认自己一开始做的核心差异点没人要。那套“分享 Instagram analytics”功能，原文里说得很重：absolutely nobody wanted。于是他把它砍掉，转而把精力重新集中到 数据看板本身。"
+          },
+          {
+            "type": "paragraph",
+            "content": "很多一人项目做不下去，往往不是因为没人用，而是作者不愿意承认自己最初最在意的功能并不重要。Tim B 的处理方式很干脆：砍掉，回到真正被使用的部分。这种判断力后面继续出现。文章里还写到，之后差不多有近 2 年时间，增长几乎完全停滞。用户同时想要 scheduling 和 analytics，但那时 Instagram scheduling 因为 API 限制还做不了。也就是说，产品需求已经指向下一步了，但外部条件没跟上。"
+          },
+          {
+            "type": "paragraph",
+            "content": "从复盘口径来看，Pallyy 后面之所以能继续长，关键并不是把旧 MVP 优化得更漂亮，而是顺着真实需求把产品往 scheduling platform 的方向推。这也是它后来能从一个 analytics 小工具，变成今天这种完整社媒工作台的原因。"
+          }
+        ]
+      },
+      {
+        "heading": "做到 $74K MRR，这个故事最值得学的不是“增长技巧”",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果只看标题，很容易把这篇文章理解成“如何做到 $74K MRR”的增长帖。但真正读进去以后，会发现它更像是一篇关于长期取舍的复盘。作者并没有给出一串短平快的 marketing tricks，而是把增长前面那些更难熬的阶段老实写出来：先学代码、30 天做 MVP、Product Hunt 失利、靠一个朋友的工具导流拿到前 100 个客户、发现差异功能没人要、经历长时间平台期，再慢慢把产品往更大的需求上挪。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这也是为什么它比很多“XX 天做到 $10k MRR”的帖子更值得学。因为大多数独立开发者真正会遇到的，不是某个广告投放技巧，而是：第一个产品形态对不对，没人理你的时候怎么办，前 100 个付费客户从哪来，哪些功能该砍，长时间不增长时还能不能继续做下去。Pallyy 这篇文章没有回避这些问题，所以它的参考价值很高。"
+          }
+        ]
+      },
+      {
+        "heading": "如果只带走 3 个方法，应该带走什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一，不要等“技术准备完全好了”才开始做产品，但也不要轻视学习基础代码的价值。Tim B 先花 6 个月补 HTML、CSS、JS 和 Nuxt，然后才进到 30 天 MVP，这个顺序并不花哨，却很稳。第二，前 100 个客户的来源要尽量具体。对他来说，那不是宏大的 launch，而是一个朋友已有工具的导流。第三，最重要的功能不一定是你最初以为的那个功能。没人要的功能，越早砍越好。"
+          },
+          {
+            "type": "paragraph",
+            "content": "把这 3 点连起来，其实就是一条很朴素的独立开发路线：先把能力补到能交付，再做一个非常窄的 MVP，用一个具体入口拿到最早的付费用户，然后顺着真实需求继续长。Pallyy 现在看起来像一个成熟平台，但它最初的起点其实非常小。也正因为起点小、反馈真、取舍狠，它才有机会一路长到今天这个收入规模。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ivabot-solo-founder-first-stripe-retrospective",
+    "sourceUrl": "https://www.indiehackers.com/post/im-a-solo-founder-it-took-me-9-months-and-at-least-3-stack-rewrites-to-ship-my-saas-a66b5fbe33",
+    "translationMode": "guidedTranslation",
+    "title": "9 个月、3 次重写、第一笔 Stripe：IvaBot 一人公司 AI Coding 复盘",
+    "originalTitle": "I'm a solo founder. It took me 9 months and at least 3 stack rewrites to ship my SaaS.",
+    "notice": "本文基于 Galyna Arikh 在 Indie Hackers 的创始人复盘，以及 IvaBot 当前官网信息整理。文中涉及的时间线、重写过程、成本变化和第一笔 Stripe 收款，均来自作者公开叙述；产品定位、定价方式和功能结构，则对照了当前官网内容。",
+    "sections": [
+      {
+        "heading": "IvaBot 现在是什么产品",
+        "image": "/learn-screenshots/ivabot-og.png",
+        "imageAlt": "IvaBot 官网预览图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "IvaBot 是一个面向 small business 和 content creators 的 AI SEO 工具。作者在复盘里把它概括成 3 个模块：technical audit、content coverage 和 content generation。官网当前也延续了这个定位，强调它不仅帮你查站点 SEO 问题，还会找关键词机会、写内容，并检查内容是否更容易被 Google 排名、被 AI 工具引用。"
+          },
+          {
+            "type": "paragraph",
+            "content": "从当前官网可读到的信息看，它的商业模式并不是重订阅，而是 pay-as-you-go。首页 schema 和 FAQ 里都写得比较清楚：入门包从 5 美元开始，没有订阅，按 credits 使用。这一点和作者在复盘里强调的方向是一致的，她想做的不是另一个每月 50 到 300 美元起步的 SEO 工具，而是一个更适合 solo founders 和小团队的小额入口产品。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "产品网站",
+                "url": "https://ivabot.xyz"
+              },
+              {
+                "label": "创始人复盘原文",
+                "url": "https://www.indiehackers.com/post/im-a-solo-founder-it-took-me-9-months-and-at-least-3-stack-rewrites-to-ship-my-saas-a66b5fbe33"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "为什么这篇复盘值得看",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这篇复盘最有价值的地方，在于它不是“我用 AI 两周做到 1 万 MRR”那类故事。Galyna Arikh 在文中说得非常坦白：她不是开发者，也不是 CSS 人。她带进来的背景是 15 年 SEO 经验、一些项目管理经验，以及数字插画兴趣；后端、数据库、webhooks 这些技术点，基本都是第一次碰，而且是边做边学。"
+          },
+          {
+            "type": "paragraph",
+            "content": "她对 AI 的定义也很朴素，不是把 AI 写成万能代工厂，而是明确说“AI was my teacher”。前六个月，ChatGPT 主要在教她提示词、HTTP 请求、JSON 解析、webhooks 和真实数据库怎么接；后面切到 Claude 之后，开发速度才明显提起来。这种表述很重要，因为它更接近多数独立开发者真正会遇到的过程：不是一句话生成产品，而是借 AI 把自己带进能做产品的能力区间。"
+          },
+          {
+            "type": "paragraph",
+            "content": "另外，它已经跨过了最关键的一道坎。作者在文章摘要和正文里都写到：距离发文往前两周，她拿到了第一笔 Stripe 付款。对创业复盘来说，这个信号非常重要，因为它意味着这不再只是一个练习项目，而是一个已经开始被真实用户付费验证的产品。"
+          }
+        ]
+      },
+      {
+        "heading": "3 次重写到底重写了什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "作者把自己的前两个方案都写得很清楚。Plan A 是 Telegram chatbot，但她很快意识到真正会用这种交互形态的人大概只有 10 个左右，所以这条路很早就被放弃了。这个判断很重要，因为它说明第一轮失败并不是技术失败，而是产品形态不成立。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Plan B 是 Typebot chat + Webflow landing 的组合。她在 Typebot 免费层里把整条 decision tree 搭起来，并把 Webflow、Memberstack、Stripe、Supabase、SerpDev 和 Make 串成了一套能工作的 no-code / low-code 流水线。也正是在这一轮，她学会了很多最基础但最关键的工程能力：怎么写更有效的提示词，怎么组织逻辑，怎么发 HTTP 请求，怎么解析 JSON，怎么接 webhooks，怎么和真实数据库打交道。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但这一轮的问题是成本。作者给出的数字非常直白：在还没卖出任何东西之前，月成本已经接近 200 美元，这对一个刚起步的一人项目来说不可持续。于是她进入第三轮真正意义上的重写：把开发工作切到 Claude，重建 backend，把文件放上 GitHub，去掉 Typebot，去掉 Memberstack，改用 Supabase Auth，同时把数据供应商从 SerpDev 换成按量付费、价格更低的 DataForSEO。做完这一轮之后，月成本降到大约 40 美元，差不多是 5 倍改善。"
+          }
+        ]
+      },
+      {
+        "heading": "它是怎么从练习项目变成付费产品的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "作者在正文里给出了一个非常清楚的时间点：IvaBot 在 2026 年 4 月 29 日带着 live Stripe 正式上线。到她在 Indie Hackers 发文时，第一笔付费交易已经发生在两周前。这个时间点很值得记，因为它说明前 9 个月的工作并不是一直在空转，最后确实落到了“可收钱”的状态。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更有意思的是，作者没有把增长写得很夸张。她提到当时的几个真实信号包括：一篇关于 ChatGPT、Perplexity、Claude 和 Google AI 会引用不同来源的博客文章开始有点 viral；Google Search Console 已经出现最初的 impressions 和 clicks；产品本身已经形成 3 个模块、5 美元起步、按次付费的基础商业结构。换句话说，这个项目不是靠一个爆款 launch 一步到位，而是在“能上线”“能收款”“有人开始看到”这几个节点上慢慢跨过去。"
+          }
+        ]
+      },
+      {
+        "heading": "作者自己承认，如果重来会更早做什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这篇复盘最实在的一段，是作者最后直接写了自己会怎么重来。她给出的答案很具体：GitHub repo 应该从第一天就建；不该再走 no-code stack；应该更早跳过 Memberstack，把这笔钱直接花在 Claude credits 上，然后把 auth properly build 好；安全问题也该从第一天考虑，而不是最后再补；同时，应该更早用 Claude。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这几句看起来平常，其实信息量很大。它说明她不是在事后神化自己的路径，而是已经能分辨：哪些工具只是让自己更快启动，哪些工具会在后面拖垮成本和维护；哪些看似省事的 no-code 选择，最后会变成长期负担；以及什么时候应该把预算从软件堆栈转向真正提高产出的 AI 能力。对一人公司来说，这比“选什么最先进框架”更有现实意义。"
+          }
+        ]
+      },
+      {
+        "heading": "这个案例最值得带走的方法",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "IvaBot 这个案例真正值得带走的，不是某个单点技术，而是它展示了一条非常真实的 AI Coding 创业路径：先用最容易启动的形态验证方向，再在成本和控制权之间做取舍，然后把 AI 从“代写工具”用成“学习加速器”。作者没有把重写看成纯浪费，而是把每一轮重写都当成降低成本、补能力和逼近真实用户的过程。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果要把这篇复盘压缩成一句执行建议，那就是：不要只盯着开发速度，要同时看产品形态、月成本、支付是否跑通，以及自己有没有在这个过程中获得更强的独立交付能力。对一人公司来说，第一笔 Stripe 收款和每月成本从 200 美元降到 40 美元，往往比“用了多少前沿名词”更说明问题。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "figma-ai-coding-design-system-mcp-workflow",
+    "sourceUrl": "https://engineering.monday.com/how-we-use-ai-to-turn-figma-designs-into-production-code/",
+    "translationMode": "guidedTranslation",
+    "title": "设计师如何用 Figma + AI Coding 保证界面还原：monday.com 的 Design-System MCP 经验",
+    "originalTitle": "How We Use AI to Turn Figma Designs into Production Code",
+    "notice": "本文为 UIcoding 基于 monday.com 工程团队文章和 Figma 官方 MCP 工作流整理的中文学习稿，不是原文全文翻译。核心参考：monday.com《How We Use AI to Turn Figma Designs into Production Code》、Figma 官方《Inside Figma: The workflow we use to turn design exploration into developer-ready code with MCP》。",
+    "sections": [
+      {
+        "heading": "为什么本文值得设计师看",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多设计师第一次尝试 AI Coding，会把 Figma 链接、截图或页面说明丢给 Cursor、Claude Code 或 Codex，然后期待它自动生成一个高度还原的页面。结果通常是：第一眼还像，但细节不对；颜色被硬编码；字体、间距、圆角、状态、组件用法都偏了；代码也没有使用团队的设计系统。"
+          },
+          {
+            "type": "paragraph",
+            "content": "monday.com 的经验很有价值，因为他们没有把问题简化成“让 AI 看懂 Figma”。他们真正解决的是：如何让 AI 在生成代码时理解 monday design system，包括组件、props、tokens、布局规则、可访问性和代码示例。这样 AI 不是凭感觉还原界面，而是在团队既有系统里实现界面。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这对设计师特别重要。因为界面还原不是只看视觉相似度，而是看生成结果是否符合设计系统、是否可维护、是否能被工程团队接受、是否能在后续迭代里继续稳定复用。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "monday.com 工程团队文章",
+                "url": "https://engineering.monday.com/how-we-use-ai-to-turn-figma-designs-into-production-code/"
+              },
+              {
+                "label": "Figma MCP 工作流文章",
+                "url": "https://www.figma.com/blog/inside-figma-dev-mode-mcp-server/"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "直接把 Figma 链接丢给 AI 为什么不够",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "monday.com 文章里提到的核心问题很真实：即使模型能读取 Figma，也不代表它知道公司内部设计系统怎么用。它可能会看出按钮是蓝色的，却不知道应该使用哪个 Button 组件；它可能看出文字大小，却不知道应该映射到哪个 typography token；它可能知道布局像卡片，却不知道团队的 Card 组件有哪些 props。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这就是为什么“像素级截图还原”并不等于“生产级代码”。截图还原关心表面，生产级实现关心系统：组件是否正确、样式是否 token 化、状态是否完整、交互是否可访问、文案是否能本地化、埋点是否符合规范、代码是否能被团队继续维护。"
+          },
+          {
+            "type": "code",
+            "label": "错误用法：只给 Figma 链接",
+            "content": `请根据这个 Figma 链接实现页面：
+https://www.figma.com/design/...
+
+要求尽量还原视觉效果。`
+          },
+          {
+            "type": "code",
+            "label": "更好的用法：给设计系统约束",
+            "content": `请根据这个 Figma 页面实现对应 UI，但不要只做视觉近似。
+
+你必须遵守：
+1. 优先使用项目已有组件，不要手写重复组件。
+2. 颜色、字号、间距、圆角、阴影必须使用设计 token，不要硬编码。
+3. Button、Input、Card、Modal、Tabs、Toast 等必须使用 design system 组件。
+4. 如果 Figma 中的样式无法映射到现有 token，请先列出差异，不要擅自新增颜色。
+5. 必须实现 default、hover、focus、disabled、loading、error 等必要状态。
+6. 必须保证键盘可访问性和语义结构。
+7. 先输出映射计划：Figma section -> 组件 -> token -> props -> 状态。
+8. 计划确认后再写代码。
+
+完成后运行 npm run build，并说明哪些地方无法 100% 还原以及原因。`
+          }
+        ]
+      },
+      {
+        "heading": "monday.com 的关键做法：让设计系统变成 MCP 上下文",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "monday.com 没有让 AI 单独猜设计系统，而是做了一个 design-system MCP server。它把公司真实代码库里的组件文档、TypeScript 类型、props、tokens、可访问性规则和代码示例变成 AI 可以查询的上下文。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个设计很关键：MCP 不是另建一份容易过期的设计系统说明，而是连接真实代码和真实规则。这样组件怎么用、哪些 props 可用、token 名称是什么，Agent 都能从源头拿到。"
+          },
+          {
+            "type": "paragraph",
+            "content": "他们还不是简单返回一堆文档，而是把流程拆成多个节点：读取 Figma、分析布局、识别组件、映射 token、处理本地化、找代码示例、生成实现计划。这个链路让 AI 从“看图写代码”变成“按团队系统生成代码”。"
+          },
+          {
+            "type": "code",
+            "label": "Design-System MCP 应该返回什么",
+            "content": `当 Agent 请求实现某个 Figma 节点时，设计系统上下文至少应该返回：
+
+1. Component mapping
+- Figma layer 名称
+- 推荐使用的代码组件
+- 必填 props
+- 可选 props
+- 禁止使用的替代组件
+
+2. Token mapping
+- color token
+- typography token
+- spacing token
+- radius token
+- shadow token
+- breakpoint token
+
+3. State mapping
+- default
+- hover
+- focus
+- active
+- disabled
+- loading
+- empty
+- error
+
+4. Accessibility rules
+- semantic element
+- aria label
+- keyboard behavior
+- focus order
+
+5. Code examples
+- 最接近当前需求的真实代码片段
+- 推荐 import path
+- 常见错误用法
+
+6. 审查 checklist
+- 哪些地方必须人工确认
+- 哪些差异允许存在
+- 哪些差异必须修复`
+          }
+        ]
+      },
+      {
+        "heading": "设计师应该怎样准备 Figma 文件",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果团队希望 AI 更稳定地还原界面，设计师的 Figma 文件也要更工程友好。不是所有漂亮稿都适合交给 AI。最理想的 Figma 文件应该有清楚命名、组件实例、Auto Layout、变量、token、状态页、响应式断点和注释。"
+          },
+          {
+            "type": "paragraph",
+            "content": "设计师要做的不是写代码，而是把“设计意图”和“可实现规则”暴露给 AI 和工程师。比如哪些组件必须复用，哪些视觉效果可以简化，移动端如何重排，空状态和错误状态长什么样，哪些内容需要本地化。"
+          },
+          {
+            "type": "code",
+            "label": "设计师 Figma 交付清单",
+            "content": `交给 AI Coding 前，设计师请检查：
+
+1. 页面结构
+- Frame 命名清楚
+- Section 分组清楚
+- 关键区域有注释
+- 不要把所有图层混在一个大组里
+
+2. 组件使用
+- 使用设计系统组件实例
+- 不要把组件 detach 后再手改
+- 变体状态完整：default / hover / disabled / error / loading
+
+3. Auto Layout
+- 列表、卡片、表单、导航都使用 Auto Layout
+- spacing 与设计系统 token 对齐
+- 不用肉眼拖拽制造间距
+
+4. Tokens / Variables
+- 颜色使用变量
+- 字体使用 text styles
+- 圆角、阴影、间距有对应规范
+
+5. 响应式
+- 提供桌面端和移动端关键画板
+- 标注哪些区域固定、哪些换行、哪些折叠
+
+6. 真实内容
+- 使用接近真实长度的标题、段落和按钮文案
+- 提供空状态、错误状态和加载状态
+
+7. 验收标准
+- 哪些细节必须完全还原
+- 哪些地方允许工程实现时微调
+- 哪些动效或交互必须保留`
+          }
+        ]
+      },
+      {
+        "heading": "工程师应该怎样和 AI 协作实现",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "工程侧最重要的变化，是不要让 AI 直接开写。正确顺序应该是：先让 AI 读取 Figma 和设计系统上下文，输出组件映射计划；工程师确认计划；再让 AI 分阶段实现；每一阶段都运行构建和视觉检查。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果团队已经有 Cursor、Claude Code 或 Codex，可以把 Figma 链接、组件文档、项目规则和验证命令一起交给 Agent。重点不是“快点生成”，而是让它先证明自己理解了设计系统。"
+          },
+          {
+            "type": "code",
+            "label": "工程实现提示词",
+            "content": `请根据 Figma 设计实现这个页面，但先不要写代码。
+
+上下文：
+- Figma 链接：
+- 目标路由：
+- 相关代码目录：
+- 设计系统组件目录：
+- token 文件：
+- 验证命令：
+
+第一步：请先输出实现计划，必须包含：
+1. Figma 区块拆解
+2. 每个区块对应的现有组件
+3. 需要使用的 token
+4. 需要实现的状态
+5. 可能无法完全还原的地方
+6. 需要设计师确认的问题
+
+规则：
+- 不要新增重复组件
+- 不要硬编码颜色、字号、间距
+- 不要绕过现有设计系统
+- 不要修改无关页面
+
+我确认计划后，你再开始实现。`
+          },
+          {
+            "type": "code",
+            "label": "实现后的 Design QA 提示词",
+            "content": `请对刚实现的页面做一次设计还原审查。
+
+请检查：
+1. 组件是否使用正确
+2. token 是否使用正确
+3. 间距、圆角、字号、行高是否和设计系统一致
+4. Figma 中的 hover / focus / disabled / loading / error 状态是否覆盖
+5. 文案较长时是否溢出
+6. 移动端是否保持设计意图
+7. 是否有硬编码样式
+8. 是否有可访问性问题
+
+输出格式：
+- 必须修复的问题
+- 可以接受的差异
+- 需要设计师确认的问题
+- 已完成验证命令`
+          }
+        ]
+      },
+      {
+        "heading": "团队如何落地：从单点试验到稳定流程",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这类流程要在团队里成功，不能只靠某个会写提示词的设计师或工程师。团队需要明确角色：设计师负责 Figma 质量和验收标准，设计系统 Owner 负责组件和 token 的机器可读上下文，工程师负责代码实现和 review，QA 负责跨状态验证，Tech Lead 负责边界和质量门禁。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一个可落地的节奏是：先选 1 到 2 个低风险页面做试点，不追求一次生成完美，而是记录 AI 在还原时最常偏离的点。每次偏离都要反推：是 Figma 没标清楚，设计系统文档不够机器可读，还是项目规则没写明。这样团队会逐渐得到自己的 Figma-to-code playbook。"
+          },
+          {
+            "type": "code",
+            "label": "Figma + AI Coding 团队落地流程",
+            "content": `第 1 阶段：准备设计系统上下文
+- 整理组件库
+- 整理 token
+- 整理组件 props 和使用示例
+- 整理常见错误用法
+- 建立 MCP、docs 或 agent-readable context
+
+第 2 阶段：规范 Figma 交付
+- 使用组件实例
+- 使用 Auto Layout
+- 使用变量和 text styles
+- 标注响应式、状态和验收标准
+
+第 3 阶段：选择试点页面
+- 页面不能太复杂
+- 但必须包含真实组件、状态和响应式
+- 设计师和工程师共同验收
+
+第 4 阶段：AI 先出计划
+- Figma 区块拆解
+- 组件映射
+- token 映射
+- 风险和待确认点
+
+第 5 阶段：分段实现
+- 先结构
+- 再样式
+- 再状态
+- 再响应式
+- 最后 Design QA
+
+第 6 阶段：沉淀规则
+- 哪些提示词有效
+- 哪些 Figma 写法会误导 AI
+- 哪些组件文档需要补充
+- 哪些视觉差异必须进入 QA 清单`
+          }
+        ]
+      },
+      {
+        "heading": "Figma 官方 MCP 工作流给设计团队的启发",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Figma 官方也在探索 MCP 工作流：把设计探索、代码实现、状态检查和视觉 diff 连接起来。这个方向对设计团队很关键，因为它让设计师不必等工程师手动反馈“这里不好实现”，也让工程师不必靠猜来理解设计意图。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更理想的协作方式是双向的：设计稿进入代码，代码状态也能回到设计评审。比如组件有多少状态、token 是否漂移、实现和设计是否有视觉差异，这些都应该能被团队看见。只有这样，AI Coding 才不会变成一次性生成，而是持续协作流程。"
+          },
+          {
+            "type": "code",
+            "label": "设计评审会可以直接使用的问题",
+            "content": `在 Figma + AI Coding 评审会上，请逐项确认：
+
+1. 设计稿是否已经使用设计系统组件
+2. AI 生成代码是否使用同一套组件
+3. token 是否一致，是否出现硬编码
+4. 哪些状态没有设计稿
+5. 哪些状态没有实现
+6. 移动端和桌面端差异是否符合预期
+7. 是否有视觉 diff 超出可接受范围
+8. 哪些问题应该修设计稿
+9. 哪些问题应该修代码
+10. 哪些问题应该补进设计系统文档`
+          }
+        ]
+      },
+      {
+        "heading": "最重要的经验：AI 不是替代设计系统，而是放大设计系统",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这套经验最值得带走的一句话是：AI Coding 的还原质量，取决于团队设计系统本身是否清楚、稳定、可机器读取。如果设计系统混乱，AI 会把混乱放大；如果组件、tokens、状态和规则都清楚，AI 才能稳定生成接近生产质量的代码。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以设计师真正要做的，不是学习怎么写更玄的提示词，而是和工程一起把设计系统变成 AI 能理解的上下文。到那一步，Figma 就不只是视觉稿，而会变成团队 AI Coding 工作流的入口。"
           }
         ]
       }

@@ -18,6 +18,7 @@ import Wenxin from '@lobehub/icons/es/Wenxin/components/Color';
 import Windsurf from '@lobehub/icons/es/Windsurf/components/Mono';
 import Zhipu from '@lobehub/icons/es/Zhipu/components/Color';
 import { Badge, Card } from './UI.jsx';
+import { formatDisplayUrl } from '../lib/urls.js';
 
 const visualAccent = {
   dashboard: 'slate',
@@ -80,6 +81,7 @@ export function CaseCard({ item }) {
   const accent = item.accent ?? visualAccent[item.visualType] ?? 'slate';
   const visualImage = item.image ?? item.screenshotUrl;
   const primaryTool = item.tools?.find((tool) => tool && tool !== 'AI 生成证据待补充');
+  const websiteLabel = formatDisplayUrl(item.websiteUrl || item.sourceUrl);
 
   return (
     <Card
@@ -105,6 +107,7 @@ export function CaseCard({ item }) {
       </div>
       <div className="case-card-body">
         <h3>{item.title}</h3>
+        {websiteLabel && <span className="content-site-line">{websiteLabel}</span>}
         <p>{item.description}</p>
         <div className="tag-row">
           <Badge>{item.category}</Badge>
@@ -124,6 +127,7 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
   const hasStats =
     showStats && item.viewCount !== undefined;
   const hasImage = Boolean(showImage && item.image && !isDefaultLearningCover(item.image));
+  const websiteLabel = formatDisplayUrl(item.websiteUrl || item.sourceUrl);
 
   return (
     <Card
@@ -146,6 +150,7 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
         </div>
       )}
       <h3>{item.title}</h3>
+      {websiteLabel && <span className="content-site-line">{websiteLabel}</span>}
       <p>{item.description}</p>
       {hasStats && (
         <div className="card-footer-row">

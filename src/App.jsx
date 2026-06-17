@@ -18,6 +18,10 @@ import LoginPage from './pages/LoginPage.jsx';
 import SubmitPage from './pages/SubmitPage.jsx';
 import { trackPageView } from './lib/analytics.js';
 
+const learnRedirects = {
+  'forged-in-silence-codex-3d-website-case': '/cases/landing-page/forged-in-silence-codex',
+};
+
 function Home() {
   return (
     <>
@@ -37,12 +41,19 @@ function App() {
   const isLogin = pathname === '/login';
   const isCaseDetail = parts[0] === 'cases' && parts.length === 3;
   const isLearnDetail = parts[0] === 'learn' && parts.length === 2;
+  const learnRedirectTarget = isLearnDetail ? learnRedirects[parts[1]] : '';
   const isToolsPath = parts[0] === 'tools';
   const knownPaths = ['/cases', '/learn', '/tools', '/about', '/privacy', '/login', '/submit'];
 
   useEffect(() => {
     trackPageView();
   }, [pathname]);
+
+  useEffect(() => {
+    if (learnRedirectTarget && pathname !== learnRedirectTarget) {
+      window.location.replace(learnRedirectTarget);
+    }
+  }, [learnRedirectTarget, pathname]);
 
   return (
     <div className={`site-shell ${isHome ? 'site-shell-home' : ''} ${isLogin ? 'site-shell-auth' : ''}`}>
@@ -53,7 +64,7 @@ function App() {
           <CaseDetailPage categorySlug={parts[1]} slug={parts[2]} />
         )}
         {pathname === '/learn' && <LearnPage />}
-        {isLearnDetail && <LearnDetailPage slug={parts[1]} />}
+        {isLearnDetail && !learnRedirectTarget && <LearnDetailPage slug={parts[1]} />}
         {isToolsPath && <ToolsPage />}
         {pathname === '/about' && <AboutPage />}
         {pathname === '/privacy' && <PrivacyPage />}
