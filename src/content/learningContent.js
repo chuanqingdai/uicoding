@@ -8490,10 +8490,12 @@ https://www.figma.com/design/...
     "id": "solo-founder-ai-coding-profit-playbook",
     "sourceUrl": "https://productled.com/blog/the-solo-founder-playbook-how-to-run-a-1m-arr-saas-with-one-person",
     "translationMode": "guidedTranslation",
-    "title": "一人公司如何用 AI Coding 盈利：从低成本交付到可持续增长",
+    "title": "一人公司如何用 AI 编程盈利：从低成本交付到可持续增长",
     "originalTitle": "The Solo-Founder Playbook: How to Run a $1M ARR SaaS With One Person",
     "notice": "",
+    "showSourceAddress": true,
     "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
     "sections": [
       {
         "heading": "为什么 Vincent 不再寻找联合创始人",
@@ -8529,11 +8531,11 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "这不是在说 AI 只能做粗糙 MVP。越来越多独立创始人已经能做出足够完整、足够精致、可以和融资团队产品正面竞争的版本。技术壁垒正在被削弱，真正重要的变成执行力、产品品味和进入市场的能力。"
+            "content": "这不是在说 AI 只能做粗糙的最小可行产品。越来越多独立创始人已经能做出足够完整、足够精致、可以和融资团队产品正面竞争的版本。技术壁垒正在被削弱，真正重要的变成执行力、产品品味和进入市场的能力。"
           },
           {
             "type": "paragraph",
-            "content": "不理解某个技术问题时，也不再只能等工程师解释。可以直接问 Agent，问 ChatGPT，让它解释架构、接口、数据库、部署和错误信息。早期创业里最昂贵的“技术等待时间”，正在被大幅压缩。"
+            "content": "不理解某个技术问题时，也不再只能等工程师解释。可以直接问智能体，问 ChatGPT，让它解释架构、接口、数据库、部署和错误信息。早期创业里最昂贵的“技术等待时间”，正在被大幅压缩。"
           }
         ]
       },
@@ -8546,7 +8548,7 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "Vincent 曾经花了一年半构建一个 product-led sales 工具。产品慢慢接近他想象中的样子，功能也能跑起来。但越往后，他越发现市场很小，onboarding 很难，还需要客户经理、客户成功和持续服务。"
+            "content": "Vincent 曾经花了一年半构建一个产品驱动销售工具。产品慢慢接近他想象中的样子，功能也能跑起来。但越往后，他越发现市场很小，新用户引导很难，还需要客户经理、客户成功和持续服务。"
           },
           {
             "type": "paragraph",
@@ -8575,7 +8577,7 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "MeetBot 的差异化不是“再做一个 Calendly”。它选择 API-first 架构，用按会议付费替代按席位付费，把运营成本控制在每月几百美元，并把合作伙伴集成作为分发方式。"
+            "content": "MeetBot 的差异化不是“再做一个 Calendly”。它选择 API 优先架构，用按会议付费替代按席位付费，把运营成本控制在每月几百美元，并把合作伙伴集成作为分发方式。"
           },
           {
             "type": "paragraph",
@@ -8584,7 +8586,7 @@ https://www.figma.com/design/...
         ]
       },
       {
-        "heading": "无限 runway 的经济学",
+        "heading": "无限续航的经济学",
         "blocks": [
           {
             "type": "paragraph",
@@ -8592,36 +8594,19 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "所谓无限 runway，不只是账面上花得少，而是创始人可以长期存在。即使还保留一份工作，也可以持续维护产品、测试定价、优化页面、尝试渠道。只要固定成本足够低，公司就不会因为短期增长慢而被迫死亡。"
+            "content": "所谓无限续航，不只是账面上花得少，而是创始人可以长期存在。即使还保留一份工作，也可以持续维护产品、测试定价、优化页面、尝试渠道。只要固定成本足够低，公司就不会因为短期增长慢而被迫死亡。"
           },
           {
             "type": "paragraph",
-            "content": "这类公司不是传统意义上的 lifestyle business。它们可以非常赚钱，只是不用大团队支撑。目标不是用人数证明规模，而是让每个员工，甚至只有一个员工，创造尽可能高的收入。"
+            "content": "这类公司不是传统意义上的生活方式型公司。它们可以非常赚钱，只是不用大团队支撑。目标不是用人数证明规模，而是让每个员工，甚至只有一个员工，创造尽可能高的收入。"
           },
           {
             "type": "paragraph",
-            "content": "如果你的 burn rate 是每月 300 美元，而竞争对手是每月 50 万美元，你就能在他们看不上的收入规模里活得很好。你可以把某些功能免费提供，可以更激进地试定价，可以转向更小的用户群，也不必向董事会解释每一次调整。"
+            "content": "如果你的月度消耗是 300 美元，而竞争对手是每月 50 万美元，你就能在他们看不上的收入规模里活得很好。你可以把某些功能免费提供，可以更激进地试定价，可以转向更小的用户群，也不必向董事会解释每一次调整。"
           },
           {
             "type": "paragraph",
             "content": "时间会变成护城河。很多公司价值来自长期存在，让用户把某个名字和某个问题关联起来。低成本让你有机会活得足够久。"
-          }
-        ]
-      },
-      {
-        "heading": "无限 runway 的经济学",
-        "blocks": [
-          {
-            "type": "paragraph",
-            "content": "一人公司最强的优势，是极低的固定成本。如果一个 SaaS 每月只需要几百美元就能运行，创始人就可以长期存在、慢慢迭代，而不是被高昂的人力成本和融资节奏逼迫。"
-          },
-          {
-            "type": "paragraph",
-            "content": "这种成本结构带来的不是单纯省钱，而是生存时间。创始人可以继续保留工作、利用业余时间维护产品，也可以在没有巨大收入压力的情况下测试定价、优化页面、尝试渠道和等待复利。"
-          },
-          {
-            "type": "paragraph",
-            "content": "与高烧钱公司相比，低成本一人公司可以承受更长的验证周期。对方每月需要几十万美元维持团队，一人公司可能只需要少量服务器和工具费用。时间因此变成一种护城河。"
           }
         ]
       },
@@ -8634,11 +8619,11 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "这种速度优势尤其适合早期产品。市场还不确定时，过大的团队会增加沟通成本和决策成本；小系统反而更容易快速试错。AI Coding 进一步放大了这种优势，因为它把很多执行工作压缩成更短的循环。"
+            "content": "这种速度优势尤其适合早期产品。市场还不确定时，过大的团队会增加沟通成本和决策成本；小系统反而更容易快速试错。AI 编程进一步放大了这种优势，因为它把很多执行工作压缩成更短的循环。"
           },
           {
             "type": "paragraph",
-            "content": "但速度窗口不会永远存在。随着越来越多创始人掌握 AI Coding，构建速度会变成基础能力。真正可持续的防御来自品牌、分发渠道、成本结构、社区内容、产品网络效应和对细分用户的深刻理解。"
+            "content": "但速度窗口不会永远存在。随着越来越多创始人掌握 AI 编程，构建速度会变成基础能力。真正可持续的防御来自品牌、分发渠道、成本结构、社区内容、产品网络效应和对细分用户的深刻理解。"
           }
         ]
       },
@@ -8660,7 +8645,7 @@ https://www.figma.com/design/...
         ]
       },
       {
-        "heading": "别再发布粗糙 MVP",
+        "heading": "别再发布粗糙的最小可行产品",
         "blocks": [
           {
             "type": "paragraph",
@@ -8672,11 +8657,11 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "AI 能很快完成 80%，但剩下 20% 才是赢的地方：细节、onboarding、定价、定位、交互、文案、视觉品味和用户路径。新的稀缺能力不是单纯写代码，而是 taste。"
+            "content": "AI 能很快完成 80%，但剩下 20% 才是赢的地方：细节、新用户引导、定价、定位、交互、文案、视觉品味和用户路径。新的稀缺能力不是单纯写代码，而是品味。"
           },
           {
             "type": "paragraph",
-            "content": "所以不要再用粗糙 MVP 当借口。应该发布有观点、有清晰定位、尊重用户预期的产品。构建成本已经下降，产品标准反而提高了。"
+            "content": "所以不要再用粗糙的最小可行产品当借口。应该发布有观点、有清晰定位、尊重用户预期的产品。构建成本已经下降，产品标准反而提高了。"
           }
         ]
       },
@@ -8689,7 +8674,7 @@ https://www.figma.com/design/...
           },
           {
             "type": "paragraph",
-            "content": "当每月成本只有几百美元，MVP 又可以在几周内做出来时，保留现金流反而更理性。过早辞职会增加焦虑，让创始人为了短期收入做出错误决定。"
+            "content": "当每月成本只有几百美元，最小可行产品又可以在几周内做出来时，保留现金流反而更理性。过早辞职会增加焦虑，让创始人为了短期收入做出错误决定。"
           },
           {
             "type": "paragraph",
@@ -8700,18 +8685,856 @@ https://www.figma.com/design/...
             "content": "一人公司最适合的启动方式，是在低成本下持续推进：先做出产品，拿真实用户反馈，验证收费意愿，再决定是否把它变成全职事业。"
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "id": "solo-founder-made-190k-two-years",
+    "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/pf2bus/made_190k_in_2_years_as_solo_founder/",
+    "translationMode": "fullTranslation",
+    "title": "一名单人创始人两年赚到 19 万美元的复盘",
+    "originalTitle": "Made $190k in 2 years as Solo Founder",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
       {
-        "heading": "来源链接",
+        "heading": "两年赚到 19 万美元",
         "blocks": [
           {
-            "type": "links",
-            "items": [
-              {
-                "label": "ProductLed 文章",
-                "url": "https://productled.com/blog/the-solo-founder-playbook-how-to-run-a-1m-arr-saas-with-one-person"
-              }
-            ]
+            "type": "paragraph",
+            "content": "嗨，大家好。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我是一个来自印度的人，从 2014 年 4 月 15 日开始担任全栈工程师。辞职之前，我工作了大约四年半。我辞职是因为当时和朋友一起创办了一家初创公司。后来因为一些原因，我被迫退出了那家公司，于是我重新开始找工作。"
+          },
+          {
+            "type": "paragraph",
+            "content": "那段时间，我读到了 Pieter Levels 的一篇文章：他在一年里做了 12 家创业项目。随后，我又读了《一人公司》这本书。这两件事激励我开始走上微型创业之路。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我开始每个月做一个微型创业项目。我从 2019 年 1 月开始做，持续了一整年。那一年里，我一共发布了 11 个微型创业项目。其中 7 个失败了，3 个被卖掉了，还有 1 个做到了每月超过 2000 美元的经常性收入。"
+          }
+        ]
+      },
+      {
+        "heading": "第一步",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一步，我开始寻找问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我在 GitHub 上发现了一个名为 Public APIs 的项目。很多开发者都在使用这个项目。它只是一个接口列表，但我想到，如果能在这些接口之上做一层包装，让人们不用写代码就能使用它们，也许会有价值。"
+          },
+          {
+            "type": "paragraph",
+            "content": "于是我做了一个最小可行产品，并在 Product Hunt 上发布。发布结果不错。后来，我把这个项目卖了 2.3 万美元。"
+          }
+        ]
+      },
+      {
+        "heading": "继续做下一个产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "随后我继续做新的微型创业项目。我不断寻找小问题，然后做出简单产品。不是每个项目都会成功。事实上，大多数项目都失败了。"
+          },
+          {
+            "type": "paragraph",
+            "content": "有些项目没有用户，有些项目没有收入，有些项目没有继续做下去的理由。但每一次发布都会带来一点学习：我更了解如何找问题，如何快速做出产品，如何发布，如何判断是否值得继续。"
+          },
+          {
+            "type": "paragraph",
+            "content": "最后，其中一个项目做起来了。它就是 NoCodeAPI.com。"
+          },
+          {
+            "type": "paragraph",
+            "content": "NoCodeAPI.com 让我在两年里赚到了大约 19 万美元。"
+          }
+        ]
+      },
+      {
+        "heading": "现在的情况",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "现在，我还在继续做 NoCodeAPI.com。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个产品目前每月收入超过 2000 美元。我希望今年能把它做到每月 1 万美元的经常性收入。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这一路没有什么神奇的地方。核心就是不断做小产品、发布、学习、失败、继续做。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我不是要说每个人都应该走同样的路。我只是想分享我的经历，也许它能帮到正在考虑做自己产品的人。"
+          }
+        ]
+      },
+      {
+        "heading": "最后",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "感谢阅读。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bank-statement-converter-11k-month-solo-founder",
+    "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/16f1mkc/making_11000_every_month_running_a_simple_website/",
+    "translationMode": "fullTranslation",
+    "title": "一个简单网站每月赚 1.1 万美元",
+    "originalTitle": "Making $11,000 every month running a simple website & not doing much",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "采访开始",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这次我采访了 Angus Cheng。他做了一个名为 Bank Statement Converter 的网页应用，目前每月经常性收入约为 1.1 万美元。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个工具可以把 PDF 格式的银行流水转换成 Excel 或 CSV 文件，主要用户是会计师、簿记员和小企业主。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Angus 目前独自经营这个业务，每周只花大约 10 小时维护和运营。"
+          }
+        ]
+      },
+      {
+        "heading": "你是怎么想到这个点子的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我以前在银行工作，经常看到客户把银行流水 PDF 发给会计师。会计师需要把这些数据手动录入 Excel，这个过程非常慢，也很容易出错。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我发现很多人都在搜索如何把银行流水 PDF 转成 Excel。这个需求很明确，而且用户已经知道自己想要什么。"
+          },
+          {
+            "type": "paragraph",
+            "content": "于是我做了一个简单工具，让用户上传 PDF，然后自动把它转换成电子表格格式。"
+          }
+        ]
+      },
+      {
+        "heading": "第一版是怎么做出来的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一版大概花了一周时间。它非常简单，只支持基本上传和转换。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我没有先做复杂功能，也没有先做大平台。最开始只想验证一件事：有没有人愿意为把银行流水 PDF 转成电子表格付费。"
+          },
+          {
+            "type": "paragraph",
+            "content": "上线后，我开始用 Google 搜索广告测试需求。广告很快带来了第一批用户，也让我看到哪些关键词能带来真正愿意付费的人。"
+          }
+        ]
+      },
+      {
+        "heading": "最早怎么获得用户",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "一开始主要靠 Google 搜索广告。因为用户本来就在搜索类似“银行流水转 Excel”这样的词，所以广告能比较直接地触达需求。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我也尝试过给会计师和簿记员发冷邮件。效果不是特别好，但它帮助我理解目标用户、他们的语言和他们真正关心的问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "后来，我开始做内容营销。围绕银行流水转换、会计工作流、PDF 转电子表格等主题写页面和文章。搜索流量慢慢积累起来后，获客成本开始下降。"
+          }
+        ]
+      },
+      {
+        "heading": "现在收入怎么样",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "现在这个网站每月经常性收入大约是 1.1 万美元。"
+          },
+          {
+            "type": "paragraph",
+            "content": "收入主要来自订阅。用户可以按月付费，也可以按年付费。"
+          },
+          {
+            "type": "paragraph",
+            "content": "运营成本不高。主要成本是服务器、转换处理、支付费用和广告费用。因为产品很聚焦，所以不需要大团队。"
+          }
+        ]
+      },
+      {
+        "heading": "每天需要做多少工作",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "现在我每周大概花 10 小时在这个业务上。"
+          },
+          {
+            "type": "paragraph",
+            "content": "大部分时间花在客服、修小问题、改进转换质量、更新内容和观察广告表现上。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个产品不需要每天大量人工介入。用户可以自己上传文件、完成转换、下载结果，也可以自己完成付费。"
+          }
+        ]
+      },
+      {
+        "heading": "遇到过哪些困难",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "最大的困难是不同银行的 PDF 格式差异很大。即使都是银行流水，版式、表格结构、日期格式和金额格式也可能完全不同。"
+          },
+          {
+            "type": "paragraph",
+            "content": "为了提高转换准确率，我需要不断处理新格式、修复边缘情况，并根据用户上传的样本改进解析逻辑。"
+          },
+          {
+            "type": "paragraph",
+            "content": "另一个困难是信任。用户上传的是财务文件，所以页面必须清楚说明安全性、隐私和文件处理方式。"
+          }
+        ]
+      },
+      {
+        "heading": "定价是怎么确定的",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "最开始的价格比较低，因为我还不确定用户愿意付多少钱。后来随着产品变稳定，我逐渐调整价格。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个工具帮用户节省的是时间。如果一个会计师每周都要处理很多银行流水，手动录入可能要花几个小时。只要工具能把这部分时间省下来，订阅价格就有价值。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我学到的一点是，不要只按技术复杂度定价，而要按用户节省的时间和减少的麻烦定价。"
+          }
+        ]
+      },
+      {
+        "heading": "如果重新开始，会做什么不同",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果重新开始，我会更早做内容营销。广告可以快速验证需求，但长期来看，搜索内容会带来更稳定、更便宜的用户。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我也会更早和用户交流。真实用户会告诉你哪些格式最重要、哪些功能只是看起来有用、哪些问题会影响他们付费。"
+          },
+          {
+            "type": "paragraph",
+            "content": "早期不要做太多功能。先把核心转换做好，让用户得到可靠结果，比做很多周边功能更重要。"
+          }
+        ]
+      },
+      {
+        "heading": "给其他创始人的建议",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "找一个很具体的问题。越具体越好。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不要害怕产品看起来简单。简单产品也可以赚钱，只要它解决的是一个真实、重复、愿意付费的问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "尽快发布，尽快验证，尽快和用户交流。不要等到产品完美。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果一个产品可以自己获客、自己注册、自己付费、自己完成核心任务，它就更适合一个人长期经营。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "llama-life-700-paying-customers-solo-founder",
+    "sourceUrl": "https://www.indiehackers.com/post/bootstrapped-my-productivity-app-to-700-paying-customers-ama-23909bf748",
+    "translationMode": "fullTranslation",
+    "title": "Llama Life：单人创始人把生产力网站做到 700 个付费用户",
+    "originalTitle": "Bootstrapped my productivity app to 700 paying customers! AMA.",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "700 个付费用户，欢迎提问",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "大家好，我是 Marie。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我在品牌和广告行业工作了 10 年。从一行 HTML 都不会写，到一年内写代码并发布自己的第一个产品。"
+          },
+          {
+            "type": "paragraph",
+            "content": "说明一下：不是说做这件事一定要学会写代码，但对我来说，学会写代码是我给自己设定的个人目标。结果发现，我真的很喜欢它。"
+          },
+          {
+            "type": "paragraph",
+            "content": "后来，我把自己的生产力应用 Llama Life 做到了 700 多个付费用户。最近，它还被 LAUNCH Accelerator 录取，这个加速器由 Jason Calacanis 支持。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个网站是 https://llamalife.co。"
+          },
+          {
+            "type": "paragraph",
+            "content": "关于这段经历，欢迎随便提问。说实话，这一路非常辛苦，但我很高兴自己做了这件事。"
+          }
+        ]
+      },
+      {
+        "heading": "最早的用户从哪里来",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "最早的 10 个用户应该还是家人和朋友，所以不太能算。"
+          },
+          {
+            "type": "paragraph",
+            "content": "再往后，我想应该是来自 Product Hunt。之后的用户主要来自 Twitter、Reddit 和口碑传播。"
+          },
+          {
+            "type": "paragraph",
+            "content": "到目前为止，我还没有花营销预算。不过之后我确实想做一点付费营销。"
+          }
+        ]
+      },
+      {
+        "heading": "如何安排产品和营销",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我没有固定日程。我听说有些创始人会一天做营销，一天写代码；也有人一周做产品，一周做增长。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这可能也取决于产品处在哪个阶段。对我来说，因为 Llama Life 还处在早期阶段，我会尽量专注于自己认为能带来某种增长的事情。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不过这很难，因为我喜欢写代码。我们大概都喜欢发布代码。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一种折中的办法是，我做了几个小副项目，比如 fidgetpage.com 和 shhhnoise.com。它们让我可以继续写代码，同时也能作为 Llama Life 的潜在客户获取渠道。"
+          }
+        ]
+      },
+      {
+        "heading": "品牌和产品定位",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "对于早期公司，我认为认真思考品牌是重要的。它不需要花很多时间，因为你的产品可能会变化，受众也可能会变化。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但你至少应该花几个小时思考：你希望产品给人什么样的感觉和氛围。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我以前做品牌工作时，会为大品牌做这件事。我们会列出品牌属性，然后确保所有对外沟通，也就是营销，都保持一致。"
+          },
+          {
+            "type": "paragraph",
+            "content": "例如，我会这样写 Llama Life：帮助我一次专注一件事；帮助我的一天更有结构；让我感觉高效但平静；使用起来有趣；带着一点好的古怪感；低压力，不让人不知所措。"
+          },
+          {
+            "type": "paragraph",
+            "content": "有了这样的清单，当你开始做营销时，就很容易检查产品传达出来的感觉是否一致。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它也能在你收到新功能请求时帮助你判断要不要做。当我收到请求时，我会对照品牌属性，看看这个请求是否真的符合产品想达到的目标。"
+          }
+        ]
+      },
+      {
+        "heading": "如何处理功能请求",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这确实有助于处理功能请求。你必须在倾听用户想要什么和坚持产品初衷之间保持平衡。"
+          },
+          {
+            "type": "paragraph",
+            "content": "有时候，用户需求会以好的方式塑造产品，并改变方向。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但 Llama Life 刚开始时，我收到很多功能请求，如果照着做，产品基本会变成类似 Toggl 的时间追踪工具。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但那不是我想解决的问题。所以那份品牌属性清单帮我保持了方向。"
+          }
+        ]
+      },
+      {
+        "heading": "公开构建",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我很早就加入了 Twitter，但直到大概一年前才真正开始认真使用它。"
+          },
+          {
+            "type": "paragraph",
+            "content": "公开构建对我来说非常有帮助，因为它让我保持责任感。作为单人创始人，它也让我从独立创作者社区获得了很多支持。"
+          },
+          {
+            "type": "paragraph",
+            "content": "每个人风格不同。我通常会像和朋友聊天一样发推，分享自己觉得有趣的东西，或者分享自己做到的阶段性进展。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我一般不发长串内容，也不会提前排期发布。对我来说，它更像是当下发生了什么就说什么。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我还给自己定了一条规则：如果我写一条推文超过两分钟，我就不发了，因为那说明我想太多了。"
+          },
+          {
+            "type": "paragraph",
+            "content": "少发一点，多参与对话。就像现实生活一样，如果你在一个大组织里工作，你会和同事聊天，而不是只对着大家喊话，然后期待别人回应。它是双向的。"
+          }
+        ]
+      },
+      {
+        "heading": "年经常性收入和客户沟通",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "目前年经常性收入大约是 1 万美元。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我只是用 Twitter 私信和邮件与客户沟通。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Jason 团队注意到我，是因为我一直在 Twitter 上公开构建。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么是这个产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Llama Life 一开始只是我为自己做的东西。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当我在 Twitter 上分享它，并得到一些很好的反馈后，我才有信心把它作为产品发布。"
+          },
+          {
+            "type": "paragraph",
+            "content": "另外，对我来说，它也有一部分是学习练习。所以一开始成功压力没那么大，因为我在心里把它定义成：只要学到了东西，就是赢。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我们经常谈产品和市场匹配，但我也相信问题和创始人之间也有匹配。"
+          },
+          {
+            "type": "paragraph",
+            "content": "对我来说，我已经为自己尝试解决这个问题很久了，而且总是会回到它。所以从某种意义上说，这就是我应该做的东西。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我之前也做过几个产品，当时我还是非技术创始人，但它们都失败了。"
+          }
+        ]
+      },
+      {
+        "heading": "实际网页案例",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "主产品：Llama Life，网址是 https://llamalife.co。"
+          },
+          {
+            "type": "paragraph",
+            "content": "相关小网站：Fidget Page，网址是 http://www.fidgetpage.com。"
+          },
+          {
+            "type": "paragraph",
+            "content": "相关小网站：Shhh Noise，网址是 http://www.shhhnoise.com。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "agents-md-open-format-coding-agents",
+    "sourceUrl": "https://github.com/agentsmd/agents.md",
+    "translationMode": "guidedTranslation",
+    "title": "AGENTS.md 实操指南：给编程智能体写清项目规则",
+    "originalTitle": "AGENTS.md",
+    "notice": "",
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "sections": [
+      {
+        "heading": "AGENTS.md 是什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "AGENTS.md 是放在项目根目录里的说明文件，专门写给编程智能体阅读。它的作用类似 README，但读者不是人类协作者，而是 Codex、Claude Code、Cursor Agent 这类会读取、修改、运行项目代码的工具。"
+          },
+          {
+            "type": "paragraph",
+            "content": "README 通常讲项目给人看：项目是什么、怎么安装、怎么使用。AGENTS.md 则更关注智能体执行任务时必须知道的规则：应该看哪些文件，不能碰哪些模块，用什么命令验证，提交前要检查什么，遇到不确定时如何处理。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它最重要的价值不是让提示词变长，而是把反复要说的项目规则固定下来。每次开启新任务时，智能体都能先从同一个位置拿到上下文，减少猜测和误改。"
+          }
+        ]
+      },
+      {
+        "heading": "AGENTS.md 能解决什么问题",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一个问题是项目上下文丢失。没有 AGENTS.md 时，每次开始新对话，都要重新解释项目技术栈、目录结构、运行方式和注意事项。解释少了，智能体会猜；解释多了，又会浪费大量上下文。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二个问题是修改范围失控。很多 AI 编程失败不是因为代码不会写，而是因为它顺手重构了无关文件、修改了公共组件、碰到了支付、登录、数据库这类高风险逻辑。AGENTS.md 可以提前写清楚：默认只改任务相关文件，禁止无关重构，关键业务逻辑必须得到明确要求才允许修改。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三个问题是验证不稳定。不同项目的验证方式不一样，有的用 npm，有的用 pnpm，有的要跑 lint，有的只跑某个包的测试。如果不写清楚，智能体可能运行错误命令，或者改完代码不做验证。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四个问题是团队习惯无法复用。一个团队可能有固定的分支命名、提交格式、PR 标题、设计系统规则、测试要求和代码审查习惯。AGENTS.md 可以把这些约定变成智能体每次都能读取的项目规则。"
+          }
+        ]
+      },
+      {
+        "heading": "它适合写哪些内容",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "AGENTS.md 不适合写成百科全书。它应该只放智能体执行任务时最容易用到、最容易出错、最需要遵守的内容。重点是短、准、可执行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第一类是项目概况：项目是什么，主要用户是谁，核心流程是什么，哪些模块最关键。不要写市场宣传语，要写能帮助智能体判断代码边界的信息。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二类是目录说明：页面在哪里，组件在哪里，样式在哪里，数据在哪里，测试在哪里。尤其是大型仓库和多包项目，目录说明能明显减少无效搜索。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三类是开发命令：如何安装依赖，如何启动本地服务，如何构建，如何跑测试，如何只验证某个包或某个页面。命令越具体，智能体越不容易乱试。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四类是禁止事项：不要删除文件，不要重命名路由，不要改数据库结构，不要碰支付回调，不要大范围格式化，不要引入新依赖，除非任务明确要求。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第五类是交付标准：改完必须运行什么命令，失败时如何处理，最终要总结哪些文件、哪些风险、哪些没有验证。"
+          }
+        ]
+      },
+      {
+        "heading": "最小可用版本",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "刚开始不需要写很长。一份最小可用的 AGENTS.md，只要能让智能体知道项目是什么、怎么运行、怎么验证、不能乱动什么，就已经有价值。"
+          },
+          {
+            "type": "code",
+            "label": "最小 AGENTS.md 模板",
+            "content": "# AGENTS.md\n\n## 项目概况\n\n这是一个 [项目类型] 项目，用于 [核心用途]。\n\n主要技术栈：\n- 前端：[例如 React、Vue、Next.js]\n- 后端：[例如 Node.js、Python、Supabase]\n- 样式：[例如 CSS、Tailwind、设计系统]\n\n## 常用命令\n\n- 安装依赖：`npm install`\n- 启动开发服务：`npm run dev`\n- 构建项目：`npm run build`\n- 运行测试：`npm test`\n\n## 工作规则\n\n- 默认只修改和当前任务直接相关的文件。\n- 不要删除、移动或重命名文件，除非任务明确要求。\n- 不要重构无关代码。\n- 不要引入新依赖，除非先说明原因。\n- 修改完成后必须说明改了哪些文件、为什么改、是否完成验证。\n\n## 高风险区域\n\n以下区域不要主动修改，除非任务明确要求：\n- 登录和权限\n- 支付和回调\n- 数据库结构\n- 生产环境配置\n- 用户数据迁移"
+          }
+        ]
+      },
+      {
+        "heading": "如何创建自己的 AGENTS.md",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一步，先从真实项目反推规则。不要凭空写一份很完美的文档，而是看智能体最容易在哪些地方犯错：找错目录、跑错命令、乱改样式、误碰支付、忘记测试。把这些问题写进 AGENTS.md。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二步，只写会影响执行的规则。比如“保持代码优雅”太抽象，不如写成“不要在页面文件里新增硬编码颜色，颜色必须引用设计变量”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三步，把命令写完整。不要只写“运行测试”，而要写清楚运行哪个命令、在哪个目录运行、什么情况算通过。如果项目很大，还要写局部验证命令。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四步，按任务迭代。第一次可以只写 30 行。后面每次发现智能体犯了重复错误，就把对应规则补进去。AGENTS.md 应该随着项目一起进化。"
+          }
+        ]
+      },
+      {
+        "heading": "适合 AI 编程项目的完整模板",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "完整 AGENTS.md 模板",
+            "content": "# AGENTS.md\n\n## 项目背景\n\n[项目名称] 是一个 [项目类型]，面向 [目标用户]，核心目标是 [核心价值]。\n\n核心用户流程：\n1. [用户第一步]\n2. [用户第二步]\n3. [用户完成的关键结果]\n\n## 技术栈\n\n- 前端：\n- 后端：\n- 数据库：\n- 部署：\n- 样式系统：\n- 测试框架：\n\n## 目录结构\n\n- `src/pages`：页面入口\n- `src/components`：通用组件\n- `src/styles`：全局样式和设计变量\n- `src/data`：静态数据或数据配置\n- `src/lib`：工具函数和外部服务封装\n- `tests`：测试文件\n\n请优先阅读和当前任务相关的文件，不要无目的扫描整个项目。\n\n## 常用命令\n\n- 安装依赖：`npm install`\n- 本地开发：`npm run dev`\n- 构建：`npm run build`\n- 测试：`npm test`\n- 代码检查：`npm run lint`\n\n如果命令失败，请先阅读错误信息，优先修复和当前任务相关的问题。\n\n## 修改范围\n\n- 默认只修改当前任务直接相关的文件。\n- 不要顺手重构无关模块。\n- 不要大范围格式化文件。\n- 不要删除用户已有内容。\n- 不要修改和任务无关的文案、数据、样式或路由。\n\n## 高风险规则\n\n以下内容只有在任务明确要求时才能修改：\n- 登录、权限、会话\n- 支付、订单、回调\n- 数据库结构和迁移\n- 生产环境配置\n- 用户隐私和安全逻辑\n- 第三方密钥和环境变量\n\n## 设计规则\n\n- 复用已有组件和样式变量。\n- 不要随意新增颜色、阴影、圆角和间距。\n- 不要让按钮、标签、卡片风格和已有页面不一致。\n- 移动端必须可读，文字不能被截断或重叠。\n- 图片缺失时页面也要正常排版。\n\n## 测试和验证\n\n完成修改后，至少运行：\n- `npm run build`\n\n如果修改了核心逻辑，还需要运行：\n- `npm test`\n- `npm run lint`\n\n如果无法运行某个命令，请说明原因和风险。\n\n## 交付说明\n\n每次完成任务后，请总结：\n1. 修改了哪些文件\n2. 每个文件改了什么\n3. 运行了哪些验证命令\n4. 是否有未验证风险\n5. 是否有需要人工确认的地方"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个模板不要一次性全部照抄。更好的方式是先复制结构，再删掉和当前项目无关的部分，然后把命令、目录、风险区域改成项目真实情况。"
+          }
+        ]
+      },
+      {
+        "heading": "AGENTS.md 写得差会带来什么问题",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一种问题是写得太泛。比如“请写高质量代码”“请保持简洁”，这类话没有操作性，智能体无法判断具体怎么做。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二种问题是写得太长。把所有产品背景、会议纪要、路线图都塞进去，会让真正重要的规则被淹没。AGENTS.md 不是知识库，应该更像任务执行手册。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三种问题是不更新。项目命令变了、目录变了、测试方式变了，但 AGENTS.md 还停留在旧版本，智能体会按照错误规则执行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四种问题是只有禁止，没有路径。只写“不要乱改”不够，还要写“应该改哪里”“如何验证”“不确定时先做什么”。"
+          }
+        ]
+      },
+      {
+        "heading": "什么时候应该更新 AGENTS.md",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "当项目新增关键目录时，应该更新。比如新增了支付模块、后台管理、设计系统、内容导入脚本，都应该说明位置和风险。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当智能体连续犯同一类错误时，应该更新。比如总是忘记构建、总是误改全局样式、总是读错数据文件，这些都说明规则还不够具体。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当验证命令变化时，应该更新。尤其是从 npm 切到 pnpm、从单体项目变成多包项目、从手动测试变成持续集成后，命令必须同步。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当团队协作规则变化时，也应该更新。比如 PR 标题格式、分支命名、发布检查、代码审查清单，这些都可以沉淀进去。"
+          }
+        ]
+      },
+      {
+        "heading": "推荐工作流",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "先创建一份最小 AGENTS.md，只写项目概况、常用命令、修改范围和验证规则。不要一开始追求完整。"
+          },
+          {
+            "type": "paragraph",
+            "content": "接着用它跑 3 到 5 个真实任务，观察智能体是否还会误解项目。如果它总是问同样的问题，说明这部分规则应该写进去。"
+          },
+          {
+            "type": "paragraph",
+            "content": "然后把高频任务沉淀成更具体的规则，比如页面开发规则、设计系统规则、内容导入规则、测试规则。"
+          },
+          {
+            "type": "paragraph",
+            "content": "最后把 AGENTS.md 纳入代码审查。每次项目结构或命令变化，都像维护 README 一样维护它。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "openai-codex-cli-readme-full-translation",
+    "sourceUrl": "https://github.com/openai/codex",
+    "translationMode": "fullTranslation",
+    "title": "Codex CLI",
+    "originalTitle": "Codex CLI",
+    "notice": "",
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "Codex CLI",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Codex CLI 是 OpenAI 的编程智能体，可以在你的电脑本地运行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果想在代码编辑器中使用 Codex，例如 VS Code、Cursor、Windsurf，请在集成开发环境中安装。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果想使用桌面应用体验，请运行 `codex app`，或访问 Codex 应用页面。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果正在寻找 OpenAI 的云端智能体，也就是 Codex 网页版，请访问 chatgpt.com/codex。"
+          }
+        ]
+      },
+      {
+        "heading": "快速开始",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "安装和运行 Codex CLI。"
+          }
+        ]
+      },
+      {
+        "heading": "安装并运行 Codex CLI",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "在 Mac 或 Linux 上运行下面的命令来安装 Codex CLI："
+          },
+          {
+            "type": "code",
+            "label": "Mac 或 Linux 安装命令",
+            "content": "curl -fsSL https://chatgpt.com/codex/install.sh | sh"
+          },
+          {
+            "type": "paragraph",
+            "content": "在 Windows 上运行下面的命令来安装 Codex CLI："
+          },
+          {
+            "type": "code",
+            "label": "Windows 安装命令",
+            "content": "powershell -ExecutionPolicy ByPass -c \"irm https://chatgpt.com/codex/install.ps1 | iex\""
+          },
+          {
+            "type": "paragraph",
+            "content": "也可以通过下面这些包管理器安装 Codex CLI。"
+          },
+          {
+            "type": "code",
+            "label": "使用 npm 安装",
+            "content": "# 使用 npm 安装\nnpm install -g @openai/codex"
+          },
+          {
+            "type": "code",
+            "label": "使用 Homebrew 安装",
+            "content": "# 使用 Homebrew 安装\nbrew install --cask codex"
+          },
+          {
+            "type": "paragraph",
+            "content": "然后直接运行 `codex` 即可开始使用。"
+          }
+        ]
+      },
+      {
+        "heading": "也可以下载适合平台的二进制文件",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "也可以前往最新的 GitHub 发布页，下载适合你所在平台的二进制文件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "每个 GitHub 发布版本都包含多个可执行文件，但实际使用时，通常需要下面这些文件之一。"
+          },
+          {
+            "type": "paragraph",
+            "content": "macOS：Apple Silicon / arm64 使用 `codex-aarch64-apple-darwin.tar.gz`；x86_64，也就是较旧的 Mac 硬件，使用 `codex-x86_64-apple-darwin.tar.gz`。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Linux：x86_64 使用 `codex-x86_64-unknown-linux-musl.tar.gz`；arm64 使用 `codex-aarch64-unknown-linux-musl.tar.gz`。"
+          },
+          {
+            "type": "paragraph",
+            "content": "每个压缩包都只包含一个条目，并且平台名称会写进文件名，例如 `codex-x86_64-unknown-linux-musl`。因此，解压后通常需要把它重命名为 `codex`。"
+          }
+        ]
+      },
+      {
+        "heading": "使用 ChatGPT 计划运行 Codex",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "运行 `codex`，然后选择“使用 ChatGPT 登录”。推荐登录 ChatGPT 账号，把 Codex 作为 Plus、Pro、Business、Edu 或 Enterprise 计划的一部分来使用。"
+          },
+          {
+            "type": "paragraph",
+            "content": "也可以使用 API 密钥运行 Codex，但这需要额外配置。"
+          }
+        ]
+      },
+      {
+        "heading": "文档",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Codex 文档：https://developers.openai.com/codex"
+          },
+          {
+            "type": "paragraph",
+            "content": "贡献说明：./docs/contributing.md"
+          },
+          {
+            "type": "paragraph",
+            "content": "安装与构建：./docs/install.md"
+          },
+          {
+            "type": "paragraph",
+            "content": "开源基金：./docs/open-source-fund.md"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个仓库使用 Apache-2.0 许可证授权。"
           }
         ]
       }

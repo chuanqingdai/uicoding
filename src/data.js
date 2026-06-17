@@ -2123,6 +2123,188 @@ export const lessons = [
     ]
   },
   {
+    "id": "solo-founder-made-190k-two-years",
+    "title": "一名单人创始人两年赚到 19 万美元的复盘",
+    "originalTitle": "Made $190k in 2 years as Solo Founder",
+    "description": "一名单人创始人从全栈工程师起步，辞职后连续发布微型创业项目：11 个项目、7 个失败、3 个卖出、1 个做到月经常性收入超过 2000 美元，两年累计赚到 19 万美元。",
+    "sourceType": "Reddit 原文翻译",
+    "sourceName": "Reddit r/Entrepreneur",
+    "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/pf2bus/made_190k_in_2_years_as_solo_founder/",
+    "author": "Reddit 用户 / NoCodeAPI.com 创始人",
+    "license": "Reddit 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "8 分钟",
+    "category": "商业变现",
+    "tools": [
+      "NoCodeAPI.com"
+    ],
+    "tags": [
+      "一人公司",
+      "独立开发",
+      "真实收入",
+      "经验复盘"
+    ],
+    "href": "/learn/solo-founder-made-190k-two-years",
+    "publishedAt": "2026-06-17",
+    "viewCount": 246,
+    "likeCount": 17,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "从自己遇到的问题开始做产品",
+      "发布、搜索流量和持续维护带来长期收入",
+      "小型软件服务可以从副业逐步发展成稳定业务"
+    ]
+  },
+  {
+    "id": "bank-statement-converter-11k-month-solo-founder",
+    "title": "一个简单网站每月赚 1.1 万美元：银行流水转换器的一人公司复盘",
+    "originalTitle": "Making $11,000 every month running a simple website & not doing much",
+    "description": "Angus Cheng 用一周做出银行流水转换器，从付费广告、冷邮件到内容营销，最终把一个只做一件事的网站做到每月 1.1 万美元月经常性收入。",
+    "sourceType": "Reddit 原文翻译",
+    "sourceName": "Reddit r/Entrepreneur",
+    "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/16f1mkc/making_11000_every_month_running_a_simple_website/",
+    "author": "Angus Cheng / ysl17",
+    "license": "Reddit 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "14 分钟",
+    "category": "商业变现",
+    "tools": [
+      "Bank Statement Converter"
+    ],
+    "tags": [
+      "一人公司",
+      "软件服务",
+      "月经常性收入",
+      "真实网页案例"
+    ],
+    "href": "/learn/bank-statement-converter-11k-month-solo-founder",
+    "publishedAt": "2026-06-17",
+    "viewCount": 238,
+    "likeCount": 16,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "一个只解决单一问题的网站也能形成稳定收入",
+      "付费广告适合早期拿反馈，但内容营销更适合长期获客",
+      "一人公司可以通过简单工具、订阅收费和低运营成本赚钱"
+    ]
+  },
+  {
+    "id": "llama-life-700-paying-customers-solo-founder",
+    "title": "Llama Life：单人创始人把生产力网站做到 700 个付费用户",
+    "originalTitle": "Bootstrapped my productivity app to 700 paying customers! AMA.",
+    "description": "Marie Ng 从品牌广告职业转向自学编程，独自把生产力网页应用 Llama Life 做到 700 多个付费用户，并通过公开构建、产品定位和相关小网站获得增长。",
+    "sourceType": "Indie Hackers 原文翻译",
+    "sourceName": "Indie Hackers",
+    "sourceUrl": "https://www.indiehackers.com/post/bootstrapped-my-productivity-app-to-700-paying-customers-ama-23909bf748",
+    "author": "Marie Ng",
+    "license": "Indie Hackers 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "9 分钟",
+    "category": "商业变现",
+    "tools": [
+      "Llama Life"
+    ],
+    "tags": [
+      "一人公司",
+      "生产力工具",
+      "付费用户",
+      "真实网页案例"
+    ],
+    "href": "/learn/llama-life-700-paying-customers-solo-founder",
+    "publishedAt": "2026-06-17",
+    "viewCount": 224,
+    "likeCount": 15,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "没有营销预算也可以通过公开构建获得早期用户",
+      "免费小网站可以为主产品带来相关流量",
+      "单人产品要清楚自己不服务哪些需求"
+    ]
+  },
+  {
+    "id": "agents-md-open-format-coding-agents",
+    "title": "AGENTS.md 实操指南：给编程智能体写清项目规则",
+    "originalTitle": "AGENTS.md",
+    "description": "详细讲清 AGENTS.md 的价值、能解决的问题、适合写哪些规则，以及如何为自己的项目创建一份可执行的 AGENTS.md。",
+    "sourceType": "开源文档延展指南",
+    "sourceName": "agents.md",
+    "sourceUrl": "https://github.com/agentsmd/agents.md",
+    "author": "OpenAI",
+    "license": "MIT License",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "14 分钟",
+    "category": "工作流",
+    "tools": [
+      "Codex",
+      "Claude Code",
+      "Cursor"
+    ],
+    "tags": [
+      "AGENTS.md",
+      "编程智能体",
+      "项目规则",
+      "工作流"
+    ],
+    "href": "/learn/agents-md-open-format-coding-agents",
+    "publishedAt": "2026-06-17",
+    "viewCount": 284,
+    "likeCount": 19,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "AGENTS.md 能减少智能体猜测项目结构和命令的成本",
+      "适合沉淀开发环境、任务边界、测试命令和提交规则",
+      "一份好的 AGENTS.md 应该短、准、可执行，并随项目持续更新"
+    ]
+  },
+  {
+    "id": "openai-codex-cli-readme-full-translation",
+    "title": "Codex CLI：在本地运行的 OpenAI 编程智能体",
+    "originalTitle": "Codex CLI",
+    "description": "Codex CLI 是 OpenAI 的本地编程智能体，可在电脑上运行；内容包括安装、登录、二进制下载和文档入口。",
+    "sourceType": "开源文档翻译",
+    "sourceName": "OpenAI Codex GitHub",
+    "sourceUrl": "https://github.com/openai/codex",
+    "author": "OpenAI",
+    "license": "Apache-2.0",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "7 分钟",
+    "category": "工具入门",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex CLI",
+      "OpenAI",
+      "本地智能体",
+      "开源文档"
+    ],
+    "href": "/learn/openai-codex-cli-readme-full-translation",
+    "publishedAt": "2026-06-17",
+    "viewCount": 272,
+    "likeCount": 18,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "Codex CLI 可以在本地电脑运行",
+      "支持通过 ChatGPT 账号或 API 密钥使用",
+      "可通过安装脚本、npm、Homebrew 或 GitHub 发布页安装"
+    ]
+  },
+  {
     "id": "ai-coding-full-workflow-prompt-chain",
     "title": "让 Claude Code / Codex 先思考再写代码：一套可复制的完整链路提示词",
     "originalTitle": "I Made Claude Code Think Before It Codes. Here's the Prompt.",

@@ -180,16 +180,37 @@ function LearnCover({ image, imageAlt }) {
 
 function LearnSourceNotice({ content, lesson }) {
   const sourceUrl = content.sourceUrl || lesson.sourceUrl;
+  const showSourceAddress = Boolean(sourceUrl && content.showSourceAddress);
   const showSourceLink = Boolean(sourceUrl && !content.hideSourceNoticeLink);
 
-  if (!content.notice && !showSourceLink) {
+  if (!content.notice && !showSourceAddress && !showSourceLink) {
     return null;
   }
 
   return (
     <aside className="learn-source-notice">
       {content.notice && <p>{content.notice}</p>}
-      {showSourceLink && (
+      {showSourceAddress && (
+        <p className="learn-source-address">
+          原文地址：
+          <a
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackEvent('outbound_link_click', {
+                label: '原文地址',
+                link_url: sourceUrl,
+                content_type: 'lesson',
+              })
+            }
+          >
+            {sourceUrl}
+            <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+          </a>
+        </p>
+      )}
+      {showSourceLink && !showSourceAddress && (
         <a
           href={sourceUrl}
           target="_blank"
@@ -287,7 +308,7 @@ export default function LearnDetailPage({ slug }) {
   const coverImage = lessonCoverImage || contentCover?.image;
   const coverImageAlt =
     (lessonCoverImage ? lesson.imageAlt : contentCover?.imageAlt) || `${lesson.title} 头图`;
-  const lessonSiteUrl = lesson.websiteUrl || lesson.sourceUrl;
+  const lessonSiteUrl = content.hideArticleSiteLink ? '' : lesson.websiteUrl || lesson.sourceUrl;
   const lessonSiteLabel = formatDisplayUrl(lessonSiteUrl);
 
   return (

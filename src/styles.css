@@ -2175,6 +2175,16 @@ h3 {
   font-weight: 760;
 }
 
+.learn-source-address {
+  word-break: break-word;
+}
+
+.learn-source-address a {
+  margin-left: 4px;
+  max-width: 100%;
+  vertical-align: baseline;
+}
+
 .learn-source-notice a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
