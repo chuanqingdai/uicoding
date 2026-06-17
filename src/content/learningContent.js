@@ -9160,6 +9160,393 @@ https://www.figma.com/design/...
     ]
   },
   {
+    "id": "adminly-claude-code-swiss-admin-saas",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1sauqtb/built_a_swiss_administrative_saas_solo_in_3/",
+    "translationMode": "fullTranslation",
+    "title": "用 Claude Code 独自做出瑞士行政事务 SaaS，3 个月拿到第一批付费用户",
+    "originalTitle": "Built a Swiss administrative SaaS solo in 3 months with Claude Code — first paying customers",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "3 个月独自做出瑞士行政事务 SaaS",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "大家好，我是 25 岁的瑞士创始人。"
+          },
+          {
+            "type": "paragraph",
+            "content": "过去 3 个月，我独自做了 Adminly。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Adminly 是一个模块化的瑞士行政事务平台，帮助人们处理税务、搬家、创业、增值税、新居民手续等任务。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我用 Claude Code 完成了大部分开发工作。"
+          },
+          {
+            "type": "paragraph",
+            "content": "现在产品已经上线，并且有了第一批付费用户。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么做这个产品",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "瑞士的行政事务很复杂。"
+          },
+          {
+            "type": "paragraph",
+            "content": "税务、搬家、注册公司、增值税、新居民材料，每个州和每种情况都有不同要求。"
+          },
+          {
+            "type": "paragraph",
+            "content": "很多人不知道该填什么表、什么时候提交、该去哪里找文件、哪些步骤不能漏。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我想把这些复杂流程拆成可以购买的模块。用户只买自己需要的包，不需要订阅。"
+          }
+        ]
+      },
+      {
+        "heading": "产品现在提供什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "现在 Adminly 提供几个瑞士行政事务包。"
+          },
+          {
+            "type": "paragraph",
+            "content": "税务申报包，价格 19 瑞士法郎。"
+          },
+          {
+            "type": "paragraph",
+            "content": "搬家包，价格 39 瑞士法郎。"
+          },
+          {
+            "type": "paragraph",
+            "content": "新居民包，价格 49 瑞士法郎。"
+          },
+          {
+            "type": "paragraph",
+            "content": "创业包，价格 69 瑞士法郎。"
+          },
+          {
+            "type": "paragraph",
+            "content": "用户选择一个包之后，会得到清单、预填文件、时间线和相关指南。"
+          }
+        ]
+      },
+      {
+        "heading": "技术栈",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "技术栈是 Next.js、Supabase、Stripe 和 Claude Code。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我不是一个大团队，整个产品基本是一个人完成。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Claude Code 帮我完成了很多开发工作，包括页面、数据库逻辑、支付流程、模块结构和修复问题。"
+          },
+          {
+            "type": "paragraph",
+            "content": "没有 Claude Code，我不可能在这个时间内完成。"
+          }
+        ]
+      },
+      {
+        "heading": "现在的状态",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Adminly 已经上线。"
+          },
+          {
+            "type": "paragraph",
+            "content": "目前有第一批付费用户。"
+          },
+          {
+            "type": "paragraph",
+            "content": "产品先从瑞士法语区开始，然后再扩展到德语和英语。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我现在正在继续改进模块、文案、支付流程和用户体验。"
+          }
+        ]
+      },
+      {
+        "heading": "我想听到的反馈",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我想听听大家的意见。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个想法是否合理？"
+          },
+          {
+            "type": "paragraph",
+            "content": "一次性购买行政事务包，而不是订阅，这种定价方式是否清楚？"
+          },
+          {
+            "type": "paragraph",
+            "content": "网站是否可信？"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你住在瑞士，这类工具是否会有用？"
+          }
+        ]
+      },
+      {
+        "heading": "产品地址",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "产品网站是 https://adminly.ch。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "one-click-report-claude-code-marketing-saas",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1ozeqy5/solobuilt_a_saas_to_23_paying_customers_in_4/",
+    "translationMode": "fullTranslation",
+    "title": "技术合伙人退出后，产品经理怎样用 Claude Code 做到 23 个付费客户",
+    "originalTitle": "Solo-built a SaaS to 23 paying customers in 4 weeks using Claude Code (after my co-founder quit)",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "技术合伙人失去兴趣以后",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "我的技术合伙人在 9 月对这个项目失去了兴趣。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我留下来继续做，而且只用了 Claude Code。"
+          },
+          {
+            "type": "paragraph",
+            "content": "到现在为止，结果是 23 个付费客户，月经常性收入超过 400 美元。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我不是开发者。我是产品经理。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我过去会写一点 Python 和 SQL，但那只是一些基本脚本和数据库查询。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个项目叫 1click Report，网站是 https://1clickreport.com。"
+          }
+        ]
+      },
+      {
+        "heading": "这个产品做什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "1click Report 是给营销团队用的报告和分析工具。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它连接 Google Ads、Meta、Google Analytics、Search Console 和 Stripe。"
+          },
+          {
+            "type": "paragraph",
+            "content": "用户可以在 Claude 里面直接分析营销表现，找到浪费预算的地方，生成报告，并且在不离开 Claude 的情况下批准修改。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我做它的原因很简单：营销人员经常要在很多工具之间切换，只为了回答几个非常具体的问题。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么这件事让我震惊",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "最让我震惊的不是代码生成速度。"
+          },
+          {
+            "type": "paragraph",
+            "content": "真正让我震惊的是，我可以把自己的产品直觉直接变成产品。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我不需要把想法解释给工程师，不需要排期，不需要等人把设计转成代码，也不需要因为技术合伙人没时间而停下来。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我可以想到一个功能，然后直接让 Claude Code 帮我实现。"
+          },
+          {
+            "type": "paragraph",
+            "content": "从想法到部署，有时候只需要几个小时。"
+          }
+        ]
+      },
+      {
+        "heading": "过去会卡住的地方",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "以前我会卡在很多地方。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我知道用户需要什么，也知道产品应该怎么工作，但我无法自己把它做出来。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果技术合伙人忙、没有兴趣，或者不认同优先级，事情就会停住。"
+          },
+          {
+            "type": "paragraph",
+            "content": "现在不一样了。"
+          },
+          {
+            "type": "paragraph",
+            "content": "我仍然不认为自己是工程师，但我可以把产品做出来，可以让用户试用，可以收钱，可以继续迭代。"
+          }
+        ]
+      },
+      {
+        "heading": "Claude Code 改变了什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Claude Code 改变的，是非技术创始人和产品人能完成的事情范围。"
+          },
+          {
+            "type": "paragraph",
+            "content": "以前你需要一个开发者才能验证一个软件想法。"
+          },
+          {
+            "type": "paragraph",
+            "content": "现在，如果你足够了解用户、问题和产品流程，你可以自己先做出第一版。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这不代表工程师不重要。"
+          },
+          {
+            "type": "paragraph",
+            "content": "但它意味着，早期验证阶段不再完全依赖别人。"
+          }
+        ]
+      },
+      {
+        "heading": "我目前学到的东西",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一，产品感觉变得更重要了。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你知道用户真正想要什么，人工智能可以帮你更快到达那里。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二，清晰描述比会写代码更重要。"
+          },
+          {
+            "type": "paragraph",
+            "content": "你必须把功能、状态、边界情况和用户流程说清楚。描述越清楚，Claude Code 做得越好。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三，人工智能编程不会自动替你做产品判断。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它可以写代码，但它不知道什么值得做、什么应该删、用户为什么愿意付钱。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这些判断还是要由创始人来做。"
+          }
+        ]
+      },
+      {
+        "heading": "现在的数字",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "产品上线 4 周。"
+          },
+          {
+            "type": "paragraph",
+            "content": "目前有 23 个付费客户。"
+          },
+          {
+            "type": "paragraph",
+            "content": "月经常性收入超过 400 美元。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这不是一个很大的数字，但它是真实用户在为产品付费。"
+          },
+          {
+            "type": "paragraph",
+            "content": "对我来说，这比停在想法阶段重要得多。"
+          }
+        ]
+      },
+      {
+        "heading": "给其他非技术创始人的建议",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果你是非技术创始人，不要再等一个完美的技术合伙人。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你真的理解一个问题，可以先用 Claude Code 做出第一版。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不要一开始就追求完美架构。"
+          },
+          {
+            "type": "paragraph",
+            "content": "先做出能解决问题、能让用户试用、能收费的东西。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一旦有人愿意付钱，你再决定下一步该怎么扩展。"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "solo-founder-made-190k-two-years",
     "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/pf2bus/made_190k_in_2_years_as_solo_founder/",
     "translationMode": "fullTranslation",

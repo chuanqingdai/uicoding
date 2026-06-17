@@ -19,6 +19,8 @@ import SubmitPage from './pages/SubmitPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import SEO, { getCanonicalUrl, seoDefaults } from './components/SEO.jsx';
 import { trackPageView } from './lib/analytics.js';
+import { I18nProvider, useI18n } from './lib/i18n.jsx';
+import { localizeCase, localizeLesson } from './lib/contentLocalization.js';
 import { cases, lessons } from './data.js';
 
 const learnRedirects = {
@@ -37,10 +39,12 @@ function Home() {
   );
 }
 
-function buildStructuredData({ caseItem, isHome, lesson, pathname, seo }) {
+function buildStructuredData({ caseItem, isHome, language, lesson, pathname, seo }) {
   const base = {
     '@context': 'https://schema.org',
   };
+  const displayCase = localizeCase(caseItem, language);
+  const displayLesson = localizeLesson(lesson, language);
 
   if (isHome) {
     return [
@@ -61,38 +65,38 @@ function buildStructuredData({ caseItem, isHome, lesson, pathname, seo }) {
     ];
   }
 
-  if (caseItem) {
+  if (displayCase) {
     return {
       ...base,
       '@type': 'CreativeWork',
-      name: caseItem.title,
-      description: caseItem.description,
+      name: displayCase.title,
+      description: displayCase.description,
       url: getCanonicalUrl(pathname),
-      datePublished: caseItem.publishedAt,
+      datePublished: displayCase.publishedAt,
       author: {
         '@type': 'Person',
-        name: caseItem.submitter?.name || 'Uicoding.ai',
+        name: displayCase.submitter?.name || 'Uicoding.ai',
       },
-      image: caseItem.screenshotUrl
-        ? `${seoDefaults.siteUrl}${caseItem.screenshotUrl}`
+      image: displayCase.screenshotUrl
+        ? `${seoDefaults.siteUrl}${displayCase.screenshotUrl}`
         : `${seoDefaults.siteUrl}/site-icon.png`,
     };
   }
 
-  if (lesson) {
+  if (displayLesson) {
     return {
       ...base,
       '@type': 'Article',
-      headline: lesson.title,
-      description: lesson.description,
+      headline: displayLesson.title,
+      description: displayLesson.description,
       url: getCanonicalUrl(pathname),
-      datePublished: lesson.publishedAt,
+      datePublished: displayLesson.publishedAt,
       author: {
         '@type': 'Person',
-        name: lesson.author || lesson.sourceName || 'Uicoding.ai',
+        name: displayLesson.author || displayLesson.sourceName || 'Uicoding.ai',
       },
-      image: lesson.image
-        ? `${seoDefaults.siteUrl}${lesson.image}`
+      image: displayLesson.image
+        ? `${seoDefaults.siteUrl}${displayLesson.image}`
         : `${seoDefaults.siteUrl}/site-icon.png`,
     };
   }
@@ -106,29 +110,36 @@ function buildStructuredData({ caseItem, isHome, lesson, pathname, seo }) {
   };
 }
 
-function getRouteSeo({ caseItem, isNotFound, lesson, pathname }) {
+function getRouteSeo({ caseItem, isNotFound, language, lesson, pathname, t }) {
   if (isNotFound) {
     return {
-      title: '页面不存在',
-      description: '这个页面可能已经移动，或链接地址不正确。',
+      title: language === 'en' ? 'Page not found' : '页面不存在',
+      description:
+        language === 'en'
+          ? 'This page may have moved, or the link may be incorrect.'
+          : '这个页面可能已经移动，或链接地址不正确。',
       noindex: true,
     };
   }
 
   if (caseItem) {
+    const displayCase = localizeCase(caseItem, language);
+
     return {
-      title: caseItem.title,
-      description: caseItem.description,
-      image: caseItem.screenshotUrl,
+      title: displayCase.title,
+      description: displayCase.description,
+      image: displayCase.screenshotUrl,
       type: 'article',
     };
   }
 
   if (lesson) {
+    const displayLesson = localizeLesson(lesson, language);
+
     return {
-      title: lesson.title,
-      description: lesson.description,
-      image: lesson.image,
+      title: displayLesson.title,
+      description: displayLesson.description,
+      image: displayLesson.image,
       type: 'article',
     };
   }
@@ -136,35 +147,41 @@ function getRouteSeo({ caseItem, isNotFound, lesson, pathname }) {
   const pageSeo = {
     '/': {
       title: 'Uicoding.ai',
-      description: seoDefaults.defaultDescription,
+      description: t('seo.home.description'),
     },
     '/cases': {
-      title: 'AI 编程案例',
-      description: '浏览真实 AI 编程作品，学习构建思路、提示词、工具组合、界面设计和上线过程。',
+      title: t('seo.cases.title'),
+      description: t('seo.cases.description'),
     },
     '/learn': {
-      title: 'AI 编程学习资料',
-      description: '面向零基础用户的 AI 编程教程、工具使用方法、提示词经验和真实项目复盘。',
+      title: t('seo.learn.title'),
+      description: t('seo.learn.description'),
     },
     '/tools': {
-      title: 'AI 编程工具',
-      description: '了解常用 AI Coding 工具的定位、适合场景和使用方式。',
+      title: t('seo.tools.title'),
+      description: t('seo.tools.description'),
     },
     '/about': {
-      title: '关于 Uicoding.ai',
-      description: '了解 Uicoding.ai 的创建背景、作者介绍和 AI 编程学习社区目标。',
+      title: language === 'en' ? 'About Uicoding.ai' : '关于 Uicoding.ai',
+      description:
+        language === 'en'
+          ? 'Learn about Uicoding.ai, its creator, and its AI coding learning community.'
+          : '了解 Uicoding.ai 的创建背景、作者介绍和 AI 编程学习社区目标。',
     },
     '/privacy': {
-      title: '隐私协议',
-      description: 'Uicoding.ai 的隐私协议和基础数据使用说明。',
+      title: language === 'en' ? 'Privacy Policy' : '隐私协议',
+      description:
+        language === 'en'
+          ? 'Privacy policy and basic data usage notes for Uicoding.ai.'
+          : 'Uicoding.ai 的隐私协议和基础数据使用说明。',
     },
     '/submit': {
-      title: '提交 AI 编程作品',
-      description: '把你的 AI 编程作品链接发给 Uicoding.ai，一起交流 AI Coding 和一人公司的经验。',
+      title: t('seo.submit.title'),
+      description: t('seo.submit.description'),
     },
     '/login': {
-      title: '登录 Uicoding.ai',
-      description: 'Uicoding.ai 登录页面。',
+      title: language === 'en' ? 'Log in to Uicoding.ai' : '登录 Uicoding.ai',
+      description: language === 'en' ? 'Uicoding.ai login page.' : 'Uicoding.ai 登录页面。',
       noindex: true,
     },
   };
@@ -172,7 +189,8 @@ function getRouteSeo({ caseItem, isNotFound, lesson, pathname }) {
   return pageSeo[pathname] ?? pageSeo['/'];
 }
 
-function App() {
+function AppContent() {
+  const { language, t } = useI18n();
   const pathname = window.location.pathname;
   const parts = pathname.split('/').filter(Boolean);
   const isHome = pathname === '/';
@@ -194,10 +212,11 @@ function App() {
     (!isStaticPath && !isCaseDetail && !isLearnDetail && !isToolsPath) ||
     (isCaseDetail && !caseItem) ||
     (isLearnDetail && !lesson && !learnRedirectTarget);
-  const seo = getRouteSeo({ caseItem, isNotFound, lesson, pathname });
+  const seo = getRouteSeo({ caseItem, isNotFound, language, lesson, pathname, t });
   const structuredData = buildStructuredData({
     caseItem,
     isHome,
+    language,
     lesson,
     pathname,
     seo,
@@ -219,6 +238,7 @@ function App() {
         canonicalPath={isNotFound ? '/404' : pathname}
         description={seo.description}
         image={seo.image}
+        language={language}
         noindex={seo.noindex}
         structuredData={isNotFound ? null : structuredData}
         title={seo.title}
@@ -245,4 +265,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <I18nProvider>
+      <AppContent />
+    </I18nProvider>
+  );
+}

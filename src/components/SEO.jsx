@@ -68,6 +68,7 @@ export default function SEO({
   canonicalPath = '/',
   description = defaultDescription,
   image = defaultImage,
+  language = 'zh',
   noindex = false,
   structuredData,
   title = siteName,
@@ -78,7 +79,7 @@ export default function SEO({
     const canonicalUrl = getCanonicalUrl(canonicalPath);
     const imageUrl = toAbsoluteUrl(image);
 
-    document.documentElement.lang = 'zh-CN';
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
     document.title = fullTitle;
     setMeta('description', description);
     setMeta('robots', noindex ? 'noindex,follow' : 'index,follow');
@@ -112,7 +113,7 @@ export default function SEO({
     }
 
     script.textContent = JSON.stringify(structuredData);
-  }, [canonicalPath, description, image, noindex, structuredData, title, type]);
+  }, [canonicalPath, description, image, language, noindex, structuredData, title, type]);
 
   return null;
 }

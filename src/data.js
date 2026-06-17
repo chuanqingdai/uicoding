@@ -2201,6 +2201,84 @@ export const lessons = [
     ]
   },
   {
+    "id": "adminly-claude-code-swiss-admin-saas",
+    "title": "用 Claude Code 独自做出瑞士行政事务 SaaS，3 个月拿到第一批付费用户",
+    "originalTitle": "Built a Swiss administrative SaaS solo in 3 months with Claude Code — first paying customers",
+    "description": "25 岁瑞士创始人用 Claude Code、Next.js 和 Supabase 独自做出 Adminly，帮助瑞士居民处理税务、搬家、创业、增值税等行政任务，并在早期拿到第一批付费用户。",
+    "sourceType": "Reddit 原文翻译",
+    "sourceName": "Reddit r/SaaS",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1sauqtb/built_a_swiss_administrative_saas_solo_in_3/",
+    "author": "Reeelias / Adminly 创始人",
+    "license": "Reddit 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "5 分钟",
+    "category": "商业变现",
+    "tools": [
+      "Claude Code",
+      "Adminly"
+    ],
+    "tags": [
+      "一人公司",
+      "Claude Code",
+      "AI 编程",
+      "付费用户"
+    ],
+    "href": "/learn/adminly-claude-code-swiss-admin-saas",
+    "image": "/learn-screenshots/adminly-home.png",
+    "imageAlt": "Adminly 瑞士行政事务 SaaS 首页截图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 214,
+    "likeCount": 14,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "本地复杂问题适合做成垂直 SaaS",
+      "Claude Code 可以显著压缩单人开发周期",
+      "第一批付费用户比泛流量更能验证方向"
+    ]
+  },
+  {
+    "id": "one-click-report-claude-code-marketing-saas",
+    "title": "技术合伙人退出后，产品经理怎样用 Claude Code 做到 23 个付费客户",
+    "originalTitle": "Solo-built a SaaS to 23 paying customers in 4 weeks using Claude Code (after my co-founder quit)",
+    "description": "一位非技术产品经理在技术合伙人失去兴趣后，用 Claude Code 独自做出 1click Report，4 周内获得 23 个付费客户和 400 美元以上月经常性收入。",
+    "sourceType": "Reddit 原文翻译",
+    "sourceName": "Reddit r/SaaS",
+    "sourceUrl": "https://www.reddit.com/r/SaaS/comments/1ozeqy5/solobuilt_a_saas_to_23_paying_customers_in_4/",
+    "author": "LeatherQuality9746 / 1click Report 创始人",
+    "license": "Reddit 用户公开分享",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "一人公司",
+    "duration": "10 分钟",
+    "category": "商业变现",
+    "tools": [
+      "Claude Code",
+      "1click Report"
+    ],
+    "tags": [
+      "一人公司",
+      "Claude Code",
+      "AI 编程",
+      "月经常性收入"
+    ],
+    "href": "/learn/one-click-report-claude-code-marketing-saas",
+    "image": "/learn-screenshots/one-click-report-home.png",
+    "imageAlt": "1click Report 营销分析 SaaS 首页截图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 208,
+    "likeCount": 13,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "懂用户和产品的人可以用 AI 编程先做出可收费版本",
+      "从想法到部署功能的周期被压缩到数小时",
+      "技术合伙人仍有价值，但早期验证不一定必须等待合伙人"
+    ]
+  },
+  {
     "id": "solo-founder-made-190k-two-years",
     "title": "一名单人创始人两年赚到 19 万美元的复盘",
     "originalTitle": "Made $190k in 2 years as Solo Founder",

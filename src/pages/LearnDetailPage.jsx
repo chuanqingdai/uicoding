@@ -8,6 +8,8 @@ import { LearningCard, isDefaultLearningCover } from '../components/Cards.jsx';
 import Comments from '../components/Comments.jsx';
 import { trackEvent } from '../lib/analytics.js';
 import { formatDisplayUrl } from '../lib/urls.js';
+import { useI18n } from '../lib/i18n.jsx';
+import { localizeLearningContent, localizeLesson } from '../lib/contentLocalization.js';
 
 function buildFallbackContent(lesson) {
   return {
@@ -30,6 +32,7 @@ function buildFallbackContent(lesson) {
 }
 
 function LearnCodeBlock({ code }) {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
 
   const copyCode = async () => {
@@ -41,7 +44,7 @@ function LearnCodeBlock({ code }) {
       await navigator.clipboard.writeText(code.content);
       setCopied(true);
       trackEvent('code_copy', {
-        label: code.label || '代码片段',
+        label: code.label || t('detail.copyablePrompt'),
         code_length: code.content.length,
       });
       window.setTimeout(() => setCopied(false), 1400);
@@ -57,14 +60,14 @@ function LearnCodeBlock({ code }) {
   return (
     <div className="learn-code-block">
       <div className="learn-code-head">
-        <span>{code.label || '代码片段'}</span>
+        <span>{code.label || t('detail.copyablePrompt')}</span>
         <button onClick={copyCode} type="button">
           {copied ? (
             <Check size={14} strokeWidth={2} aria-hidden="true" />
           ) : (
             <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
           )}
-          {copied ? '已复制' : '复制'}
+          {copied ? t('detail.copied') : t('detail.copy')}
         </button>
       </div>
       <pre>
@@ -179,6 +182,7 @@ function LearnCover({ image, imageAlt }) {
 }
 
 function LearnSourceNotice({ content, lesson }) {
+  const { t } = useI18n();
   const sourceUrl = content.sourceUrl || lesson.sourceUrl;
   const showSourceAddress = Boolean(sourceUrl && content.showSourceAddress);
   const showSourceLink = Boolean(sourceUrl && !content.hideSourceNoticeLink);
@@ -192,14 +196,14 @@ function LearnSourceNotice({ content, lesson }) {
       {content.notice && <p>{content.notice}</p>}
       {showSourceAddress && (
         <p className="learn-source-address">
-          原文地址：
+          {t('detail.sourceAddress')}
           <a
             href={sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() =>
               trackEvent('outbound_link_click', {
-                label: '原文地址',
+                label: t('detail.sourceAddress'),
                 link_url: sourceUrl,
                 content_type: 'lesson',
               })
@@ -217,13 +221,13 @@ function LearnSourceNotice({ content, lesson }) {
           rel="noopener noreferrer"
           onClick={() =>
             trackEvent('outbound_link_click', {
-              label: '查看英文原文',
+              label: t('detail.viewOriginal'),
               link_url: sourceUrl,
               content_type: 'lesson',
             })
           }
         >
-          查看英文原文
+          {t('detail.viewOriginal')}
           <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
         </a>
       )}
@@ -261,39 +265,45 @@ function ArticleSiteLink({ url, label, lesson }) {
 }
 
 export default function LearnDetailPage({ slug }) {
-  const lesson = useMemo(() => lessons.find((item) => item.id === slug), [slug]);
-  const content = useMemo(() => {
-    if (!lesson) {
+  const { language, t } = useI18n();
+  const rawLesson = useMemo(() => lessons.find((item) => item.id === slug), [slug]);
+  const rawContent = useMemo(() => {
+    if (!rawLesson) {
       return null;
     }
 
-    return learningContent.find((item) => item.id === lesson.id) ?? buildFallbackContent(lesson);
-  }, [lesson]);
+    return learningContent.find((item) => item.id === rawLesson.id) ?? buildFallbackContent(rawLesson);
+  }, [rawLesson]);
+  const lesson = useMemo(() => localizeLesson(rawLesson, language), [language, rawLesson]);
+  const content = useMemo(
+    () => localizeLearningContent(rawContent, rawLesson, language),
+    [language, rawContent, rawLesson],
+  );
 
   const relatedLessons = useMemo(() => {
-    if (!lesson) {
+    if (!rawLesson) {
       return [];
     }
 
     return lessons
-      .filter((item) => item.id !== lesson.id)
+      .filter((item) => item.id !== rawLesson.id)
       .filter((item) => {
-        const sameCategory = item.category === lesson.category;
-        const sameTool = item.tools?.some((tool) => lesson.tools?.includes(tool));
-        const sameAudience = item.audience === lesson.audience;
+        const sameCategory = item.category === rawLesson.category;
+        const sameTool = item.tools?.some((tool) => rawLesson.tools?.includes(tool));
+        const sameAudience = item.audience === rawLesson.audience;
 
         return sameCategory || sameTool || sameAudience;
       })
       .slice(0, 4);
-  }, [lesson]);
+  }, [rawLesson]);
 
   if (!lesson || !content) {
     return (
       <div className="case-detail-empty">
         <Container>
-          <h1>学习资料不存在</h1>
-          <p>这篇资料可能已被移除，或链接地址不正确。</p>
-          <Button href="/learn">返回学习资料</Button>
+          <h1>{t('detail.lessonNotFound')}</h1>
+          <p>{t('detail.lessonNotFoundDescription')}</p>
+          <Button href="/learn">{t('detail.backToLearn')}</Button>
         </Container>
       </div>
     );
@@ -307,7 +317,7 @@ export default function LearnDetailPage({ slug }) {
     lesson.image && !isDefaultLearningCover(lesson.image) ? lesson.image : '';
   const coverImage = lessonCoverImage || contentCover?.image;
   const coverImageAlt =
-    (lessonCoverImage ? lesson.imageAlt : contentCover?.imageAlt) || `${lesson.title} 头图`;
+    (lessonCoverImage ? lesson.imageAlt : contentCover?.imageAlt) || `${lesson.title} cover`;
   const lessonSiteUrl = content.hideArticleSiteLink ? '' : lesson.websiteUrl || lesson.sourceUrl;
   const lessonSiteLabel = formatDisplayUrl(lessonSiteUrl);
 
@@ -352,14 +362,14 @@ export default function LearnDetailPage({ slug }) {
             <Comments
               targetId={lesson.id}
               targetType="lesson"
-              title="评论"
+              title={t('detail.comments')}
             />
 
             {relatedLessons.length > 0 && (
               <section className="tool-detail-section learn-related-section">
                 <div>
-                  <h2>更多学习资料</h2>
-                  <p>继续阅读与这个主题相关的 AI 编程学习内容。</p>
+                  <h2>{t('detail.moreLearning')}</h2>
+                  <p>{t('detail.moreLearningDescription')}</p>
                 </div>
                 <div className="learning-grid related-learning-grid">
                   {relatedLessons.map((item) => (

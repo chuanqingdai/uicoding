@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Send } from 'lucide-react';
+import { Check, ChevronDown, Send } from 'lucide-react';
 import { footerGroups, navItems } from '../data.js';
 import { Button } from './UI.jsx';
 import { trackClick } from '../lib/analytics.js';
+import { languages, useI18n } from '../lib/i18n.jsx';
 
 export function Container({ children, className = '' }) {
   return <div className={`container ${className}`}>{children}</div>;
@@ -17,6 +18,9 @@ export function Section({
   title,
   description,
 }) {
+  const { t } = useI18n();
+  const finalActionLabel = actionLabel === '更多' ? t('common.more') : actionLabel;
+
   return (
     <section className={`section ${className}`}>
       <Container>
@@ -31,9 +35,9 @@ export function Section({
               <a
                 className="section-more"
                 href={actionHref}
-                onClick={() => trackClick('section_more', actionLabel, { link_url: actionHref })}
+                onClick={() => trackClick('section_more', finalActionLabel, { link_url: actionHref })}
               >
-                {actionLabel} →
+                {finalActionLabel} →
               </a>
             )}
           </div>
@@ -45,9 +49,18 @@ export function Section({
 }
 
 export function Header() {
+  const { language, setLanguage, t } = useI18n();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const languageMenuRef = useRef(null);
   const scrollTimer = useRef(null);
   const pathname = window.location.pathname;
+
+  const handleLanguageSelect = (nextLanguage) => {
+    setLanguage(nextLanguage);
+    setIsLanguageOpen(false);
+    trackClick('language_switch', nextLanguage, { language: nextLanguage });
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -100,6 +113,28 @@ export function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    const handlePointerDown = (event) => {
+      if (!languageMenuRef.current?.contains(event.target)) {
+        setIsLanguageOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsLanguageOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
@@ -107,15 +142,21 @@ export function Header() {
           <a
             className="brand"
             href="/"
-            aria-label="Uicoding.ai 首页"
+            aria-label={language === 'en' ? 'Uicoding.ai home' : 'Uicoding.ai 首页'}
             onClick={() => trackClick('header_brand', 'Uicoding.ai', { link_url: '/' })}
           >
             <img className="brand-icon" src="/site-icon.png" alt="" aria-hidden="true" />
             Uicoding.ai
           </a>
-          <nav className="main-nav" aria-label="主导航">
+          <nav className="main-nav" aria-label={language === 'en' ? 'Main navigation' : '主导航'}>
             {navItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const labelMap = {
+                '/cases': t('nav.cases'),
+                '/learn': t('nav.learn'),
+                '/tools': t('nav.tools'),
+              };
+              const label = labelMap[item.href] ?? item.label;
 
               return (
                 <a
@@ -123,23 +164,64 @@ export function Header() {
                   className={isActive ? 'is-active' : ''}
                   href={item.href}
                   key={item.href}
-                  onClick={() => trackClick('header_nav', item.label, { link_url: item.href })}
+                  onClick={() => trackClick('header_nav', label, { link_url: item.href })}
                 >
-                  {item.label}
+                  {label}
                 </a>
               );
             })}
           </nav>
           <div className="header-actions">
+            <div
+              className={`language-menu ${isLanguageOpen ? 'is-open' : ''}`}
+              ref={languageMenuRef}
+            >
+              <button
+                aria-expanded={isLanguageOpen}
+                aria-haspopup="listbox"
+                aria-label={language === 'en' ? 'Select language' : '选择语言'}
+                className="language-trigger"
+                onClick={() => setIsLanguageOpen((value) => !value)}
+                type="button"
+              >
+                <span>{languages[language]}</span>
+                <ChevronDown size={14} strokeWidth={2} aria-hidden="true" />
+              </button>
+              {isLanguageOpen && (
+                <div
+                  aria-label={language === 'en' ? 'Language options' : '语言选项'}
+                  className="language-options"
+                  role="listbox"
+                >
+                  {Object.entries(languages).map(([value, label]) => {
+                    const isSelected = value === language;
+
+                    return (
+                      <button
+                        aria-selected={isSelected}
+                        className={`language-option ${isSelected ? 'is-selected' : ''}`}
+                        key={value}
+                        onClick={() => handleLanguageSelect(value)}
+                        role="option"
+                        type="button"
+                      >
+                        <span>{label}</span>
+                        {isSelected && <Check size={14} strokeWidth={2} aria-hidden="true" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <Button
               href="/submit"
               icon={Send}
               analyticsEvent={{
                 name: 'cta_click',
-                params: { area: 'header', label: '提交作品', link_url: '/submit' },
+                params: { area: 'header', label: t('common.submit'), link_url: '/submit' },
               }}
             >
-              提交作品
+              {t('common.submit')}
             </Button>
           </div>
         </Container>
@@ -150,6 +232,19 @@ export function Header() {
 }
 
 export function Footer() {
+  const { t } = useI18n();
+  const footerTitleMap = {
+    探索: t('footer.explore'),
+    站点: t('footer.site'),
+  };
+  const footerLinkMap = {
+    案例: t('footer.cases'),
+    学习资料: t('footer.learn'),
+    提交作品: t('footer.submit'),
+    关于: t('footer.about'),
+    隐私协议: t('footer.privacy'),
+  };
+
   return (
     <footer className="site-footer">
       <Container className="footer-inner">
@@ -162,26 +257,24 @@ export function Footer() {
             <img className="brand-icon" src="/site-icon.png" alt="" aria-hidden="true" />
             Uicoding.ai
           </a>
-          <p>
-            代码零基础人群的交流社区，一起学习工具使用技巧、界面设计和上线经验。
-          </p>
+          <p>{t('footer.description')}</p>
         </div>
         <div className="footer-links">
           {footerGroups.map((group) => (
             <div className="footer-group" key={group.title}>
-              <h3>{group.title}</h3>
+              <h3>{footerTitleMap[group.title] ?? group.title}</h3>
               {group.links.map((link) => (
                 <a
                   href={link.href}
                   key={link.label}
                   onClick={() =>
-                    trackClick('footer_link', link.label, {
-                      group: group.title,
+                    trackClick('footer_link', footerLinkMap[link.label] ?? link.label, {
+                      group: footerTitleMap[group.title] ?? group.title,
                       link_url: link.href,
                     })
                   }
                 >
-                  {link.label}
+                  {footerLinkMap[link.label] ?? link.label}
                 </a>
               ))}
             </div>

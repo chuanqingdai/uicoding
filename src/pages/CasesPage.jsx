@@ -7,6 +7,7 @@ import { CaseCard } from '../components/Cards.jsx';
 import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
 import { byLatest as byPublishedLatest, byTodayPickFirst } from '../lib/contentOrdering.js';
+import { useI18n } from '../lib/i18n.jsx';
 
 const pinnedCaseOrder = [
   'forged-in-silence-codex',
@@ -60,7 +61,10 @@ function FilterSelect({
   onChange,
   onClose,
   onToggle,
+  getOptionLabel = (option) => option,
 }) {
+  const displayValue = getOptionLabel(value);
+
   return (
     <div
       className="cases-filter-group cases-select"
@@ -82,7 +86,7 @@ function FilterSelect({
         onClick={onToggle}
         type="button"
       >
-        <span>{value}</span>
+        <span>{displayValue}</span>
         <ChevronDown size={15} strokeWidth={1.9} aria-hidden="true" />
       </button>
       {isOpen && (
@@ -108,7 +112,7 @@ function FilterSelect({
               role="option"
               type="button"
             >
-              <span>{option}</span>
+              <span>{getOptionLabel(option)}</span>
               {value === option && (
                 <Check size={14} strokeWidth={2} aria-hidden="true" />
               )}
@@ -121,6 +125,7 @@ function FilterSelect({
 }
 
 export default function CasesPage() {
+  const { categoryLabel, t } = useI18n();
   const [sortMode, setSortMode] = useState('latest');
   const [activeType, setActiveType] = useState('全部类型');
   const [openFilter, setOpenFilter] = useState(null);
@@ -184,16 +189,14 @@ export default function CasesPage() {
     <div className="cases-page">
       <section className="cases-hero">
         <Container>
-          <h1>案例</h1>
-          <p>
-            浏览真实 AI 编程作品，学习它们的构建思路、提示词、工具组合、界面设计和上线过程。
-          </p>
+          <h1>{t('cases.title')}</h1>
+          <p>{t('cases.description')}</p>
         </Container>
       </section>
 
       <Container>
         <div className="cases-toolbar">
-          <div className="cases-tabs" aria-label="排序方式">
+          <div className="cases-tabs" aria-label={t('cases.sortLabel')}>
             <Button
               type="button"
               variant={sortMode === 'latest' ? 'primary' : 'secondary'}
@@ -203,7 +206,7 @@ export default function CasesPage() {
               }}
               aria-pressed={sortMode === 'latest'}
             >
-              最新
+              {t('cases.latest')}
             </Button>
             <Button
               type="button"
@@ -214,19 +217,20 @@ export default function CasesPage() {
               }}
               aria-pressed={sortMode === 'hot'}
             >
-              最热
+              {t('cases.hot')}
             </Button>
           </div>
 
           <FilterSelect
             id="case-type-filter"
-            label="类型"
+            label={t('cases.type')}
             value={activeType}
             options={caseTypeFilters}
             isOpen={openFilter === 'type'}
             onChange={setActiveType}
             onClose={() => setOpenFilter(null)}
             onToggle={() => setOpenFilter(openFilter === 'type' ? null : 'type')}
+            getOptionLabel={categoryLabel}
           />
         </div>
 
@@ -242,15 +246,15 @@ export default function CasesPage() {
               className="auto-load-sentinel"
               ref={loadMoreRef}
             >
-              {hasMoreCases ? '继续向下浏览' : '已显示全部案例'}
+              {hasMoreCases ? t('common.keepBrowsing') : t('common.allCasesShown')}
             </div>
           </>
         ) : (
           <div className="cases-empty">
-            <h2>暂时没有匹配的案例</h2>
-            <p>试试切换类型，回到全部案例继续浏览。</p>
+            <h2>{t('cases.emptyTitle')}</h2>
+            <p>{t('cases.emptyDescription')}</p>
             <Button type="button" onClick={resetFilters}>
-              查看全部
+              {t('cases.viewAll')}
             </Button>
           </div>
         )}

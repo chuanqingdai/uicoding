@@ -7,13 +7,17 @@ import { CaseCard } from '../components/Cards.jsx';
 import Comments from '../components/Comments.jsx';
 import { trackEvent } from '../lib/analytics.js';
 import { formatDisplayUrl } from '../lib/urls.js';
+import { useI18n } from '../lib/i18n.jsx';
+import { localizeCase, localizeCaseSections } from '../lib/contentLocalization.js';
 
 function isRecentCase(item) {
   return Boolean(item.sourceType);
 }
 
 function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
+  const { language, t } = useI18n();
   const [copied, setCopied] = useState(false);
+  const showWechat = language === 'zh';
 
   if (!submitter) {
     return null;
@@ -45,7 +49,7 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
         </div>
         <div>
           <h2>{submitter.name}</h2>
-          <p>{submitter.bio || submitter.role || '分享 AI 编程作品和实践经验。'}</p>
+          <p>{submitter.bio || submitter.role || t('detail.defaultSubmitterBio')}</p>
         </div>
       </div>
 
@@ -53,13 +57,13 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
         {submitter.email && (
           <a href={`mailto:${submitter.email}`}>
             <Mail size={14} strokeWidth={1.8} aria-hidden="true" />
-            邮箱
+            {t('detail.email')}
           </a>
         )}
-        {submitter.wechat && (
+        {showWechat && submitter.wechat && (
           <button type="button" onClick={copyWechat}>
             <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
-            微信：{submitter.wechat} · {copied ? '已复制' : '复制微信'}
+            {t('detail.wechat')}：{submitter.wechat} · {copied ? t('detail.copied') : t('detail.copyWechat')}
           </button>
         )}
         {submitter.douyinUrl && (
@@ -79,7 +83,7 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
         {submitter.website && (
           <a href={submitter.website} target="_blank" rel="noopener noreferrer">
             <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
-            个人网站
+            {t('detail.website')}
           </a>
         )}
       </div>
@@ -91,13 +95,14 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
         type="button"
         variant={isFollowing ? 'secondary' : 'primary'}
       >
-        {isFollowing ? '已关注' : '关注提交者'}
+        {isFollowing ? t('detail.following') : t('detail.follow')}
       </Button>
     </Card>
   );
 }
 
 function DetailCodeBlock({ prompt, caseItem, sectionTitle }) {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
 
   const copyCode = async () => {
@@ -129,14 +134,14 @@ function DetailCodeBlock({ prompt, caseItem, sectionTitle }) {
   return (
     <div className="learn-code-block">
       <div className="learn-code-head">
-        <span>{prompt.label || '可复制提示词'}</span>
+        <span>{prompt.label || t('detail.copyablePrompt')}</span>
         <button onClick={copyCode} type="button">
           {copied ? (
             <Check size={14} strokeWidth={2} aria-hidden="true" />
           ) : (
             <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
           )}
-          {copied ? '已复制' : '复制'}
+          {copied ? t('detail.copied') : t('detail.copy')}
         </button>
       </div>
       <pre>
@@ -146,14 +151,36 @@ function DetailCodeBlock({ prompt, caseItem, sectionTitle }) {
   );
 }
 
-function DetailBlock({ section, caseItem }) {
+function DetailBlock({ section, caseItem, visitLabel }) {
   const hasImage = Boolean(section.image);
+  const imageUrl = caseItem.websiteUrl || caseItem.sourceUrl;
 
   return (
     <article className={`detail-block ${hasImage ? 'has-image' : 'is-text-only'}`}>
       {hasImage && (
         <div className="detail-image">
-          <img src={section.image} alt={section.imageAlt} />
+          {imageUrl ? (
+            <a
+              className="detail-image-link"
+              href={imageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${caseItem.title} ${visitLabel}`}
+              onClick={() =>
+                trackEvent('outbound_link_click', {
+                  label: '案例正文图片',
+                  content_type: 'case',
+                  item_id: caseItem.id,
+                  item_name: caseItem.title,
+                  link_url: imageUrl,
+                })
+              }
+            >
+              <img src={section.image} alt={section.imageAlt} />
+            </a>
+          ) : (
+            <img src={section.image} alt={section.imageAlt} />
+          )}
         </div>
       )}
       <div className="detail-copy">
@@ -203,7 +230,7 @@ function RelatedCaseSection({ title, description, items }) {
   );
 }
 
-function CaseCover({ image, imageAlt }) {
+function CaseCover({ image, imageAlt, caseItem, url, visitLabel }) {
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = image && !imageFailed;
 
@@ -211,14 +238,39 @@ function CaseCover({ image, imageAlt }) {
     return null;
   }
 
+  const imageNode = (
+    <img
+      src={image}
+      alt={imageAlt}
+      loading="eager"
+      onError={() => setImageFailed(true)}
+    />
+  );
+
   return (
     <div className="case-detail-cover">
-      <img
-        src={image}
-        alt={imageAlt}
-        loading="eager"
-        onError={() => setImageFailed(true)}
-      />
+      {url ? (
+        <a
+          className="case-detail-cover-link"
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${caseItem.title} ${visitLabel}`}
+          onClick={() =>
+            trackEvent('outbound_link_click', {
+              label: '案例主图',
+              content_type: 'case',
+              item_id: caseItem.id,
+              item_name: caseItem.title,
+              link_url: url,
+            })
+          }
+        >
+          {imageNode}
+        </a>
+      ) : (
+        imageNode
+      )}
     </div>
   );
 }
@@ -266,6 +318,7 @@ function isEditorialOnlySection(section) {
 }
 
 export default function CaseDetailPage({ categorySlug, slug }) {
+  const { categoryLabel, language, t } = useI18n();
   const caseItem = useMemo(
     () => cases.find((item) => item.categorySlug === categorySlug && item.slug === slug),
     [categorySlug, slug],
@@ -292,16 +345,17 @@ export default function CaseDetailPage({ categorySlug, slug }) {
     return (
       <div className="case-detail-empty">
         <Container>
-          <h1>案例不存在</h1>
-          <p>这个案例可能已被移除，或链接地址不正确。</p>
-          <Button href="/cases">返回案例列表</Button>
+          <h1>{t('detail.caseNotFound')}</h1>
+          <p>{t('detail.caseNotFoundDescription')}</p>
+          <Button href="/cases">{t('detail.backToCases')}</Button>
         </Container>
       </div>
     );
   }
 
+  const displayCase = localizeCase(caseItem, language);
   const metaTags = [
-    caseItem.category,
+    categoryLabel(caseItem.category),
     ...(caseItem.tools ?? []),
     ...(caseItem.tags ?? []),
   ].filter(
@@ -312,11 +366,11 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   );
   const siteUrl = caseItem.websiteUrl || caseItem.sourceUrl;
   const siteLabel = formatDisplayUrl(siteUrl);
-  const displaySections = caseItem.detailSections.filter(
+  const displaySections = localizeCaseSections(caseItem.detailSections, language).filter(
     (section) => !isEditorialOnlySection(section),
   );
   const coverImage = caseItem.screenshotUrl || displaySections.find((section) => section.image)?.image || '';
-  const coverImageAlt = caseItem.imageAlt || caseItem.screenshotAlt || `${caseItem.title} 网站截图`;
+  const coverImageAlt = caseItem.imageAlt || caseItem.screenshotAlt || `${displayCase.title} screenshot`;
 
   return (
     <div className="case-detail">
@@ -331,11 +385,11 @@ export default function CaseDetailPage({ categorySlug, slug }) {
                   </Badge>
                 ))}
               </div>
-              <h1>{caseItem.title}</h1>
+              <h1>{displayCase.title}</h1>
               <ArticleSiteLink
                 caseItem={caseItem}
                 url={siteUrl}
-                label="访问网站"
+                label={t('detail.visitWebsite')}
               />
               <div className="blog-article-meta">
                 <span>{caseItem.publishedAt}</span>
@@ -345,16 +399,20 @@ export default function CaseDetailPage({ categorySlug, slug }) {
             <CaseCover
               image={coverImage}
               imageAlt={coverImageAlt}
+              caseItem={caseItem}
+              url={siteUrl}
+              visitLabel={t('detail.visitWebsite')}
             />
 
             <div className="blog-prose">
-              <p className="blog-lead">{caseItem.description}</p>
+              <p className="blog-lead">{displayCase.description}</p>
               <div className="case-detail-sections">
                 {displaySections.map((section) => (
                   <DetailBlock
                     key={section.id}
                     section={section}
                     caseItem={caseItem}
+                    visitLabel={t('detail.visitWebsite')}
                   />
                 ))}
               </div>
@@ -363,14 +421,14 @@ export default function CaseDetailPage({ categorySlug, slug }) {
             <Comments
               targetId={caseItem.id}
               targetType="case"
-              title="评论"
+              title={t('detail.comments')}
             />
           </article>
         </div>
 
         <RelatedCaseSection
-          title="类似案例"
-          description="继续查看更多值得拆解的 AI 编程作品。"
+          title={t('detail.relatedCases')}
+          description={t('detail.relatedCasesDescription')}
           items={relatedCases}
         />
       </Container>

@@ -1,11 +1,22 @@
 import { useMemo, useState } from 'react';
 import { Send } from 'lucide-react';
 import { trackEvent } from '../lib/analytics.js';
+import { useI18n } from '../lib/i18n.jsx';
 
 const cookieName = 'uicoding_comment_user';
 
-const namePrefixes = ['松石', '青柠', '竹影', '星河', '云杉', '墨白', '暖橙', '海盐'];
-const nameRoles = ['设计师', '产品人', '学习者', '独立开发者', '创作者', '观察员'];
+const localizedNameSets = {
+  zh: {
+    prefixes: ['松石', '青柠', '竹影', '星河', '云杉', '墨白', '暖橙', '海盐'],
+    roles: ['设计师', '产品人', '学习者', '独立开发者', '创作者', '观察员'],
+    fallbackAvatar: '评',
+  },
+  en: {
+    prefixes: ['North', 'Cedar', 'Pixel', 'Maple', 'Quartz', 'Orbit', 'Indie', 'Signal'],
+    roles: ['Maker', 'Designer', 'Reader', 'Builder', 'Learner', 'Founder'],
+    fallbackAvatar: 'C',
+  },
+};
 const avatarColors = ['#9B3D2B', '#7B5C38', '#2F6F64', '#4E5F7A', '#6D4F7D', '#8A5B4A'];
 
 function readCookie(name) {
@@ -26,9 +37,12 @@ function writeCookie(name, value) {
   document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
 }
 
-function createCommentUser() {
+function createCommentUser(language = 'zh') {
   const seed = Math.floor(Math.random() * 10000);
-  const name = `${namePrefixes[seed % namePrefixes.length]}${nameRoles[seed % nameRoles.length]}`;
+  const nameSet = localizedNameSets[language] ?? localizedNameSets.zh;
+  const prefix = nameSet.prefixes[seed % nameSet.prefixes.length];
+  const role = nameSet.roles[seed % nameSet.roles.length];
+  const name = language === 'en' ? `${prefix} ${role}` : `${prefix}${role}`;
 
   return {
     id: `guest-${Date.now()}-${seed}`,
@@ -38,7 +52,7 @@ function createCommentUser() {
   };
 }
 
-function getCommentUser() {
+function getCommentUser(language = 'zh') {
   try {
     const stored = readCookie(cookieName);
 
@@ -49,7 +63,7 @@ function getCommentUser() {
     // Ignore malformed cookies and issue a new local identity.
   }
 
-  const user = createCommentUser();
+  const user = createCommentUser(language);
   writeCookie(cookieName, JSON.stringify(user));
 
   return user;
@@ -87,12 +101,14 @@ function formatTime(value) {
 }
 
 export default function Comments({ targetId, targetType = 'page', title = '评论' }) {
+  const { language, t } = useI18n();
+  const fallbackAvatar = localizedNameSets[language]?.fallbackAvatar ?? localizedNameSets.zh.fallbackAvatar;
   const storageKey = `uicoding_comments_${targetType}_${targetId}`;
   const [commentUser, setCommentUser] = useState(
     () =>
       getExistingCommentUser() ?? {
-        name: '点击评论生成昵称',
-        avatarText: '评',
+        name: t('comments.emptyName'),
+        avatarText: fallbackAvatar,
         avatarColor: '#8A5B4A',
       },
   );
@@ -100,10 +116,16 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
   const [draft, setDraft] = useState('');
   const [error, setError] = useState('');
 
-  const commentCountLabel = useMemo(() => `${comments.length} 条`, [comments.length]);
+  const commentCountLabel = useMemo(() => {
+    if (language === 'en') {
+      return `${comments.length} ${comments.length === 1 ? 'comment' : 'comments'}`;
+    }
+
+    return `${comments.length} ${t('comments.countSuffix')}`;
+  }, [comments.length, language, t]);
 
   const refreshUser = () => {
-    const user = getCommentUser();
+    const user = getCommentUser(language);
     setCommentUser(user);
 
     return user;
@@ -114,7 +136,7 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
     const content = draft.trim();
 
     if (content.length < 2) {
-      setError('写一点你的想法再发布。');
+      setError(t('comments.shortError'));
       return;
     }
 
@@ -142,7 +164,7 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
     <section className="comments-section" aria-labelledby={`${targetType}-${targetId}-comments`}>
       <div className="comments-head">
         <div>
-          <h2 id={`${targetType}-${targetId}-comments`}>{title}</h2>
+          <h2 id={`${targetType}-${targetId}-comments`}>{title || t('comments.defaultTitle')}</h2>
           <p>{commentCountLabel}</p>
         </div>
         <div className="comment-user">
@@ -162,15 +184,15 @@ export default function Comments({ targetId, targetType = 'page', title = '评�
           value={draft}
           onFocus={refreshUser}
           onChange={(event) => setDraft(event.target.value)}
-          placeholder="写下想法或问题。"
+          placeholder={t('comments.placeholder')}
           maxLength={300}
           rows={3}
         />
         <div className="comment-form-foot">
-          <span>{error || '首次评论会生成昵称。'}</span>
+          <span>{error || t('comments.note')}</span>
           <button type="submit">
             <Send size={15} strokeWidth={1.9} aria-hidden="true" />
-            发布
+            {t('comments.publish')}
           </button>
         </div>
       </form>

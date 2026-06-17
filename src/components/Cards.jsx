@@ -18,6 +18,8 @@ import Wenxin from '@lobehub/icons/es/Wenxin/components/Color';
 import Windsurf from '@lobehub/icons/es/Windsurf/components/Mono';
 import Zhipu from '@lobehub/icons/es/Zhipu/components/Color';
 import { Badge, Card } from './UI.jsx';
+import { useI18n } from '../lib/i18n.jsx';
+import { localizeCase, localizeLesson, localizeTool } from '../lib/contentLocalization.js';
 
 const visualAccent = {
   dashboard: 'slate',
@@ -77,6 +79,8 @@ export function isDefaultLearningCover(image = '') {
 }
 
 export function CaseCard({ item }) {
+  const { categoryLabel, language, t } = useI18n();
+  const displayItem = localizeCase(item, language);
   const accent = item.accent ?? visualAccent[item.visualType] ?? 'slate';
   const visualImage = item.image ?? item.screenshotUrl;
   const primaryTool = item.tools?.find((tool) => tool && tool !== 'AI 生成证据待补充');
@@ -90,7 +94,7 @@ export function CaseCard({ item }) {
         params: {
           content_type: 'case',
           item_id: item.id,
-          item_name: item.title,
+          item_name: displayItem.title,
           category: item.category,
           link_url: item.href ?? '/cases',
         },
@@ -98,21 +102,21 @@ export function CaseCard({ item }) {
     >
       <div className="case-card-visual">
         {visualImage ? (
-          <img src={visualImage} alt={item.imageAlt ?? `${item.title} 截图`} loading="lazy" />
+          <img src={visualImage} alt={item.imageAlt ?? `${displayItem.title} screenshot`} loading="lazy" />
         ) : (
           <ProductMockup accent={accent} compact type={item.visualType} />
         )}
       </div>
       <div className="case-card-body">
-        <h3>{item.title}</h3>
-        <p>{item.description}</p>
+        <h3>{displayItem.title}</h3>
+        <p>{displayItem.description}</p>
         <div className="tag-row">
-          <Badge>{item.category}</Badge>
+          <Badge>{categoryLabel(item.category)}</Badge>
           {primaryTool && <Badge>{primaryTool}</Badge>}
         </div>
         <div className="card-footer-row case-card-footer is-link-only">
           <span className="card-link">
-            查看案例 →
+            {t('common.viewCase')} →
           </span>
         </div>
       </div>
@@ -121,6 +125,8 @@ export function CaseCard({ item }) {
 }
 
 export function LearningCard({ item, showStats = false, showImage = true }) {
+  const { language, t } = useI18n();
+  const displayItem = localizeLesson(item, language);
   const hasStats =
     showStats && item.viewCount !== undefined;
   const hasImage = Boolean(showImage && item.image && !isDefaultLearningCover(item.image));
@@ -134,7 +140,7 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
         params: {
           content_type: 'lesson',
           item_id: item.id,
-          item_name: item.title,
+          item_name: displayItem.title,
           category: item.category,
           link_url: item.href ?? '/learn',
         },
@@ -142,11 +148,11 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
     >
       {hasImage && (
         <div className="learning-card-image">
-          <img src={item.image} alt={item.imageAlt ?? item.title} loading="lazy" />
+          <img src={item.image} alt={item.imageAlt ?? displayItem.title} loading="lazy" />
         </div>
       )}
-      <h3>{item.title}</h3>
-      <p>{item.description}</p>
+      <h3>{displayItem.title}</h3>
+      <p>{displayItem.description}</p>
       {hasStats && (
         <div className="card-footer-row">
           <div className="case-stats">
@@ -156,16 +162,18 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
             </span>
           </div>
           <span className="card-link">
-            查看资料 →
+            {t('common.viewLesson')} →
           </span>
         </div>
       )}
-      {!hasStats && <span className="card-link">查看资料 →</span>}
+      {!hasStats && <span className="card-link">{t('common.viewLesson')} →</span>}
     </Card>
   );
 }
 
 export function ToolPill({ id, name, description, officialUrl }) {
+  const { language, t } = useI18n();
+  const displayTool = localizeTool({ id, name, description, officialUrl }, language);
   const label = toolIconLabels[id] ?? name.slice(0, 2);
   const Icon = toolIcons[id];
   const iconImage = toolIconImages[id];
@@ -181,8 +189,8 @@ export function ToolPill({ id, name, description, officialUrl }) {
         params: {
           content_type: 'tool',
           item_id: id,
-          item_name: name,
-          label: name,
+          item_name: displayTool.name,
+          label: displayTool.name,
           link_url: officialUrl ?? '/tools',
         },
       }}
@@ -193,11 +201,11 @@ export function ToolPill({ id, name, description, officialUrl }) {
         {!Icon && !iconImage ? <span>{label}</span> : null}
       </div>
       <div className="tool-card-copy">
-        <h3>{name}</h3>
-        <p>{description}</p>
+        <h3>{displayTool.name}</h3>
+        <p>{displayTool.description}</p>
       </div>
       <span className="card-link">
-        访问官网 →
+        {t('common.visitWebsite')} →
       </span>
     </Card>
   );

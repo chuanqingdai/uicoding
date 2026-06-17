@@ -3,11 +3,13 @@ import { tools } from '../data.js';
 import { Container, Section } from '../components/Layout.jsx';
 import { ToolPill } from '../components/Cards.jsx';
 import { trackEvent } from '../lib/analytics.js';
+import { useI18n } from '../lib/i18n.jsx';
 
 const initialVisibleCount = 8;
 const loadMoreCount = 4;
 
 export default function ToolsPage() {
+  const { t } = useI18n();
   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
   const loadMoreRef = useRef(null);
 
@@ -54,10 +56,8 @@ export default function ToolsPage() {
     <div className="tools-page">
       <section className="tools-hero">
         <Container>
-          <h1>工具</h1>
-          <p>
-            了解常用 AI Coding 工具的定位、适合场景和使用方式，快速找到适合自己的开发工作流。
-          </p>
+          <h1>{t('tools.title')}</h1>
+          <p>{t('tools.description')}</p>
         </Container>
       </section>
 
@@ -72,7 +72,7 @@ export default function ToolsPage() {
           className="auto-load-sentinel"
           ref={loadMoreRef}
         >
-          {hasMoreTools ? '继续向下浏览' : '已显示全部工具'}
+          {hasMoreTools ? t('common.keepBrowsing') : t('common.allToolsShown')}
         </div>
       </Section>
     </div>

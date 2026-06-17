@@ -5,6 +5,7 @@ import { LearningCard } from '../components/Cards.jsx';
 import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
 import { byLatest, byRank, byTodayPickFirst } from '../lib/contentOrdering.js';
+import { useI18n } from '../lib/i18n.jsx';
 
 const pinnedLessonIds = [
   'ten-essential-codex-skills',
@@ -79,6 +80,7 @@ const topicFilters = [
 ];
 
 export default function LearnPage() {
+  const { t } = useI18n();
   const [activeTopicId, setActiveTopicId] = useState('all');
   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
   const loadMoreRef = useRef(null);
@@ -146,11 +148,9 @@ export default function LearnPage() {
     <div className="learn-page">
       <section className="learn-hero">
         <Container>
-          <h1>学会 AI Coding</h1>
-          <p>
-            从真实案例、可复制提示词和产品拆解开始，尽快把想法做成能上线的网页和工具。
-          </p>
-          <div className="learn-topic-tabs" aria-label="学习资料分类">
+          <h1>{t('learn.title')}</h1>
+          <p>{t('learn.description')}</p>
+          <div className="learn-topic-tabs" aria-label={t('learn.categoryLabel')}>
             {topicFilters.map((filter) => (
               <button
                 aria-pressed={activeTopicId === filter.id}
@@ -159,7 +159,7 @@ export default function LearnPage() {
                 onClick={() => changeTopic(filter.id)}
                 type="button"
               >
-                <span>{filter.label}</span>
+                <span>{t(`learn.topics.${filter.id}`) || filter.label}</span>
                 <span>{topicCounts[filter.id]}</span>
               </button>
             ))}
@@ -178,7 +178,7 @@ export default function LearnPage() {
           className="auto-load-sentinel"
           ref={loadMoreRef}
         >
-          {hasMoreLessons ? '继续向下浏览' : '已显示全部资料'}
+          {hasMoreLessons ? t('common.keepBrowsing') : t('common.allLessonsShown')}
         </div>
       </Container>
     </div>
