@@ -1901,6 +1901,23 @@ h3 {
   font-size: 13px;
 }
 
+.case-detail .article-site-button {
+  min-height: 40px;
+  padding: 0 16px;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 760;
+  box-shadow: 0 8px 18px rgba(217, 78, 43, 0.18);
+}
+
+.case-detail .article-site-button:hover {
+  border-color: var(--color-primary-hover);
+  background: var(--color-primary-hover);
+  box-shadow: 0 10px 22px rgba(217, 78, 43, 0.22);
+}
+
 .learn-detail-cover,
 .case-detail-cover {
   max-width: 960px;

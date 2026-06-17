@@ -233,9 +233,10 @@ function ArticleSiteLink({ caseItem, url, label }) {
       className="article-site-button"
       href={url}
       icon={ExternalLink}
-      variant="secondary"
+      variant="primary"
       target="_blank"
       rel="noopener noreferrer"
+      title={label}
       analyticsEvent={{
         name: 'outbound_link_click',
         params: {
@@ -334,7 +335,7 @@ export default function CaseDetailPage({ categorySlug, slug }) {
               <ArticleSiteLink
                 caseItem={caseItem}
                 url={siteUrl}
-                label={siteLabel}
+                label="访问网站"
               />
               <div className="blog-article-meta">
                 <span>{caseItem.publishedAt}</span>
