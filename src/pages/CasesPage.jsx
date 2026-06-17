@@ -8,18 +8,40 @@ import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
 import { byLatest as byPublishedLatest, byTodayPickFirst } from '../lib/contentOrdering.js';
 
-const pinnedCaseIds = new Set([]);
+const pinnedCaseOrder = [
+  'forged-in-silence-codex',
+  'knowlens-ai-infographic-generator',
+];
+
+const pinnedCaseRanks = new Map(
+  pinnedCaseOrder.map((id, index) => [id, index]),
+);
 
 function byPinnedFirst(a, b) {
-  return Number(pinnedCaseIds.has(b.id)) - Number(pinnedCaseIds.has(a.id));
+  const aRank = pinnedCaseRanks.get(a.id);
+  const bRank = pinnedCaseRanks.get(b.id);
+
+  if (aRank === undefined && bRank === undefined) {
+    return 0;
+  }
+
+  if (aRank === undefined) {
+    return 1;
+  }
+
+  if (bRank === undefined) {
+    return -1;
+  }
+
+  return aRank - bRank;
 }
 
 function byLatest(a, b) {
-  return byTodayPickFirst(a, b) || byPinnedFirst(a, b) || byPublishedLatest(a, b);
+  return byPinnedFirst(a, b) || byTodayPickFirst(a, b) || byPublishedLatest(a, b);
 }
 
 function byHot(a, b) {
-  return byTodayPickFirst(a, b) || byPinnedFirst(a, b) || b.viewCount - a.viewCount;
+  return byPinnedFirst(a, b) || byTodayPickFirst(a, b) || b.viewCount - a.viewCount;
 }
 
 const initialVisibleCount = 9;

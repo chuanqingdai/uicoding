@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Copy, ExternalLink, Mail, UserPlus } from 'lucide-react';
+import { Check, Copy, ExternalLink, Mail, UserPlus } from 'lucide-react';
 import { cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge, Card } from '../components/UI.jsx';
@@ -97,7 +97,56 @@ function SubmitterCard({ submitter, isFollowing, onFollowToggle }) {
   );
 }
 
-function DetailBlock({ section }) {
+function DetailCodeBlock({ prompt, caseItem, sectionTitle }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyCode = async () => {
+    if (!prompt?.content) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(prompt.content);
+      setCopied(true);
+      trackEvent('code_copy', {
+        label: prompt.label || '案例提示词',
+        code_length: prompt.content.length,
+        content_type: 'case',
+        item_id: caseItem?.id,
+        item_name: caseItem?.title,
+        section_title: sectionTitle,
+      });
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  if (!prompt?.content) {
+    return null;
+  }
+
+  return (
+    <div className="learn-code-block">
+      <div className="learn-code-head">
+        <span>{prompt.label || '可复制提示词'}</span>
+        <button onClick={copyCode} type="button">
+          {copied ? (
+            <Check size={14} strokeWidth={2} aria-hidden="true" />
+          ) : (
+            <Copy size={14} strokeWidth={1.8} aria-hidden="true" />
+          )}
+          {copied ? '已复制' : '复制'}
+        </button>
+      </div>
+      <pre>
+        <code>{prompt.content}</code>
+      </pre>
+    </div>
+  );
+}
+
+function DetailBlock({ section, caseItem }) {
   const hasImage = Boolean(section.image);
 
   return (
@@ -116,6 +165,18 @@ function DetailBlock({ section }) {
               <li key={point}>{point}</li>
             ))}
           </ul>
+        )}
+        {section.prompts?.length > 0 && (
+          <div className="detail-prompt-stack">
+            {section.prompts.map((prompt) => (
+              <DetailCodeBlock
+                key={prompt.label || prompt.content}
+                prompt={prompt}
+                caseItem={caseItem}
+                sectionTitle={section.title}
+              />
+            ))}
+          </div>
         )}
       </div>
     </article>
@@ -139,6 +200,26 @@ function RelatedCaseSection({ title, description, items }) {
         ))}
       </div>
     </section>
+  );
+}
+
+function CaseCover({ image, imageAlt }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = image && !imageFailed;
+
+  if (!showImage) {
+    return null;
+  }
+
+  return (
+    <div className="case-detail-cover">
+      <img
+        src={image}
+        alt={imageAlt}
+        loading="eager"
+        onError={() => setImageFailed(true)}
+      />
+    </div>
   );
 }
 
@@ -168,6 +249,18 @@ function ArticleSiteLink({ caseItem, url, label }) {
     >
       {label}
     </Button>
+  );
+}
+
+function isEditorialOnlySection(section) {
+  if (!section) {
+    return false;
+  }
+
+  return (
+    section.id === 'ai-generated-evidence' ||
+    section.title === 'AI 生成证据' ||
+    section.title === 'AI 生成证据待补充'
   );
 }
 
@@ -218,6 +311,11 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   );
   const siteUrl = caseItem.websiteUrl || caseItem.sourceUrl;
   const siteLabel = formatDisplayUrl(siteUrl);
+  const displaySections = caseItem.detailSections.filter(
+    (section) => !isEditorialOnlySection(section),
+  );
+  const coverImage = caseItem.screenshotUrl || displaySections.find((section) => section.image)?.image || '';
+  const coverImageAlt = caseItem.imageAlt || caseItem.screenshotAlt || `${caseItem.title} 网站截图`;
 
   return (
     <div className="case-detail">
@@ -243,13 +341,19 @@ export default function CaseDetailPage({ categorySlug, slug }) {
               </div>
             </header>
 
+            <CaseCover
+              image={coverImage}
+              imageAlt={coverImageAlt}
+            />
+
             <div className="blog-prose">
               <p className="blog-lead">{caseItem.description}</p>
               <div className="case-detail-sections">
-                {caseItem.detailSections.map((section) => (
+                {displaySections.map((section) => (
                   <DetailBlock
                     key={section.id}
                     section={section}
+                    caseItem={caseItem}
                   />
                 ))}
               </div>
