@@ -3113,6 +3113,46 @@ export const lessons = [
       "结果区、控制区和状态区的层级关系，决定了页面是否像真实工具",
       "先把操作路径做清楚，再补 3D 场景、反馈和质感细节"
     ]
+  },
+  {
+    "id": "copyable-prompts-for-knowledge-and-education-ai-websites",
+    "title": "5 个教育与知识表达的 AI 网页案例：照着做信息图、教学和内容解释界面",
+    "originalTitle": "Copyable prompts for knowledge and education AI websites",
+    "description": "整理 5 个更偏教育、知识解释和信息可视化的 AI 网页案例。每个案例都附真实网站首页截图、网站链接、案例详情链接，以及 2 个适合还原首页和核心交互的中文提示词。",
+    "sourceType": "UIcoding 精选",
+    "sourceName": "UIcoding 编辑整理",
+    "sourceUrl": "https://www.uicoding.ai/cases",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "21 分钟",
+    "category": "Prompt",
+    "tools": [
+      "Codex",
+      "Claude Code",
+      "通用"
+    ],
+    "tags": [
+      "Prompt",
+      "Education",
+      "Knowledge UI",
+      "AI Coding"
+    ],
+    "href": "/learn/copyable-prompts-for-knowledge-and-education-ai-websites",
+    "image": "/case-screenshots/knowlens-ai-home.webp",
+    "imageAlt": "教育与知识表达 AI 网页案例封面图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 438,
+    "likeCount": 35,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "知识型产品首页要先让用户理解输入、处理和输出三件事",
+      "教育与解释类页面的重点是降低理解成本，而不是炫技",
+      "先把内容结构做清楚，再补视觉风格、状态反馈和细节"
+    ]
   }
 ];
 
