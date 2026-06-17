@@ -1,6 +1,5 @@
 import {
   Eye,
-  Heart,
 } from 'lucide-react';
 import ClaudeCode from '@lobehub/icons/es/ClaudeCode/components/Mono';
 import Cline from '@lobehub/icons/es/Cline/components/Mono';
@@ -123,7 +122,7 @@ export function CaseCard({ item }) {
 
 export function LearningCard({ item, showStats = false, showImage = true }) {
   const hasStats =
-    showStats && item.viewCount !== undefined && item.likeCount !== undefined;
+    showStats && item.viewCount !== undefined;
   const hasImage = Boolean(showImage && item.image && !isDefaultLearningCover(item.image));
 
   return (
@@ -154,10 +153,6 @@ export function LearningCard({ item, showStats = false, showImage = true }) {
             <span>
               <Eye size={14} strokeWidth={1.8} aria-hidden="true" />
               {numberFormatter.format(item.viewCount)}
-            </span>
-            <span>
-              <Heart size={14} strokeWidth={1.8} aria-hidden="true" />
-              {numberFormatter.format(item.likeCount)}
             </span>
           </div>
           <span className="card-link">

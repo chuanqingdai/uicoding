@@ -355,6 +355,3000 @@ export const learningContent = [
     "sections": parseLearningMarkdown(knowlensCodexTipsMarkdown)
   },
   {
+    "id": "ai-coding-full-workflow-prompt-chain",
+    "sourceUrl": "https://github.com/vlad-ko/claude-wizard",
+    "translationMode": "guidedTranslation",
+    "title": "让 Claude Code / Codex 先思考再写代码：一套可复制的完整链路提示词",
+    "originalTitle": "I Made Claude Code Think Before It Codes. Here's the Prompt.",
+    "notice": "本文为 Uicoding.ai 基于 Claude Wizard、Addy Osmani 的 AI Agent Spec 写法和 OpenAI Codex 官方提示词建议整理的中文学习笔记，不是原文全文翻译。主要参考：https://github.com/vlad-ko/claude-wizard、https://addyosmani.com/blog/good-spec/、https://developers.openai.com/codex/prompting。",
+    "sections": [
+      {
+        "heading": "为什么这篇资料值得收录",
+        "paragraphs": [
+          "很多人使用 Claude Code 或 Codex 时，习惯直接输入一句“帮我做这个功能”。这当然能跑起来，但越到真实项目，越容易出现三个问题：AI 没弄清需求就开始写、没有验证标准、改完之后不知道有没有影响其它模块。",
+          "Claude Wizard 这类资料的价值在于，它把 AI Coding 从“写代码”变成了一条工程链路：先理解需求，再探索代码，然后写测试或验证标准，接着最小实现，最后运行验证、自我审查和总结交付。",
+          "Addy Osmani 关于好 Spec 的文章强调，给 AI Agent 的说明应该包含目标、上下文、约束、验收标准和失败边界。OpenAI Codex 官方提示词建议也强调，要写清楚任务范围、测试方式和期望输出。三者合在一起，就能形成一套稳定、可复制的工作流。"
+        ]
+      },
+      {
+        "heading": "适合什么时候使用",
+        "paragraphs": [
+          "这套提示词适合中等以上复杂度的任务，比如新增一个页面、重构一个组件、接入一个 API、修复一个线上问题、优化一段核心流程，或者让 AI 帮你完成一轮带测试的功能开发。",
+          "如果只是改一句文案，没必要套完整流程。真正需要它的场景是：你担心 AI 改太多文件、担心它凭空假设、担心它不跑验证、担心它动到登录、支付、数据库这类高风险逻辑。",
+          "你可以把它理解成给 Claude Code / Codex 的“开发纪律”：不是限制它能力，而是让它先想清楚、再下手。对独立开发者尤其有用，因为你没有完整工程团队帮你做 Code Review，AI 自己的审查流程就更重要。"
+        ]
+      },
+      {
+        "heading": "一套完整链路提示词",
+        "paragraphs": [
+          "下面这段可以直接复制到 Claude Code、Codex 或 Cursor Agent 中使用。建议在一个具体任务开始前粘贴，然后把“本次任务”替换成你真正要做的事情。",
+          "如果你的项目有 AGENTS.md、CLAUDE.md、README 或内部开发规范，一定要让 AI 先读这些文件。这样它不会只凭当前对话猜项目结构。"
+        ],
+        "code": {
+          "label": "完整链路提示词",
+          "content": `你现在不是普通代码助手，而是我的资深软件架构师和结对工程师。
+
+本次任务：
+请在这里写清楚你要完成的具体任务。
+
+请按以下 8 个阶段完成任务，不要跳步，不要一上来就写代码。
+
+阶段 1：理解与计划
+- 先阅读项目规则文件，例如 AGENTS.md、CLAUDE.md、README 或 package.json。
+- 理解当前任务目标、范围、风险和验收标准。
+- 如果需求不清楚，先提出问题。
+- 给出简短实施计划，等我确认后再继续。
+
+阶段 2：探索代码
+- 搜索已有实现和相似模式。
+- 确认要调用的函数、组件、接口、数据结构真实存在。
+- 不要凭空假设项目里有某个方法、字段或依赖。
+- 列出你准备修改的文件和原因。
+
+阶段 3：先写测试或验证标准
+- 如果项目有测试，先补能覆盖新行为的测试。
+- 如果暂时不适合写测试，明确列出可验证步骤。
+- 测试要验证具体结果，不要只验证“成功”。
+- 覆盖边界情况：空值、异常输入、重复执行、极端值。
+
+阶段 4：最小实现
+- 只实现当前任务需要的最小改动。
+- 遵循项目已有代码风格和组件模式。
+- 不要顺手重构无关代码。
+- 不要修改登录、支付、权限、数据库等高风险逻辑，除非任务明确要求。
+
+阶段 5：运行验证
+- 运行相关测试、lint、build 或手动验证步骤。
+- 如果失败，分析根因后修复。
+- 不要在测试失败时宣称完成。
+
+阶段 6：文档与状态同步
+- 如果行为、命令、环境变量或使用方式发生变化，更新对应文档。
+- 如果有任务清单、issue 或 TODO，同步完成状态。
+
+阶段 7：自我审查
+请像严格 reviewer 一样检查自己的改动：
+- 是否有硬编码？
+- 是否有遗漏的错误处理？
+- 是否可能重复执行出错？
+- 是否可能产生竞态问题？
+- 是否影响了无关页面或模块？
+- 是否有安全风险？
+- 是否有测试或验证缺口？
+
+阶段 8：总结交付
+最后请输出：
+1. 改了哪些文件；
+2. 每个文件改了什么；
+3. 如何验证；
+4. 有哪些风险；
+5. 是否需要我手动处理配置或线上环境。`
+        }
+      },
+      {
+        "heading": "第一阶段：先让 AI 读项目，不要马上写代码",
+        "paragraphs": [
+          "AI Coding 最容易失控的第一步，就是没有读项目就开始补代码。真实项目里，很多约束藏在 README、AGENTS.md、路由文件、数据结构和已有组件里。",
+          "这一阶段的目标不是产出代码，而是让 AI 先建立项目地图：这个项目是什么、入口在哪里、相关文件有哪些、哪些模块不能碰。"
+        ],
+        "code": {
+          "label": "项目理解提示词",
+          "content": `请先阅读当前项目，不要修改任何文件。
+
+请重点理解：
+1. 这个项目是什么；
+2. 主要页面、组件和数据文件在哪里；
+3. 本次任务可能涉及哪些文件；
+4. 项目是否有 AGENTS.md、CLAUDE.md、README 或其它开发规则；
+5. 哪些模块属于高风险区域，例如登录、支付、权限、数据库、部署配置。
+
+请用中文总结你的理解，并列出你下一步准备查看的文件。
+在我确认之前，不要写代码。`
+        }
+      },
+      {
+        "heading": "第二阶段：把需求写成 Spec",
+        "paragraphs": [
+          "Addy Osmani 文章里最有价值的一点是：不要只告诉 AI“做什么”，还要告诉它“为什么做、不能做什么、怎么算完成”。这就是 Spec 的作用。",
+          "一个好 Spec 不需要很长，但至少要包含目标、用户场景、范围、非目标、验收标准和验证方式。这样 AI 更像在执行一个工程任务，而不是根据一句话自由发挥。"
+        ],
+        "code": {
+          "label": "Spec 提示词模板",
+          "content": `请先把我的需求整理成一份简短 Spec，不要写代码。
+
+需求背景：
+请在这里写背景。
+
+目标：
+请在这里写要达成的结果。
+
+请按以下结构输出：
+1. 用户场景：谁在什么情况下使用这个功能；
+2. 目标结果：完成后用户能看到或做到什么；
+3. 修改范围：预计会涉及哪些页面、组件、接口或数据；
+4. 非目标：本次明确不做什么；
+5. 风险点：哪些地方可能影响已有功能；
+6. 验收标准：用具体条目描述怎样才算完成；
+7. 验证方式：需要运行哪些测试、命令或手动检查。
+
+输出 Spec 后先停下来，等我确认。`
+        }
+      },
+      {
+        "heading": "第三阶段：先写测试或验证标准",
+        "paragraphs": [
+          "Claude Wizard 的思路里，一个关键点是让 AI 在实现前先考虑验证。不是所有项目都有测试，但至少要让 AI 写清楚怎么证明这次改动是对的。",
+          "对前端页面来说，验证可以是 build、lint、截图检查、关键 DOM 文案、移动端布局检查。对业务逻辑来说，最好有单元测试、集成测试或明确的输入输出样例。"
+        ],
+        "code": {
+          "label": "测试与验证提示词",
+          "content": `在开始实现之前，请先给出测试或验证计划。
+
+要求：
+1. 如果项目已有测试框架，优先补充自动化测试。
+2. 如果不适合写测试，请列出可执行的手动验证步骤。
+3. 验证步骤必须具体，例如检查某个页面、某个按钮、某个状态或某个返回值。
+4. 至少考虑 3 类边界情况：空数据、异常输入、重复操作。
+5. 说明需要运行哪些命令，例如 npm run test、npm run lint、npm run build。
+
+请先输出验证计划，不要开始实现。`
+        }
+      },
+      {
+        "heading": "第四阶段：限制 AI 只做最小实现",
+        "paragraphs": [
+          "AI 很容易过度热心。你只是让它修一个按钮，它可能顺手重构样式；你只是让它接一个字段，它可能顺手改数据结构。所以实现阶段一定要写边界。",
+          "这里的核心是三句话：只做当前任务、复用已有模式、不要动无关模块。尤其是登录、支付、权限、数据库、环境变量这类地方，除非任务明确要求，否则要写进禁止范围。"
+        ],
+        "code": {
+          "label": "最小实现提示词",
+          "content": `现在开始实现，但请严格控制修改范围。
+
+实现要求：
+1. 只做当前 Spec 中明确要求的功能。
+2. 优先复用已有组件、函数、样式和数据结构。
+3. 不要重构无关代码。
+4. 不要新增依赖，除非你先说明必要性并获得确认。
+5. 不要修改登录、支付、权限、数据库、部署配置和环境变量，除非任务明确要求。
+6. 如果发现必须扩大修改范围，请先停下来说明原因。
+
+实现完成后，请运行前面列出的验证命令。`
+        }
+      },
+      {
+        "heading": "第五阶段：让 AI 自己做一次 Code Review",
+        "paragraphs": [
+          "很多 AI 生成代码的问题，不是语法错误，而是边界情况、隐性副作用和维护成本。自我审查不能保证万无一失，但能显著减少低级问题。",
+          "这一段适合放在每次实现之后。它会逼 AI 从“完成任务”的状态切换到“审查改动”的状态。"
+        ],
+        "code": {
+          "label": "自我审查提示词",
+          "content": `请对你刚才的改动做一次严格自我审查。
+
+请逐项检查：
+1. 是否有不必要的文件修改；
+2. 是否有硬编码、重复逻辑或临时方案；
+3. 是否遗漏错误处理、加载状态、空状态；
+4. 是否可能影响其它页面或已有功能；
+5. 是否有安全、权限、数据一致性风险；
+6. 是否有未覆盖的边界情况；
+7. 是否有测试或验证步骤没有运行；
+8. 是否有需要我手动配置的环境变量或后台设置。
+
+如果发现问题，请先列出问题，再修复。
+如果没有发现问题，也请说明剩余风险。`
+        }
+      },
+      {
+        "heading": "第六阶段：交付总结要能帮你复盘",
+        "paragraphs": [
+          "最后的总结不是形式主义。它能帮你快速判断 AI 有没有改到不该改的地方，也方便你之后提交 Git、写 PR 或回滚。",
+          "一个好的交付总结应该包含文件、行为、验证、风险和后续动作。不要只让 AI 说“已完成”。"
+        ],
+        "code": {
+          "label": "交付总结提示词",
+          "content": `请用中文给我一份交付总结。
+
+格式如下：
+1. 修改文件：列出每个文件路径；
+2. 修改内容：每个文件具体改了什么；
+3. 验证结果：运行了哪些命令，结果是什么；
+4. 页面检查：如果是前端改动，应该重点看哪些页面和状态；
+5. 风险说明：有哪些可能影响其它功能的地方；
+6. 后续建议：有没有需要我手动配置、上线检查或继续补充的事项。
+
+请保持简洁，但不要遗漏风险。`
+        }
+      },
+      {
+        "heading": "把这套流程变成你的固定工作法",
+        "paragraphs": [
+          "这套提示词最适合沉淀到项目规则里。你可以把完整链路放进 AGENTS.md、CLAUDE.md 或团队的工作流文档里，让 AI 每次进入项目时都按同一套节奏工作。",
+          "真正的变化不是提示词更长，而是你开始用工程流程管理 AI：需求先变成 Spec，代码先经过探索，修改先有边界，结果必须验证，最后必须自审。",
+          "当你用这套方式工作一段时间，会发现 AI Coding 的体验会稳定很多。AI 依然可以很快，但它不再是自由发挥，而是在一条清楚的产品和工程链路里加速你。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "claude-code-official-prompt-library-copyable-workflows",
+    "sourceUrl": "https://code.claude.com/docs/en/prompt-library",
+    "translationMode": "guidedTranslation",
+    "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制 Prompt",
+    "originalTitle": "Claude Code Prompt Library / Common Workflows",
+    "notice": "本文为 Uicoding.ai 基于 Claude Code 官方 Prompt Library 和 Common Workflows 整理的中文学习笔记，不是原文全文翻译。主要参考：https://code.claude.com/docs/en/prompt-library 和 https://docs.anthropic.com/en/docs/claude-code/common-workflows。",
+    "sections": [
+      {
+        "heading": "这篇不是提示词片段，而是完整工作提示词",
+        "paragraphs": [
+          "Claude Code 官方 Prompt Library 的重点不是教你写一句万能咒语，而是把任务说清楚：让 Agent 先理解上下文，再按目标修改，最后给出可验证结果。Common Workflows 也强调从理解代码库、查找相关代码、修 Bug、写测试到提交总结的一整套流程。",
+          "所以这篇资料不整理成零散句子，而是把官方推荐的模式改写成可以直接复制的完整中文 Prompt。每个代码块都可以单独复制到 Claude Code，也可以改一下工具名后用于 Codex、Cursor Agent 或其它 AI Coding 工具。",
+          "使用时只需要替换方括号里的内容，例如页面路径、Bug 描述、验收标准、允许修改范围。其它约束建议保留，因为这些约束能减少 AI 误改、过度重构和没有验证就结束的情况。"
+        ]
+      },
+      {
+        "heading": "完整总控 Prompt：从探索代码到验证结果",
+        "paragraphs": [
+          "如果你只想复制一段最完整的 Prompt，就用下面这一段。它适合中等复杂度任务：新增页面、修复问题、优化组件、补测试、调整工作流。",
+          "这段 Prompt 的核心是：先探索，不急着改；先定义验收标准，再实现；实现后必须验证；最后要输出风险和检查项。"
+        ],
+        "code": {
+          "label": "完整总控 Prompt",
+          "content": `你现在是我的 Claude Code 结对工程师。请按“探索代码 -> 制定计划 -> 最小实现 -> 验证结果 -> 总结交付”的流程完成任务。
+
+任务目标：
+[在这里写清楚本次要完成的任务，例如：修复 /learn 页面卡片描述被截断的问题。]
+
+背景信息：
+[在这里补充用户看到的问题、截图描述、相关页面路径、期望效果。]
+
+验收标准：
+1. [写清楚第一个可检查结果。]
+2. [写清楚第二个可检查结果。]
+3. [写清楚第三个可检查结果。]
+
+限制范围：
+- 先不要修改文件，先探索代码并说明计划。
+- 优先复用已有组件、样式、数据结构和工具函数。
+- 不要重构无关代码。
+- 不要新增依赖，除非先说明原因并获得确认。
+- 不要修改登录、支付、权限、数据库、部署配置和环境变量。
+- 如果发现必须扩大修改范围，请先停下来说明原因。
+
+请按以下步骤执行：
+
+第一步：理解项目
+- 阅读与任务相关的文件。
+- 如果存在 README、AGENTS.md、CLAUDE.md 或项目规则，请先读取。
+- 找到当前功能的入口、相关组件、样式和数据来源。
+- 用中文总结你理解到的项目结构和任务影响范围。
+
+第二步：制定计划
+- 列出你准备修改的文件。
+- 说明每个文件为什么需要改。
+- 给出最小实现方案。
+- 如果任务有不确定性，先问我，不要猜。
+
+第三步：实现
+- 只做当前任务需要的最小修改。
+- 保持现有代码风格。
+- 不要顺手清理、移动、重命名或重构无关内容。
+
+第四步：验证
+- 根据项目情况运行必要命令，例如 npm run build、npm run test、npm run lint。
+- 如果是前端页面问题，请说明需要打开哪个页面检查什么。
+- 如果验证失败，请先分析原因再修复，不要跳过失败。
+
+第五步：交付总结
+请最后用中文输出：
+1. 修改了哪些文件；
+2. 每个文件改了什么；
+3. 运行了哪些验证命令，结果如何；
+4. 我应该在浏览器里重点检查哪里；
+5. 是否存在风险、未验证项或需要我手动处理的地方。`
+        }
+      },
+      {
+        "heading": "探索代码库 Prompt：先弄清楚项目再动手",
+        "paragraphs": [
+          "这是最适合新项目、新页面、新需求开始前使用的 Prompt。它不会要求 AI 立刻改代码，而是先让它建立代码地图。",
+          "如果你经常遇到 AI 改错文件、找不到真实入口、凭空假设组件存在，先运行这一段会稳很多。"
+        ],
+        "code": {
+          "label": "探索代码库 Prompt",
+          "content": `请先探索当前代码库，不要修改任何文件。
+
+我想完成的任务是：
+[写清楚你想做什么。]
+
+请帮我找到和这个任务最相关的代码位置，并用中文解释：
+1. 这个功能或页面的入口文件在哪里；
+2. 它依赖哪些组件、样式文件、数据文件或接口；
+3. 相关文件之间是什么关系；
+4. 现有代码里有没有类似实现可以复用；
+5. 如果要完成这个任务，最小修改范围是什么；
+6. 哪些文件或模块不应该被修改；
+7. 你建议的实施步骤是什么。
+
+要求：
+- 只阅读和任务相关的文件。
+- 不要全项目无目的扫描。
+- 不要修改文件。
+- 不要给出最终代码。
+- 如果你找不到入口，请说明你已经查了哪些位置，以及下一步建议怎么找。
+
+最后请给我一个简短计划，等我确认后再执行。`
+        }
+      },
+      {
+        "heading": "修 Bug Prompt：带复现、范围和验证",
+        "paragraphs": [
+          "修 Bug 最怕的问题是 AI 只根据报错文字猜原因。更稳的方式是把现象、复现步骤、期望结果、限制范围和验证方式都写进去。",
+          "下面这段适合 UI Bug、交互 Bug、接口 Bug 和构建报错。你可以把截图描述、终端报错或浏览器控制台报错粘到对应位置。"
+        ],
+        "code": {
+          "label": "修 Bug 完整 Prompt",
+          "content": `请帮我修复一个 Bug。先分析，不要马上改代码。
+
+Bug 现象：
+[描述用户看到的问题，例如：学习卡片描述文字被截断一半。]
+
+复现步骤：
+1. 打开 [页面路径或操作入口]。
+2. 执行 [具体操作]。
+3. 观察到 [错误现象]。
+
+期望结果：
+[描述正确表现，例如：文字最多显示三行，不应该露出半行，也不应该遮挡按钮。]
+
+已知信息：
+- 相关页面：[页面路径]
+- 相关截图：[如果有截图，用文字描述关键问题]
+- 报错信息：[如果有终端或控制台报错，粘贴在这里]
+
+限制范围：
+- 优先修改和 Bug 直接相关的文件。
+- 不要重构无关组件。
+- 不要修改数据结构，除非这是根因。
+- 不要修改登录、支付、权限、数据库或环境变量。
+
+请按这个流程做：
+1. 找出最可能的相关文件。
+2. 解释 Bug 根因。
+3. 给出最小修复方案。
+4. 实施修复。
+5. 运行必要验证命令。
+6. 告诉我应该如何在浏览器中复查。
+
+最后请总结：
+- 根因是什么；
+- 改了哪些文件；
+- 如何验证已经修好；
+- 有没有可能影响其它页面。`
+        }
+      },
+      {
+        "heading": "安全重构 Prompt：保持行为不变",
+        "paragraphs": [
+          "重构时要特别强调“行为不变”。如果不写清楚，AI 可能把重构理解成重新设计功能，最后改出新 Bug。",
+          "这段 Prompt 适合整理重复代码、拆组件、移动样式、命名清理、抽工具函数。"
+        ],
+        "code": {
+          "label": "安全重构 Prompt",
+          "content": `请帮我做一次小范围安全重构。
+
+重构目标：
+[写清楚要整理什么，例如：把重复的学习卡片样式收敛到一个组件样式中。]
+
+必须保持不变的行为：
+1. 页面路由不变。
+2. 用户看到的主要内容不变。
+3. 交互行为不变。
+4. 数据结构不变。
+5. 对外 API 不变。
+
+允许修改：
+- [列出允许修改的文件或目录。]
+
+禁止修改：
+- 登录、支付、权限、数据库、环境变量、部署配置。
+- 与本次重构无关的页面和组件。
+- 用户可见文案，除非我明确要求。
+
+请先输出重构计划：
+1. 当前重复或混乱点在哪里；
+2. 你准备怎么拆分或合并；
+3. 哪些文件会被修改；
+4. 如何证明行为没有变化。
+
+我确认后再执行。执行后请运行构建或测试，并给出修改前后行为保持一致的验证说明。`
+        }
+      },
+      {
+        "heading": "补测试 Prompt：让 AI 先定义测试目标",
+        "paragraphs": [
+          "官方工作流里经常会把测试作为任务的一部分。重点不是让 AI 随便补几个测试，而是先说明测试要保护什么行为。",
+          "这段适合已有测试框架的项目。如果项目暂时没有测试，也可以让 AI 输出手动验证清单。"
+        ],
+        "code": {
+          "label": "补测试 Prompt",
+          "content": `请为当前功能补充测试。先不要写实现代码，先制定测试计划。
+
+要保护的功能：
+[写清楚功能名称或页面路径。]
+
+用户期望行为：
+1. [正常情况应该怎样。]
+2. [空数据或异常情况应该怎样。]
+3. [重复操作或边界情况应该怎样。]
+
+请先检查项目已有测试方式：
+- 使用了什么测试框架；
+- 测试文件一般放在哪里；
+- 命名规则是什么；
+- 有没有可以参考的类似测试。
+
+然后请输出测试计划：
+1. 需要新增或修改哪些测试文件；
+2. 每个测试覆盖什么行为；
+3. 哪些边界情况需要覆盖；
+4. 需要运行什么命令验证。
+
+获得确认后再写测试。
+写完测试后请运行测试命令。如果测试失败，请解释失败原因并修复。`
+        }
+      },
+      {
+        "heading": "验证交付 Prompt：不要让任务停在“我改完了”",
+        "paragraphs": [
+          "很多 AI Coding 的问题发生在最后一步：代码改了，但没有说明怎么验，也没有告诉你风险在哪里。",
+          "这段适合每次改完后复制使用。它会强制 AI 把验证、浏览器检查、风险和后续动作讲清楚。"
+        ],
+        "code": {
+          "label": "验证交付 Prompt",
+          "content": `请对刚才的修改做一次完整交付检查。
+
+请按以下结构输出，不要省略：
+
+1. 修改文件
+- 列出所有被修改、新增或删除的文件。
+
+2. 修改说明
+- 每个文件分别改了什么。
+- 为什么需要这样改。
+
+3. 验证命令
+- 你已经运行了哪些命令。
+- 每个命令的结果是什么。
+- 如果有命令没有运行，请说明原因。
+
+4. 浏览器检查
+- 如果是前端页面，请告诉我应该打开哪个 URL。
+- 应该检查哪些元素、状态、交互和移动端情况。
+
+5. 风险检查
+- 是否可能影响其它页面；
+- 是否可能影响数据、权限、登录、支付或部署；
+- 是否有未覆盖的边界情况；
+- 是否有需要我手动配置的内容。
+
+6. 最终结论
+- 用一句话说明这次任务是否已经完成。
+- 如果还有后续事项，请列出来。`
+        }
+      },
+      {
+        "heading": "如何把这些 Prompt 用在真实项目里",
+        "paragraphs": [
+          "最稳的用法不是每次都把所有 Prompt 全部复制一遍，而是按任务阶段选择。刚进入项目时用“探索代码库 Prompt”，遇到问题时用“修 Bug Prompt”，想整理代码时用“安全重构 Prompt”，改完以后用“验证交付 Prompt”。",
+          "如果你希望团队长期复用，可以把这些 Prompt 放进 CLAUDE.md、AGENTS.md 或项目内部文档。更进一步，还可以把它们拆成 Claude Code slash commands，比如 /explore-task、/fix-bug、/verify-change。",
+          "真正重要的是让 AI 形成固定节奏：先理解，再计划，再改动，再验证，再交付。只要这个节奏稳定，Claude Code 和 Codex 都会比“想到什么说什么”的使用方式可靠很多。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-official-workflows-copyable-prompts",
+    "sourceUrl": "https://developers.openai.com/codex/workflows",
+    "translationMode": "guidedTranslation",
+    "title": "Codex 官方工作流：7 个可直接复制的实战 Prompt",
+    "originalTitle": "Workflows",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex 官方 Workflows 整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/workflows。",
+    "sections": [
+      {
+        "heading": "为什么这篇适合做 Codex 实战学习页",
+        "paragraphs": [
+          "OpenAI Codex 官方 Workflows 不是只讲“提示词怎么写”，而是把 Codex 放到真实开发任务里：理解代码、修 Bug、写测试、根据截图做原型、迭代 UI、做本地 code review，以及在 GitHub PR 上做 review。",
+          "这几个场景基本覆盖了独立开发者每天会遇到的工作：先弄懂项目，再动手改；改完要验证；提交前要审查；别人提 PR 时，也可以让 Codex 先帮你看一轮。",
+          "下面每个代码块都是完整 Prompt。你可以直接复制到 Codex 里使用，只需要替换方括号中的页面路径、Bug 描述、截图信息或 PR 信息。"
+        ]
+      },
+      {
+        "heading": "1. 解释代码流：先让 Codex 讲清楚系统怎么跑",
+        "paragraphs": [
+          "这个 Prompt 适合接手新项目、理解一个页面、读接口链路或梳理某个功能的执行路径。重点是让 Codex 先解释，而不是马上修改。",
+          "如果你是零基础用户，这也是最安全的第一步：先知道文件在哪里、数据怎么走、用户操作会触发哪些代码。"
+        ],
+        "code": {
+          "label": "解释代码流 Prompt",
+          "content": `请帮我解释当前项目中的一条代码流，不要修改任何文件。
+
+我想理解的功能或页面是：
+[例如：用户打开 /learn 页面后，学习卡片是如何从数据渲染到页面上的。]
+
+请按以下方式分析：
+1. 找到这个功能的入口文件。
+2. 找到相关组件、数据文件、样式文件和工具函数。
+3. 按用户操作顺序解释代码是如何执行的。
+4. 说明数据从哪里来，经过哪些组件，最后如何显示到页面。
+5. 标出最重要的 3 到 5 个文件，并解释每个文件的职责。
+6. 如果有容易误解的地方，请单独提醒我。
+
+输出要求：
+- 用中文解释，适合非资深工程师理解。
+- 不要只列文件名，要解释它们之间的关系。
+- 不要修改文件。
+- 最后给我一份“如果我要修改这个功能，应该先看哪些文件”的清单。`
+        }
+      },
+      {
+        "heading": "2. 修 Bug：给现象、复现步骤和验收标准",
+        "paragraphs": [
+          "修 Bug 时，最重要的是不要只给一句“这里坏了”。你需要告诉 Codex：现象是什么、如何复现、期望结果是什么、哪些模块不能碰。",
+          "下面这段适合 UI Bug、构建错误、状态错误和数据展示错误。"
+        ],
+        "code": {
+          "label": "修 Bug Prompt",
+          "content": `请帮我修复一个 Bug。先分析根因，再做最小修改。
+
+Bug 现象：
+[描述用户看到的问题，例如：页面标题显示错误，或者卡片描述文字被截断。]
+
+复现步骤：
+1. 打开 [页面 URL 或路由]。
+2. 执行 [具体操作]。
+3. 观察到 [错误表现]。
+
+期望结果：
+[描述修复后的正确表现。]
+
+限制范围：
+- 优先只修改和这个 Bug 直接相关的文件。
+- 不要重构无关代码。
+- 不要新增依赖。
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量。
+- 如果你发现必须扩大修改范围，请先说明原因。
+
+请按以下流程执行：
+1. 找到相关文件。
+2. 解释 Bug 的可能根因。
+3. 给出最小修复方案。
+4. 实施修复。
+5. 运行必要验证命令，例如 npm run build、npm run test 或 npm run lint。
+6. 如果是前端问题，告诉我应该打开哪个页面、检查哪些状态。
+
+最后请总结：
+- 根因是什么；
+- 改了哪些文件；
+- 如何验证已经修好；
+- 是否可能影响其它页面或功能。`
+        }
+      },
+      {
+        "heading": "3. 写测试：让 Codex 先理解要保护的行为",
+        "paragraphs": [
+          "写测试不是让 Codex 随便补几个断言，而是先说清楚“这个测试保护什么行为”。如果项目没有测试框架，也可以要求它先输出手动验证方案。",
+          "这段 Prompt 适合给核心函数、组件状态、表单逻辑、接口处理和回归 Bug 补测试。"
+        ],
+        "code": {
+          "label": "写测试 Prompt",
+          "content": `请为当前功能补充测试。先制定测试计划，不要马上写代码。
+
+要测试的功能：
+[描述功能，例如：学习资料详情页可以正确渲染代码块，并且复制按钮能复制完整 Prompt。]
+
+需要保护的行为：
+1. 正常数据下应该如何表现；
+2. 空数据或缺失字段时应该如何表现；
+3. 用户交互后应该如何表现；
+4. 回归场景：之前出过什么问题，不能再出现。
+
+请先检查项目现有测试方式：
+- 使用什么测试框架；
+- 测试文件放在哪里；
+- 有没有类似测试可以参考；
+- 应该运行什么命令。
+
+然后请输出测试计划：
+1. 需要新增或修改哪些测试文件；
+2. 每个测试覆盖什么行为；
+3. 哪些边界情况需要覆盖；
+4. 哪些测试不值得现在写，原因是什么。
+
+我确认后再写测试。
+写完后请运行测试命令。
+如果测试失败，请解释失败原因并修复。`
+        }
+      },
+      {
+        "heading": "4. 根据截图做原型：把图片变成可运行页面",
+        "paragraphs": [
+          "Codex Workflows 里一个很实用的场景，是基于截图快速做原型。这里的关键不是“照着做一个差不多的页面”，而是写清楚还原范围、交互、响应式和不允许新增的复杂度。",
+          "如果你给 Codex 截图，最好同时描述：这是哪个页面、哪些元素必须还原、哪些只是参考、移动端怎么处理。"
+        ],
+        "code": {
+          "label": "根据截图做原型 Prompt",
+          "content": `请根据我提供的截图，为当前项目实现一个可运行的前端原型。
+
+截图说明：
+[描述截图里的页面类型、核心元素、布局结构、颜色和交互。]
+
+目标页面：
+[例如：/submit、/pricing、/learn/new-page]
+
+还原重点：
+1. 页面结构和信息层级；
+2. 主要标题、按钮、表单、卡片或导航；
+3. 间距、字体层级、颜色气质；
+4. 桌面端和移动端的布局；
+5. 必要的 hover、focus、loading、empty 状态。
+
+限制范围：
+- 优先使用项目已有组件、样式变量和布局规则。
+- 不要引入新的 UI 组件库。
+- 不要接后端接口。
+- 不要实现真实登录、支付、数据库逻辑。
+- 如果截图里有复杂图表或图片，可以先用静态占位或简单结构还原。
+
+请按步骤执行：
+1. 先阅读项目现有页面和样式规范。
+2. 给出你准备新增或修改的文件。
+3. 说明哪些部分会高保真还原，哪些部分会合理简化。
+4. 实现页面。
+5. 运行 npm run build。
+6. 告诉我应该打开哪个 URL 检查效果。
+
+最后请总结：还原了哪些截图元素，哪些地方需要后续人工微调。`
+        }
+      },
+      {
+        "heading": "5. UI 迭代：不要让 Codex 一次性大改视觉",
+        "paragraphs": [
+          "UI 迭代最容易失控：一句“优化一下”可能导致全局样式被重写。更稳的做法是让 Codex 只围绕一个页面、三个问题、明确验收标准做最小调整。",
+          "这段 Prompt 适合你已经有页面，但觉得层级、留白、卡片、按钮或移动端不够好时使用。"
+        ],
+        "code": {
+          "label": "UI 迭代 Prompt",
+          "content": `请帮我对当前页面做一轮小范围 UI 迭代。
+
+目标页面：
+[写页面路径，例如 /learn 或 /tools。]
+
+当前问题：
+1. [问题一，例如标题层级不够清晰。]
+2. [问题二，例如卡片内容太挤。]
+3. [问题三，例如移动端按钮和文字距离太近。]
+
+设计目标：
+- 更清晰；
+- 更有编辑感；
+- 更易读；
+- 不要增加复杂装饰；
+- 不要做成普通 AI 模板站。
+
+限制范围：
+- 只修改这个页面相关组件和样式。
+- 不要重构路由。
+- 不要修改数据结构。
+- 不要新增依赖。
+- 不要改无关页面。
+- 不要引入大面积渐变、发光、重阴影或多层卡片嵌套。
+
+请先输出：
+1. 你观察到的主要 UI 问题；
+2. 最小修改方案；
+3. 预计修改哪些文件。
+
+我确认后再执行。
+执行后请运行 npm run build，并告诉我桌面端和移动端分别应该检查什么。`
+        }
+      },
+      {
+        "heading": "6. 本地 Code Review：提交前让 Codex 先审一轮",
+        "paragraphs": [
+          "Codex 支持本地审查工作流。你可以在提交前让它检查当前 diff，重点看 bug、回归风险、测试缺口和无关改动。",
+          "这段 Prompt 适合在你已经改完代码、准备提交之前使用。"
+        ],
+        "code": {
+          "label": "本地 Code Review Prompt",
+          "content": `请对我当前本地改动做一次 code review。
+
+审查范围：
+- 当前工作区 diff；
+- 已修改、新增或删除的文件；
+- 与本次任务相关的测试和构建结果。
+
+请重点检查：
+1. 是否存在明显 Bug 或回归风险；
+2. 是否有无关文件被修改；
+3. 是否有过度重构；
+4. 是否遗漏错误处理、空状态、加载状态或边界情况；
+5. 是否影响登录、支付、权限、数据库、部署配置；
+6. 是否缺少必要测试或验证；
+7. 是否有命名、可读性或维护性问题。
+
+输出要求：
+- 先列问题，按严重程度排序。
+- 每个问题都说明文件位置、原因和建议修复方式。
+- 如果没有发现问题，请明确说“未发现阻塞问题”。
+- 最后给出提交前还应该运行哪些命令或检查哪些页面。
+
+请先只 review，不要直接修改代码。`
+        }
+      },
+      {
+        "heading": "7. PR Review：让 Codex 帮你读 Pull Request",
+        "paragraphs": [
+          "当团队协作时，Codex 可以用于 PR Review：总结改动、找风险、检查测试、提出问题。重点是不要只让它“看看”，而是明确审查维度。",
+          "如果你使用 GitHub，可以把 PR 链接、diff 摘要、测试结果或 CI 报错一起给 Codex。"
+        ],
+        "code": {
+          "label": "PR Review Prompt",
+          "content": `请帮我 review 这个 Pull Request。
+
+PR 链接或编号：
+[粘贴 PR 链接或编号。]
+
+PR 目标：
+[描述这个 PR 想解决什么问题。]
+
+请按以下维度审查：
+1. 这个 PR 实际改了什么；
+2. 改动是否符合 PR 目标；
+3. 是否存在明显 Bug、回归风险或安全风险；
+4. 是否影响登录、支付、权限、数据库、部署配置；
+5. 是否有无关重构或不必要文件改动；
+6. 测试是否充分；
+7. 文档、环境变量或迁移说明是否缺失；
+8. 是否有需要向作者确认的问题。
+
+输出格式：
+- 先给一句总体结论：建议通过、需要修改，或需要更多信息。
+- 然后列出发现的问题，按严重程度排序。
+- 每条问题包含：位置、原因、建议。
+- 最后列出开放问题和建议补充的测试。
+
+请保持 review 口吻专业、具体、可执行，不要只给泛泛建议。`
+        }
+      },
+      {
+        "heading": "怎么选择这 7 个 Prompt",
+        "paragraphs": [
+          "如果你刚进入项目，用“解释代码流”。如果线上或页面出问题，用“修 Bug”。如果要避免回归，用“写测试”。如果从截图开始做页面，用“根据截图做原型”。如果页面已经有了但不够好，用“UI 迭代”。如果准备提交，用“本地 Code Review”。如果团队有人开 PR，用“PR Review”。",
+          "这 7 个 Prompt 的共同点是：都要求 Codex 先理解上下文，再明确范围，然后执行，最后验证。它们不是为了让提示词显得复杂，而是为了让 AI Coding 更接近真实工程流程。",
+          "你也可以把它们沉淀成自己的常用命令，比如 /explain-flow、/fix-bug、/write-tests、/prototype-from-screenshot、/ui-iterate、/local-review、/pr-review。每次复用同一套结构，项目会稳定很多。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-real-webpage-prompt-case-library",
+    "sourceUrl": "https://developers.openai.com/codex/use-cases",
+    "translationMode": "guidedTranslation",
+    "title": "Codex 真实网页案例 Prompt 库：从网页拆解到验证套件",
+    "originalTitle": "Codex prompt examples and real web workflow cases",
+    "notice": "本文为 Uicoding.ai 基于公开资料整理的中文学习笔记，不是原文全文翻译。参考来源包括 OpenAI Codex Use Cases：https://developers.openai.com/codex/use-cases，OpenAI Codex Figma to code 用例：https://developers.openai.com/codex/use-cases/figma-designs-to-code，以及 Jose Casanova Codex Prompts：https://www.josecasanova.com/prompts/for/codex。",
+    "sections": [
+      {
+        "heading": "这篇资料解决什么问题",
+        "paragraphs": [
+          "很多 AI Coding 教程只讲“写清楚需求”，但真实做产品时，你经常面对的是一个真实网页、一个截图、一个竞品页面、一个 Figma 设计、一个已经上线但有问题的页面。你需要 Codex 不只是写代码，而是先拆解网页，再做实现计划，最后用验证套件检查结果。",
+          "这篇把几个真实网页来源组合起来：OpenAI Codex 官方 Use Cases 提供真实用例方向，Figma to code 用例说明如何把设计转成代码，Jose Casanova 的 Codex Prompts 则偏向验证、执行计划和提交前检查。",
+          "下面所有 Prompt 都是完整可复制版本。你可以把真实网页 URL、截图描述、目标页面路径和验收标准填进去，然后直接交给 Codex 执行。"
+        ]
+      },
+      {
+        "heading": "可以用来练习的真实网页来源",
+        "paragraphs": [
+          "网页案例一：OpenAI Codex Use Cases，地址：https://developers.openai.com/codex/use-cases。这个页面适合学习 Codex 在 PR review、Figma to code、数据分析、反馈整理等真实任务中的应用方向。",
+          "网页案例二：OpenAI Codex Figma designs to code，地址：https://developers.openai.com/codex/use-cases/figma-designs-to-code。这个案例适合练习“从设计稿或截图到可运行页面”的工作流。",
+          "网页案例三：Jose Casanova Codex Prompts，地址：https://www.josecasanova.com/prompts/for/codex。这个页面适合学习把验证套件、执行计划、Git commit 分析、跨 Agent Review 这类任务做成可复用 Prompt。"
+        ]
+      },
+      {
+        "heading": "Prompt 1：真实网页拆解，先把网页变成实现清单",
+        "paragraphs": [
+          "当你看到一个好网页，不要马上让 Codex“仿一个”。更稳的方式是先让它拆解页面：信息架构、布局、组件、视觉层级、交互状态、移动端策略。",
+          "这段 Prompt 适合输入一个真实网页 URL，或者你已经打开网页后，把页面结构描述给 Codex。"
+        ],
+        "code": {
+          "label": "真实网页拆解 Prompt",
+          "content": `请基于下面这个真实网页，帮我做一次产品和前端实现拆解。先不要写代码。
+
+真实网页 URL：
+[粘贴网页地址，例如 https://developers.openai.com/codex/use-cases/figma-designs-to-code]
+
+我的目标：
+[说明你想学习它的什么，例如：学习它如何组织 use case 页面，或者把类似结构做进我的网站。]
+
+请按以下结构拆解：
+
+1. 页面定位
+- 这个页面面向什么用户；
+- 用户进入页面后最想解决什么问题；
+- 页面第一屏传递了什么核心信息。
+
+2. 信息架构
+- 页面从上到下有哪些主要区块；
+- 每个区块承担什么任务；
+- 区块之间的阅读顺序是否清晰。
+
+3. 组件结构
+- 哪些是可复用组件；
+- 哪些是页面专属模块；
+- 是否有卡片、代码块、步骤列表、CTA、FAQ、示例图等。
+
+4. 视觉和排版
+- 标题层级如何组织；
+- 文本宽度和段落节奏如何控制；
+- 图片、代码块或示例如何承载重点；
+- 哪些视觉细节值得借鉴，哪些不适合照搬。
+
+5. 交互和状态
+- 页面里有哪些按钮、链接、展开区、复制按钮或跳转；
+- 如果要做成真实产品页面，需要补哪些 hover、focus、loading、empty 状态。
+
+6. 移动端适配
+- 哪些区块在移动端需要改成单列；
+- 图片、代码块、长标题应该如何处理；
+- 哪些内容需要压缩或换行。
+
+7. 可实现清单
+- 如果我要在当前项目中做一个类似页面，应该新增或修改哪些文件；
+- 哪些组件可以复用；
+- 哪些地方需要新写样式；
+- 哪些地方需要我手动提供图片或文案。
+
+最后请输出一份“最小可实现版本”的开发计划，不要开始写代码。`
+        }
+      },
+      {
+        "heading": "Prompt 2：从真实网页或截图复刻一个原型页面",
+        "paragraphs": [
+          "网页复刻最怕两个极端：要么只抄表面，要么过度设计。这个 Prompt 会要求 Codex 先还原结构和层级，再实现可运行原型，并明确哪些地方可以简化。",
+          "适合练习 OpenAI 的 Figma to code 思路，也适合你把竞品网页、截图、设计稿转成项目里的一个新页面。"
+        ],
+        "code": {
+          "label": "真实网页/截图复刻 Prompt",
+          "content": `请根据我提供的真实网页或截图，帮我在当前项目中实现一个可运行的原型页面。
+
+参考网页或截图：
+[粘贴 URL，或用文字描述截图内容。]
+
+目标路由：
+[例如 /learn/codex-prompt-case-study 或 /cases/new-example]
+
+复刻目标：
+- 复刻页面的信息架构；
+- 复刻主要视觉层级；
+- 复刻关键组件关系；
+- 不要求逐像素完全一致，但要保留页面的产品表达方式。
+
+必须还原：
+1. 首屏标题、说明、主要行动按钮；
+2. 主要内容区块顺序；
+3. 卡片、代码块、步骤说明或案例区；
+4. 桌面端和移动端布局；
+5. 基础交互状态，例如 hover、focus、active。
+
+允许简化：
+- 复杂插图可以先用已有图片或简单占位；
+- 复杂动画可以先不做；
+- 后端数据和真实接口可以先用静态数据；
+- 图表可以先用静态结构。
+
+限制范围：
+- 优先复用当前项目已有组件、样式变量和布局规则；
+- 不要引入新的 UI 组件库；
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量；
+- 不要重构无关页面；
+- 如果必须新增文件，请先说明文件用途。
+
+请按步骤执行：
+1. 先给出页面结构分析；
+2. 再给出实现计划；
+3. 等我确认后再写代码；
+4. 实现后运行 npm run build；
+5. 最后告诉我应该打开哪个 URL 检查，以及重点检查哪些区域。`
+        }
+      },
+      {
+        "heading": "Prompt 3：执行计划 Prompt，把拆解结果变成可落地任务",
+        "paragraphs": [
+          "网页拆解之后，不要一次性让 Codex 全部实现。更稳的是把它拆成可执行任务：先页面结构，再内容数据，再样式，再移动端，再验证。",
+          "这个 Prompt 适合把上一段拆解结果变成任务清单，也适合在真实项目里控制 Codex 的修改范围。"
+        ],
+        "code": {
+          "label": "执行计划 Prompt",
+          "content": `请把前面的网页拆解结果整理成一个可执行开发计划。先不要写代码。
+
+项目目标：
+[说明你要在当前项目里做什么页面或功能。]
+
+参考来源：
+[粘贴真实网页 URL 或截图说明。]
+
+请输出一个分阶段计划：
+
+阶段 1：页面结构
+- 需要新增或修改哪些页面文件；
+- 页面主要区块是什么；
+- 每个区块需要哪些内容。
+
+阶段 2：数据和内容
+- 是否需要新增静态数据；
+- 每条数据需要哪些字段；
+- 是否需要来源地址、图片、标签、作者或发布时间。
+
+阶段 3：组件复用
+- 当前项目里哪些组件可以复用；
+- 哪些组件需要新增；
+- 哪些组件不要动。
+
+阶段 4：样式实现
+- 需要新增哪些页面级样式；
+- 哪些样式应该复用设计变量；
+- 桌面端和移动端分别如何布局。
+
+阶段 5：验证
+- 需要运行哪些命令；
+- 需要打开哪些页面；
+- 需要检查哪些边界情况。
+
+要求：
+- 每个阶段都要足够小，可以单独完成；
+- 不要安排无关重构；
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量；
+- 给出建议的第一步任务。
+
+最后请问我是否确认执行第一阶段。`
+        }
+      },
+      {
+        "heading": "Prompt 4：验证套件 Prompt，检查页面不是只做到表面相似",
+        "paragraphs": [
+          "页面做完以后，最容易出现的问题是：桌面端看起来还行，移动端溢出；标题能显示，但按钮被遮挡；代码块能出现，但复制不完整。",
+          "这段 Prompt 参考验证套件的思路，把视觉、内容、交互、响应式、性能和无关改动都纳入检查。"
+        ],
+        "code": {
+          "label": "验证套件 Prompt",
+          "content": `请为刚才实现的页面执行一轮验证套件检查。
+
+目标页面：
+[填写页面 URL 或路由。]
+
+参考网页或目标效果：
+[填写参考网页 URL、截图说明或验收标准。]
+
+请按以下维度检查：
+
+1. 内容完整性
+- 标题、副标题、正文、来源链接是否完整；
+- 代码块或 Prompt 是否完整显示；
+- 是否存在文字被截断、重叠或半行显示。
+
+2. 结构一致性
+- 页面区块顺序是否符合计划；
+- 关键组件是否都出现；
+- 是否遗漏 CTA、来源、案例、步骤或验证信息。
+
+3. 视觉质量
+- 标题层级是否清晰；
+- 段落宽度是否适合阅读；
+- 卡片、代码块、按钮、图片是否和现有设计风格一致；
+- 是否存在过重阴影、过度渐变、多层卡片嵌套或模板感。
+
+4. 交互状态
+- 链接是否可点击；
+- 复制按钮是否能复制完整内容；
+- hover、focus、active 状态是否可用；
+- 空状态或图片加载失败时是否可接受。
+
+5. 响应式
+- 桌面端是否正常；
+- 移动端是否单列可读；
+- 长标题、长 URL、长 Prompt 是否会撑破布局；
+- 图片和代码块是否会横向溢出。
+
+6. 工程验证
+- 运行 npm run build；
+- 如果有测试，运行相关测试；
+- 检查是否修改了无关文件；
+- 检查是否影响共享组件或其它页面。
+
+输出格式：
+1. 通过项；
+2. 发现的问题，按严重程度排序；
+3. 建议修复方案；
+4. 是否需要继续修改；
+5. 最终是否可以交付。`
+        }
+      },
+      {
+        "heading": "Prompt 5：Git Commit 分析 Prompt，提交前确认改动范围",
+        "paragraphs": [
+          "当一个页面做完以后，不要立刻提交。先让 Codex 看一遍 diff，确认改动范围、风险和验证结果，再决定是否提交。",
+          "这个 Prompt 适合准备 commit 前使用，尤其是你让 Codex 连续做了几轮页面和内容改动之后。"
+        ],
+        "code": {
+          "label": "Git Commit 分析 Prompt",
+          "content": `请在提交前分析当前本地改动，但先不要 stage，也不要 commit。
+
+请检查：
+1. 当前 git status；
+2. 当前 diff；
+3. 修改文件是否都和本次任务相关；
+4. 是否有临时文件、调试代码、无关格式化或误删内容；
+5. 是否有高风险模块被修改，例如登录、支付、权限、数据库、部署配置或环境变量；
+6. 是否已经运行必要验证命令；
+7. 是否还有需要我手动检查的页面。
+
+请输出：
+
+## 改动摘要
+- 用 3 到 5 条说明本次改动做了什么。
+
+## 文件分组
+- 内容数据；
+- 页面组件；
+- 样式；
+- 静态资源；
+- 其它。
+
+## 验证状态
+- 已运行的命令和结果；
+- 未运行的验证和原因；
+- 浏览器中需要检查的 URL。
+
+## 风险点
+- 可能影响哪些页面；
+- 是否有未验证的边界情况；
+- 是否需要我确认来源、版权、图片或文案。
+
+## 建议 commit message
+- 给出一个简短英文 commit message；
+- 再给一个中文说明版本。
+
+最后请问我是否要继续 stage 和 commit，不要自动执行。`
+        }
+      },
+      {
+        "heading": "这套案例 Prompt 怎么用",
+        "paragraphs": [
+          "如果你要学习一个真实网页，先用“真实网页拆解 Prompt”。如果你要把网页或截图做成页面，用“真实网页/截图复刻 Prompt”。如果页面较复杂，用“执行计划 Prompt”拆阶段。做完以后，用“验证套件 Prompt”检查。准备提交前，用“Git Commit 分析 Prompt”。",
+          "这套流程的重点是：真实网页不是让你照抄，而是帮助你拆解产品表达、页面结构和工程实现。Codex 最适合做的不是凭空生成，而是在你给出真实参考和明确验收标准后，把页面落地出来。",
+          "你也可以把这些 Prompt 做成自己的项目 Skill，例如 /analyze-webpage、/prototype-page、/plan-implementation、/verify-page、/commit-analysis。这样以后每次看到一个好网页，都能稳定地从参考变成可实现任务。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-best-practices-plan-agents-review",
+    "sourceUrl": "https://developers.openai.com/codex/learn/best-practices",
+    "translationMode": "guidedTranslation",
+    "title": "Codex 官方最佳实践：Plan first、AGENTS.md 和可验证交付",
+    "originalTitle": "Best practices",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex 官方 Best practices 整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/learn/best-practices。",
+    "sections": [
+      {
+        "heading": "这篇最佳实践真正讲的是什么",
+        "paragraphs": [
+          "Codex 很强，但它不是读心工具。官方最佳实践的核心不是“写更长的 Prompt”，而是把任务讲成一个可执行工程任务：目标是什么、上下文在哪里、不能改什么、做到什么算完成。",
+          "对复杂任务，官方建议先让 Codex 制定计划，甚至反问澄清问题，而不是一上来就改代码。对长期项目，则应该把常用规则沉淀到 AGENTS.md，让 Codex 每次进入项目都知道项目习惯。",
+          "这篇把官方思路整理成 5 个可以直接复制的模板：任务总模板、Plan first 模板、AGENTS.md 模板、验证清单模板和交付 review 模板。"
+        ]
+      },
+      {
+        "heading": "Prompt 1：Codex 任务总模板",
+        "paragraphs": [
+          "这是最通用的一段。适合新增功能、修 Bug、优化页面、补内容、重构小模块。你只需要替换方括号里的信息。",
+          "它对应官方最佳实践里的四个要素：Goal、Context、Constraints、Done when。"
+        ],
+        "code": {
+          "label": "Codex 任务总模板",
+          "content": `请帮我完成下面这个任务，但先阅读相关代码并给出简短计划。
+
+Goal / 目标：
+[写清楚你希望 Codex 完成什么，例如：修复学习卡片文字被截断的问题。]
+
+Context / 上下文：
+[写清楚相关页面、用户看到的问题、截图描述、相关文件或已有实现。]
+
+Constraints / 约束：
+- 只修改和当前任务直接相关的文件。
+- 优先复用已有组件、样式、数据结构和工具函数。
+- 不要重构无关代码。
+- 不要新增依赖，除非你先说明必要性。
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量。
+- 如果发现必须扩大范围，请先停下来说明原因。
+
+Done when / 完成标准：
+1. [写清楚第一个可验证结果。]
+2. [写清楚第二个可验证结果。]
+3. [写清楚第三个可验证结果。]
+
+请按以下流程执行：
+1. 找到相关文件；
+2. 说明你理解的任务和修改计划；
+3. 等我确认后再修改；
+4. 修改后运行必要验证命令，例如 npm run build、npm run test 或 npm run lint；
+5. 最后总结改了哪些文件、如何验证、还有什么风险。`
+        }
+      },
+      {
+        "heading": "Prompt 2：Plan first，让 Codex 先计划再动手",
+        "paragraphs": [
+          "复杂需求不要直接让 Codex 写代码。先让它做计划，能暴露很多问题：它是否理解了范围、是否会误改文件、是否需要更多信息。",
+          "这个模板适合需求还不完全清楚，或者涉及多个页面、组件、数据、样式、测试时使用。"
+        ],
+        "code": {
+          "label": "Plan first 模板",
+          "content": `请先不要修改任何文件。请先为这个任务制定计划。
+
+任务：
+[写清楚你要做什么。]
+
+我希望你先完成：
+
+1. 理解任务
+- 用你自己的话复述任务目标；
+- 说明用户最终会看到什么变化；
+- 说明哪些内容不属于本次任务。
+
+2. 探索代码
+- 找出最相关的页面、组件、样式、数据或测试文件；
+- 说明每个文件和任务的关系；
+- 找出可以复用的已有模式。
+
+3. 风险判断
+- 哪些修改可能影响其它页面；
+- 哪些模块不能碰；
+- 是否涉及登录、支付、权限、数据库、部署配置或环境变量。
+
+4. 实施计划
+- 把任务拆成 3 到 6 个小步骤；
+- 每一步说明要改什么、为什么要改；
+- 标出最小可交付范围。
+
+5. 验证计划
+- 需要运行哪些命令；
+- 需要打开哪些页面；
+- 需要检查哪些边界情况。
+
+如果需求不清楚，请先问我最多 3 个关键问题。
+在我确认计划之前，不要写代码。`
+        }
+      },
+      {
+        "heading": "模板 3：AGENTS.md，让项目规则长期生效",
+        "paragraphs": [
+          "AGENTS.md 适合放项目长期规则：项目是什么、如何运行、不要改什么、完成后怎么验证。它比每次在对话里重复规则更稳定。",
+          "下面这个模板适合前端内容站、产品原型站、案例库、学习资料站。可以复制到项目根目录的 AGENTS.md，再根据你的项目改。"
+        ],
+        "code": {
+          "label": "AGENTS.md 模板",
+          "content": `# AGENTS.md
+
+## Project
+
+This project is a frontend website for publishing AI coding cases, learning materials, and tool guides.
+
+The main audience includes designers, product managers, independent developers, and beginners learning to build real products with AI coding tools.
+
+## Working Rules
+
+- Keep changes tightly scoped to the user's request.
+- Do not delete, move, or rename files unless explicitly requested.
+- Do not refactor unrelated code.
+- Do not introduce new dependencies unless necessary and explained first.
+- Prefer existing components, styles, data structures, and helper functions.
+- If the task is ambiguous, ask a focused question before editing.
+- If a task is large, propose a plan first and wait for confirmation.
+
+## High-Risk Areas
+
+Do not modify these areas unless the user explicitly asks:
+
+- Authentication
+- Payment
+- User permissions
+- Database schema
+- Deployment configuration
+- Environment variables
+- Analytics or tracking logic
+
+## UI Rules
+
+- Keep the interface clean, readable, and editorial.
+- Avoid heavy gradients, glow effects, excessive shadows, and nested cards.
+- Do not make labels more visually dominant than titles.
+- Make sure text does not overflow, overlap, or show half lines.
+- Check desktop and mobile layouts when UI changes.
+- Use existing design tokens and page patterns where possible.
+
+## Verification
+
+After changes, run the smallest meaningful verification command:
+
+- npm run build for frontend/content changes.
+- npm run test when logic or tested behavior changes.
+- npm run lint if linting is configured.
+
+If a command fails, fix the issue before claiming the task is complete.
+
+## Final Response
+
+Always summarize:
+
+1. Files changed.
+2. What changed.
+3. Verification commands and results.
+4. Remaining risks or manual checks.
+5. Whether the user needs to inspect any specific page.`
+        }
+      },
+      {
+        "heading": "Prompt 4：可验证交付清单",
+        "paragraphs": [
+          "很多 AI Coding 出问题不是因为没写代码，而是没有把“完成”定义清楚。这个模板适合每次实现前让 Codex 先写 Done criteria。",
+          "它能让 Codex 从“写完代码”切换到“交付一个可验证结果”。"
+        ],
+        "code": {
+          "label": "Done criteria 模板",
+          "content": `在开始实现之前，请先为这个任务写一份可验证交付清单。
+
+任务：
+[写清楚任务。]
+
+请输出：
+
+1. 用户可见结果
+- 用户最终应该看到什么；
+- 哪些文案、按钮、页面、状态应该变化。
+
+2. 文件范围
+- 预计需要修改哪些文件；
+- 哪些文件明确不应该修改。
+
+3. 功能验收标准
+- 至少列出 3 条可检查的结果；
+- 每一条都要能通过页面、命令或测试验证。
+
+4. 边界情况
+- 空数据时怎样；
+- 图片或接口失败时怎样；
+- 移动端怎样；
+- 长文本、长 URL 或长代码块怎样。
+
+5. 验证方式
+- 需要运行哪些命令；
+- 需要打开哪些页面；
+- 需要手动检查哪些交互。
+
+输出后先停下来，等我确认。`
+        }
+      },
+      {
+        "heading": "Prompt 5：交付前 Review",
+        "paragraphs": [
+          "Codex 官方最佳实践也强调验证和 review。这个模板适合任务完成后使用：让 Codex 站在 reviewer 视角检查自己刚才的改动。",
+          "它不会替代人工 review，但可以帮你提前发现无关改动、测试缺口、边界问题和风险模块。"
+        ],
+        "code": {
+          "label": "交付前 Review Prompt",
+          "content": `请对你刚才完成的改动做一次交付前 review。
+
+请检查：
+
+1. 任务匹配
+- 当前改动是否完全对应原始任务；
+- 是否做了超出范围的事情；
+- 是否遗漏了某个验收标准。
+
+2. 文件范围
+- 哪些文件被修改；
+- 是否有无关文件被修改；
+- 是否有不必要的格式化或重构。
+
+3. 代码风险
+- 是否有硬编码；
+- 是否有重复逻辑；
+- 是否遗漏错误处理、空状态、加载状态；
+- 是否可能影响其它页面或共享组件。
+
+4. 高风险模块
+- 是否修改了登录、支付、权限、数据库、部署配置或环境变量；
+- 如果没有，请明确说明没有涉及；
+- 如果涉及，请说明原因和风险。
+
+5. 验证结果
+- 已运行哪些命令；
+- 命令是否通过；
+- 如果没有运行，请说明原因；
+- 页面上还需要手动检查什么。
+
+6. 最终建议
+- 是否可以交付；
+- 是否还需要继续修改；
+- 是否需要用户手动验证。
+
+请用中文输出，先列风险，再给结论。`
+        }
+      },
+      {
+        "heading": "怎么把这套最佳实践用起来",
+        "paragraphs": [
+          "如果你只是做一个小改动，用“任务总模板”就够了。如果任务有点复杂，先用“Plan first 模板”。如果这是长期项目，把 AGENTS.md 模板放进项目根目录。实现前用 Done criteria 模板，完成后用交付前 Review。",
+          "这套流程看起来比一句“帮我做一下”麻烦，但它能减少返工。你给 Codex 的不是一段愿望，而是一张带边界、验证和交付标准的任务卡。",
+          "最好的 Codex 使用方式，不是让它自由发挥，而是把它放进稳定工程流程里：先计划、再修改、再验证、再 review。这样它会更像靠谱的协作者，而不是随机生成代码的工具。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-agent-skills-reusable-workflow-templates",
+    "sourceUrl": "https://developers.openai.com/codex/skills",
+    "translationMode": "guidedTranslation",
+    "title": "Codex Agent Skills：把高频 Prompt 封装成可靠工作流",
+    "originalTitle": "Agent Skills",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Agent Skills 官方文档整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/skills。",
+    "sections": [
+      {
+        "heading": "为什么 Codex 也需要 Skills",
+        "paragraphs": [
+          "当你已经积累了很多好 Prompt，下一步不是继续复制粘贴，而是把它们沉淀成可复用 Skill。Codex Agent Skills 的思路就是：把一套稳定工作流写进 `SKILL.md`，让 Codex 在合适任务里自动或按名称调用。",
+          "这非常适合高频任务：页面走查、内容导入、真实网页案例整理、本地 review、交付验证、PR 摘要。它们每次都差不多，但如果每次手写 Prompt，很容易漏掉边界、验证或禁止修改范围。",
+          "你可以把 Skill 理解成“给 Codex 的专业操作手册”。普通 Prompt 是这次对话有效，AGENTS.md 是项目长期规则，Skill 则是某一类任务的可复用流程。"
+        ]
+      },
+      {
+        "heading": "推荐目录结构",
+        "paragraphs": [
+          "项目级 Skill 适合放在仓库里，让团队一起复用。对内容站、案例库、工具站来说，建议把页面走查、内容写入、验证交付这几类任务都 Skill 化。",
+          "下面是一个适合前端内容项目的目录结构。你可以直接复制目录名，也可以按自己的项目改。"
+        ],
+        "code": {
+          "label": "Codex Skills 目录结构",
+          "content": `.agents/
+  skills/
+    webpage-case-importer/
+      SKILL.md
+    ui-polish-review/
+      SKILL.md
+    verify-delivery/
+      SKILL.md
+    local-code-review/
+      SKILL.md`
+        }
+      },
+      {
+        "heading": "Skill 1：webpage-case-importer，导入真实网页案例",
+        "paragraphs": [
+          "这个 Skill 适合 UIcoding.ai 这种案例和学习站：从真实网页、截图、官方文档或外部文章里整理学习资料，再写入站内详情页。",
+          "它会要求 Codex 保留来源、避免全文搬运、生成中文解读，并且给出可复制 Prompt。"
+        ],
+        "code": {
+          "label": "webpage-case-importer/SKILL.md",
+          "content": `---
+name: webpage-case-importer
+description: Use this skill when the user asks Codex to turn a real webpage, article, official doc, or prompt library into a structured learning detail page.
+---
+
+# Webpage Case Importer
+
+Use this skill to create a learning page from a real external source.
+
+## Source Rules
+
+- Prefer official docs, open source repositories, or clearly attributed public articles.
+- Always preserve the original source URL.
+- Do not copy a full copyrighted article verbatim.
+- Summarize and explain in Chinese.
+- Keep original structure only when the user explicitly asks for translation and rights allow it.
+- If the source includes useful prompts, convert them into complete copyable prompt blocks.
+
+## Workflow
+
+1. Read the source page or repository.
+2. Identify the core learning value.
+3. Extract real use cases, prompt examples, workflows, screenshots, or code templates.
+4. Rewrite the material as a Chinese learning page.
+5. Include source URL, source type, author, and collection date.
+6. Create a route-friendly slug.
+7. Add metadata to the learning list.
+8. Add detail content with sections and copyable code blocks.
+9. Run the project build.
+10. Summarize changed files and verification results.
+
+## Content Shape
+
+The learning page should include:
+
+- Why this source is worth learning
+- Who should read it
+- Original source link
+- Key ideas explained in Chinese
+- Complete copyable prompt or template blocks
+- How to use the prompts in a real project
+- Risks, boundaries, and verification advice
+
+## Constraints
+
+- Keep changes limited to learning data, content data, and required static assets.
+- Do not modify layout, routing, analytics, payment, auth, database, or deployment config unless explicitly requested.
+- If the source has images and the user asks to preserve them, save images locally when allowed and cite the source.
+- Do not invent claims that are not supported by the source.
+
+## Final Response
+
+Summarize in Chinese:
+
+1. New learning page URL.
+2. Source URL.
+3. What content was added.
+4. Which files changed.
+5. Verification command and result.`
+        }
+      },
+      {
+        "heading": "Skill 2：ui-polish-review，页面视觉走查",
+        "paragraphs": [
+          "这个 Skill 适合每次页面做完以后跑一遍，尤其适合学习页、案例页、工具页这种内容型界面。它会让 Codex 不只是说“好看”，而是按排版、阅读、响应式、文字溢出、图片状态逐项检查。",
+          "如果你经常遇到页面文字截断、卡片高度不稳、图片缺失、移动端拥挤，就可以沉淀这个 Skill。"
+        ],
+        "code": {
+          "label": "ui-polish-review/SKILL.md",
+          "content": `---
+name: ui-polish-review
+description: Use this skill when the user asks Codex to review or polish a frontend page for layout, typography, responsive behavior, and content readability.
+---
+
+# UI Polish Review
+
+Use this skill for frontend pages, cards, detail pages, content pages, dashboards, or tool interfaces.
+
+## Review Focus
+
+Check:
+
+- Visual hierarchy
+- Text readability
+- Card spacing
+- Button weight
+- Image handling
+- Code block readability
+- Long text overflow
+- Mobile layout
+- Empty states
+- Hover and focus states
+- Consistency with existing design patterns
+
+## Workflow
+
+1. Identify the target page and route.
+2. Read the page component, related card/detail components, and relevant CSS.
+3. Do not start by changing code.
+4. First list the 3 most important UI problems.
+5. Explain why each problem hurts usability or visual quality.
+6. Propose the smallest safe fix for each.
+7. If the user confirms, implement only those fixes.
+8. Run the build.
+9. Provide browser/manual inspection steps.
+
+## Design Rules
+
+- Do not add decorative gradients, glow effects, or heavy shadows.
+- Do not nest cards inside cards.
+- Do not make labels more prominent than titles.
+- Do not let text overlap, truncate half lines, or overflow buttons.
+- Prefer existing CSS variables and component patterns.
+- Keep content pages editorial, readable, and calm.
+
+## Output Format
+
+请用中文输出：
+
+1. 页面问题
+- 最多列 3 个最重要问题。
+
+2. 修改方案
+- 每个问题对应一个最小修复方式。
+
+3. 修改文件
+- 列出涉及文件。
+
+4. 验证
+- 运行了哪些命令；
+- 需要打开哪些页面检查；
+- 桌面端和移动端分别看什么。
+
+## Constraints
+
+- Do not redesign the entire site.
+- Do not modify data unless the issue is data-specific.
+- Do not introduce new UI libraries.
+- Do not touch auth, payment, database, deployment, or environment variables.`
+        }
+      },
+      {
+        "heading": "Skill 3：verify-delivery，交付前验证",
+        "paragraphs": [
+          "这个 Skill 适合任何改动完成后运行。它把“我改完了”变成“我验证过了”，能显著减少构建失败、页面溢出、来源缺失和无关改动。",
+          "它尤其适合当前这种不断写入学习资料的工作流：新增内容后必须检查 slug、来源、详情页、代码块和 build。"
+        ],
+        "code": {
+          "label": "verify-delivery/SKILL.md",
+          "content": `---
+name: verify-delivery
+description: Use this skill after Codex has implemented a change and needs to verify build health, affected pages, source links, and delivery quality.
+---
+
+# Verify Delivery
+
+Use this skill after implementation and before final response.
+
+## Workflow
+
+1. Inspect git status.
+2. Identify files changed by the current task.
+3. Check whether the change matches the user's latest request.
+4. Run the smallest meaningful verification command.
+5. For frontend/content changes, identify affected routes.
+6. Check source links, images, code blocks, and long text.
+7. Report unverified items honestly.
+
+## Verification Matrix
+
+For learning/content pages:
+
+- Metadata exists in the learning list.
+- Detail content exists for the same id.
+- href matches the detail route.
+- Source URL is preserved.
+- Copyable prompt blocks are complete.
+- Build passes.
+- No unrelated pages were removed.
+
+For UI changes:
+
+- Build passes.
+- Desktop layout is readable.
+- Mobile layout is readable.
+- Text does not overlap or show half lines.
+- Images have fallback behavior.
+
+For logic changes:
+
+- Relevant tests run.
+- Edge cases are considered.
+- Error handling is checked.
+
+## Output Format
+
+请用中文输出：
+
+1. 验证结果
+- 已运行命令；
+- 命令结果；
+- 如果有 warning，说明是否影响交付。
+
+2. 影响范围
+- 哪些页面或文件受影响；
+- 是否有无关改动。
+
+3. 手动检查建议
+- 用户应该打开哪些 URL；
+- 重点检查什么。
+
+4. 风险
+- 未验证项；
+- 可能影响其它功能的点。
+
+5. 结论
+- 可以交付 / 需要继续修复 / 需要用户确认。
+
+## Rules
+
+- Never claim a command passed unless it actually ran.
+- Do not hide build warnings.
+- Do not run destructive git commands.
+- Do not stage or commit unless explicitly requested.`
+        }
+      },
+      {
+        "heading": "Skill 4：local-code-review，本地提交前审查",
+        "paragraphs": [
+          "这个 Skill 适合准备提交前运行，专门检查 diff 是否干净、有没有无关改动、有没有遗漏验证。和 verify-delivery 不同，它更偏 review 视角。",
+          "如果你经常让 Codex 连续加多篇内容或做多轮 UI 修改，这个 Skill 可以帮你在最后收口。"
+        ],
+        "code": {
+          "label": "local-code-review/SKILL.md",
+          "content": `---
+name: local-code-review
+description: Use this skill when the user asks Codex to review local changes before commit, PR, deployment, or handoff.
+---
+
+# Local Code Review
+
+Use this skill to review current local changes.
+
+## Review Priorities
+
+Look for:
+
+- Bugs
+- Behavioral regressions
+- Missing tests
+- Missing verification
+- Unrelated changes
+- Accidental deletion
+- Broken routes or ids
+- Source attribution problems
+- UI overflow or layout risks
+- High-risk module changes
+
+## Workflow
+
+1. Inspect git status.
+2. Inspect the diff.
+3. Identify changed files by category.
+4. Check whether changes match the user request.
+5. Check for suspicious unrelated edits.
+6. Check whether tests/build were run.
+7. Review content routes, ids, images, and source URLs when relevant.
+8. Produce findings first, ordered by severity.
+
+## Output Format
+
+请用中文输出：
+
+1. Findings
+- 如果发现问题，按严重程度排序；
+- 每条包含文件、问题、影响、建议修复。
+
+2. Open Questions
+- 有哪些需要用户确认的内容、来源、版权、图片或验收标准。
+
+3. Verification Gap
+- 哪些验证已运行；
+- 哪些验证还没运行；
+- 是否需要浏览器检查。
+
+4. Change Summary
+- 简短总结本次改动。
+
+If there are no findings, say:
+未发现阻塞问题。
+
+## Rules
+
+- Do not modify files unless the user asks you to fix findings.
+- Do not stage, commit, or push.
+- Do not bury findings under a long summary.
+- Be specific and cite file paths when possible.`
+        }
+      },
+      {
+        "heading": "怎么开始用这一组 Skills",
+        "paragraphs": [
+          "最简单的方式是先只做一个 Skill，比如 `verify-delivery`。当你发现它确实能帮你省掉重复检查，再继续加入 `webpage-case-importer`、`ui-polish-review` 和 `local-code-review`。",
+          "不要一开始就把所有 Prompt 都做成 Skill。Skill 的价值在于复用，不在于数量。只要某个任务你会反复做三次以上，它就值得被沉淀。",
+          "对 UIcoding.ai 这种内容型网站来说，最推荐的顺序是：先做 `webpage-case-importer` 管内容导入，再做 `verify-delivery` 管交付，最后做 `ui-polish-review` 和 `local-code-review` 管质量。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-slack-team-workflow-prompts",
+    "sourceUrl": "https://developers.openai.com/codex/integrations/slack",
+    "translationMode": "guidedTranslation",
+    "title": "Slack 里调用 Codex：把团队反馈变成可执行任务 Prompt",
+    "originalTitle": "Use Codex in Slack",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Slack 官方集成文档整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/integrations/slack。",
+    "sections": [
+      {
+        "heading": "为什么 Slack 场景很适合 Codex",
+        "paragraphs": [
+          "很多真实需求不是从 issue 开始的，而是从 Slack 里的几句话开始：用户说页面坏了，设计师说按钮不对，产品说这个文案要改，工程师说这个 PR 需要再看一眼。",
+          "Codex 的 Slack 集成价值在于：你可以在频道或线程里直接 `@Codex`，让它把上下文转成一个云端编码任务。它可以利用线程里的讨论，但你最好在最后一条消息里把目标、仓库、环境、约束和完成标准说清楚。",
+          "这篇不讲安装步骤，而是整理一组可以直接复制到 Slack 线程里的 Prompt。你可以把它们当成团队协作模板：Bug 反馈、UI 反馈、PR Review、发布前检查、把讨论整理成 issue。"
+        ]
+      },
+      {
+        "heading": "Slack Prompt 的基本结构",
+        "paragraphs": [
+          "在 Slack 里给 Codex 的 Prompt 要比普通对话更明确，因为它可能从一段很长的线程里接任务。最稳的结构是：先说明仓库和环境，再总结线程结论，然后写清楚任务目标、限制范围和验收标准。",
+          "下面这个是通用模板，可以作为任何 Slack 任务的起点。"
+        ],
+        "code": {
+          "label": "Slack 通用 @Codex 模板",
+          "content": `@Codex 请根据这个线程创建一个编码任务。
+
+仓库：
+[填写仓库名称或链接]
+
+目标分支或环境：
+[填写 main、staging、preview、某个环境名，或说明请按默认环境处理]
+
+线程结论摘要：
+[用 3 到 5 条总结这个 Slack 线程真正要解决的问题，不要让 Codex 自己从几十条消息里猜重点。]
+
+本次任务目标：
+[写清楚要修复、实现或检查什么。]
+
+限制范围：
+- 只修改和当前任务直接相关的文件。
+- 优先复用现有组件、样式、数据结构和工具函数。
+- 不要重构无关代码。
+- 不要新增依赖，除非先说明必要性。
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量。
+
+验收标准：
+1. [第一条可验证结果。]
+2. [第二条可验证结果。]
+3. [第三条可验证结果。]
+
+验证要求：
+- 运行项目里合适的验证命令，例如 build、test 或 lint。
+- 如果是前端页面，说明应该检查哪个 URL 和哪些状态。
+- 最后总结改了哪些文件、如何验证、还有什么风险。`
+        }
+      },
+      {
+        "heading": "Prompt 1：把用户 Bug 反馈变成修复任务",
+        "paragraphs": [
+          "用户反馈经常很模糊：打不开、错位、按钮没反应、数据显示不对。你需要在 Slack 里帮 Codex 把反馈补成可复现任务。",
+          "这段 Prompt 适合客服、产品、运营把用户反馈直接转交给 Codex。"
+        ],
+        "code": {
+          "label": "Slack Bug 修复 Prompt",
+          "content": `@Codex 请根据这个线程修复一个 Bug。
+
+仓库：
+[填写仓库名称或链接]
+
+Bug 现象：
+[用一句话描述用户看到的问题。]
+
+复现路径：
+1. 打开 [页面 URL 或路由]。
+2. 执行 [用户操作]。
+3. 观察到 [错误表现]。
+
+期望结果：
+[说明正确表现。]
+
+线程里有用的信息：
+- 用户设备或浏览器：[如果有就填写]
+- 截图或录屏：[如果有就说明]
+- 报错信息：[如果有就粘贴]
+- 首次出现时间：[如果有就填写]
+
+请执行：
+1. 找到相关代码。
+2. 分析最可能的根因。
+3. 做最小修复。
+4. 不要改无关页面。
+5. 不要修改登录、支付、权限、数据库、部署配置或环境变量。
+6. 运行必要验证命令。
+
+完成后请回复：
+- 根因；
+- 修改文件；
+- 验证结果；
+- 需要我们在浏览器里复查的页面和状态；
+- 是否还有未验证风险。`
+        }
+      },
+      {
+        "heading": "Prompt 2：把设计反馈变成 UI 迭代任务",
+        "paragraphs": [
+          "设计反馈最容易变成“优化一下”。在 Slack 里交给 Codex 时，一定要明确页面、问题、视觉目标、禁止项和验收方式。",
+          "这段适合设计师或产品经理在评审线程里直接发给 Codex。"
+        ],
+        "code": {
+          "label": "Slack UI 迭代 Prompt",
+          "content": `@Codex 请根据这个设计反馈线程做一轮小范围 UI 迭代。
+
+仓库：
+[填写仓库名称或链接]
+
+目标页面：
+[填写页面 URL 或路由]
+
+当前问题：
+1. [例如：标题层级不清晰。]
+2. [例如：卡片内容太挤。]
+3. [例如：移动端按钮和正文距离太近。]
+
+设计目标：
+- 更清晰；
+- 更易读；
+- 更符合现有设计系统；
+- 不增加复杂装饰；
+- 不做成模板站风格。
+
+限制范围：
+- 只修改该页面相关组件和样式。
+- 不要改数据结构。
+- 不要改路由。
+- 不要新增 UI 库。
+- 不要引入重渐变、发光、重阴影或多层卡片嵌套。
+
+验收标准：
+1. 桌面端页面内容不重叠、不截断、不出现半行文字。
+2. 移动端布局可读，按钮和文字有足够间距。
+3. 页面风格和现有组件保持一致。
+
+请先检查相关页面和样式文件，再做最小修改。
+完成后请运行 build，并回复修改文件、验证结果和需要设计复查的页面。`
+        }
+      },
+      {
+        "heading": "Prompt 3：把 PR 线程变成 Codex Review",
+        "paragraphs": [
+          "团队里常见场景是：有人在 Slack 贴了一个 PR，让大家帮忙看。你可以直接让 Codex 先做一轮结构化 Review，找风险、测试缺口和无关改动。",
+          "注意：这不是让 Codex 自动合并，而是让它先给 reviewer 一份清晰检查清单。"
+        ],
+        "code": {
+          "label": "Slack PR Review Prompt",
+          "content": `@Codex 请帮我们 review 这个 PR。
+
+PR 链接：
+[粘贴 PR URL]
+
+PR 目标：
+[用一句话说明这个 PR 要解决什么问题。]
+
+请重点检查：
+1. 改动是否符合 PR 目标；
+2. 是否有明显 Bug 或回归风险；
+3. 是否有无关重构或不必要文件改动；
+4. 是否影响登录、支付、权限、数据库、部署配置或环境变量；
+5. 是否缺少测试、文档或迁移说明；
+6. 是否有 UI 溢出、移动端问题或可访问性问题；
+7. 是否需要作者补充截图、验证结果或说明。
+
+输出格式：
+- 总体结论：建议通过 / 需要修改 / 需要更多信息。
+- Findings：按严重程度列出问题，每条包含位置、原因、建议。
+- Open questions：列出需要向作者确认的问题。
+- Suggested tests：列出建议补充或重新运行的测试。
+
+请只做 review，不要直接修改代码，也不要批准或合并 PR。`
+        }
+      },
+      {
+        "heading": "Prompt 4：发布前检查",
+        "paragraphs": [
+          "发布前检查非常适合交给 Codex 做第一轮。它可以从代码角度看构建、路由、环境变量、静态资源、关键页面和风险模块。",
+          "这段适合在准备上线、发版、部署 preview 之前发到 Slack 发布线程。"
+        ],
+        "code": {
+          "label": "Slack 发布前检查 Prompt",
+          "content": `@Codex 请根据当前分支做一次发布前检查。
+
+仓库：
+[填写仓库名称或链接]
+
+目标分支或部署环境：
+[填写分支、preview 链接或部署环境]
+
+本次发布包含：
+[用 3 到 5 条总结这次发布的主要改动。]
+
+请检查：
+1. 构建是否通过；
+2. 测试或 lint 是否需要运行；
+3. 新增或修改的路由是否可访问；
+4. 关键页面是否有明显内容缺失、图片缺失、文字溢出或链接错误；
+5. 是否改动了登录、支付、权限、数据库、部署配置或环境变量；
+6. 是否有需要手动配置的环境变量或后台设置；
+7. 是否有未提交、临时或调试文件。
+
+输出格式：
+- 可以发布 / 暂不建议发布 / 需要人工确认；
+- 已通过的检查；
+- 发现的问题；
+- 需要人工验证的页面；
+- 发布前建议补做的步骤。
+
+请不要自动部署，也不要执行破坏性命令。`
+        }
+      },
+      {
+        "heading": "Prompt 5：把 Slack 讨论整理成 Issue",
+        "paragraphs": [
+          "并不是每个 Slack 讨论都应该马上让 Codex 改代码。有时更好的做法是先整理成一个清晰 issue，等产品或工程确认后再执行。",
+          "这段 Prompt 适合需求还没定、多人意见分散、线程很长的时候。"
+        ],
+        "code": {
+          "label": "Slack 讨论转 Issue Prompt",
+          "content": `@Codex 请先不要改代码。请把这个 Slack 线程整理成一个清晰的工程 issue。
+
+线程背景：
+[用一句话说明这个讨论从什么问题开始。]
+
+请整理成以下结构：
+
+## 背景
+- 这个问题为什么重要；
+- 影响哪些用户或页面；
+- 目前看到的现象是什么。
+
+## 目标
+- 这次希望解决什么；
+- 完成后用户应该看到什么变化。
+
+## 非目标
+- 本次不做什么；
+- 哪些方向需要以后单独讨论。
+
+## 验收标准
+- 至少列出 3 条可验证标准；
+- 每条都要能通过页面、测试或命令确认。
+
+## 相关信息
+- 相关页面；
+- 截图或录屏；
+- 报错；
+- 相关 PR、issue 或讨论链接。
+
+## 风险
+- 是否涉及登录、支付、权限、数据库、部署配置或环境变量；
+- 是否需要设计、产品或后端确认。
+
+## 建议执行计划
+- 拆成 3 到 5 个小步骤；
+- 标出第一步应该做什么。
+
+请输出 issue 草稿，不要修改代码。`
+        }
+      },
+      {
+        "heading": "Slack 里调用 Codex 的关键习惯",
+        "paragraphs": [
+          "第一，不要让 Codex 从一长串聊天里猜需求。你应该在 `@Codex` 那条消息里总结线程结论。第二，一定要写仓库、环境和页面路径。第三，要写清楚不要动什么，尤其是登录、支付、数据库和部署配置。",
+          "第四，Slack 里的任务也要有验收标准。否则 Codex 可能完成了代码修改，但团队不知道怎么判断结果是否正确。第五，如果需求还没定，先让 Codex 整理 issue，不要直接写代码。",
+          "把 Slack 当成任务入口，而不是需求垃圾桶。人负责把讨论收敛成清晰任务，Codex 负责按任务执行和验证，这样团队协作会稳很多。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-pixel-perfect-website-rebuild-prompts",
+    "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
+    "translationMode": "guidedTranslation",
+    "title": "Codex 高保真网站复现 Prompt：从参考网页到像素级验证",
+    "originalTitle": "Turn Figma designs into code",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Figma-to-code 官方用例整理的中文学习笔记，不是原文全文翻译。原文地址：https://developers.openai.com/codex/use-cases/figma-designs-to-code。请仅用于自己的设计稿、授权页面、学习临摹或内部原型；不要直接复制第三方品牌页面并冒充上线。",
+    "sections": [
+      {
+        "heading": "高保真复现不是一句“照着做”",
+        "paragraphs": [
+          "很多人让 Codex 复现网站时，会直接说“帮我做一个和这个网站一样的页面”。这种提示词很容易失败：Codex 不知道你要复现哪些部分，也不知道哪些可以简化，更不知道完成后怎么判断像不像。",
+          "更稳定的方式是把复现拆成五步：先拆解参考页面，再收集资产和约束，然后实现页面，接着做响应式和交互，最后用截图对比继续迭代。",
+          "OpenAI Codex 的 Figma-to-code 用例也强调了类似思路：给 Codex 足够的设计上下文和资产，实现后通过浏览器截图检查，再迭代修正。下面这组 Prompt 就是把这个流程改写成可以直接复制的中文版本。"
+        ]
+      },
+      {
+        "heading": "Prompt 1：复现前拆解参考网页",
+        "paragraphs": [
+          "不要一开始就写代码。先让 Codex 拆解参考页面：布局、字号、间距、颜色、图片、动效、响应式、交互状态。拆得越清楚，后面实现越稳定。",
+          "如果你有 URL，就粘 URL；如果只有截图，就用文字描述截图，或者把截图提供给 Codex。"
+        ],
+        "code": {
+          "label": "参考网页拆解 Prompt",
+          "content": `请先拆解这个参考网页或截图，不要写代码。
+
+参考来源：
+[粘贴网页 URL、Figma 链接，或描述截图内容。]
+
+我要复现的目标：
+[例如：复现首页首屏和下方案例区，作为我自己项目的内部原型。]
+
+使用边界：
+- 这是学习、临摹、内部原型或已授权页面复现。
+- 不要复制第三方品牌名称、Logo、商标文案用于正式上线。
+- 如果参考页包含第三方图片或版权素材，请提醒我需要替换成自有素材。
+
+请按以下维度拆解：
+
+1. 页面结构
+- 从上到下有哪些区块；
+- 每个区块承担什么信息任务；
+- 哪些区块必须复现，哪些可以简化。
+
+2. 首屏布局
+- 导航栏高度、Logo 区、导航项、按钮位置；
+- Hero 标题、副标题、CTA、媒体区域；
+- 首屏是否需要露出下一屏内容。
+
+3. 视觉系统
+- 背景颜色、文字颜色、强调色；
+- 字体气质、字号层级、行高；
+- 圆角、边框、阴影、留白和最大宽度；
+- 页面是否偏编辑感、SaaS 感、工具感或作品集感。
+
+4. 组件清单
+- 导航、按钮、卡片、标签、图片、代码块、表单、列表；
+- 哪些组件可以复用当前项目已有组件；
+- 哪些需要新写。
+
+5. 动效和交互
+- hover、focus、active 状态；
+- 滚动、吸顶、展开、切换、加载或空状态；
+- 哪些动效必须做，哪些可以先不做。
+
+6. 响应式
+- 桌面端布局；
+- 平板端布局；
+- 移动端布局；
+- 长标题、长按钮、图片和卡片如何换行。
+
+7. 实现风险
+- 哪些部分最容易不像；
+- 哪些素材需要我提供；
+- 哪些地方不能直接复制原站内容。
+
+最后请输出一份“高保真复现实施计划”，但不要开始写代码。`
+        }
+      },
+      {
+        "heading": "Prompt 2：高保真实现页面",
+        "paragraphs": [
+          "拆解完成后，再让 Codex 实现页面。这个 Prompt 会明确目标路由、允许简化项、禁止项和验收标准，避免它一边复现一边重构整个项目。",
+          "如果你已经有项目设计系统，要强调复用现有组件和样式变量；如果是空项目，要让 Codex 先建立最小可运行页面。"
+        ],
+        "code": {
+          "label": "高保真实现 Prompt",
+          "content": `请根据前面的页面拆解，在当前项目中实现一个高保真原型页面。
+
+目标路由：
+[例如 /landing-rebuild 或 /cases/reference-clone]
+
+复现范围：
+- 必须复现：[列出必须复现的区块，例如导航、Hero、案例区、CTA。]
+- 可以简化：[列出可以简化的内容，例如复杂动画、第三方图片、真实后端数据。]
+- 不要复现：[列出不应复制的品牌 Logo、商标文案、专有图片或敏感内容。]
+
+实现要求：
+1. 页面整体信息层级要接近参考网页。
+2. 首屏布局、标题节奏、按钮位置、图片比例要尽量接近。
+3. 颜色、字体层级、间距、圆角、边框和阴影要保持一致的视觉气质。
+4. 桌面端和移动端都要可用。
+5. 需要包含 hover、focus、active 等基础交互状态。
+6. 图片缺失时要有可接受的 fallback。
+7. 长标题、长段落、长按钮不能溢出或遮挡。
+
+工程限制：
+- 优先复用当前项目已有组件、样式变量和布局规则。
+- 不要引入新的 UI 组件库。
+- 不要接真实后端。
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量。
+- 不要重构无关页面。
+- 如果需要新增文件，请先说明用途。
+
+请按步骤执行：
+1. 列出准备新增或修改的文件。
+2. 实现页面结构和样式。
+3. 补充移动端样式。
+4. 运行 npm run build。
+5. 告诉我应该打开哪个 URL 检查效果。
+
+完成后请总结：
+- 还原了哪些参考页面特征；
+- 哪些地方做了合理简化；
+- 哪些地方需要我提供真实素材；
+- 有哪些风险或后续微调点。`
+        }
+      },
+      {
+        "heading": "Prompt 3：专门做响应式复现",
+        "paragraphs": [
+          "很多页面桌面端看起来像，移动端就崩了。高保真复现必须单独处理响应式：导航、Hero、图片比例、卡片列数、长文本和按钮换行都要检查。",
+          "这段 Prompt 适合页面初版完成后单独运行一轮。"
+        ],
+        "code": {
+          "label": "响应式复现 Prompt",
+          "content": `请针对刚才实现的页面做一轮响应式高保真检查和修复。
+
+目标页面：
+[填写本地页面 URL 或路由。]
+
+参考页面或截图：
+[填写参考网页 URL，或说明桌面端/移动端截图。]
+
+请检查以下视口：
+- 1440px 桌面端；
+- 1024px 平板端；
+- 768px 小平板；
+- 390px 手机端；
+- 320px 极窄手机端。
+
+重点检查：
+1. 导航是否拥挤、换行或溢出；
+2. Hero 标题是否过长、是否遮挡媒体；
+3. CTA 按钮是否完整显示；
+4. 图片比例是否合理，是否被过度裁切；
+5. 卡片列数是否自然变化；
+6. 长文本、长 URL、长英文单词是否撑破容器；
+7. 页面是否出现横向滚动；
+8. 首屏是否还能露出下一段内容；
+9. 代码块或列表是否在移动端可读。
+
+修复要求：
+- 只修改响应式相关样式。
+- 不要改变页面内容结构，除非确实需要。
+- 不要重构无关组件。
+- 不要新增依赖。
+
+完成后请运行 npm run build，并输出：
+1. 修改了哪些响应式规则；
+2. 每个视口重点检查结果；
+3. 仍然需要人工确认的地方。`
+        }
+      },
+      {
+        "heading": "Prompt 4：Playwright 截图对比验证",
+        "paragraphs": [
+          "要逼近“完美复现”，不能只靠肉眼一句“差不多”。最实用的方式是让 Codex 用浏览器打开页面，截桌面和移动端截图，和参考截图逐项比较。",
+          "如果项目里已经能用 Playwright 或浏览器工具，这段 Prompt 很适合做视觉 QA。"
+        ],
+        "code": {
+          "label": "截图对比验证 Prompt",
+          "content": `请对当前页面做一轮截图对比验证。
+
+目标页面：
+[填写本地 URL，例如 http://localhost:3000/rebuild]
+
+参考来源：
+[填写参考网页 URL，或说明参考截图文件路径。]
+
+请使用可用的浏览器或 Playwright 工具完成：
+1. 打开目标页面。
+2. 分别在 1440px、1024px、390px 视口截图。
+3. 如果可以访问参考网页，也在相同视口截图。
+4. 对比目标页面和参考页面。
+
+请按以下维度打分，满分 10 分：
+- 布局结构相似度；
+- 首屏视觉相似度；
+- 字体层级相似度；
+- 间距和留白相似度；
+- 颜色和背景相似度；
+- 图片和媒体比例相似度；
+- 移动端相似度；
+- 交互状态完整度。
+
+请输出：
+1. 当前最不像的 5 个地方；
+2. 每个问题对应的文件和 CSS/组件位置；
+3. 最小修复建议；
+4. 哪些差异是因为版权素材或品牌内容不能直接复制；
+5. 下一轮应该优先修哪 3 个问题。
+
+如果截图工具不可用，请退而求其次：用 DOM、CSS 和人工检查清单完成对比，并说明限制。`
+        }
+      },
+      {
+        "heading": "Prompt 5：按截图差异继续迭代",
+        "paragraphs": [
+          "第一版复现通常不会一次到位。更好的做法是每轮只修最影响相似度的 3 个问题，修完再截图对比。",
+          "这个 Prompt 适合你已经有截图对比结果，想让 Codex 继续微调页面。"
+        ],
+        "code": {
+          "label": "高保真迭代 Prompt",
+          "content": `请根据上一轮截图对比结果，继续做高保真迭代。
+
+上一轮最主要差异：
+1. [差异一，例如 Hero 标题字号偏小。]
+2. [差异二，例如右侧图片比例不对。]
+3. [差异三，例如卡片间距太大。]
+
+本轮只修这 3 个问题，不要扩大范围。
+
+修复要求：
+- 尽量通过 CSS 和现有组件微调解决；
+- 不要重写整个页面；
+- 不要修改无关内容；
+- 不要新增依赖；
+- 不要复制第三方品牌素材或商标文案；
+- 保持桌面端和移动端都可用。
+
+请执行：
+1. 找到相关样式或组件；
+2. 做最小修改；
+3. 运行 npm run build；
+4. 重新说明 1440px 和 390px 两个视口应该检查什么；
+5. 输出本轮相似度是否提升，以及还剩哪些差异。
+
+最后请给出下一轮建议，但不要自动继续大改。`
+        }
+      },
+      {
+        "heading": "Prompt 6：复现交付检查",
+        "paragraphs": [
+          "当你觉得页面已经很像了，最后要做一次交付检查：版权素材是否替换、移动端是否可用、链接是否正常、构建是否通过、是否误改其它页面。",
+          "这一步能避免“看起来像，但不能上线”的问题。"
+        ],
+        "code": {
+          "label": "复现交付检查 Prompt",
+          "content": `请对这个高保真复现页面做最终交付检查。
+
+目标页面：
+[填写页面 URL 或路由。]
+
+参考来源：
+[填写参考网页、Figma 或截图来源。]
+
+请检查：
+1. 是否还包含第三方品牌 Logo、商标文案或未经授权图片；
+2. 所有图片、链接、按钮、表单状态是否可用；
+3. 桌面端、平板端、移动端是否正常；
+4. 是否有文本溢出、遮挡、半行截断或横向滚动；
+5. hover、focus、active 状态是否可接受；
+6. 是否影响其它页面、共享组件或全局样式；
+7. 是否修改了登录、支付、权限、数据库、部署配置或环境变量；
+8. npm run build 是否通过。
+
+请输出：
+- 可以交付 / 需要继续修改 / 需要用户确认；
+- 必须修复的问题；
+- 建议优化的问题；
+- 需要替换的素材或文案；
+- 验证命令和结果；
+- 用户应该最后人工检查的页面和视口。`
+        }
+      },
+      {
+        "heading": "怎么用这套 Prompt 才稳定",
+        "paragraphs": [
+          "不要把 6 段 Prompt 一次性全丢给 Codex。最稳的顺序是：先拆解，再实现，再响应式，再截图对比，再小步迭代，最后交付检查。",
+          "如果你有 Figma 或截图，效果通常比只给 URL 更稳定。因为截图能提供明确视觉目标，Codex 可以用浏览器截图反复对比。URL 适合拆解结构，截图适合校准视觉。",
+          "最后再强调一次：高保真复现适合学习、内部原型、授权项目和自己的设计稿。真正上线时，要替换第三方品牌、图片和专有文案，保留参考里的结构思路，而不是照搬别人的商业页面。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codex-cinematic-web-effects-prompts",
+    "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
+    "translationMode": "guidedTranslation",
+    "title": "Codex 酷炫网页效果 Prompt：3D、滚动叙事和高级动效",
+    "originalTitle": "Build cinematic web experiences with Codex",
+    "notice": "本文为 Uicoding.ai 基于 OpenAI Codex Figma-to-code 用例、Three.js 官方文档和 GSAP ScrollTrigger 官方资料整理的中文学习笔记，不是原文全文翻译。参考来源：https://developers.openai.com/codex/use-cases/figma-designs-to-code、https://threejs.org/docs/、https://gsap.com/docs/v3/Plugins/ScrollTrigger/。",
+    "sections": [
+      {
+        "heading": "酷炫网页效果最怕一句话乱做",
+        "paragraphs": [
+          "让 Codex 做酷炫网页时，最危险的提示词就是“做得炫一点”。它可能会堆渐变、发光、粒子、动效、阴影和随机装饰，最后页面确实动起来了，但不高级、不稳定，也不一定能在手机上正常运行。",
+          "更好的方式是把酷炫效果拆成可实现模块：沉浸式 Hero、3D 背景、滚动叙事、粒子动效、微交互、性能降级和浏览器验证。每个模块都要写清楚视觉目标、技术约束、响应式策略和验收标准。",
+          "下面这组 Prompt 适合给 Codex、Claude Code 或 Cursor Agent 使用。你可以复制完整代码块，把项目名称、目标页面、视觉参考和技术栈替换掉。"
+        ]
+      },
+      {
+        "heading": "Prompt 1：酷炫网页效果总控 Prompt",
+        "paragraphs": [
+          "如果你只想复制一段完整 Prompt，就用这一段。它适合从零做一个带视觉冲击力的页面，也适合重做一个普通首页。",
+          "它会约束 Codex：先做计划，不要堆装饰；优先保证可读、可用和性能；最后必须验证。"
+        ],
+        "code": {
+          "label": "酷炫网页效果总控 Prompt",
+          "content": `请帮我为当前项目实现一个高级、酷炫但可用的网页效果页面。先制定计划，不要马上写代码。
+
+目标页面：
+[填写路由，例如 /showcase、/landing、/product-demo]
+
+页面主题：
+[填写产品或主题，例如 AI Coding 案例库、3D 产品展示、创意工具官网]
+
+视觉方向：
+- 沉浸式；
+- 有空间感；
+- 有高级动效；
+- 第一屏有强视觉记忆点；
+- 不要像普通 SaaS 模板；
+- 不要堆廉价渐变、发光边框和随机装饰。
+
+期望效果：
+1. 首屏有一个沉浸式 Hero。
+2. 背景可以使用 3D、粒子、网格、光线、玻璃感或动态几何。
+3. 滚动时内容有节奏地出现。
+4. 鼠标或触摸操作有轻微反馈。
+5. 移动端保持简洁可读，不强行动画堆满屏。
+
+技术约束：
+- 优先使用当前项目已有技术栈。
+- 如果项目已经有 Three.js、GSAP、Framer Motion 或 Motion，可以复用。
+- 如果需要新增依赖，先说明为什么必须新增。
+- 不要引入沉重、难维护的动画框架。
+- 不要修改登录、支付、权限、数据库、部署配置或环境变量。
+- 不要影响其它页面。
+
+性能约束：
+- 动画不能阻塞阅读。
+- 移动端可以降级或减少粒子数量。
+- 避免无限制 requestAnimationFrame。
+- Canvas 或 WebGL 必须有非 WebGL fallback。
+- 文字不能被动画遮挡。
+
+请先输出：
+1. 页面结构；
+2. 动效设计；
+3. 技术实现方案；
+4. 需要新增或修改的文件；
+5. 性能和移动端降级策略；
+6. 验证方式。
+
+等我确认后再实现。`
+        }
+      },
+      {
+        "heading": "Prompt 2：沉浸式 Hero + 3D 背景",
+        "paragraphs": [
+          "酷炫网页最重要的是首屏。首屏要有记忆点，但不能牺牲标题可读性。这个 Prompt 适合做 Three.js 背景、粒子场、动态网格、漂浮几何或光线效果。",
+          "如果项目没有 Three.js，可以让 Codex 先用 CSS + Canvas 做轻量版。"
+        ],
+        "code": {
+          "label": "沉浸式 Hero Prompt",
+          "content": `请为目标页面实现一个沉浸式 Hero 区域，包含高级动态背景，但不要影响文字可读性。
+
+目标页面：
+[填写页面路由]
+
+Hero 内容：
+- H1：[填写主标题]
+- 副标题：[填写副标题]
+- 主按钮：[填写按钮文案]
+- 次按钮：[填写按钮文案，可选]
+
+视觉效果：
+- 背景有空间纵深感；
+- 可以使用 Three.js、Canvas 或纯 CSS 实现动态几何、粒子、网格、光线或波纹；
+- 视觉要克制高级，不要廉价霓虹和过度发光；
+- 前景文字必须始终清晰；
+- 首屏底部要隐约露出下一段内容。
+
+交互效果：
+- 鼠标移动时背景有轻微视差；
+- 按钮 hover 有轻微位移或光泽；
+- 动效不能抢走阅读注意力；
+- 用户开启 reduced motion 时应减少动画。
+
+实现要求：
+1. 创建独立的 Hero 组件，不要把复杂动画直接塞进页面文件。
+2. 动画代码要和内容结构分离。
+3. 如果使用 Canvas 或 WebGL，要处理容器 resize。
+4. 移动端减少动画复杂度。
+5. 提供 fallback 背景，避免 WebGL 不可用时空白。
+
+验证要求：
+- 运行 npm run build；
+- 检查桌面端 1440px；
+- 检查移动端 390px；
+- 检查文字是否被背景遮挡；
+- 检查页面是否出现横向滚动。
+
+请先列出实现计划和文件清单，等我确认后再写代码。`
+        }
+      },
+      {
+        "heading": "Prompt 3：滚动叙事和视差转场",
+        "paragraphs": [
+          "很多高级网站的酷，不是元素一直乱动，而是滚动时有节奏：标题出现、图片推进、卡片错位、背景层慢慢切换。",
+          "这个 Prompt 适合用 GSAP ScrollTrigger、IntersectionObserver 或轻量 CSS 动画实现滚动叙事。"
+        ],
+        "code": {
+          "label": "滚动叙事 Prompt",
+          "content": `请为当前页面加入高级滚动叙事效果，让内容随着滚动有节奏地出现。
+
+目标页面：
+[填写页面路由]
+
+页面区块：
+1. Hero；
+2. 核心卖点；
+3. 案例展示；
+4. 工作流步骤；
+5. CTA。
+
+动效目标：
+- 滚动时每个区块自然进入视野；
+- 标题、正文、图片或卡片有轻微错层；
+- 背景可以有慢速视差；
+- 不要让内容闪烁、跳动或遮挡；
+- 动效节奏要服务阅读，而不是炫技。
+
+技术选择：
+- 如果项目已有 GSAP，可以使用 ScrollTrigger。
+- 如果没有 GSAP，优先使用 IntersectionObserver + CSS transition。
+- 不要为了小动效新增大型依赖，除非先说明必要性。
+
+实现要求：
+1. 动效逻辑封装到独立 hook 或组件中。
+2. 不要把动画状态和业务数据混在一起。
+3. reduced motion 用户应直接显示内容或使用极弱动画。
+4. 移动端减少位移距离和动画数量。
+5. 所有内容在 JS 失败时仍然可见。
+
+验收标准：
+- 滚动过程没有明显卡顿；
+- 内容不会因为动画导致不可读；
+- 移动端没有横向滚动；
+- build 通过；
+- 页面结构仍然可被搜索引擎读取。
+
+请先输出动效方案和风险，再实现。`
+        }
+      },
+      {
+        "heading": "Prompt 4：粒子、流体和动态网格效果",
+        "paragraphs": [
+          "粒子和流体效果很容易变土。关键是少而准：数量可控、色彩克制、运动慢、不要挡住内容、移动端降级。",
+          "这段适合做背景氛围、产品展示区或创意工具的视觉记忆点。"
+        ],
+        "code": {
+          "label": "粒子/动态网格 Prompt",
+          "content": `请为页面实现一个克制但高级的动态背景效果，可以是粒子场、动态网格、柔和光带或流体感背景。
+
+目标区域：
+[填写 Hero、某个 section，或整个页面背景]
+
+视觉要求：
+- 高级、克制、有空间感；
+- 颜色不要超过 3 个主色；
+- 不要使用廉价霓虹、重发光、过度模糊；
+- 背景要衬托内容，不要抢内容；
+- 动效要慢、稳、流畅。
+
+技术要求：
+- 优先使用 CSS 或 Canvas；
+- 如果使用 Three.js，要封装成独立组件；
+- 粒子数量需要根据设备能力或视口尺寸调整；
+- 移动端降低粒子数量或静态化；
+- 支持 prefers-reduced-motion；
+- 必须有纯 CSS fallback。
+
+交互要求：
+- 鼠标移动可以轻微影响背景；
+- 不要让交互产生眩晕感；
+- 不要阻塞页面滚动；
+- 不要影响按钮点击或文本选择。
+
+实现限制：
+- 不要引入新的依赖，除非先说明必要性；
+- 不要修改其它页面；
+- 不要把动画写成难维护的大段匿名代码；
+- 不要导致首屏加载明显变慢。
+
+完成后请验证：
+1. build 是否通过；
+2. 1440px 桌面端是否流畅；
+3. 390px 移动端是否降级合理；
+4. 文字是否清晰；
+5. 背景是否会遮挡交互元素。
+
+最后请说明：动效如何实现、如何降级、还有哪些性能风险。`
+        }
+      },
+      {
+        "heading": "Prompt 5：高级微交互和按钮动效",
+        "paragraphs": [
+          "酷炫网页不一定都靠大背景。有时按钮、卡片、导航、输入框这些小交互更能让页面有质感。",
+          "这个 Prompt 适合在页面结构已经完成后，单独加一轮微交互。"
+        ],
+        "code": {
+          "label": "微交互 Prompt",
+          "content": `请为当前页面做一轮高级微交互优化，只处理交互质感，不重做页面结构。
+
+目标页面：
+[填写页面路由]
+
+需要优化的元素：
+- 导航；
+- 主按钮和次按钮；
+- 卡片；
+- 图片或预览图；
+- 表单或输入框；
+- 代码块复制按钮。
+
+动效方向：
+- hover 时有轻微位移、阴影或边框变化；
+- active 时有明确按压反馈；
+- focus 状态清晰可见；
+- 卡片 hover 不要过度漂浮；
+- 按钮动效不要影响文字可读；
+- 复制成功状态要明确但不刺眼。
+
+限制：
+- 不要新增复杂动画库；
+- 不要加夸张发光；
+- 不要让 hover 改变布局尺寸；
+- 不要影响移动端点击；
+- 不要破坏键盘可访问性。
+
+请执行：
+1. 找出页面中最重要的交互元素；
+2. 只做最小样式和状态增强；
+3. 保持现有视觉风格；
+4. 运行 npm run build；
+5. 输出需要手动检查的交互清单。
+
+验收标准：
+- 鼠标用户能感知到交互反馈；
+- 键盘用户能看到 focus；
+- 移动端没有 hover 依赖；
+- 页面没有布局跳动。`
+        }
+      },
+      {
+        "heading": "Prompt 6：酷炫效果 QA 和性能验证",
+        "paragraphs": [
+          "高级动效做完以后，一定要单独 QA。酷炫页面最常见的问题是：手机卡、文字被挡、滚动抖、截图空白、Canvas 没 fallback、动画影响点击。",
+          "这段 Prompt 适合最后一轮检查。"
+        ],
+        "code": {
+          "label": "酷炫效果 QA Prompt",
+          "content": `请对当前酷炫网页效果做一轮 QA 和性能验证。
+
+目标页面：
+[填写页面 URL 或路由]
+
+请检查：
+
+1. 视觉完整性
+- Hero 是否非空白；
+- 背景动画是否正常；
+- 文本是否清晰可读；
+- 按钮和链接是否不被遮挡；
+- 页面是否有高级感而不是模板感。
+
+2. 响应式
+- 1440px 桌面端；
+- 1024px 平板端；
+- 390px 手机端；
+- 320px 极窄手机端；
+- 是否有横向滚动、文字截断、图片溢出。
+
+3. 动效稳定性
+- 动画是否卡顿；
+- 滚动是否抖动；
+- hover 和 focus 是否正常；
+- prefers-reduced-motion 是否有降级；
+- JS 失败时主要内容是否仍可见。
+
+4. 性能风险
+- 是否存在过多粒子；
+- 是否存在无限循环但未清理的动画；
+- 是否监听 resize、mousemove 但没有节流；
+- 是否可能导致移动端耗电或发热；
+- 是否影响首屏加载。
+
+5. 工程检查
+- npm run build 是否通过；
+- 是否新增了不必要依赖；
+- 是否改动了无关页面；
+- 是否影响登录、支付、权限、数据库、部署配置或环境变量。
+
+请输出：
+- 通过项；
+- 阻塞问题；
+- 建议优化项；
+- 需要降级的效果；
+- 下一轮最应该修的 3 个问题；
+- 是否可以交付。`
+        }
+      },
+      {
+        "heading": "怎么让 Codex 做出酷而不乱的页面",
+        "paragraphs": [
+          "第一，不要只说“酷炫”。要说清楚是哪一种酷：3D 空间感、滚动叙事、粒子氛围、视觉冲击 Hero，还是细腻微交互。",
+          "第二，不要一次要求所有效果。先做 Hero，再做滚动，再做微交互，最后做 QA。每轮只解决一个视觉目标，页面会更稳。",
+          "第三，必须写性能和降级要求。真正高级的网页不是一直动，而是在合适的地方动，并且在低性能设备上仍然可读、可点、可访问。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "claude-code-skills-reusable-prompt-workflows",
+    "sourceUrl": "https://docs.anthropic.com/en/docs/claude-code/skills",
+    "translationMode": "guidedTranslation",
+    "title": "Claude Code Skills 官方指南：把一次性 Prompt 沉淀成可复用工作流",
+    "originalTitle": "Claude Code Skills",
+    "notice": "本文为 Uicoding.ai 基于 Anthropic Claude Code Skills 官方文档整理的中文学习笔记，不是原文全文翻译。原文地址：https://docs.anthropic.com/en/docs/claude-code/skills。",
+    "sections": [
+      {
+        "heading": "为什么要把 Prompt 沉淀成 Skill",
+        "paragraphs": [
+          "一次性 Prompt 适合临时任务，但真实项目里有很多动作会反复出现：总结当前改动、修复 issue、生成 PR 摘要、做提交前检查、审查 UI 改动。如果每次都重新写一遍，不仅浪费时间，还容易漏掉验证步骤。",
+          "Claude Code Skills 的价值，就是把这些高频工作流写进一个固定的 SKILL.md 文件。以后你只需要调用对应 Skill，Claude Code 就会按同一套步骤执行。",
+          "官方文档里也强调，Skills 可以把任务说明、约束、允许工具和动态上下文组织在一起。旧的 slash commands 仍然可用，但官方更推荐把复杂工作流迁移到 Skills。"
+        ]
+      },
+      {
+        "heading": "一个 Skill 最小长什么样",
+        "paragraphs": [
+          "一个 Skill 通常就是一个文件夹，里面放一个 SKILL.md。文件开头是元数据，下面是具体工作流说明。你可以把它理解成：一份专门写给 Claude Code 的可复用操作手册。",
+          "下面这个是最小模板。复制后，把 name、description 和正文替换成你的工作流即可。"
+        ],
+        "code": {
+          "label": "最小 SKILL.md 模板",
+          "content": `---
+name: example-skill
+description: Use this skill when the user asks Claude Code to perform a reusable project workflow.
+---
+
+# Example Skill
+
+Use this skill when the user asks for:
+- A repeatable workflow
+- A task that should follow the same checklist every time
+- A task that needs project-specific rules
+
+## Workflow
+
+1. Read the relevant project files.
+2. Identify the smallest safe change.
+3. Ask clarifying questions if the task is ambiguous.
+4. Make the change.
+5. Run the required verification command.
+6. Summarize files changed, verification results, and risks.
+
+## Rules
+
+- Keep changes scoped.
+- Do not refactor unrelated code.
+- Do not modify auth, payment, database, deployment, or environment variables unless explicitly requested.
+- If verification fails, explain the failure and fix it before claiming the task is done.`
+        }
+      },
+      {
+        "heading": "保存在哪里，怎么调用",
+        "paragraphs": [
+          "如果是项目专属 Skill，建议放在当前项目的 .claude/skills/ 目录下。这样它跟项目一起走，适合团队共享。如果是个人通用 Skill，可以放在你的用户级 Claude Code 配置目录里。",
+          "调用时通常可以用 slash command 形式，例如 /summarize-changes、/fix-issue、/pr-summary。具体是否立即生效，取决于你的 Claude Code 版本和当前会话是否重新加载了 Skills。"
+        ],
+        "code": {
+          "label": "项目级 Skill 文件结构",
+          "content": `.claude/
+  skills/
+    summarize-changes/
+      SKILL.md
+    fix-issue/
+      SKILL.md
+    pr-summary/
+      SKILL.md`
+        }
+      },
+      {
+        "heading": "Skill 1：summarize-changes，自动总结当前改动",
+        "paragraphs": [
+          "这个 Skill 适合每次改完代码后使用。它不会继续改代码，只负责查看当前 diff、总结文件变化、验证状态和风险点。",
+          "你可以把它做成 /summarize-changes，在提交 Git 或发给别人 review 前运行。"
+        ],
+        "code": {
+          "label": "summarize-changes/SKILL.md",
+          "content": `---
+name: summarize-changes
+description: Use this skill when the user asks to summarize local code changes, explain the diff, or prepare a concise handoff after implementation.
+---
+
+# Summarize Changes
+
+Use this skill after code has already been modified.
+
+The goal is to explain what changed, why it changed, how it was verified, and what risks remain.
+
+## Workflow
+
+1. Inspect the current git status.
+2. Inspect the relevant diff.
+3. Identify modified, added, deleted, and renamed files.
+4. Group changes by feature area or user-facing behavior.
+5. Check whether tests, lint, build, or manual verification were run in this session.
+6. Produce a concise Chinese summary.
+
+## Output Format
+
+请用中文输出：
+
+1. 修改文件
+- 列出每个被修改、新增或删除的文件。
+
+2. 修改内容
+- 每个文件具体改了什么。
+- 这些改动解决了什么问题。
+
+3. 验证情况
+- 已运行哪些命令。
+- 每个命令是否通过。
+- 如果没有运行验证，请明确说明。
+
+4. 风险和检查项
+- 是否可能影响其它页面或模块。
+- 是否涉及登录、支付、权限、数据库、部署配置或环境变量。
+- 用户应该重点检查哪些页面、交互或边界情况。
+
+5. 一句话结论
+- 当前改动是否可以进入下一步。
+
+## Rules
+
+- Do not modify files.
+- Do not stage or commit changes.
+- Do not invent verification results.
+- If verification was not run, say so plainly.
+- Keep the summary concise but specific.`
+        }
+      },
+      {
+        "heading": "Skill 2：fix-issue，按固定流程修复 Issue",
+        "paragraphs": [
+          "这个 Skill 适合把 GitHub issue、产品反馈或用户报错变成可执行修复流程。它要求 Claude Code 先理解 issue，再找代码，再制定计划，最后最小修改和验证。",
+          "它的重点是防止 AI 一上来就改代码。复杂 issue 一定要先复现、定位、计划，再实现。"
+        ],
+        "code": {
+          "label": "fix-issue/SKILL.md",
+          "content": `---
+name: fix-issue
+description: Use this skill when the user asks Claude Code to fix a bug, resolve an issue, or implement a narrowly scoped issue from a tracker.
+---
+
+# Fix Issue
+
+Use this skill when the user provides an issue, bug report, screenshot, reproduction steps, or failing behavior.
+
+## Inputs To Collect
+
+Before editing, identify:
+- The issue title or summary
+- The observed behavior
+- The expected behavior
+- Reproduction steps
+- Relevant route, component, API, or command
+- Any logs, screenshots, or failing tests
+
+If key information is missing and cannot be inferred from the repo, ask a focused question before editing.
+
+## Workflow
+
+1. Read project rules such as AGENTS.md, CLAUDE.md, README, or package.json.
+2. Locate files most likely related to the issue.
+3. Explain the suspected root cause.
+4. Propose the smallest safe fix.
+5. Identify files that should not be touched.
+6. Implement only the necessary change.
+7. Run the most relevant verification command.
+8. If verification fails, debug and fix before finishing.
+9. Summarize the fix, verification, and remaining risk.
+
+## Constraints
+
+- Do not refactor unrelated code.
+- Do not introduce new dependencies unless clearly necessary.
+- Do not change public routes, data schemas, auth, payment, permissions, database, deployment, or environment variables unless the issue explicitly requires it.
+- If the fix requires a larger architectural change, stop and explain the tradeoff before continuing.
+
+## Output Format
+
+请用中文输出：
+
+1. 问题复述
+- 用一句话说明这个 issue 是什么。
+
+2. 根因判断
+- 说明你认为问题出在哪里。
+
+3. 修改内容
+- 列出修改文件和每个文件的变化。
+
+4. 验证结果
+- 列出运行的命令和结果。
+- 如果是 UI 问题，说明应该打开哪个页面检查什么。
+
+5. 风险
+- 是否可能影响其它模块。
+- 是否有未覆盖的边界情况。
+
+6. 最终结论
+- issue 是否已经解决。
+
+## Final Check
+
+Before final response, verify:
+- The issue behavior is addressed.
+- No unrelated files were changed.
+- Verification results are accurate.
+- Any unverified assumptions are stated clearly.`
+        }
+      },
+      {
+        "heading": "Skill 3：pr-summary，生成 PR 摘要和 Review 说明",
+        "paragraphs": [
+          "这个 Skill 适合准备提交 PR 时使用。它会把当前改动整理成 reviewer 容易读的结构：背景、改动、验证、风险、截图或检查方式。",
+          "如果你的团队经常要求 PR 描述清楚，这个模板会非常省时间。"
+        ],
+        "code": {
+          "label": "pr-summary/SKILL.md",
+          "content": `---
+name: pr-summary
+description: Use this skill when the user asks to draft a pull request summary, release note, or review handoff from local changes.
+---
+
+# PR Summary
+
+Use this skill when code changes are ready to be described for review.
+
+## Workflow
+
+1. Inspect git status and the current diff.
+2. Identify the user-facing goal of the change.
+3. Group changed files by area.
+4. Identify verification commands that were run.
+5. Identify screenshots, pages, states, or manual checks the reviewer should inspect.
+6. Note any risks, assumptions, or follow-up items.
+7. Draft a clear PR summary in Chinese.
+
+## PR Description Template
+
+请生成以下结构：
+
+## 背景
+
+说明这个 PR 要解决什么问题，以及为什么需要这次改动。
+
+## 改动内容
+
+- 列出主要改动点。
+- 按页面、组件、数据、样式、测试或文档分组。
+- 不要只罗列文件名，要说明行为变化。
+
+## 验证
+
+- 列出已运行命令，例如 npm run build、npm run test、npm run lint。
+- 如果有手动检查，说明检查了哪个页面、哪个状态、哪个交互。
+- 如果没有运行某些验证，说明原因。
+
+## 风险
+
+- 说明可能影响的页面或模块。
+- 特别说明是否涉及登录、支付、权限、数据库、部署配置或环境变量。
+- 列出 reviewer 应重点关注的地方。
+
+## 截图或录屏
+
+- 如果是 UI 改动，提醒需要附截图。
+- 如果当前没有截图，写“待补充”。
+
+## Review Checklist
+
+- [ ] 主要页面表现符合预期
+- [ ] 移动端布局可用
+- [ ] 无明显无关改动
+- [ ] 构建或测试通过
+- [ ] 风险点已说明
+
+## Rules
+
+- Do not stage or commit files.
+- Do not invent tests that were not run.
+- If the diff is too large, summarize by feature area and call out review hotspots.
+- Keep the PR description practical for human reviewers.`
+        }
+      },
+      {
+        "heading": "Skill 4：verify-change，改完后强制验证",
+        "paragraphs": [
+          "很多 AI Coding 的问题不是不会写代码，而是写完后没有验证。你可以把验证流程单独做成 Skill，每次改完都跑一遍。",
+          "这个 Skill 适合前端项目、静态内容站、工具页、学习页、案例页等场景。"
+        ],
+        "code": {
+          "label": "verify-change/SKILL.md",
+          "content": `---
+name: verify-change
+description: Use this skill after implementation to verify build health, user-facing behavior, and risk before handing work back to the user.
+---
+
+# Verify Change
+
+Use this skill after files have been modified.
+
+## Workflow
+
+1. Inspect the changed files.
+2. Decide the smallest meaningful verification set.
+3. Run available automated checks when appropriate.
+4. For frontend changes, identify pages and states to inspect manually.
+5. Check whether the change could affect unrelated routes, shared components, or data rendering.
+6. Report verification results honestly.
+
+## Recommended Verification Choices
+
+For JavaScript or React projects:
+- Run npm run build when available.
+- Run npm run test if tests exist and the change touches tested logic.
+- Run npm run lint if the project uses linting.
+
+For content-only changes:
+- Run build.
+- Check that new route, title, source link, and code blocks render correctly.
+
+For UI changes:
+- Check desktop and mobile layout.
+- Check text overflow, image rendering, hover or active states, and empty states.
+
+## Output Format
+
+请用中文输出：
+
+1. 验证命令
+- 已运行哪些命令；
+- 每个命令是否通过；
+- 如果没有运行某个命令，说明原因。
+
+2. 页面检查
+- 应打开哪些 URL；
+- 每个页面重点看什么。
+
+3. 风险检查
+- 是否影响共享组件；
+- 是否影响其它页面；
+- 是否涉及高风险模块。
+
+4. 结论
+- 可以交付；
+- 需要继续修复；
+- 或需要用户手动验证。
+
+## Rules
+
+- Do not claim verification passed unless it actually ran.
+- Do not ignore failed commands.
+- If a dev server or browser check is unavailable, say so and give manual verification steps.`
+        }
+      },
+      {
+        "heading": "什么时候用 Skill，什么时候只用 Prompt",
+        "paragraphs": [
+          "如果某个任务只会做一次，用普通 Prompt 就够了。比如临时解释一段代码、一次性改一段文案、问一个概念问题，没有必要做成 Skill。",
+          "如果某个任务会反复出现，而且你希望每次都按同样流程执行，就应该做成 Skill。比如 summarize-changes、fix-issue、pr-summary、verify-change、ui-review、release-note 这类任务。",
+          "判断标准很简单：只要你发现自己第三次复制同一段提示词，就应该考虑把它沉淀成 Skill。这样 Claude Code 不再依赖你每次把规则说完整，而是自动按项目约定工作。"
+        ]
+      }
+    ]
+  },
+  {
     "id": "codex-cli-basic-operations",
     "sourceUrl": "https://developers.openai.com/codex/cli/features",
     "translationMode": "guidedTranslation",
@@ -1929,6 +4923,478 @@ export const learningContent = [
       {
         "heading": "把反馈也当作上下文",
         "content": "截图、报错、构建失败信息、用户反馈，都是上下文。比如你告诉 AI“卡片太挤、标签太重、图片有黑边”，它下一轮就能更准确地修改。不要只说“不好看”，要描述具体问题。"
+      }
+    ]
+  },
+  {
+    "id": "copyable-prompts-for-stunning-ai-websites",
+    "sourceUrl": "https://developers.openai.com/showcase",
+    "translationMode": "guidedTranslation",
+    "title": "5 个带可复制 Prompt 的酷炫网页案例：照着还原首页",
+    "originalTitle": "Copyable prompts for stunning AI websites",
+    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附官网链接、官方 Prompt 页面，以及适合直接拿去还原网页的中文提示词。",
+    "sections": [
+      {
+        "heading": "先怎么用这篇文章",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这篇不是单纯列链接，而是把 5 个明确带有官方 Prompt 页面、并且首页视觉足够惊艳的 AI 生成网站整理成一套可练习素材。建议先选一个案例，只还原首页第一屏和主视觉；做出气质之后，再补动效、滚动和响应式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "每个案例下面我都放了两个可直接复制的 Prompt。第一个负责把结构和画面气质先搭准，第二个负责补视觉、交互和收尾。你可以直接丢给 Codex，也可以按自己的技术栈稍作改写。"
+          },
+          {
+            "type": "code",
+            "label": "通用使用方法",
+            "content": "使用方式建议：\n1. 先打开案例官网，观察首屏结构、字体、主视觉、按钮位置和滚动节奏。\n2. 先复制 Prompt 1，让 Codex 只把首页骨架和视觉方向做出来。\n3. 构建成功后，再复制 Prompt 2，补动画、质感和响应式。\n4. 每一轮都要求它运行 npm run build，并在成功后停止。\n5. 如果页面开始变成普通 SaaS 模板，就提醒它：不要卡片堆叠、不要默认功能区块、不要模板化卖点布局。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 1：Forged in Silence",
+        "image": "/case-screenshots/forged-in-silence-home.png",
+        "imageAlt": "Forged in Silence 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这是一个非常适合练 3D 品牌首页气质的案例。它不是传统电商站那种信息密集的首屏，而是用极少文案、强主视觉、滚动叙事和沉浸式光影，先把品牌氛围打进用户脑子里。"
+          },
+          {
+            "type": "paragraph",
+            "content": "值得重点观察的地方有三个：黑金配色怎么保持高级而不俗、主视觉 3D 物体怎么和滚动叙事绑定、以及首页如何在“内容很少”的情况下依然成立。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://katana-3d-5mdo.vercel.app"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/forged-in-silence"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先搭首屏骨架",
+            "content": "请创建一个 React + Vite 单页网页，还原一个高质感武士刀品牌首页，视觉气质参考 Forged in Silence。\n\n目标：\n- 第一屏就建立强烈的品牌压迫感\n- 页面像奢侈品视觉官网，不像普通 SaaS 模板\n- 以黑色、冷白、金属灰和少量暗金为主\n\n页面要求：\n1. 顶部导航极简，左侧品牌名，右侧少量菜单和一个克制的 CTA。\n2. 首屏中央使用超大标题，文案极少，允许上下分层排版。\n3. 背景必须很深，保留微弱纹理或空气感，不要彩色渐变。\n4. 首屏中心放一个悬浮的主视觉对象占位，后续可替换为 3D 武士刀或高质感金属物件。\n5. 页面整体保留大量留白，不要做功能卡片宫格。\n6. 向下滚动前，首屏必须完整、克制、沉浸。\n\n技术要求：\n- React\n- Vite\n- 普通 CSS\n- 先不要引入 UI 组件库\n- 代码结构清晰，样式集中\n\n完成后运行 npm run build，构建成功后停止。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补 3D 气质和滚动叙事",
+            "content": "继续完善当前页面，把它推进到接近 Forged in Silence 的沉浸式品牌首页效果。\n\n本轮目标：\n- 增加 scroll-driven 叙事感\n- 强化主视觉物件的存在感\n- 让页面更像 cinematic landing page\n\n请实现：\n1. 使用 Three.js 或 React Three Fiber 做一个高质感金属主视觉，可先用程序化几何体模拟，不依赖外部 3D 模型也可以。\n2. 首屏到第二屏之间建立滚动联动：主视觉有轻微旋转、位移、镜头推进或光影变化。\n3. 补充 3 到 5 个章节，每个章节只有少量文字，让内容像视觉旁白，不要写成卖点卡片。\n4. 加入更克制的细节效果，例如微粒、暗角、金属反光、极轻的扫描质感，但不要过度炫技。\n5. 移动端保持首屏张力，标题允许换行，但不要破坏中心构图。\n6. 不要引入夸张 hover，不要把后续内容做成普通电商组件堆叠。\n\n最后运行 npm run build；如果构建成功，就停止并总结修改了哪些文件。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 2：Watchmaker Landing Page",
+        "image": "/case-screenshots/watchmaker-home.png",
+        "imageAlt": "Watchmaker Landing Page 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个案例适合练“高奢品牌官网”的克制感。它最迷人的地方不是特效很多，而是版式、留白、数字章节、精密部件展示和高端商品叙事做得非常稳。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你经常把高端官网做成重营销模板，这个案例很值得反复拆。重点不只是手表图本身，而是标题、序号、图文错位、视差和章节节奏怎么一起工作。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://openai-landing-page-examples.vercel.app/haute-horlogerie"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/watchmaker-landing-page"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做高奢首屏和章节结构",
+            "content": "请创建一个 React + Vite 品牌官网首页，主题是一家高端制表品牌，视觉方向参考 Watchmaker Landing Page。\n\n要求：\n- 首屏气质必须高端、克制、精密\n- 不要做成普通产品营销页\n- 排版以大留白、细字体、章节数字和高质量产品图为核心\n\n页面结构：\n1. 极简导航，品牌名左侧，菜单极少。\n2. Hero 区域使用非常大的标题和少量说明文案。\n3. 首屏右侧或中央放精密腕表主视觉，图像要有收藏品质感。\n4. 下方分成多个章节，每个章节像一本奢侈品画册中的段落。\n5. 使用编号章节标题，例如 01、02、03，但样式要克制。\n6. 全站避免默认卡片列表、避免功能卖点图标区。\n\n风格要求：\n- 象牙白、暖灰、深黑、金属银、少量金色点缀\n- 字体优雅，有呼吸感\n- 边框和阴影很轻\n\n完成后运行 npm run build，成功后停止。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补视差、图文错位和精密质感",
+            "content": "继续完善这个高端制表品牌首页，让视觉更接近 Watchmaker Landing Page。\n\n请重点增强：\n1. 主视觉腕表或零件图的分层感，可以做 exploded view、部件悬浮或轻微 parallax。\n2. 文本章节与图片之间使用错位布局，让页面更像编辑型叙事，不要整齐排成模板区块。\n3. 加入细微滚动过渡：文字淡入、部件慢速移动、章节切换时的节奏变化。\n4. 调整标题和段落的字重、字号、行距，让画面更像 luxury editorial site。\n5. CTA 数量保持极少，避免强销售感。\n6. 移动端优先保证构图稳定和阅读节奏，不要为了响应式把页面压成普通竖排模块。\n\n不要新增复杂功能，不要引入沉重组件库。最后运行 npm run build。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 3：Arcade Bar Landing Page",
+        "image": "/case-screenshots/arcade-bar-home.png",
+        "imageAlt": "Arcade Bar Landing Page 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果你想练一个风格非常鲜明、又不至于失控的娱乐型首页，这个案例很好用。它把霓虹、暗色背景、活动感和游戏厅气氛结合得很直接，但整体信息还是清楚的。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它特别适合用来练“强风格首页怎么避免做脏”。因为这种题材一不小心就会变成俗艳夜店风，而这个案例更像一个经过设计控制的品牌活动页。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://openai-landing-page-examples.vercel.app/tilt-signal-arcade-bar/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/arcade-landing-page"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做霓虹娱乐场所首页",
+            "content": "请创建一个 React + Vite 单页 landing page，主题是一家霓虹风格的街机与弹珠酒吧，视觉参考 Arcade Bar Landing Page。\n\n目标：\n- 一眼看出是夜间娱乐场所\n- 页面有很强的品牌气氛，但结构依然清楚\n- 不要做成普通餐厅官网模板\n\n页面要求：\n1. Hero 使用大标题、霓虹风主视觉和一个主要 CTA。\n2. 背景以深色为主，加入紫红、蓝青、橙色等霓虹点缀，但要控制层次。\n3. 首页往下包含活动、饮品、小食、游戏项目、到店信息等模块。\n4. 模块可以有海报感，但不要全部做成同尺寸卡片宫格。\n5. 标题字体和装饰细节需要有 arcade vibe。\n6. 页面第一屏必须足够抓人，像一家真实会想去的潮流场地。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 不做后端\n- 构图优先，不要先堆功能组件\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补霓虹细节和版式控制",
+            "content": "继续打磨这个街机酒吧首页，让它更接近 Arcade Bar Landing Page 的完成度。\n\n请增强：\n1. 霓虹招牌感的排版和边缘发光，但发光范围要可控，不要糊成一片。\n2. 不同区块之间建立节奏变化，例如海报区、菜单区、活动区、游戏区可以有不同构图。\n3. 为 CTA、分隔线、图像边框和标签加入街机视觉语言，但保持信息可读。\n4. 为首屏和关键区块加入轻微 hover 或滚动反馈，让页面更有现场感。\n5. 检查配色，避免整页只剩一种紫蓝；要有暖色作为点亮点。\n6. 移动端保持强风格，不要退化成普通白底列表页。\n\n最后运行 npm run build，构建成功后停止。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 4：Neon FPS",
+        "image": "/case-screenshots/neon-voxel-breach-home.png",
+        "imageAlt": "Neon FPS 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这是一个更偏游戏化的案例，适合练“AI 能不能直接生成一个有完整氛围的网页游戏入口页”。它的亮点不是纯 UI，而是氛围、HUD、题材设定和第一眼的赛博朋克冲击力。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你想做更酷一点的作品集首页、游戏活动页、或者可玩的 AI Demo，这种案例特别有参考价值。哪怕你不真的做 FPS，也可以学它的标题、配色、HUD 和开场界面语言。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://openai-minigames-examples.vercel.app/fps/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/rift-vox"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做赛博朋克游戏入口页",
+            "content": "请创建一个 React + Vite 的游戏网页首页，主题是赛博朋克体素风第一人称射击游戏，视觉参考 Neon FPS。\n\n目标：\n- 首页像可玩的独立游戏入口页\n- 第一眼就有 neon cyberpunk atmosphere\n- 不要做成普通游戏官网营销模板\n\n页面要求：\n1. 使用全屏 hero，带有强烈标题、简短背景设定、开始按钮。\n2. 视觉上要有体素、霓虹、工业感、夜间 megablock 气质。\n3. 页面叠加 HUD 风格元素，例如状态字、小型指示、扫描线、准星感组件，但不要影响阅读。\n4. 可以加入一张主视觉图或 canvas 场景占位，营造游戏世界入口。\n5. 文案保持少而硬朗，像游戏开场界面。\n6. 不要出现常规 SaaS 的 feature cards、pricing 区和团队介绍区。\n\n技术要求：\n- React + Vite\n- 普通 CSS，必要时可加入 canvas 或 WebGL 占位\n- 优先把氛围和构图做对\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补 HUD、光效和可玩气氛",
+            "content": "继续完善这个赛博朋克游戏首页，让它更接近 Neon FPS 的完成度。\n\n请重点处理：\n1. 让画面更像游戏启动界面，而不是静态海报页。\n2. 增加 HUD 式 UI 细节：角标、状态文本、扫描框、微弱噪点、目标标记等。\n3. 背景中的主视觉加入更强层次，例如体素建筑、走廊、敌人剪影、霓虹标识或雾感光束。\n4. CTA 和交互控件要像游戏按钮，不要像通用网页按钮。\n5. 颜色以黑、蓝青、紫、电光粉为主，但控制对比，避免花掉。\n6. 如果加入动效，请优先做轻量入场、闪烁和漂浮，不要引入卡顿的复杂动画。\n\n最后运行 npm run build，并总结哪些部分最能体现游戏氛围。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 5：Time to Fly",
+        "image": "/case-screenshots/time-to-fly-home.png",
+        "imageAlt": "Time to Fly 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个案例适合练“可玩产品首页”和“游戏规则可视化”。它不是纯海报式官网，而是把宇宙谜题、轨道、重力、按钮和可玩逻辑放进了一个很轻盈的界面里。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你想做 AI 生成小游戏、教育交互页、或者带一点产品实验感的首页，这个方向很值得学。它的优秀之处在于复杂规则没有把界面压垮，反而形成了清楚、可探索的体验。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://codextimetofly.com/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/time-to-fly"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做宇宙谜题首页和主玩法区",
+            "content": "请创建一个 React + Vite 的网页游戏首页，主题是宇宙重力谜题，视觉和玩法表达参考 Time to Fly。\n\n目标：\n- 首页既像一个可玩的产品，也像一个被精心设计的实验性网页\n- 用户一眼就能理解“拖动行星、调整发射角度、把火箭送到目标”的核心概念\n- 界面轻盈、清楚、带一点太空童话感\n\n页面要求：\n1. 首屏展示标题、简短玩法说明和一个主玩法区域。\n2. 主玩法区域用圆形轨道、行星、火箭、目标点来构成一个 miniature solar system。\n3. 界面信息简洁，不要出现复杂仪表盘。\n4. 用少量发光、轨道线和星空背景表现宇宙感。\n5. 交互区旁边可以有开始按钮、重置按钮和关卡提示。\n6. 不要把页面做成游戏介绍长文页，核心是“马上想点一下试试”。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 可以用 SVG、Canvas 或 DOM 实现轨道和星体\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补规则表达、动画和细节",
+            "content": "继续完善这个宇宙重力谜题首页，让体验更接近 Time to Fly。\n\n请增强：\n1. 行星、轨道、重力场和火箭路径的视觉表达，让用户不看教程也能理解玩法。\n2. 加入轻量动画，例如星体缓慢漂浮、按钮反馈、发射前后状态切换。\n3. 为界面补充更细腻的太空层次，比如柔和光晕、粒子、遥远星点和颜色深浅变化。\n4. 保持整体简洁，避免加入多余说明卡片。\n5. 如果实现可玩演示，允许用户拖动行星位置、点击发射、立即重试。\n6. 移动端优先保证主玩法区域完整可见，不要被说明文案挤压。\n\n最后运行 npm run build，成功后停止并总结实现了哪些可玩交互。"
+          }
+        ]
+      },
+      {
+        "heading": "最后一层：怎么让还原结果更像原站",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多人第一次复制 Prompt 后，页面会“有点像，但还是模板味很重”。通常不是代码能力不够，而是 Prompt 没把气质约束写清楚。真正决定像不像的，往往是构图、留白、内容密度、动效节奏和对“不要什么”的限制。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你发现 Codex 开始自动加功能卡片、价格区、团队介绍、过多按钮，就说明它退回了常见模板。这个时候最有效的做法不是重来，而是补一轮收尾 Prompt，把不该出现的模式明确排除掉。"
+          },
+          {
+            "type": "code",
+            "label": "通用收尾 Prompt",
+            "content": "请继续优化当前页面，但不要改变核心结构。\n\n本轮只做视觉和体验收尾：\n1. 减少模板感，删除或弱化普通 SaaS 风格区块。\n2. 强化首屏构图、标题层级、留白和品牌气质。\n3. 检查颜色是否过杂，保留 1 到 2 个主色系和少量强调色。\n4. 调整按钮、标签、边框和阴影，让它们更克制。\n5. 让图片、主视觉或 canvas 成为第一视线焦点，而不是一堆说明文字。\n6. 检查移动端，确保标题、主视觉和按钮不会互相挤压。\n7. 不要新增无关功能，不要把页面改成通用营销模板。\n\n完成后运行 npm run build，并用一句话总结当前页面最接近原案例的地方，和仍然不够像的地方。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "copyable-prompts-for-playable-ai-websites",
+    "sourceUrl": "https://developers.openai.com/showcase",
+    "translationMode": "guidedTranslation",
+    "title": "5 个更偏游戏感的 AI 网页案例：直接照着做首页和交互入口",
+    "originalTitle": "Copyable prompts for playable AI websites",
+    "notice": "本文为 UIcoding 基于 OpenAI Showcase 公开案例整理的中文学习稿。文中配图为各网站真实首页截图；每个案例都附真实网址、官方 Prompt 页面，以及适合直接拿去还原网页首页和交互入口的中文提示词。",
+    "sections": [
+      {
+        "heading": "这篇更适合谁看",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果你已经会让 Codex 生成普通 landing page，但总觉得作品还不够酷、不够有记忆点，这篇会更对路。这里挑的 5 个案例都不是标准产品营销页，而是更强调场景、氛围、可玩性和“第一屏就想点一下”的网页。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这类页面的关键，不是加很多特效，而是让用户一打开就进入情境。也就是说，主场景、标题、按钮、规则提示和操作入口要一起成立，而不是先写一大段介绍再把用户送到真正的体验区。"
+          },
+          {
+            "type": "code",
+            "label": "通用练习方式",
+            "content": "推荐练法：\n1. 先还原首页第一屏，不急着做完整玩法。\n2. 先把主场景、标题、开始按钮和基础 HUD 做出来。\n3. 第二轮再补轻量交互，例如 hover、镜头移动、按钮反馈、规则提示。\n4. 如果想继续深入，再把核心玩法做成一个小 demo。\n5. 每次都要求 Codex 在完成后运行 npm run build，并在成功后停止。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 1：London Dream Railway",
+        "image": "/case-screenshots/london-dream-railway-home.png",
+        "imageAlt": "London Dream Railway 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个案例最值得学的地方，是它几乎把首页直接做成了一个可探索的小世界。3D 城市、轨道交通、参数面板和互动控件同屏出现，用户一进来就知道这不是介绍页，而是体验本身。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你想练“沉浸式场景首页”，它比普通 3D hero 更有参考价值，因为它不只是摆一个物体，而是让场景和控制面板一起工作。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://petergpt.github.io/london-train/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/london-train"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做可探索 3D 城市首页",
+            "content": "请创建一个 React + Vite 的互动网页首页，主题是一个可探索的伦敦城市轨道世界，视觉方向参考 London Dream Railway。\n\n目标：\n- 首页本身就是体验，不是传统介绍页\n- 第一屏就出现城市模型、轨道线路和控制入口\n- 用户进入页面后会立刻想拖动、切换或观察场景\n\n页面要求：\n1. 使用全屏或接近全屏的主场景区域，展示抽象化的伦敦城市与轨道系统。\n2. 保留标题和简短说明，但文字必须克制，不能盖过场景本身。\n3. 场景旁边或上方叠加一个轻量控制面板，包含线路切换、时间、视角或模式控制。\n4. 视觉上要有模型感、交通感、未来演示感，但不要做成企业数据后台。\n5. 页面结构优先围绕“观察和探索”，不要加产品卖点卡片。\n6. 移动端允许弱化控制项，但要保留场景沉浸感。\n\n技术要求：\n- React + Vite\n- 可用 Three.js 或 React Three Fiber\n- 不引入重型 UI 组件库\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补场景控制和导览感",
+            "content": "继续完善这个城市轨道互动首页，让它更接近 London Dream Railway 的可探索感。\n\n请增强：\n1. 让主场景具备轻量交互，例如镜头缓慢移动、场景旋转、线路高亮、车体移动或 hover 提示。\n2. 控制面板要更像体验控制台，而不是普通网页筛选器。\n3. 加入少量信息标记，例如站点名、线路标签、当前模式说明，但不要变成信息噪声。\n4. 通过层次、雾感、灯光和景深增强 miniature city 气质。\n5. 首屏仍然以场景为主，避免后续内容抢走注意力。\n6. 不要加入模板化 feature section，不要把页面变成普通产品官网。\n\n最后运行 npm run build，并总结哪些交互最能体现“首页就是体验”。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 2：Golden Gate Experience",
+        "image": "/case-screenshots/golden-gate-home.png",
+        "imageAlt": "Golden Gate Experience 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个案例更偏“电影感体验页”。它不是典型游戏 HUD 那种密集界面，而是把大桥、海面、空气透视和少量控制元素叠在一起，让人一进页面就像进入一个飞行体验入口。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它很适合参考“体验型品牌页”和“可视化交互页”的中间形态：既有强视觉主场景，也保留了可操作的仪表感。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://openai-miniapps-examples.vercel.app/bridge-5p5/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/golden-gate-flight-experience"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做飞行体验首屏",
+            "content": "请创建一个 React + Vite 的沉浸式网页首页，主题是飞越金门大桥的互动体验，视觉方向参考 Golden Gate Experience。\n\n目标：\n- 第一屏像电影海报和体验入口的结合体\n- 用户一眼看到主场景、标题和开始体验按钮\n- 页面重心是空间感和沉浸感，不是功能说明\n\n页面要求：\n1. Hero 采用大幅场景图或 3D 场景，金门大桥必须成为绝对视觉中心。\n2. 文案要很少，只保留标题、简短副标题和一个开始按钮。\n3. 在场景边缘叠加轻量控制元素或状态信息，让页面有“可操作”暗示。\n4. 颜色以雾蓝、海水灰、桥梁暖红和高光白为主。\n5. 保留大量留白和纵深，不要做模块化卡片拼接。\n6. 页面打开后要像一个体验入口，而不是旅游官网或 SaaS 首页。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补电影感和控制叠层",
+            "content": "继续完善这个飞越金门大桥的首页，让它更接近 Golden Gate Experience 的完成度。\n\n请重点增强：\n1. 场景纵深和镜头感，例如轻微漂移、海雾、远景淡化、桥体透视。\n2. 控制叠层要更自然地贴在场景之上，像体验面板而不是网页表单。\n3. 给按钮和状态条加入克制但高级的交互反馈。\n4. 文本层级要像预告片式体验页，避免普通宣传页语气。\n5. 如果补充后续区块，也要延续 cinematic 叙事，不要落回普通卡片布局。\n6. 移动端优先保留桥体构图和按钮可点性。\n\n最后运行 npm run build，并用一句话总结当前页面的主情绪。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 3：Ember Tactics",
+        "image": "/case-screenshots/ember-tactics-home.png",
+        "imageAlt": "Ember Tactics 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这是一个特别适合练“可玩型首页”的案例。用户打开页面之后，看到的不是宣传文案，而是地图、角色、战斗信息和操作按钮。它几乎跳过了传统介绍阶段，直接进入玩法情境。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你想做游戏风格作品集、策略类 demo、或者有强规则感的网页工具，这种结构非常值得照着拆。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://trpg-demo-codex.vercel.app/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/turn-based-rpg"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做战棋式可玩首页",
+            "content": "请创建一个 React + Vite 的网页首页，主题是回合制策略 RPG，视觉和界面组织参考 Ember Tactics。\n\n目标：\n- 首页直接进入战场情境\n- 地图、角色、状态面板和操作按钮同屏出现\n- 用户一眼就知道这是可玩的策略体验，而不是普通游戏官网\n\n页面要求：\n1. 第一屏包含俯视角战场区域，至少有地格、角色单位和目标区域的视觉暗示。\n2. 画面侧边或底部保留一个轻量 HUD，展示角色状态、技能按钮或回合信息。\n3. 顶部可以有标题和一句世界观说明，但不要喧宾夺主。\n4. 配色偏奇幻、战术、略带独立游戏质感，不要做成卡通手游广告页。\n5. 页面必须让人感觉“已经开局”，而不是“准备介绍”。\n6. 不要加入价格、团队、FAQ 这类官网结构。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 可以用 CSS Grid、Canvas 或 SVG 模拟地图\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补战场 HUD 和操作反馈",
+            "content": "继续完善这个回合制 RPG 首页，让它更接近 Ember Tactics 的可玩质感。\n\n请增强：\n1. 地格、单位、攻击范围、高亮选中和悬停反馈，让战术感更清楚。\n2. HUD 元素要有游戏面板气质，但布局仍然清晰易读。\n3. 给技能按钮、回合提示和状态区加入轻量交互反馈。\n4. 场景中的光影、地形和单位轮廓要更明确，让首页更像试玩版开局画面。\n5. 不要为了“网页化”而削弱玩法感。\n6. 移动端可以精简 HUD，但必须保留核心战场构图。\n\n最后运行 npm run build，并总结当前页面最像游戏启动界面的部分。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 4：Neon Voxel Breach",
+        "image": "/case-screenshots/neon-voxel-breach-home.png",
+        "imageAlt": "Neon Voxel Breach 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这一类就更直接了：赛博朋克、霓虹、硬核标题、进入战场按钮，全都在第一屏正面撞过来。它适合练“动作类网页游戏入口页”，也适合练酷炫作品集首页的强情绪表达。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它最有价值的地方不是单纯好看，而是入口非常明确。用户不会犹豫下一步做什么，因为所有视觉都在把人往“开始”这件事上推。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://openai-minigames-examples.vercel.app/fps/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/rift-vox"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做赛博朋克 FPS 入口页",
+            "content": "请创建一个 React + Vite 的网页首页，主题是赛博朋克体素风第一人称射击游戏，视觉方向参考 Neon Voxel Breach。\n\n目标：\n- 第一屏像硬核游戏启动界面\n- 强调 neon、夜景、工业感和即将开战的气氛\n- 用户进入页面后，第一反应是点击开始而不是阅读说明\n\n页面要求：\n1. 使用全屏 hero，背景可以是场景图、插画或轻量 3D/canvas 场景。\n2. 放置巨大标题、极短玩法文案和一个强 CTA。\n3. 叠加少量 HUD 元素，例如状态字、角标、准星感图形或按键提示。\n4. 颜色以黑、蓝青、紫、电光粉为主，但控制对比，不要糊。\n5. 页面要像游戏入口，不要出现普通 feature cards。\n6. 保持强风格，但文字必须仍可读。\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补 HUD、光效和战场预热感",
+            "content": "继续完善这个赛博朋克 FPS 首页，让它更接近 Neon Voxel Breach 的完成度。\n\n请增强：\n1. 增加 HUD 风格元素，例如警告条、目标标识、模式说明和轻微扫描线。\n2. 背景主场景要更像即将进入的战场，而不是静态壁纸。\n3. 按钮、标题和关键标签要像游戏 UI，而不是普通网页控件。\n4. 使用轻量动效增加预热感，例如霓虹闪烁、远景漂浮、标题细微位移。\n5. 控制视觉节奏，不要把所有元素都做得同样亮。\n6. 移动端依然要保留“强入口”特征，避免退化成普通宣传页。\n\n最后运行 npm run build，并总结你用了哪些手法避免页面变脏。"
+          }
+        ]
+      },
+      {
+        "heading": "案例 5：Brickbound Climb",
+        "image": "/case-screenshots/brickbound-climb-home.png",
+        "imageAlt": "Brickbound Climb 网站首页截图",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个案例更偏复古街机感。它不是靠复杂 3D 或粒子撑场面，而是靠像素场景、月夜屋顶、角色站位和极短信息，把“马上开玩”的信号打得非常干净。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果你想做更轻、更小、更容易完成的游戏网页练习，它是很好的切入口。难度比 3D 场景低，但气质依然鲜明。"
+          },
+          {
+            "type": "links",
+            "items": [
+              {
+                "label": "网站首页",
+                "url": "https://openai-minigames-examples.vercel.app/brick-platformer/"
+              },
+              {
+                "label": "官方 Prompt 页",
+                "url": "https://developers.openai.com/showcase/brick-platformer"
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "label": "Prompt 1 · 先做复古平台跳跃首页",
+            "content": "请创建一个 React + Vite 的网页游戏首页，主题是复古像素风平台跳跃，视觉方向参考 Brickbound Climb。\n\n目标：\n- 首页直接呈现关卡开局画面\n- 用户一眼就能理解这是跳跃攀登类玩法\n- 画面轻巧、复古、带一点月夜冒险感\n\n页面要求：\n1. 第一屏使用像素风屋顶、砖块平台、月亮和角色站位构成完整场景。\n2. 顶部或角落保留少量 UI 信息，例如时间、得分、生命或提示键位。\n3. 文案必须极少，按钮可只有一个开始或重试入口。\n4. 不要做成手机游戏广告页或普通独立游戏官网。\n5. 重点是“场景本身就能说明玩法”。\n6. 移动端要优先保持主关卡构图完整。\n\n技术要求：\n- React + Vite\n- 普通 CSS\n- 可用 CSS 像素画、SVG 或 Sprite 风格实现\n\n完成后运行 npm run build。"
+          },
+          {
+            "type": "code",
+            "label": "Prompt 2 · 补像素 HUD 和开局反馈",
+            "content": "继续完善这个复古平台跳跃首页，让它更接近 Brickbound Climb 的完成度。\n\n请重点处理：\n1. 让角色、平台和危险区更像真的可玩关卡，而不是装饰场景。\n2. 为 HUD 加入像素风边框、计时器、分数或简单提示，但保持克制。\n3. 增加轻量动态，例如角色待机、月光闪烁、云层移动或平台高亮。\n4. 标题和按钮要延续复古街机语言，不要变成现代 SaaS 按钮样式。\n5. 保持整个首页干净，不要额外补一堆说明模块。\n6. 如果实现试玩 demo，优先做左右移动和跳跃反馈。\n\n最后运行 npm run build，并总结哪些元素最有效地传达了玩法。"
+          }
+        ]
+      },
+      {
+        "heading": "最后怎么用这些 Prompt",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这组案例和上一篇最大的区别，是它们更依赖“情境成立”。普通 landing page 可以先搭文字结构再补视觉，但这种游戏感网页如果主场景不成立，后面再怎么补按钮和说明都不会像。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以真正高效的顺序通常是：先让场景成立，再让入口明确，最后才补规则说明。只要第一屏已经像一个体验入口，后面哪怕玩法还没做完，页面也已经有记忆点了。"
+          },
+          {
+            "type": "code",
+            "label": "通用收尾 Prompt",
+            "content": "请继续优化当前页面，但不要改变核心玩法方向。\n\n本轮只做可玩型首页收尾：\n1. 强化主场景，让用户第一眼就进入情境。\n2. 删除或弱化模板化网页模块，例如 feature cards、团队介绍、FAQ、价格区。\n3. 让 CTA 更明确，但不要破坏画面氛围。\n4. 检查 HUD、状态信息和标题之间的视觉优先级。\n5. 调整颜色和光效，避免脏、乱、全亮或全灰。\n6. 移动端优先保留主场景、标题和主按钮。\n7. 如果页面还是像官网而不像体验入口，请继续减少解释性文案。\n\n完成后运行 npm run build，并总结当前页面最像“可玩首页”的 2 个地方。"
+          }
+        ]
       }
     ]
   }

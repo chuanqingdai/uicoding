@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { Copy, ExternalLink, Heart, Mail, UserPlus } from 'lucide-react';
+import { Copy, ExternalLink, Mail, UserPlus } from 'lucide-react';
 import { cases } from '../data.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge, Card } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
+import Comments from '../components/Comments.jsx';
 import { trackEvent } from '../lib/analytics.js';
 
 function isRecentCase(item) {
@@ -145,8 +146,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
     () => cases.find((item) => item.categorySlug === categorySlug && item.slug === slug),
     [categorySlug, slug],
   );
-  const [liked, setLiked] = useState(false);
-
   const relatedCases = useMemo(() => {
     if (!caseItem) {
       return [];
@@ -188,20 +187,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
       list.indexOf(item) === index,
   );
 
-  const toggleLike = () => {
-    setLiked((current) => {
-      const next = !current;
-      trackEvent('content_like_toggle', {
-        content_type: 'case',
-        item_id: caseItem.id,
-        item_name: caseItem.title,
-        liked: next,
-      });
-
-      return next;
-    });
-  };
-
   return (
     <div className="case-detail">
       <Container>
@@ -240,14 +225,6 @@ export default function CaseDetailPage({ categorySlug, slug }) {
                     访问网站
                   </Button>
                 )}
-                <Button
-                  icon={Heart}
-                  onClick={toggleLike}
-                  type="button"
-                  variant={liked ? 'primary' : 'secondary'}
-                >
-                  {liked ? '已喜欢' : '喜欢'}
-                </Button>
               </div>
             </header>
 
@@ -263,6 +240,11 @@ export default function CaseDetailPage({ categorySlug, slug }) {
               </div>
             </div>
 
+            <Comments
+              targetId={caseItem.id}
+              targetType="case"
+              title="讨论这个案例"
+            />
           </article>
         </div>
 

@@ -5,6 +5,7 @@ import { learningContent } from '../content/learningContent.js';
 import { Container } from '../components/Layout.jsx';
 import { Button, Badge } from '../components/UI.jsx';
 import { LearningCard, isDefaultLearningCover } from '../components/Cards.jsx';
+import Comments from '../components/Comments.jsx';
 import { trackEvent } from '../lib/analytics.js';
 
 function buildFallbackContent(lesson) {
@@ -72,7 +73,39 @@ function LearnCodeBlock({ code }) {
   );
 }
 
-function LearnArticleSection({ section }) {
+function LearnLinkGroup({ block, lesson }) {
+  if (!block?.items?.length) {
+    return null;
+  }
+
+  return (
+    <div className="learn-link-group">
+      {block.items.map((item) => (
+        <a
+          key={`${item.label}-${item.url}`}
+          className="learn-link-card"
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            trackEvent('outbound_link_click', {
+              label: item.label,
+              content_type: 'lesson',
+              item_id: lesson?.id,
+              item_name: lesson?.title,
+              link_url: item.url,
+            })
+          }
+        >
+          <span>{item.label}</span>
+          <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+function LearnArticleSection({ section, lesson }) {
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = section.image && !isDefaultLearningCover(section.image) && !imageFailed;
   const paragraphs = section.paragraphs ?? [section.content].filter(Boolean);
@@ -112,6 +145,12 @@ function LearnArticleSection({ section }) {
             <LearnCodeBlock
               code={block}
               key={`${block.label ?? 'code'}-${index}`}
+            />
+          ) : block.type === 'links' ? (
+            <LearnLinkGroup
+              block={block}
+              key={`${block.label ?? 'links'}-${index}`}
+              lesson={lesson}
             />
           ) : (
             <p key={`${block.content}-${index}`}>{block.content}</p>
@@ -267,9 +306,16 @@ export default function LearnDetailPage({ slug }) {
                 <LearnArticleSection
                   key={`${section.heading || 'intro'}-${index}`}
                   section={section}
+                  lesson={lesson}
                 />
               ))}
             </div>
+
+            <Comments
+              targetId={lesson.id}
+              targetType="lesson"
+              title="讨论这篇资料"
+            />
 
             {relatedLessons.length > 0 && (
               <section className="tool-detail-section learn-related-section">

@@ -1,4 +1,4 @@
-export const GA_MEASUREMENT_ID = 'G-TM9TZCDS6K';
+export const GA_MEASUREMENT_ID = 'G-C2MHYKP5WM';
 
 function canTrack() {
   return typeof window !== 'undefined' && typeof window.gtag === 'function';

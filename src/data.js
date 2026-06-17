@@ -1177,6 +1177,198 @@ const caseDrafts = [
     ],
   }),
   buildCase({
+    id: 'ember-tactics-turn-based-rpg',
+    slug: 'ember-tactics-turn-based-rpg',
+    title: 'Ember Tactics 回合制 RPG 网页',
+    description: '一个由 Codex 构建的回合制 RPG 网页，首页直接就是可玩的战场与操作面板，视觉像独立策略游戏的试玩版。',
+    category: '游戏',
+    categorySlug: 'game',
+    tools: ['Codex'],
+    tags: ['AI 生成', 'Game', 'Turn-Based RPG', 'GPT-5.4'],
+    websiteUrl: 'https://trpg-demo-codex.vercel.app/',
+    sourceType: '外部精选',
+    sourceName: 'OpenAI Showcase',
+    sourceUrl: 'https://developers.openai.com/showcase/turn-based-rpg',
+    screenshotUrl: '/case-screenshots/ember-tactics-home.png',
+    copyrightNote: '该案例使用真实网站首页截图，来源页为 OpenAI Showcase。官方页面标注其由 Codex 与 GPT-5.4 构建，用于学习可玩游戏网页如何把 UI 面板与主场景融合在第一屏。',
+    visualType: 'dashboard',
+    publishedAt: '2026-06-17',
+    viewCount: 438,
+    likeCount: 34,
+    featured: true,
+    submitterId: 'uicodingEditor',
+    detailSections: [
+      {
+        id: 'ai-generated-evidence',
+        title: 'AI 生成证据',
+        description: 'OpenAI Showcase 将这个项目作为 Turn-Based RPG 案例展示，官方说明写明它由 Codex 与 GPT-5.4 构建。案例卡片使用的是游戏网页首页截图，也就是玩家一打开就看到的可玩场景。',
+        image: '/case-screenshots/ember-tactics-home.png',
+        imageAlt: 'Ember Tactics 首页截图',
+        points: ['真实首页可访问', '官方来源页标注 Codex + GPT-5.4', '封面图使用网站首页截图'],
+      },
+      {
+        id: 'playable-homepage',
+        title: '可玩型首页',
+        description: '这个案例不是先介绍玩法，再进入游戏，而是直接把地形、角色、战斗信息和控制按钮放在第一屏。用户进入页面后立刻就知道它是一个策略战棋式体验。',
+        image: '',
+        imageAlt: 'Ember Tactics 可玩型首页说明',
+        points: ['首页直接进入玩法情境', '地图与面板同屏出现', '适合学习游戏网页的首屏组织'],
+      },
+      {
+        id: 'ui-game-balance',
+        title: '游戏界面与网页结构平衡',
+        description: '它的有趣之处在于既保留了游戏 HUD 的感觉，又没有完全脱离网页浏览的阅读方式。适合参考“游戏化网页”如何保持可读性和操作性。',
+        image: '',
+        imageAlt: 'Ember Tactics 游戏界面说明',
+        points: ['UI 面板密度高但仍可理解', '像游戏试玩版而非传统官网', '非常适合策略类网页参考'],
+      },
+    ],
+  }),
+  buildCase({
+    id: 'neon-voxel-breach-fps',
+    slug: 'neon-voxel-breach-fps',
+    title: 'Neon Voxel Breach 浏览器 FPS',
+    description: '一个由 Codex 生成的浏览器第一人称射击网页，首屏用赛博霓虹氛围图和硬核文案把“可玩”气质直接拉满。',
+    category: '游戏',
+    categorySlug: 'game',
+    tools: ['Codex'],
+    tags: ['AI 生成', 'Game', 'FPS', 'GPT-5.5'],
+    websiteUrl: 'https://openai-minigames-examples.vercel.app/fps/',
+    sourceType: '外部精选',
+    sourceName: 'OpenAI Showcase',
+    sourceUrl: 'https://developers.openai.com/showcase/rift-vox',
+    screenshotUrl: '/case-screenshots/neon-voxel-breach-home.png',
+    copyrightNote: '该案例使用真实网站首页截图，来源页为 OpenAI Showcase。官方页面标注其由 Codex、GPT-5.5 与 GPT Image 2 构建，用于学习赛博朋克风游戏网页的首屏表达。',
+    visualType: 'landing',
+    publishedAt: '2026-06-17',
+    viewCount: 432,
+    likeCount: 33,
+    featured: true,
+    submitterId: 'uicodingEditor',
+    detailSections: [
+      {
+        id: 'ai-generated-evidence',
+        title: 'AI 生成证据',
+        description: 'OpenAI Showcase 将 Neon FPS 作为 Codex + GPT-5.5 + GPT Image 2 案例公开展示。当前案例图使用的是游戏首页的真实首屏，而不是 Showcase 介绍图。',
+        image: '/case-screenshots/neon-voxel-breach-home.png',
+        imageAlt: 'Neon Voxel Breach 首页截图',
+        points: ['真实首页可访问', '官方来源页标注 Codex + GPT-5.5 + GPT Image 2', '封面图来自网站首页'],
+      },
+      {
+        id: 'visual-direction',
+        title: '赛博朋克视觉方向',
+        description: '这个首页最强的地方是气氛建立得非常快。暗色城市、霓虹反射、巨幅标题和冷色 UI 边框一起构成了一个很完整的 FPS 世界观入口。',
+        image: '',
+        imageAlt: 'Neon Voxel Breach 视觉方向说明',
+        points: ['首屏氛围极强', '像游戏封面也像宣传页', '适合酷炫风格网页参考'],
+      },
+      {
+        id: 'entry-flow',
+        title: '进入游戏的第一屏设计',
+        description: '它不是把首页做成传统官网，而是把玩法文案、按钮和键位提示都压缩在主视觉前方，让用户直接知道下一步是“进入战场”。',
+        image: '',
+        imageAlt: 'Neon Voxel Breach 进入游戏说明',
+        points: ['CTA 非常明确', '标题和规则提示配合自然', '适合动作类网页游戏参考'],
+      },
+    ],
+  }),
+  buildCase({
+    id: 'brickbound-climb-platformer',
+    slug: 'brickbound-climb-platformer',
+    title: 'Brickbound Climb 平台跳跃网页',
+    description: '一个由 Codex 生成的 2D 平台跳跃网页，首屏直接就是月夜楼顶关卡，复古街机感非常强。',
+    category: '游戏',
+    categorySlug: 'game',
+    tools: ['Codex'],
+    tags: ['AI 生成', 'Game', 'Platformer', 'GPT-5.5'],
+    websiteUrl: 'https://openai-minigames-examples.vercel.app/brick-platformer/',
+    sourceType: '外部精选',
+    sourceName: 'OpenAI Showcase',
+    sourceUrl: 'https://developers.openai.com/showcase/brick-platformer',
+    screenshotUrl: '/case-screenshots/brickbound-climb-home.png',
+    copyrightNote: '该案例使用真实网站首页截图，来源页为 OpenAI Showcase。官方页面标注其由 Codex、GPT-5.5 与 GPT Image 1.5 构建，用于学习复古像素风网页游戏的视觉组织。',
+    visualType: 'landing',
+    publishedAt: '2026-06-17',
+    viewCount: 426,
+    likeCount: 32,
+    featured: true,
+    submitterId: 'uicodingEditor',
+    detailSections: [
+      {
+        id: 'ai-generated-evidence',
+        title: 'AI 生成证据',
+        description: 'OpenAI Showcase 将 Brick Platformer 作为 Codex + GPT-5.5 + GPT Image 1.5 的网页游戏案例公开展示。案例使用的封面图来自真实网站首页第一屏。',
+        image: '/case-screenshots/brickbound-climb-home.png',
+        imageAlt: 'Brickbound Climb 首页截图',
+        points: ['真实首页可访问', '官方来源页标注 Codex + GPT-5.5 + GPT Image 1.5', '封面图使用网站首页截图'],
+      },
+      {
+        id: 'retro-scene',
+        title: '复古场景感',
+        description: '月亮、砖墙、屋顶平台和角色站位一起构成了很明确的“马上开玩”信号。这个首页不像宣传图，而更像已经开始的关卡。',
+        image: '',
+        imageAlt: 'Brickbound Climb 复古场景说明',
+        points: ['第一屏就有游戏状态', '像素与夜景氛围明确', '很适合复古 2D 游戏网页参考'],
+      },
+      {
+        id: 'gameplay-clarity',
+        title: '玩法表达清晰度',
+        description: '平台位置、角色站位和顶部计时信息让用户立刻理解它是跳跃攀登类玩法。适合学习如何在极短时间内把规则表达清楚。',
+        image: '',
+        imageAlt: 'Brickbound Climb 玩法表达说明',
+        points: ['玩法从场景本身就能读出来', 'UI 信息非常少但够用', '适合小游戏首页参考'],
+      },
+    ],
+  }),
+  buildCase({
+    id: 'time-to-fly-cosmic-puzzle',
+    slug: 'time-to-fly-cosmic-puzzle',
+    title: 'Time to Fly 宇宙飞行谜题页',
+    description: '一个由 Codex 生成的宇宙飞行网页游戏，首屏把蓝色星空、飞船发射和控制面板结合在一起，整体像独立太空游戏的起始页。',
+    category: '游戏',
+    categorySlug: 'game',
+    tools: ['Codex'],
+    tags: ['AI 生成', 'Game', 'Space', 'GPT-5.5'],
+    websiteUrl: 'https://codextimetofly.com/',
+    sourceType: '外部精选',
+    sourceName: 'OpenAI Showcase',
+    sourceUrl: 'https://developers.openai.com/showcase/time-to-fly',
+    screenshotUrl: '/case-screenshots/time-to-fly-home.png',
+    copyrightNote: '该案例使用真实网站首页截图，来源页为 OpenAI Showcase。官方页面标注其由 Codex、GPT-5.5 与 GPT Image 2 构建，用于学习太空题材网页游戏的首页表达。',
+    visualType: 'landing',
+    publishedAt: '2026-06-17',
+    viewCount: 421,
+    likeCount: 31,
+    featured: true,
+    submitterId: 'uicodingEditor',
+    detailSections: [
+      {
+        id: 'ai-generated-evidence',
+        title: 'AI 生成证据',
+        description: 'OpenAI Showcase 将 Time to Fly 作为 Codex + GPT-5.5 + GPT Image 2 案例公开展示。当前案例图为真实游戏首页截图，展示的是用户进入页面后直接看到的起始界面。',
+        image: '/case-screenshots/time-to-fly-home.png',
+        imageAlt: 'Time to Fly 首页截图',
+        points: ['真实首页可访问', '官方来源页标注 Codex + GPT-5.5 + GPT Image 2', '封面图来自网站首页'],
+      },
+      {
+        id: 'space-atmosphere',
+        title: '太空感氛围',
+        description: '这个首页的强项是氛围很完整。深蓝宇宙背景、星球边缘、发光标题和控制面板让它很像一款独立太空游戏的启动页。',
+        image: '',
+        imageAlt: 'Time to Fly 太空氛围说明',
+        points: ['视觉统一度很高', '发光标题和宇宙背景配合自然', '适合太空题材网页参考'],
+      },
+      {
+        id: 'control-panel',
+        title: '控制面板融入首屏',
+        description: '它把任务控制面板直接放在首页右侧，让场景表现和游戏规则在第一屏同步出现。这种结构很适合“可玩体验页”参考。',
+        image: '',
+        imageAlt: 'Time to Fly 控制面板说明',
+        points: ['首页既是入口也是玩法说明', '场景与规则同屏出现', '适合互动产品或游戏化网页'],
+      },
+    ],
+  }),
+  buildCase({
     id: 'knowlens-ai-infographic-generator',
     slug: 'knowlens-ai-infographic-generator',
     title: 'KnowLens.ai 信息可视化生成工具',
@@ -1636,6 +1828,10 @@ const caseDrafts = [
 
 const visibleCaseIds = [
   'freemake-ai-image-maker',
+  'ember-tactics-turn-based-rpg',
+  'neon-voxel-breach-fps',
+  'brickbound-climb-platformer',
+  'time-to-fly-cosmic-puzzle',
   'forged-in-silence-codex',
   'watchmaker-codex-landing',
   'arcade-bar-codex-landing',
@@ -1817,6 +2013,367 @@ export const lessons = [
       "不要把需求一次性丢给 Codex",
       "先设计产品工作流再写代码",
       "从任务拆分减少返工和重构"
+    ]
+  },
+  {
+    "id": "ai-coding-full-workflow-prompt-chain",
+    "title": "让 Claude Code / Codex 先思考再写代码：一套可复制的完整链路提示词",
+    "originalTitle": "I Made Claude Code Think Before It Codes. Here's the Prompt.",
+    "description": "基于 Claude Wizard、Addy Osmani 的 AI Agent Spec 写法和 OpenAI Codex 官方提示词建议整理，把 AI Coding 从一句话生成代码，升级为需求理解、代码探索、测试、实现、验证和自审的完整闭环。",
+    "sourceType": "开源提示词整理",
+    "sourceName": "Claude Wizard / Addy Osmani / OpenAI Codex Docs",
+    "sourceUrl": "https://github.com/vlad-ko/claude-wizard",
+    "author": "Vlad Ko、Addy Osmani、OpenAI",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "16 分钟",
+    "category": "Prompting",
+    "tools": [
+      "Claude Code",
+      "Codex"
+    ],
+    "tags": [
+      "提示词",
+      "Claude Code",
+      "Codex",
+      "工作流"
+    ],
+    "href": "/learn/ai-coding-full-workflow-prompt-chain",
+    "publishedAt": "2026-06-17",
+    "viewCount": 512,
+    "likeCount": 38,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "先理解和计划，再写代码",
+      "用测试和验证标准约束 AI 输出",
+      "把提示词沉淀成可复用工作流"
+    ]
+  },
+  {
+    "id": "claude-code-official-prompt-library-copyable-workflows",
+    "title": "Claude Code 官方提示词库：从探索代码到验证结果的可复制 Prompt",
+    "originalTitle": "Claude Code Prompt Library / Common Workflows",
+    "description": "基于 Claude Code 官方 Prompt Library 和 Common Workflows 整理，把探索代码、修复 Bug、重构、写测试和交付验证整理成可以完整复制的中文 Prompt。",
+    "sourceType": "官方文档整理",
+    "sourceName": "Anthropic Claude Code Docs",
+    "sourceUrl": "https://code.claude.com/docs/en/prompt-library",
+    "author": "Anthropic",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "15 分钟",
+    "category": "Prompting",
+    "tools": [
+      "Claude Code"
+    ],
+    "tags": [
+      "Claude Code",
+      "Prompt",
+      "工作流",
+      "验证"
+    ],
+    "href": "/learn/claude-code-official-prompt-library-copyable-workflows",
+    "publishedAt": "2026-06-17",
+    "viewCount": 486,
+    "likeCount": 36,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "把官方 Prompt 模式整理成完整中文模板",
+      "从代码探索开始降低误改风险",
+      "让每次修改都有验证和交付总结"
+    ]
+  },
+  {
+    "id": "codex-official-workflows-copyable-prompts",
+    "title": "Codex 官方工作流：7 个可直接复制的实战 Prompt",
+    "originalTitle": "Workflows",
+    "description": "基于 OpenAI Codex 官方 Workflows 整理，覆盖解释代码流、修 Bug、写测试、根据截图做原型、UI 迭代、本地 code review 和 PR review，每个场景都给出完整可复制 Prompt。",
+    "sourceType": "官方文档整理",
+    "sourceName": "OpenAI Developers",
+    "sourceUrl": "https://developers.openai.com/codex/workflows",
+    "author": "OpenAI",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "17 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "Prompt",
+      "代码审查",
+      "UI 迭代"
+    ],
+    "href": "/learn/codex-official-workflows-copyable-prompts",
+    "publishedAt": "2026-06-17",
+    "viewCount": 458,
+    "likeCount": 34,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "按场景选择最合适的 Codex 工作流",
+      "每个任务都写清上下文、约束和验证方式",
+      "用 review 和 PR review 形成提交前检查"
+    ]
+  },
+  {
+    "id": "codex-real-webpage-prompt-case-library",
+    "title": "Codex 真实网页案例 Prompt 库：从网页拆解到验证套件",
+    "originalTitle": "Codex prompt examples and real web workflow cases",
+    "description": "整理 OpenAI Codex 官方用例和外部 Prompt 库中的真实网页场景，把网页拆解、截图复刻、实现计划、验证套件和提交总结沉淀成完整可复制 Prompt。",
+    "sourceType": "案例资料整理",
+    "sourceName": "OpenAI Developers / Jose Casanova Prompts",
+    "sourceUrl": "https://developers.openai.com/codex/use-cases",
+    "author": "OpenAI、Jose Casanova、Uicoding.ai 整理",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "19 分钟",
+    "category": "Prompting",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "真实网页案例",
+      "Prompt",
+      "验证套件"
+    ],
+    "href": "/learn/codex-real-webpage-prompt-case-library",
+    "publishedAt": "2026-06-17",
+    "viewCount": 426,
+    "likeCount": 29,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "用真实网页作为 AI Coding 输入",
+      "把网页拆解、实现和验证拆成稳定 Prompt",
+      "用验证套件避免页面只做到表面相似"
+    ]
+  },
+  {
+    "id": "codex-best-practices-plan-agents-review",
+    "title": "Codex 官方最佳实践：Plan first、AGENTS.md 和可验证交付",
+    "originalTitle": "Best practices",
+    "description": "基于 OpenAI Codex 官方 Best practices 整理，学习如何用目标、上下文、约束和完成标准写任务，用 Plan first 处理复杂需求，用 AGENTS.md 固化规则，并通过测试和 review 验证交付。",
+    "sourceType": "官方文档整理",
+    "sourceName": "OpenAI Developers",
+    "sourceUrl": "https://developers.openai.com/codex/learn/best-practices",
+    "author": "OpenAI",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "18 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "Best Practices",
+      "AGENTS.md",
+      "Review"
+    ],
+    "href": "/learn/codex-best-practices-plan-agents-review",
+    "publishedAt": "2026-06-17",
+    "viewCount": 404,
+    "likeCount": 27,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "用目标、上下文、约束和完成标准组织任务",
+      "复杂需求先让 Codex 计划和反问",
+      "用 AGENTS.md、测试和 review 固化交付质量"
+    ]
+  },
+  {
+    "id": "codex-agent-skills-reusable-workflow-templates",
+    "title": "Codex Agent Skills：把高频 Prompt 封装成可靠工作流",
+    "originalTitle": "Agent Skills",
+    "description": "基于 OpenAI Codex Agent Skills 官方文档整理，学习如何用 .agents/skills 和 SKILL.md 把页面走查、内容导入、本地 review、验证交付等高频 Prompt 封装成可复用技能。",
+    "sourceType": "官方文档整理",
+    "sourceName": "OpenAI Developers",
+    "sourceUrl": "https://developers.openai.com/codex/skills",
+    "author": "OpenAI",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "20 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "Agent Skills",
+      "SKILL.md",
+      "工作流"
+    ],
+    "href": "/learn/codex-agent-skills-reusable-workflow-templates",
+    "publishedAt": "2026-06-17",
+    "viewCount": 392,
+    "likeCount": 25,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "理解 Codex Skills 的目录结构和触发方式",
+      "用 SKILL.md 固化高频工作流",
+      "把页面走查、内容导入和 review 做成可复用模板"
+    ]
+  },
+  {
+    "id": "codex-slack-team-workflow-prompts",
+    "title": "Slack 里调用 Codex：把团队反馈变成可执行任务 Prompt",
+    "originalTitle": "Use Codex in Slack",
+    "description": "基于 OpenAI Codex Slack 官方集成文档整理，学习如何在 Slack 线程中 @Codex，把 Bug 反馈、设计意见、PR 检查和上线前验证变成可执行云任务。",
+    "sourceType": "官方文档整理",
+    "sourceName": "OpenAI Developers",
+    "sourceUrl": "https://developers.openai.com/codex/integrations/slack",
+    "author": "OpenAI",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "16 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "Slack",
+      "团队协作",
+      "云任务"
+    ],
+    "href": "/learn/codex-slack-team-workflow-prompts",
+    "publishedAt": "2026-06-17",
+    "viewCount": 376,
+    "likeCount": 23,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "在 Slack 线程里把反馈整理成 Codex 云任务",
+      "用仓库、环境、验收标准减少上下文丢失",
+      "把 Bug、UI 反馈、PR review 和发布检查模板化"
+    ]
+  },
+  {
+    "id": "codex-pixel-perfect-website-rebuild-prompts",
+    "title": "Codex 高保真网站复现 Prompt：从参考网页到像素级验证",
+    "originalTitle": "Turn Figma designs into code",
+    "description": "基于 OpenAI Codex Figma-to-code 官方用例整理，学习如何把参考网页、截图或设计稿拆解成可实现页面，并用 Playwright 截图、响应式检查和迭代 Prompt 做到高保真复现。",
+    "sourceType": "官方用例整理",
+    "sourceName": "OpenAI Developers",
+    "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
+    "author": "OpenAI",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "设计师",
+    "duration": "20 分钟",
+    "category": "Prompting",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "网站复现",
+      "Figma to Code",
+      "Playwright"
+    ],
+    "href": "/learn/codex-pixel-perfect-website-rebuild-prompts",
+    "publishedAt": "2026-06-17",
+    "viewCount": 364,
+    "likeCount": 22,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "先拆解参考网页再写代码",
+      "用完整 Prompt 控制布局、资产、响应式和交互",
+      "用截图对比和迭代提示词逼近高保真效果"
+    ]
+  },
+  {
+    "id": "codex-cinematic-web-effects-prompts",
+    "title": "Codex 酷炫网页效果 Prompt：3D、滚动叙事和高级动效",
+    "originalTitle": "Build cinematic web experiences with Codex",
+    "description": "基于 Codex Figma-to-code 用例、Three.js 和 GSAP ScrollTrigger 官方资料整理，学习如何用完整 Prompt 让 Codex 实现沉浸式 Hero、3D 背景、滚动叙事、粒子动效和性能验证。",
+    "sourceType": "技术资料整理",
+    "sourceName": "OpenAI Developers / Three.js / GSAP",
+    "sourceUrl": "https://developers.openai.com/codex/use-cases/figma-designs-to-code",
+    "author": "OpenAI、Three.js、GSAP、Uicoding.ai 整理",
+    "license": "外部资料整理",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "设计师",
+    "duration": "21 分钟",
+    "category": "Prompting",
+    "tools": [
+      "Codex"
+    ],
+    "tags": [
+      "Codex",
+      "酷炫网页",
+      "Three.js",
+      "ScrollTrigger"
+    ],
+    "href": "/learn/codex-cinematic-web-effects-prompts",
+    "publishedAt": "2026-06-17",
+    "viewCount": 352,
+    "likeCount": 21,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "用 Prompt 把酷炫效果拆成可实现模块",
+      "让 Codex 同时处理视觉、交互、响应式和性能",
+      "用截图、帧率和降级方案验证高级动效"
+    ]
+  },
+  {
+    "id": "claude-code-skills-reusable-prompt-workflows",
+    "title": "Claude Code Skills 官方指南：把一次性 Prompt 沉淀成可复用工作流",
+    "originalTitle": "Claude Code Skills",
+    "description": "基于 Claude Code 官方 Skills 文档整理，学习如何把 summarize-changes、fix-issue、pr-summary 等一次性提示词，变成可以反复调用的 Skill / slash command。",
+    "sourceType": "官方文档整理",
+    "sourceName": "Anthropic Claude Code Docs",
+    "sourceUrl": "https://docs.anthropic.com/en/docs/claude-code/skills",
+    "author": "Anthropic",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "18 分钟",
+    "category": "Workflow",
+    "tools": [
+      "Claude Code"
+    ],
+    "tags": [
+      "Claude Code",
+      "Skills",
+      "Slash Command",
+      "Prompt 模板"
+    ],
+    "href": "/learn/claude-code-skills-reusable-prompt-workflows",
+    "publishedAt": "2026-06-17",
+    "viewCount": 432,
+    "likeCount": 31,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "把高频 Prompt 变成可复用 Skill",
+      "用 SKILL.md 固化任务流程和验证标准",
+      "沉淀 summarize-changes、fix-issue、pr-summary 模板"
     ]
   },
   {
@@ -2365,6 +2922,84 @@ export const lessons = [
       "减少无关信息能提升输出稳定性",
       "用文件、规则和反馈循环管理上下文"
     ]
+  },
+  {
+    "id": "copyable-prompts-for-stunning-ai-websites",
+    "title": "5 个带可复制 Prompt 的酷炫网页案例：照着还原首页",
+    "originalTitle": "Copyable prompts for stunning AI websites",
+    "description": "整理 5 个明确提供可复制 prompt 的 AI 网页案例。每个案例都附真实网站首页图、网站链接、官方 prompt 页面，以及 2 到 3 个可直接拿去还原网页的中文提示词。",
+    "sourceType": "UIcoding 精选",
+    "sourceName": "OpenAI Showcase / UIcoding 编辑整理",
+    "sourceUrl": "https://developers.openai.com/showcase",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "18 分钟",
+    "category": "Prompt",
+    "tools": [
+      "Codex",
+      "通用"
+    ],
+    "tags": [
+      "Prompt",
+      "Landing Page",
+      "Game",
+      "AI Coding"
+    ],
+    "href": "/learn/copyable-prompts-for-stunning-ai-websites",
+    "image": "/case-screenshots/forged-in-silence-home.png",
+    "imageAlt": "带可复制 Prompt 的酷炫网页案例封面图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 528,
+    "likeCount": 46,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "优先选公开提供 Copy Prompt 的网页案例来学",
+      "把 prompt 拆成首屏、交互和收尾三段更容易还原",
+      "先还原网站气质，再补动效、响应式和细节"
+    ]
+  },
+  {
+    "id": "copyable-prompts-for-playable-ai-websites",
+    "title": "5 个更偏游戏感的 AI 网页案例：直接照着做首页和交互入口",
+    "originalTitle": "Copyable prompts for playable AI websites",
+    "description": "整理 5 个更偏游戏感、互动感和可玩体验的 AI 网页案例。每个案例都附真实网站首页截图、真实网址、官方 Prompt 页面，以及 2 个适合还原首页与交互入口的中文提示词。",
+    "sourceType": "UIcoding 精选",
+    "sourceName": "OpenAI Showcase / UIcoding 编辑整理",
+    "sourceUrl": "https://developers.openai.com/showcase",
+    "author": "UIcoding 编辑部",
+    "license": "未确认",
+    "translationMode": "guidedTranslation",
+    "collectedAt": "2026-06-17",
+    "audience": "独立开发者",
+    "duration": "19 分钟",
+    "category": "Prompt",
+    "tools": [
+      "Codex",
+      "通用"
+    ],
+    "tags": [
+      "Prompt",
+      "Game",
+      "Interactive",
+      "AI Coding"
+    ],
+    "href": "/learn/copyable-prompts-for-playable-ai-websites",
+    "image": "/case-screenshots/ember-tactics-home.png",
+    "imageAlt": "偏游戏感的 AI 网页案例封面图",
+    "publishedAt": "2026-06-17",
+    "viewCount": 476,
+    "likeCount": 39,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "游戏感网页的关键不是特效多，而是第一屏就能进入情境",
+      "先把主场景和操作入口做出来，再补 HUD、动效和反馈",
+      "可玩型首页要尽量减少介绍废话，让用户想立刻点一下"
+    ]
   }
 ];
 
@@ -2841,7 +3476,6 @@ export const footerGroups = [
     title: '参与',
     links: [
       { label: '提交作品', href: '/submit' },
-      { label: '登录', href: '/login' },
     ],
   },
   {

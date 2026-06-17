@@ -17,7 +17,7 @@ function byLatest(a, b) {
 }
 
 function byHot(a, b) {
-  return byPinnedFirst(a, b) || b.likeCount - a.likeCount || b.viewCount - a.viewCount;
+  return byPinnedFirst(a, b) || b.viewCount - a.viewCount;
 }
 
 const initialVisibleCount = 9;

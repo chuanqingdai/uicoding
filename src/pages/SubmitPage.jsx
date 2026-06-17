@@ -1,6 +1,7 @@
 import { MessageCircle } from 'lucide-react';
 import { Container } from '../components/Layout.jsx';
 import { Button, Card } from '../components/UI.jsx';
+import Comments from '../components/Comments.jsx';
 
 const submitTips = [
   '作品名称和访问链接',
@@ -55,6 +56,12 @@ export default function SubmitPage() {
               </Button>
             </div>
           </Card>
+
+          <Comments
+            targetId="submit"
+            targetType="submit"
+            title="提交交流"
+          />
         </div>
       </Container>
     </div>

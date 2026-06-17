@@ -42,7 +42,7 @@ export default function LoginPage() {
             <div className="login-copy">
               <h1 id="login-title">登录 Uicoding.ai</h1>
               <p id="login-description">
-                使用 Google 登录，继续收藏案例和学习资料。
+                使用 Google 登录，继续浏览案例和学习资料。
               </p>
             </div>
             <Button
