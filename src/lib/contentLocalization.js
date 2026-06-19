@@ -109,6 +109,101 @@ const caseCopyEn = {
     description:
       'A Codex-generated retail storefront homepage that organizes brand imagery, product browsing, and shopping entry points into a complete ecommerce structure.',
   },
+  'onboarding-hub-codex': {
+    title: 'Onboarding Hub',
+    description:
+      'A Sites in Codex onboarding portal that organizes first-week progress, meetings, tasks, and resources into a clear new-hire workspace.',
+  },
+  'enablement-hub-codex': {
+    title: 'Enablement Hub',
+    description:
+      'A Sites in Codex learning and enablement portal that combines featured paths, updates, and resource filters into one clear homepage.',
+  },
+  'pulse-dashboard-codex': {
+    title: 'Pulse Dashboard',
+    description:
+      'A Sites in Codex KPI dashboard that brings metric health, trend charts, and lineage context into one operator-facing interface.',
+  },
+  'sparkboard-codex': {
+    title: 'Sparkboard',
+    description:
+      'A Sites in Codex idea board that combines proposal sharing, upvote ranking, status filters, and contributor visibility.',
+  },
+  'launch-cal-codex': {
+    title: 'Launch Cal',
+    description:
+      'A Sites in Codex launch calendar that organizes timelines, risk signals, and checklist-driven execution in one page.',
+  },
+  'event-planning-hub-codex': {
+    title: 'Event Planning Hub',
+    description:
+      'A Sites in Codex event operations hub that combines requests, templates, milestone dates, and readiness tracking.',
+  },
+  'photobooth-demo-openai': {
+    title: 'Photobooth Demo',
+    description:
+      'An OpenAI image demo that lets users upload or capture a portrait, pick a style direction, and generate visual variants.',
+  },
+  'openai-fm-speech-demo': {
+    title: 'OpenAI.fm',
+    description:
+      'An interactive speech playground that combines voice selection, vibe presets, script editing, and playback in a minimal interface.',
+  },
+  'codex-101-guide-showcase': {
+    title: 'Codex 101',
+    description:
+      'A bilingual Codex learning site that organizes CLI, desktop, IDE, web, and automation workflows into a clear practical guide.',
+  },
+  'chatkit-world-openai': {
+    title: 'Chatkit.world',
+    description:
+      'A conversational map experience that combines world exploration, guided questions, and chat input on one screen.',
+  },
+  'crossbeam-claude-permit-review': {
+    title: 'CrossBeam',
+    description:
+      'An AI permit review product for California ADUs that combines parcel rules, multi-agent review, technical architecture, and filing outputs in one polished English homepage.',
+  },
+  'sense-enterprise-affective-platform': {
+    title: 'Sense',
+    description:
+      'An enterprise affective computing platform that turns emotion analysis, business diagnosis, and model-powered insight into a high-finish product homepage.',
+  },
+  'smartroute-approval-workflow': {
+    title: 'SmartRoute',
+    description:
+      'An approval-routing workflow product that organizes request intake, SLA tracking, multi-stage approvals, and admin collaboration into one interface.',
+  },
+  'stackwise-inventory-system': {
+    title: 'Stackwise',
+    description:
+      'An inventory operations system that combines stock tracking, supplier management, purchase orders, forecasting, and analytics.',
+  },
+  'hireflow-applicant-tracking-system': {
+    title: 'HireFlow',
+    description:
+      'A recruiting ATS that combines candidate pipelines, interview scheduling, and offer management into a complete hiring workflow.',
+  },
+  'clipcraft-video-editor': {
+    title: 'ClipCraft',
+    description:
+      'A browser-based video editor SaaS that combines editing, social export presets, white-label options, and trial-to-signup structure.',
+  },
+  'v0-salesops-dashboard': {
+    title: 'SalesOps Dashboard',
+    description:
+      'A sales operations dashboard that brings revenue tracking, pipeline visibility, customer acquisition, and team performance into one business interface.',
+  },
+  'scout-startup-funding-tracker': {
+    title: 'Scout',
+    description:
+      'A startup funding intelligence platform that combines funding-round tracking, filters, news discovery, and research management.',
+  },
+  'expensedesk-approval-tool': {
+    title: 'ExpenseDesk',
+    description:
+      'An expense approval system that combines submission, receipt upload, multi-step approvals, audit history, and spending analytics.',
+  },
 };
 
 const toolCopyEn = {
@@ -192,10 +287,20 @@ const genericSectionEn = {
     description:
       'This section looks at what the product is, who it serves, and what users understand from the first screen.',
   },
+  适合谁用: {
+    title: 'Who It Helps',
+    description:
+      'This section looks at the audience, the real use cases, and why this product keeps the right users engaged.',
+  },
   视觉气质: {
     title: 'Visual Direction',
     description:
       'This section studies how typography, imagery, color, and spacing build the first impression.',
+  },
+  作品结构: {
+    title: 'Website Overview',
+    description:
+      'This section explains how the page is structured and which modules carry the product story first.',
   },
   网站拆解: {
     title: 'Page Breakdown',
@@ -231,6 +336,11 @@ const genericSectionEn = {
     title: 'What to Learn',
     description:
       'This section distills the design and AI coding decisions worth carrying into your own work.',
+  },
+  'UIcoding 拆解': {
+    title: 'Page Breakdown',
+    description:
+      'This section summarizes the structural decisions, information hierarchy, and workflow choices worth studying.',
   },
 };
 
@@ -328,6 +438,326 @@ const caseSectionEn = {
         'Navigation, hero image, and cart entry form a stable three-layer structure.',
         'Brand imagery carries attention while buttons carry conversion.',
         'It is a solid example of the core skeleton behind a retail homepage.',
+      ],
+    },
+  },
+  'onboarding-hub-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Onboarding Hub is an internal first-week workspace for new hires. It brings welcome messaging, progress feedback, task flow, and meeting guidance together so users can immediately understand what matters next.',
+      points: [
+        'It is built for internal onboarding rather than public marketing.',
+        'The first screen is action-oriented from the start.',
+        'It behaves like a working dashboard, not an explanatory page.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This is a strong reference for HR, People Ops, employee experience, and internal tools teams. It is especially useful when you need to design a flow entry that reduces uncertainty instead of overwhelming users with policy content.',
+      points: [
+        'Useful for internal platforms and employee self-service portals.',
+        'Relevant to onboarding, training, and guided process products.',
+        'A good reference for checklist-driven homepages that need to feel calm and supportive.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The page opens with a welcome message and current progress, then uses the checklist panel to drive action. Suggested meetings and planning tools support the rest of the flow. Structurally, it is a process dashboard: it does not tell a brand story, it lowers next-step decision cost.',
+      points: [
+        'Welcome state, progress, and checklist are organized in a clear sequence.',
+        'Suggested meetings function as guided support rather than passive content.',
+        'It is a strong case for learning how internal tools structure operational flows.',
+      ],
+    },
+  },
+  'enablement-hub-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Enablement Hub is a learning and resource portal for internal teams. Its job is not to sell a course. It helps users find the right learning path, announcements, and documentation quickly.',
+      points: [
+        'It is built for internal learning and knowledge transfer.',
+        'The homepage prioritizes a recommended path instead of generic browse-first behavior.',
+        'Resource filtering matters more here than promotional copy.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for training platforms, internal documentation centers, sales enablement, and customer-success learning programs. It is a strong reference for content-heavy interfaces that still need a clear homepage.',
+      points: [
+        'Useful for learning hubs and resource centers.',
+        'A good reference for discover pages that reduce search cost.',
+        'Helpful when you need a layered entry into a large body of content.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The homepage uses a large featured learning path as the main guide, then adds announcement and update cards before introducing searchable resource filters. It feels like a hybrid between editorial curation and a work-focused retrieval tool.',
+      points: [
+        'Featured path, updates, and filtered resources each have a distinct role.',
+        'The page handles high content volume without losing reading order.',
+        'It is a strong example of a knowledge-center homepage with controlled pacing.',
+      ],
+    },
+  },
+  'pulse-dashboard-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Pulse Dashboard is an operator and leadership KPI surface. It does more than list numbers: it shows trends, target distance, and metric lineage so users can judge both performance and trustworthiness from the same screen.',
+      points: [
+        'It is built for operational review and metric tracking.',
+        'The homepage combines outcomes with interpretive context.',
+        'It goes beyond generic chart dashboards by foregrounding data confidence.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This is a strong case for analytics homepages, BI tools, management dashboards, and operations surfaces. It is especially useful when you want to bring the “why this metric looks this way” layer into the primary interface.',
+      points: [
+        'Useful for data products and operations back offices.',
+        'A good reference for pairing KPI cards with trend visualization.',
+        'Helpful for learning how a side panel can improve interpretability.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The page uses top KPI cards as a scan layer, trend and revenue modules as the judgment layer, and the lineage panel as the explanation layer. This structure works well for complex business contexts because users can review, evaluate, and trace without leaving the homepage.',
+      points: [
+        'Scan, judgment, and explanation layers are clearly separated.',
+        'The right-side panel makes complex metrics easier to trust and discuss.',
+        'It is a strong example of multi-layer business dashboard structure.',
+      ],
+    },
+  },
+  'sparkboard-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Sparkboard is an idea intake and ranking interface for teams. It combines proposal submission, popularity, workflow status, and contributor visibility into one discussion-heavy surface.',
+      points: [
+        'It is built for idea collection and collaborative review.',
+        'The first screen makes activity and momentum visible immediately.',
+        'It behaves more like a structured community surface than a form page.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for employee suggestion boxes, product feedback communities, internal proposal boards, and team voting pages. It is a strong reference for content-dense pages that still need fast readability.',
+      points: [
+        'Useful for feedback communities and idea-pool products.',
+        'A good reference for combining list cards with side information.',
+        'Helpful for studying dense layouts that still feel legible.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The homepage uses the central trending idea card as the focus layer, the left rail as the status-navigation layer, and the right rail as the ranking and category context layer. It is not an open feed. It is a priority board with a clear structure.',
+      points: [
+        'Left navigation, central content, and right context create a stable three-column system.',
+        'The trending card controls first attention effectively.',
+        'It is a strong case for community-style management layouts.',
+      ],
+    },
+  },
+  'launch-cal-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Launch Cal is a launch-management workspace. Its job is to help teams see schedule, risk, and execution checklists at the same time, so the page is organized around launch readiness rather than dates alone.',
+      points: [
+        'It is built for launch operations and cross-functional coordination.',
+        'The homepage combines time, risk, and checklist views.',
+        'It emphasizes execution over passive calendar browsing.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for PMs, operations teams, project-management tools, and release planning pages. It is a strong reference for calendar-like products that need more than a long list of dates.',
+      points: [
+        'Useful for release planning and execution platforms.',
+        'A good reference for bringing risk signals into the main UI.',
+        'Helpful for learning how checklists and timelines can work together.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The page treats the calendar or timeline as the structural spine, risk state as the judgment layer, and detailed checklists as the action layer. That means users do not just see when something launches, they can also see what still blocks it.',
+      points: [
+        'Time, judgment, and action layers are clearly separated.',
+        'Risk signals raise the management value of the page.',
+        'It is a strong example of a launch-tool homepage structure.',
+      ],
+    },
+  },
+  'event-planning-hub-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Event Planning Hub is an event-operations workspace. It is not meant to sell a venue or event. It gathers requests, templates, dates, and readiness status so teams can execute smoothly.',
+      points: [
+        'It is built for operational event workflows.',
+        'The homepage solves coordination more than presentation.',
+        'It feels like an operations hub instead of a marketing surface.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for event tools, operations dashboards, project execution centers, and template-heavy internal systems. It is especially relevant when many actions and assets need one clear entry point.',
+      points: [
+        'Useful for event operations and execution platforms.',
+        'A good reference for unifying requests, templates, and milestones.',
+        'Helpful for complex operational contexts that need clear information layers.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The homepage typically treats intake and status overview as the upper layer, templates and key dates as the execution-support layer, and readiness as the decision layer. The structure is designed to speed up action rather than simply look complete.',
+      points: [
+        'Entry points, resources, and progress are separated cleanly.',
+        'Operational efficiency is prioritized over decorative density.',
+        'It is a strong case for operations-dashboard homepage structure.',
+      ],
+    },
+  },
+  'photobooth-demo-openai': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Photobooth Demo is a low-friction image-stylization workspace. It does not rely on long tutorials. It asks users to start with one photo, then choose a target look and generate results.',
+      points: [
+        'It is built for lightweight image creation and style experimentation.',
+        'The homepage begins directly with the upload action.',
+        'It is a good reference for generation tools with simple task entry.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for image tools, avatar generators, style-transfer demos, and creative playgrounds. It is especially helpful when you want a layout where the workspace is simple but style selection still feels important.',
+      points: [
+        'Useful for image tools and visual experiment pages.',
+        'A good reference for pairing an upload entry with a style list.',
+        'Helpful for low-friction generator homepages.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The interface uses a large canvas as the primary task area, a right-side style list as the main control layer, and a bottom CTA as the generation trigger. Almost nothing else competes for attention, which makes it a strong generation-tool homepage reference.',
+      points: [
+        'The workspace and style controls are separated clearly.',
+        'The user path is short and easy to begin.',
+        'It is a strong example of a generator UI with minimal noise.',
+      ],
+    },
+  },
+  'openai-fm-speech-demo': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'OpenAI.fm is a speech-playground interface. Its job is to let developers rapidly compare voices, tone presets, and scripts, then hear the result immediately.',
+      points: [
+        'It is built for TTS exploration and experimentation.',
+        'The homepage combines parameter selection with script editing.',
+        'It works well as a developer-tool reference rather than a consumer app homepage.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for audio tools, AI voice demos, developer playgrounds, and prompt labs. It is especially helpful when you need many controls without making the page feel visually chaotic.',
+      points: [
+        'Useful for audio and speech tooling.',
+        'A good reference for combining control panels with a playable output surface.',
+        'Helpful for interactive demos aimed at developers.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The page keeps top-level explanation extremely short, then turns voice, vibe, and script into parallel control zones. Playback, sharing, and download actions form the output layer at the bottom. Structurally it behaves like a lab bench: the point is to test quickly, not browse slowly.',
+      points: [
+        'Control density is high, but the structure stays intuitive.',
+        'Playback is the primary conversion action on the screen.',
+        'It is a strong example of a playground-style homepage.',
+      ],
+    },
+  },
+  'codex-101-guide-showcase': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Codex 101 is a bilingual learning site for developers and beginners. It is not a generic blog roll. It breaks Codex usage into chapters, platforms, and practical action paths so users immediately know where to begin.',
+      points: [
+        'It is built for Codex learning and practical onboarding.',
+        'The homepage is organized around learning paths from the first screen.',
+        'It behaves more like a knowledge product than a single-article page.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for AI coding learning hubs, documentation navigation pages, knowledge products, and tutorial-centered websites. It is especially relevant when you have a lot of information but still need users to start quickly.',
+      points: [
+        'Useful for learning sites and topic-based knowledge pages.',
+        'A good reference for bilingual navigation and chapter entry design.',
+        'Helpful for structured tutorial homepages.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The homepage uses one very large title as the main value statement, two CTAs to separate reading paths, and chapter shortcuts to turn long-form content into short decisions. Structurally it is a strong tutorial homepage: the goal is not to show everything, but to show how to start.',
+      points: [
+        'Title, CTA, and chapter entry layers are clearly separated.',
+        'Bilingual and multi-platform information fit into one first screen without feeling messy.',
+        'It is a strong example of homepage structure for long-form learning content.',
+      ],
+    },
+  },
+  'chatkit-world-openai': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Chatkit.world combines world exploration with guided conversation. Users are not asked to read feature bullets first. They are invited directly into a question-led journey through a map interface.',
+      points: [
+        'It is built for conversational exploration and lightweight interaction.',
+        'The homepage begins with a question prompt instead of a feature list.',
+        'It feels more like a world entry point than a generic chat app.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This case is useful for map products, AI tour guides, educational chat tools, and scene-driven conversational interfaces. It is especially helpful if you want a strong homepage built from one main canvas plus one guided prompt panel.',
+      points: [
+        'Useful for map and conversation-first products.',
+        'A good reference for question prompts as onboarding.',
+        'Helpful for lightweight conversational demos with a strong sense of place.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The core structure is a left-side world canvas and a right-side prompt and input column. Even when the map is still loading, the question suggestions already explain what users can do. That makes the page an interaction entry, not a passive showcase.',
+      points: [
+        'Canvas and prompt zones have a very clear division of labor.',
+        'Suggested questions function as onboarding.',
+        'It is a strong reference for conversation-first homepage design.',
       ],
     },
   },

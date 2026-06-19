@@ -12,9 +12,9 @@ import { useI18n } from '../lib/i18n.jsx';
 const pinnedCaseOrder = [
   'forged-in-silence-codex',
   'knowlens-ai-infographic-generator',
-  'cold-brew-house-codex',
-  'theme-park-builder-codex',
-  'ecommerce-website-codex',
+  'crossbeam-claude-permit-review',
+  'pulse-dashboard-codex',
+  'sense-enterprise-affective-platform',
 ];
 
 const pinnedCaseRanks = new Map(
