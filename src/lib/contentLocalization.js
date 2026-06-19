@@ -94,6 +94,21 @@ const caseCopyEn = {
     description:
       'A browser-based AI image generation workspace that brings multiple image models into one low-friction interface.',
   },
+  'cold-brew-house-codex': {
+    title: 'Cold Brew House',
+    description:
+      'A Codex-generated coffee brand landing page that uses oversized serif type, quiet whitespace, and product photography to establish a strong premium mood immediately.',
+  },
+  'theme-park-builder-codex': {
+    title: 'Theme Park Builder',
+    description:
+      'A Codex-generated playable web game that turns the build panel, status bar, and isometric park scene into the homepage experience itself.',
+  },
+  'ecommerce-website-codex': {
+    title: 'E-commerce Website',
+    description:
+      'A Codex-generated retail storefront homepage that organizes brand imagery, product browsing, and shopping entry points into a complete ecommerce structure.',
+  },
 };
 
 const toolCopyEn = {
@@ -216,6 +231,105 @@ const genericSectionEn = {
     title: 'What to Learn',
     description:
       'This section distills the design and AI coding decisions worth carrying into your own work.',
+  },
+};
+
+const caseSectionEn = {
+  'cold-brew-house-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Cold Brew House is a brand-led food and beverage landing page. It does not begin with store details, menus, or operational information. Instead, it uses typography, image mood, and slow copy rhythm to answer one key question first: what kind of coffee brand is this?',
+      points: [
+        'It establishes brand atmosphere before asking for action.',
+        'It feels closer to a premium hospitality landing page than an information-dense business site.',
+        'It works well as a reference for beverage, dessert, restaurant, and lifestyle brand homepages.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'This kind of homepage is especially useful for teams building food, beverage, consumer, or image-led brand sites. The value is not complexity. It shows how to make visitors stop, feel the brand, and understand the tone within a few seconds.',
+      points: [
+        'Useful for brand-heavy consumer landing pages.',
+        'A good reference for learning the relationship between large imagery, whitespace, and CTA placement.',
+        'Helpful for AI coding users who want to practice a high-end hero composition.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The homepage is very restrained: oversized display type and two CTAs sit on the left, the product image anchors the right side, and the top navigation stays minimal. Technically it is still a standard landing-page structure, but the typography scale, quiet decorative background, and drink photography make the first screen feel much more memorable than a generic template.',
+      points: [
+        'The headline, product image, and buttons each have a clear job.',
+        'A single image is enough to establish the brand world on the first screen.',
+        'It is a strong example of a homepage with very few modules but very high finish.',
+      ],
+    },
+  },
+  'theme-park-builder-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'Theme Park Builder is not a traditional “game introduction page.” It places the building loop directly on the homepage. Users immediately see budget, guests, happiness, and placeable structures, so the product reads as a lightweight management and building experience from the first glance.',
+      points: [
+        'The homepage is the playable interface itself.',
+        'Management stats and the main scene appear in one screen.',
+        'It is a strong reference for mini-games, demos, and gameplay validation pages.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'If you are building playable web experiences, lightweight game demos, or any interface that combines a control panel with a primary scene, this is a useful case. It shows that a web page does not always need to explain the product before letting people interact with it.',
+      points: [
+        'Useful for indie game and interaction-demo homepages.',
+        'A good reference for coordinating top bars, side panels, and a primary scene.',
+        'Helpful when you want an entry point that says “start playing first, understand while using.”',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The page uses a three-part structure: a top status bar gives management feedback, the left build panel handles action selection, and the isometric map in the center carries the core experience. The live reaction panel on the right adds another layer of readable results, so the homepage works as both a game screen and a feedback surface.',
+      points: [
+        'Status, controls, and primary scene are separated clearly.',
+        'Feedback is embedded into the layout instead of hidden in modal windows.',
+        'It is a strong study case for how browser game homepages organize interaction.',
+      ],
+    },
+  },
+  'ecommerce-website-codex': {
+    'product-positioning': {
+      title: 'Positioning',
+      description:
+        'This case is a retail storefront demo with a direct goal: bring users in through brand imagery, then guide them into browsing and shopping through navigation, category structure, and cart entry points. It behaves more like a purchasable brand store than a visual-only campaign page.',
+      points: [
+        'The homepage handles both brand presentation and shopping entry.',
+        'It works well as a reference for apparel, home goods, and retail storefronts.',
+        'Brand imagery and conversion actions live in the same first-screen system.',
+      ],
+    },
+    'target-audience': {
+      title: 'Who It Helps',
+      description:
+        'If you are building a retail store, product catalog, or cart flow, this case is useful because it shows how an ecommerce homepage can surface browsing, classification, and purchase intent without feeling overloaded.',
+      points: [
+        'Useful for learning ecommerce homepage information priority.',
+        'A good reference for balancing navigation, a hero image, and CTA structure.',
+        'Helpful for indie builders creating a storefront MVP.',
+      ],
+    },
+    'site-breakdown': {
+      title: 'Page Breakdown',
+      description:
+        'The homepage follows a classic storefront composition: top navigation handles categories and account access, the central hero image carries the seasonal campaign visual, and the floating cart in the lower corner keeps the purchase path present. The structure is not technically flashy, but the model photography, type, and CTA work together well enough that the first screen already feels like a real store worth browsing.',
+      points: [
+        'Navigation, hero image, and cart entry form a stable three-layer structure.',
+        'Brand imagery carries attention while buttons carry conversion.',
+        'It is a solid example of the core skeleton behind a retail homepage.',
+      ],
+    },
   },
 };
 
@@ -512,12 +626,26 @@ export function localizeCase(caseItem, language) {
   };
 }
 
-export function localizeCaseSections(sections = [], language) {
+export function localizeCaseSections(caseItem, language) {
   if (language !== 'en') {
-    return sections;
+    return caseItem?.detailSections ?? [];
   }
 
+  const sections = caseItem?.detailSections ?? [];
+  const caseSpecificCopy = caseSectionEn[caseItem?.id] ?? {};
+
   return sections.map((section) => {
+    const explicitCopy = caseSpecificCopy[section.id];
+    if (explicitCopy) {
+      return {
+        ...section,
+        title: explicitCopy.title,
+        description: explicitCopy.description,
+        points: explicitCopy.points ?? section.points,
+        prompts: explicitCopy.prompts ?? section.prompts,
+      };
+    }
+
     const copy = genericSectionEn[section.title];
 
     if (!copy) {

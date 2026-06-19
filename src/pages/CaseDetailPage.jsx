@@ -366,7 +366,7 @@ export default function CaseDetailPage({ categorySlug, slug }) {
   );
   const siteUrl = caseItem.websiteUrl || caseItem.sourceUrl;
   const siteLabel = formatDisplayUrl(siteUrl);
-  const displaySections = localizeCaseSections(caseItem.detailSections, language).filter(
+  const displaySections = localizeCaseSections(caseItem, language).filter(
     (section) => !isEditorialOnlySection(section),
   );
   const coverImage = caseItem.screenshotUrl || displaySections.find((section) => section.image)?.image || '';
