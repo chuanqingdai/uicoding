@@ -6,7 +6,7 @@ import { Button } from '../components/UI.jsx';
 import { CaseCard } from '../components/Cards.jsx';
 import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
-import { byLatest as byPublishedLatest, byTodayPickFirst } from '../lib/contentOrdering.js';
+import { byCuratedShuffle, byTodayPickFirst } from '../lib/contentOrdering.js';
 import { useI18n } from '../lib/i18n.jsx';
 
 const pinnedCaseOrder = [
@@ -17,35 +17,32 @@ const pinnedCaseOrder = [
   'sense-enterprise-affective-platform',
 ];
 
-const pinnedCaseRanks = new Map(
-  pinnedCaseOrder.map((id, index) => [id, index]),
-);
-
-function byPinnedFirst(a, b) {
-  const aRank = pinnedCaseRanks.get(a.id);
-  const bRank = pinnedCaseRanks.get(b.id);
-
-  if (aRank === undefined && bRank === undefined) {
-    return 0;
-  }
-
-  if (aRank === undefined) {
-    return 1;
-  }
-
-  if (bRank === undefined) {
-    return -1;
-  }
-
-  return aRank - bRank;
-}
-
 function byLatest(a, b) {
-  return byPinnedFirst(a, b) || byTodayPickFirst(a, b) || byPublishedLatest(a, b);
+  return (
+    byTodayPickFirst(a, b) ||
+    byCuratedShuffle({
+      orderedIds: pinnedCaseOrder,
+      freshnessBias: 1.1,
+      popularityBias: 0.85,
+      featuredBias: 1.15,
+      jitter: 14,
+      scope: 'cases-latest',
+    })(a, b)
+  );
 }
 
 function byHot(a, b) {
-  return byPinnedFirst(a, b) || byTodayPickFirst(a, b) || b.viewCount - a.viewCount;
+  return (
+    byTodayPickFirst(a, b) ||
+    byCuratedShuffle({
+      orderedIds: pinnedCaseOrder,
+      freshnessBias: 0.45,
+      popularityBias: 1.3,
+      featuredBias: 1.1,
+      jitter: 14,
+      scope: 'cases-hot',
+    })(a, b)
+  );
 }
 
 const initialVisibleCount = 9;

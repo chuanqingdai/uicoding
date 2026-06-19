@@ -4,7 +4,7 @@ import { Container } from '../components/Layout.jsx';
 import { LearningCard } from '../components/Cards.jsx';
 import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
-import { byLatest, byRank, byTodayPickFirst } from '../lib/contentOrdering.js';
+import { byCuratedShuffle, byTodayPickFirst } from '../lib/contentOrdering.js';
 import { useI18n } from '../lib/i18n.jsx';
 
 const pinnedLessonIds = [
@@ -16,7 +16,17 @@ const pinnedLessonIds = [
 ];
 
 function byPinnedThenLatest(a, b) {
-  return byTodayPickFirst(a, b) || byRank(pinnedLessonIds)(a, b) || byLatest(a, b);
+  return (
+    byTodayPickFirst(a, b) ||
+    byCuratedShuffle({
+      orderedIds: pinnedLessonIds,
+      freshnessBias: 1,
+      popularityBias: 0.75,
+      featuredBias: 1.2,
+      jitter: 12,
+      scope: 'learn-page',
+    })(a, b)
+  );
 }
 
 const initialVisibleCount = 6;
