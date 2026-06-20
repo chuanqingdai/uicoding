@@ -9547,6 +9547,469 @@ https://www.figma.com/design/...
     ]
   },
   {
+    "id": "codex-prompt-writing-official-playbook",
+    "sourceUrl": "https://developers.openai.com/codex/prompting",
+    "translationMode": "guidedTranslation",
+    "title": "Codex 提示词写法：任务、上下文、验收标准和验证命令",
+    "originalTitle": "Prompting Codex",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "提示词不是口号，而是任务说明",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Codex 的提示词不应该只写“帮我优化页面”“修一下这个问题”“做一个功能”。这种表达太宽，容易让 Codex 自己猜范围、猜优先级、猜验证方式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "更可靠的写法，是把提示词当成一份小型任务说明：先写目标，再写上下文，再写允许修改的范围，然后写禁止事项、验收标准和验证命令。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这样做的好处是，Codex 不需要在关键问题上猜测。它知道该读哪些文件、改哪些文件、不能碰哪里、完成后如何证明结果是对的。"
+          }
+        ]
+      },
+      {
+        "heading": "新手应该按什么顺序写",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "刚开始不要追求写出很长、很漂亮的提示词。更稳的顺序是：先写清目标，再写清范围，然后写限制，最后写验证方式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "目标回答“最终要变成什么样”。范围回答“允许 Codex 动哪里”。限制回答“哪些地方不能动”。验证方式回答“怎么判断它真的完成了”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果这四件事没写清楚，Codex 就会自己补全缺失信息。它可能补得对，也可能改到无关文件、重构公共组件，或者只做了表面修改。"
+          },
+          {
+            "type": "paragraph",
+            "content": "所以新手写提示词时，可以先不用技术术语，但必须写清用户看到的结果、不能破坏的部分和完成后的检查方式。"
+          }
+        ]
+      },
+      {
+        "heading": "每个字段到底怎么填",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "目标不要写“优化一下”，而要写“让学习卡片标题完整显示，描述最多显示三行，按钮不被文字挤压”。目标越像验收结果，Codex 越容易对齐。"
+          },
+          {
+            "type": "paragraph",
+            "content": "背景不是写一大段故事，而是告诉 Codex 为什么要改。比如“用户在首页看到标题被截断，截图里第一张卡片描述压住了按钮”。背景能帮助它判断优先级。"
+          },
+          {
+            "type": "paragraph",
+            "content": "修改范围要尽量具体。能写文件名就写文件名；不知道文件名时，可以写页面和组件范围，并要求 Codex 先查找相关文件，不要全站乱改。"
+          },
+          {
+            "type": "paragraph",
+            "content": "禁止事项是保护项目的护栏。比如不要改路由、不要改数据结构、不要改支付、不要重做整页、不要顺手格式化无关文件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "验收标准要站在用户视角写。比如“移动端标题不换到奇怪位置”“没有横向滚动条”“构建通过”。不要只写“代码更好”。"
+          }
+        ]
+      },
+      {
+        "heading": "可复制模板：通用 Codex 任务提示词",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "Codex 通用任务模板",
+            "content": "请完成下面这个任务。\n\n目标：\n[用一句话写清要解决的问题，以及用户最终会看到什么变化。]\n\n背景：\n[说明相关页面、功能、业务规则、历史问题或用户反馈。]\n\n修改范围：\n- 允许修改：[列出文件、目录或模块]\n- 不要修改：[列出不相关文件、公共逻辑、数据结构、接口、登录、支付等]\n\n实现要求：\n1. [具体要求一]\n2. [具体要求二]\n3. [具体要求三]\n\n验收标准：\n- [用户可见结果]\n- [边界情况]\n- [响应式或错误状态]\n\n验证方式：\n- 运行：[构建、测试或检查命令]\n- 如果验证失败，请只修复和本任务相关的问题。\n\n完成后请总结：\n1. 修改了哪些文件\n2. 每个文件改了什么\n3. 运行了哪些验证命令\n4. 是否还有未验证风险"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个模板适合大多数前端修改、内容页调整、样式修复和小功能开发。它的重点不是写得长，而是把边界讲清楚。"
+          },
+          {
+            "type": "code",
+            "label": "填写示例：优化学习页卡片",
+            "content": "请完成下面这个任务。\n\n目标：\n优化学习页卡片文字显示，避免标题和描述被截断得不自然，让卡片在桌面端和移动端都更容易阅读。\n\n背景：\n当前学习页部分卡片标题较长，描述文字有时会压住底部链接。用户浏览时很难快速判断每篇资料讲什么。\n\n修改范围：\n- 允许修改：src/components/Cards.jsx、src/styles.css、src/pages/LearnPage.jsx\n- 不要修改：学习资料数据、详情页正文、路由、评论组件、统计逻辑\n\n实现要求：\n1. 标题最多显示三行，不能只露出半行文字。\n2. 描述最多显示三行，并和底部链接保持稳定间距。\n3. 没有图片的卡片也要排版自然，不能出现大面积空白。\n4. 移动端单列显示时，文字不能溢出卡片。\n\n验收标准：\n- 学习页卡片标题完整可读，不出现半截文字。\n- 描述和“查看资料”链接不重叠。\n- 桌面端三列、移动端单列都正常。\n\n验证方式：\n- 运行：npm run build\n- 如果验证失败，请只修复和本任务相关的问题。\n\n完成后请总结：\n1. 修改了哪些文件\n2. 每个文件改了什么\n3. 运行了哪些验证命令\n4. 是否还有未验证风险"
+          }
+        ]
+      },
+      {
+        "heading": "什么时候需要先给计划",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "小改动可以直接执行，比如改一个文案、修一个卡片样式、补一个链接。复杂任务应该先让 Codex 给计划，比如涉及多个页面、公共组件、数据结构、登录、支付或上线流程。"
+          },
+          {
+            "type": "paragraph",
+            "content": "计划不需要单独做成一个短 prompt。更好的做法，是在通用任务模板的开头加一句：“请先阅读相关文件并给出最小修改计划，等我确认后再执行。”"
+          },
+          {
+            "type": "paragraph",
+            "content": "修 Bug 和按截图优化也不需要单独背模板。它们本质上仍然使用同一套结构：现象、期望行为、修改范围、限制、验收标准和验证命令。"
+          }
+        ]
+      },
+      {
+        "heading": "常见错误",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "第一个错误是只写结果，不写限制。比如“把首页做高级一点”，Codex 可能会加阴影、加渐变、改布局，最后偏离原本风格。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二个错误是只给截图，不说明问题。截图能提供视觉上下文，但 Codex 不一定知道你关注的是标题、按钮、间距还是图片比例。最好把截图问题用文字点出来。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三个错误是没有验证命令。没有验证命令时，Codex 可能改完就停，但项目实际上构建失败。对前端项目，至少要求运行 npm run build。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四个错误是一次塞太多目标。新手更应该把任务拆小：先修卡片文字，再调首页推荐，再改移动端。每次只让 Codex 完成一个能验证的小结果。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "claude-prompt-engineering-official-templates",
+    "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+    "translationMode": "guidedTranslation",
+    "title": "Claude 提示工程：如何写清角色、上下文、示例和输出格式",
+    "originalTitle": "Claude prompting best practices",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "Claude 提示词的核心结构",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "高质量提示词通常不是单句命令，而是结构化说明。它会把角色、任务、上下文、资料、示例、限制和输出格式分开写。"
+          },
+          {
+            "type": "paragraph",
+            "content": "对 Claude Code 来说，这种结构尤其重要。因为代码任务常常同时涉及业务目标、文件范围、技术约束、风险边界和验证方式。如果所有信息混在一段话里，模型更容易遗漏关键要求。"
+          },
+          {
+            "type": "paragraph",
+            "content": "Anthropic 官方资料反复强调：清晰、具体、分层的指令，通常比简短模糊的指令更稳定。"
+          }
+        ]
+      },
+      {
+        "heading": "新手最容易漏掉什么",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "新手最容易漏掉的是上下文和输出格式。只写“帮我写一个方案”，Claude 会给出一个看起来完整但不一定能执行的答案。"
+          },
+          {
+            "type": "paragraph",
+            "content": "上下文告诉 Claude 当前问题发生在哪里。比如是 React 页面、表单校验、文章详情页、支付回调，还是本地代码审查。没有上下文，它只能用通用经验回答。"
+          },
+          {
+            "type": "paragraph",
+            "content": "输出格式告诉 Claude 最后应该交付什么。比如要清单、要代码、要表格、要审查问题、要一步步计划，还是要直接修改文件。输出格式不清楚时，回答就容易散。"
+          },
+          {
+            "type": "paragraph",
+            "content": "对 Claude Code 来说，还要特别写清“先不要修改”还是“直接执行”。这能避免它在你只是想讨论方案时提前动代码。"
+          }
+        ]
+      },
+      {
+        "heading": "可复制模板：角色、任务、上下文、格式",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "Claude 结构化提示词模板",
+            "content": "<role>\n你是一名资深前端工程师，擅长在现有代码库中做小而稳的修改。\n</role>\n\n<task>\n[写清本次要完成的任务。]\n</task>\n\n<context>\n[写清页面、用户、业务规则、已知问题、相关文件或截图信息。]\n</context>\n\n<constraints>\n- 不要修改和任务无关的文件。\n- 不要重构公共组件，除非任务明确需要。\n- 不要改变已有数据结构和路由。\n- 保持现有设计系统和代码风格。\n</constraints>\n\n<acceptance_criteria>\n- [验收标准一]\n- [验收标准二]\n- [验收标准三]\n</acceptance_criteria>\n\n<output_format>\n请先给出简短计划。\n实现后请总结修改文件、验证命令和剩余风险。\n</output_format>"
+          },
+          {
+            "type": "paragraph",
+            "content": "role 写的是 Claude 应该用什么身份思考，不是随便加一句“你很厉害”。如果是修代码，就让它当工程师；如果是审查，就让它当代码审查者；如果是写产品需求，就让它当产品经理。"
+          },
+          {
+            "type": "paragraph",
+            "content": "task 只写本次任务，不要把长期目标都塞进去。比如“优化注册流程第一步的错误提示”，比“优化整个用户体验”更容易执行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "context 放背景材料：页面地址、截图描述、相关文件、用户反馈、业务规则。它不是越多越好，而是要和任务直接相关。"
+          },
+          {
+            "type": "paragraph",
+            "content": "constraints 放边界条件。它能告诉 Claude 哪些方案虽然可行，但本次不能做。比如不能引入新库、不能改数据库、不能动公共组件。"
+          },
+          {
+            "type": "paragraph",
+            "content": "acceptance_criteria 是验收标准。写得越像测试清单越好，因为它会迫使 Claude 对照结果，而不是只完成代码表面。"
+          }
+        ]
+      },
+      {
+        "heading": "为什么使用 XML 标签",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "XML 标签的价值不是形式感，而是隔离信息。角色放在 role，任务放在 task，资料放在 context，限制放在 constraints，输出格式放在 output_format。"
+          },
+          {
+            "type": "paragraph",
+            "content": "当提示词变长时，这种分层能减少歧义。模型更容易知道哪些内容是资料，哪些内容是规则，哪些内容是最终输出要求。"
+          }
+        ]
+      },
+      {
+        "heading": "填写示例：让 Claude Code 优化一个表单",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "完整填写示例",
+            "content": "<role>\n你是一名注重可用性和稳定性的前端工程师。\n</role>\n\n<task>\n优化注册页邮箱输入框的错误提示，让新手用户更容易理解该怎么修正。\n</task>\n\n<context>\n当前注册页在用户输入错误邮箱时，只显示 Invalid email。用户不知道是缺少 @、域名错误，还是输入了空格。\n相关页面可能是 src/pages/SignupPage.jsx，相关样式可能在 src/styles.css。\n</context>\n\n<constraints>\n- 不要修改注册流程和接口请求。\n- 不要修改登录页。\n- 不要引入新的表单库。\n- 保持现有视觉风格。\n</constraints>\n\n<acceptance_criteria>\n- 空输入显示“请输入邮箱地址”。\n- 缺少 @ 时显示“邮箱地址需要包含 @”。\n- 域名不完整时显示“请检查邮箱域名是否完整”。\n- 错误提示在移动端不挤压按钮。\n- npm run build 通过。\n</acceptance_criteria>\n\n<output_format>\n请先说明你会检查哪些文件，然后做最小修改。完成后总结修改文件、验证命令和风险。\n</output_format>"
+          },
+          {
+            "type": "paragraph",
+            "content": "这个示例之所以比“优化邮箱错误提示”更好，是因为它把错误类型、限制、页面范围和验收结果都写清楚了。Claude Code 不需要猜要不要重做表单，也不需要猜错误文案应该覆盖哪些情况。"
+          }
+        ]
+      },
+      {
+        "heading": "可复制模板：给 Claude Code 的代码审查提示词",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "本地代码审查模板",
+            "content": "<role>\n你是一名严谨的代码审查者，重点关注 bug、回归风险、可维护性和缺失验证。\n</role>\n\n<task>\n请审查当前未提交改动。\n</task>\n\n<focus>\n- 是否有用户可见行为回归\n- 是否有边界情况遗漏\n- 是否有不必要的大范围修改\n- 是否有测试或构建验证缺失\n- 是否有安全、权限、支付或数据风险\n</focus>\n\n<output_format>\n请按严重程度列出发现的问题。\n每个问题包含：文件位置、问题说明、影响、建议修复方式。\n如果没有发现明确问题，请说明剩余风险和未验证部分。\n</output_format>\n\n请先不要修改代码，只做审查。"
+          }
+        ]
+      },
+      {
+        "heading": "什么时候让 Claude 直接做，什么时候先复述",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果任务很小，比如改一个按钮文案、补一个缺失链接、调整一个卡片间距，可以直接让 Claude Code 执行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果任务影响多个页面、涉及登录支付、要改数据结构、要重写组件，应该先让它复述理解和给计划。确认之后再执行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不需要为了“复述理解”单独维护一个短模板。直接在完整结构化提示词的 output_format 里写清楚：先复述目标、保留内容、风险和验证方式，等确认后再执行。"
+          },
+          {
+            "type": "paragraph",
+            "content": "判断标准很简单：如果改错了只需要几分钟恢复，可以直接做；如果改错了会影响业务逻辑、数据或多个页面，就先复述。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这不是拖慢速度，而是在用一分钟确认方向，避免后面花半小时回滚。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bmad-method-ai-coding-spec-workflow",
+    "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD",
+    "translationMode": "guidedTranslation",
+    "title": "BMAD 方法：把 AI 编程从一句提示词升级成规格驱动流程",
+    "originalTitle": "BMAD-METHOD",
+    "notice": "",
+    "showSourceAddress": true,
+    "hideSourceNoticeLink": true,
+    "hideArticleSiteLink": true,
+    "hideLead": true,
+    "sections": [
+      {
+        "heading": "BMAD 方法解决的问题",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "很多 AI 编程失败，不是因为模型不会写代码，而是因为输入只有一句模糊需求。没有产品目标、没有验收标准、没有架构边界、没有故事拆分，模型只能靠猜。"
+          },
+          {
+            "type": "paragraph",
+            "content": "BMAD 方法把 AI 编程变成更接近软件团队的流程：先整理产品需求，再形成架构说明，然后拆成可执行故事，最后让开发代理按故事实现。"
+          },
+          {
+            "type": "paragraph",
+            "content": "它的重点不是让提示词更玄，而是让上下文更完整、任务更小、交付更容易验证。"
+          }
+        ]
+      },
+      {
+        "heading": "新手可以先这样理解",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "BMAD 可以理解成四步：先把产品说清楚，再把技术边界说清楚，然后把大需求拆成小故事，最后让 AI 一次实现一个故事。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第一步是产品需求文档。它回答“做什么、给谁用、为什么有人需要”。如果这一步不清楚，后面的代码再快也可能做错方向。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二步是架构说明。它回答“用什么技术、数据放哪里、哪些模块不能乱动”。这一步是为了防止 AI 写出能跑但很难维护的代码。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三步是故事拆分。它把“做一个完整产品”拆成“做登录页”“做列表页”“做支付入口”“补错误状态”这类小任务。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第四步才是交给 AI 编程工具执行。顺序不能反过来。很多人失败，就是一开始直接让 AI 做完整产品。"
+          }
+        ]
+      },
+      {
+        "heading": "适合谁使用",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "这个方法适合做真实产品的人：独立开发者、产品经理、设计师转 AI 编程、早期团队，以及需要把想法拆成可开发任务的人。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果只是让 AI 改一个按钮，BMAD 会显得太重。但如果要做一个完整网站、一个 SaaS 原型、一个内部工具，先写规格再开发会更稳。"
+          }
+        ]
+      },
+      {
+        "heading": "一个完整例子：AI 编程案例库",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "假设要做一个 AI 编程案例库，最差的提示词是“帮我做一个 AI 编程网站”。这句话没有用户、没有范围、没有内容结构、没有验收标准。"
+          },
+          {
+            "type": "paragraph",
+            "content": "按照 BMAD 方法，应该先写：这个网站面向设计师、产品经理和独立开发者，帮助他们查看真实 AI 编程案例、学习提示词、收藏工具，并从案例跳转到详情页。"
+          },
+          {
+            "type": "paragraph",
+            "content": "然后写架构：使用 React 和静态数据，先不做登录和数据库；案例数据放在 src/data.js，详情页从 slug 读取；样式统一写在 src/styles.css。"
+          },
+          {
+            "type": "paragraph",
+            "content": "接着拆故事：先做首页案例卡片，再做学习页分类，再做详情页原文地址，再做移动端排版。每个故事都能单独验证。"
+          }
+        ]
+      },
+      {
+        "heading": "可复制模板：产品需求文档",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "AI 编程产品需求文档模板",
+            "content": "# 产品需求文档\n\n## 产品一句话\n[这个产品帮助谁，在什么场景下，完成什么关键任务。]\n\n## 目标用户\n- 主要用户：\n- 使用场景：\n- 当前痛点：\n- 为什么现在需要：\n\n## 核心流程\n1. 用户进入产品后第一步做什么\n2. 用户提供什么输入\n3. 系统如何处理\n4. 用户看到什么结果\n5. 用户下一步可以做什么\n\n## 必须有的功能\n- 功能一：\n- 功能二：\n- 功能三：\n\n## 暂时不做\n- 不做登录，除非必须\n- 不做复杂后台\n- 不做多人协作\n- 不做和核心流程无关的营销模块\n\n## 验收标准\n- 用户可以完成核心流程\n- 移动端和桌面端都可用\n- 错误状态有明确提示\n- 构建命令通过\n\n## 风险\n- 技术风险：\n- 产品风险：\n- 数据风险：\n- 体验风险："
+          },
+          {
+            "type": "paragraph",
+            "content": "产品一句话必须包含三件事：谁、场景、结果。比如“帮助设计师在没有工程基础时，学习如何用 Codex 做出可上线网页”。这比“一个 AI 学习网站”清楚得多。"
+          },
+          {
+            "type": "paragraph",
+            "content": "核心流程要写成用户动作，不要写成系统模块。新手常犯的错是写“首页、列表、详情、评论”，但真正应该写“用户打开首页，看到精选案例，点击案例，阅读拆解，复制提示词”。"
+          },
+          {
+            "type": "paragraph",
+            "content": "暂时不做非常重要。它能把项目从无限扩张拉回第一版。没有这部分，AI 很容易顺手加登录、后台、订阅、搜索、评论和复杂权限。"
+          }
+        ]
+      },
+      {
+        "heading": "可复制模板：架构说明",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "AI 编程架构说明模板",
+            "content": "# 架构说明\n\n## 技术栈\n- 前端：\n- 后端：\n- 数据库：\n- 鉴权：\n- 支付：\n- 部署：\n\n## 目录结构\n- src/pages：页面入口\n- src/components：可复用组件\n- src/content：静态文章或内容数据\n- src/data：列表和元数据\n- src/lib：工具函数和外部服务封装\n\n## 数据模型\n[列出核心对象、字段和关系。]\n\n## 关键边界\n- 登录和权限：\n- 支付和订单：\n- 用户生成内容：\n- 第三方接口：\n\n## 不允许随意修改\n- 公共布局组件\n- 支付回调\n- 数据库迁移\n- 已上线 URL\n- 设计系统基础变量\n\n## 验证命令\n- npm run build\n- npm test\n- npm run lint"
+          },
+          {
+            "type": "paragraph",
+            "content": "架构说明不需要像正式工程文档那样复杂。它的作用是给 AI 画边界：哪里放页面，哪里放组件，哪里放数据，哪里不能乱改。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果项目还很早期，可以把后端、数据库、鉴权都写成“暂不需要”。这不是偷懒，而是在告诉 AI 第一版不要过度设计。"
+          },
+          {
+            "type": "paragraph",
+            "content": "不允许随意修改这一栏尤其关键。比如支付回调、用户数据、生产环境配置，一旦 AI 为了完成小任务顺手改了，风险会很高。"
+          }
+        ]
+      },
+      {
+        "heading": "可复制模板：故事拆分",
+        "blocks": [
+          {
+            "type": "code",
+            "label": "开发故事模板",
+            "content": "# 开发故事\n\n## 故事标题\n[用一句话写清本次任务]\n\n## 用户价值\n作为 [用户]，我希望 [完成某件事]，这样我可以 [获得什么结果]。\n\n## 修改范围\n- 允许修改：\n- 不要修改：\n\n## 具体任务\n1. \n2. \n3. \n\n## 验收标准\n- \n- \n- \n\n## 测试方式\n- 手动验证：\n- 自动验证：\n- 构建命令：\n\n## 完成定义\n- 代码已实现\n- 构建通过\n- 页面无明显布局问题\n- 总结改动和风险"
+          },
+          {
+            "type": "paragraph",
+            "content": "故事拆分的目的，是让 AI 一次只做一个可验证的小任务。任务越小，越容易控制改动范围，也越容易判断结果是否正确。"
+          },
+          {
+            "type": "paragraph",
+            "content": "一个好故事应该能在一两个小时内完成，并且有明确验收方式。比如“学习页增加分类筛选”是好故事；“完善整个学习系统”太大。"
+          },
+          {
+            "type": "paragraph",
+            "content": "如果一个故事里同时出现页面、数据、支付、登录、后台、邮件通知，说明它还需要继续拆。"
+          }
+        ]
+      },
+      {
+        "heading": "新手使用 BMAD 的最小版本",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "如果觉得完整 BMAD 太重，可以先用最小版本：一页产品说明、一页架构说明、三到五个开发故事。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第一天只写产品说明，不写代码。把目标用户、核心流程、必须做和暂时不做写清楚。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第二天写架构说明，确认技术栈、目录、数据结构和不能乱动的边界。"
+          },
+          {
+            "type": "paragraph",
+            "content": "第三天开始拆故事，每次只把一个故事交给 Codex、Claude Code 或 Cursor。每完成一个故事，就运行构建或测试，再继续下一个。"
+          },
+          {
+            "type": "paragraph",
+            "content": "真正复制给 AI 编程工具的内容，应该是完整的开发故事，而不是另写一个很短的执行 prompt。故事里已经包含用户价值、修改范围、任务、验收标准和测试方式。"
+          },
+          {
+            "type": "paragraph",
+            "content": "这套节奏看起来慢，但实际会减少大量返工。AI 编程最大的浪费不是写代码慢，而是方向错了还一路写下去。"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "solo-founder-made-190k-two-years",
     "sourceUrl": "https://www.reddit.com/r/Entrepreneur/comments/pf2bus/made_190k_in_2_years_as_solo_founder/",
     "translationMode": "fullTranslation",

@@ -4,30 +4,8 @@ import { Container } from '../components/Layout.jsx';
 import { LearningCard } from '../components/Cards.jsx';
 import MasonryGrid from '../components/MasonryGrid.jsx';
 import { trackEvent } from '../lib/analytics.js';
-import { byCuratedShuffle, byTodayPickFirst } from '../lib/contentOrdering.js';
+import { byLatest } from '../lib/contentOrdering.js';
 import { useI18n } from '../lib/i18n.jsx';
-
-const pinnedLessonIds = [
-  'ten-essential-codex-skills',
-  'pallyy-74k-mrr-solo-founder-retrospective',
-  'promptboard-codex-real-developer-case',
-  'uicoding-skill-coding-process',
-  'knowlens-codex-2b-token-tips',
-];
-
-function byPinnedThenLatest(a, b) {
-  return (
-    byTodayPickFirst(a, b) ||
-    byCuratedShuffle({
-      orderedIds: pinnedLessonIds,
-      freshnessBias: 1,
-      popularityBias: 0.75,
-      featuredBias: 1.2,
-      jitter: 12,
-      scope: 'learn-page',
-    })(a, b)
-  );
-}
 
 const initialVisibleCount = 6;
 const loadMoreCount = 6;
@@ -96,7 +74,7 @@ export default function LearnPage() {
   const loadMoreRef = useRef(null);
   const activeTopic = topicFilters.find((filter) => filter.id === activeTopicId) ?? topicFilters[0];
   const visibleLessons = useMemo(
-    () => [...lessons].filter(activeTopic.matches).sort(byPinnedThenLatest),
+    () => [...lessons].filter(activeTopic.matches).sort(byLatest),
     [activeTopic],
   );
   const displayedLessons = visibleLessons.slice(0, visibleCount);

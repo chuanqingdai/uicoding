@@ -204,6 +204,56 @@ const caseCopyEn = {
     description:
       'An expense approval system that combines submission, receipt upload, multi-step approvals, audit history, and spending analytics.',
   },
+  'cursor-seo-dashboard': {
+    title: 'Search Foundry',
+    description:
+      'A Cursor-built SEO and LLM visibility dashboard that compares model performance, retrieval outcomes, and ranking patterns in one analytics surface.',
+  },
+  'v0-customer-success-dashboard': {
+    title: 'Orbit Customer Success Command Center',
+    description:
+      'A customer success dashboard that combines account health, renewal tracking, churn signals, and operator workflows in one clean internal app.',
+  },
+  'replit-agent-app-prototype': {
+    title: 'PodNudge',
+    description:
+      'A Replit-built podcast discovery product that combines category search, recommendation entry points, and a simple consumer-facing content workflow.',
+  },
+  'traverse-visa-review': {
+    title: 'Traverse',
+    description:
+      'An AI visa review product that combines requirement research, document reading, multilingual checking, and fix guidance in one workflow-focused homepage.',
+  },
+  'orkasa-real-estate-crm': {
+    title: 'Orkasa',
+    description:
+      'A real-estate CRM that combines lead capture, listing distribution, appointment scheduling, and deal tracking in one operator-facing product surface.',
+  },
+  'freightintelligence-market-brief': {
+    title: 'FreightIntelligence',
+    description:
+      'A freight market intelligence product that combines AI trend analysis, industry news, and supply-chain insight into a professional information workflow.',
+  },
+  'real-estate-dataviz-codex': {
+    title: 'Parcelia',
+    description:
+      'A Codex-built real estate data visualization product that combines parcel search, maps, comparables, and summary analysis in one data-heavy interface.',
+  },
+  'deskflow-office-booking': {
+    title: 'DeskFlow',
+    description:
+      'An office booking system that combines desks, meeting rooms, parking, lockers, and admin analytics in one internal operations workflow.',
+  },
+  'orgchart-team-directory': {
+    title: 'OrgChart',
+    description:
+      'An internal directory product that combines an interactive org chart, searchable people directory, and reporting-line visibility in one interface.',
+  },
+  'assetwise-asset-management': {
+    title: 'AssetWise',
+    description:
+      'An asset management system that combines depreciation, employee assignments, maintenance tracking, and operational dashboards into one admin surface.',
+  },
 };
 
 const toolCopyEn = {
