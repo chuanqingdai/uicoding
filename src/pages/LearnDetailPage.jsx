@@ -156,6 +156,8 @@ function LearnArticleSection({ section, lesson }) {
               key={`${block.label ?? 'links'}-${index}`}
               lesson={lesson}
             />
+          ) : block.type === 'subheading' ? (
+            <h3 key={`${block.content}-${index}`}>{block.content}</h3>
           ) : (
             <p key={`${block.content}-${index}`}>{block.content}</p>
           )

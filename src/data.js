@@ -3434,6 +3434,118 @@ export const lessons = [
     ]
   },
   {
+    "id": "codex-plugin-claude-code-readme-translation",
+    "title": "Codex for Claude Code 插件：在 Claude Code 里调用 Codex 做审查和任务委派",
+    "originalTitle": "Codex plugin for Claude Code",
+    "description": "OpenAI 官方 Codex for Claude Code 插件 README 全文翻译：安装、常用命令、代码审查、对抗式审查、后台任务、配置和常见问题。",
+    "sourceType": "开源 README 翻译",
+    "sourceName": "OpenAI GitHub",
+    "sourceUrl": "https://github.com/openai/codex-plugin-cc",
+    "author": "OpenAI",
+    "license": "Apache-2.0",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-21",
+    "audience": "独立开发者",
+    "duration": "12 分钟",
+    "category": "Codex",
+    "tools": [
+      "Codex",
+      "Claude Code"
+    ],
+    "tags": [
+      "Codex",
+      "Claude Code",
+      "代码审查",
+      "插件"
+    ],
+    "href": "/learn/codex-plugin-claude-code-readme-translation",
+    "publishedAt": "2026-06-21",
+    "viewCount": 168,
+    "likeCount": 9,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "在 Claude Code 工作流里直接运行 Codex 审查",
+      "用 rescue 命令把问题委派给 Codex 后台处理",
+      "复用本机 Codex 登录状态和配置文件"
+    ]
+  },
+  {
+    "id": "claude-code-workflows-readme-translation",
+    "title": "Claude Code Workflows：从需求、设计、实现到验证的端到端开发流程",
+    "originalTitle": "Claude Code Workflows",
+    "description": "Claude Code Workflows 开源 README 翻译：用 recipe 命令、专门代理、设计文档、测试和审查，把 Claude Code 变成更可控的开发流水线。",
+    "sourceType": "开源 README 翻译",
+    "sourceName": "shinpr GitHub",
+    "sourceUrl": "https://github.com/shinpr/claude-code-workflows",
+    "author": "shinpr",
+    "license": "MIT",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-21",
+    "audience": "团队开发",
+    "duration": "18 分钟",
+    "category": "Claude",
+    "tools": [
+      "Claude Code",
+      "Codex"
+    ],
+    "tags": [
+      "Claude Code",
+      "工作流",
+      "需求文档",
+      "测试验证"
+    ],
+    "href": "/learn/claude-code-workflows-readme-translation",
+    "publishedAt": "2026-06-21",
+    "viewCount": 162,
+    "likeCount": 8,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "用 recipe 命令把需求、设计、实现、验证串起来",
+      "不同代理负责需求、代码库分析、实现、质量修复和审查",
+      "全栈任务拆成前后端设计文档和垂直切片"
+    ]
+  },
+  {
+    "id": "primer-ai-agent-milestone-workflow-translation",
+    "title": "Primer：让 AI 编程按已验证里程碑推进",
+    "originalTitle": "Primer",
+    "description": "Primer 开源 README 翻译：用单独工作区、里程碑契约、验证步骤和下一步动作，避免把巨大模糊任务一次性交给 AI 编程工具。",
+    "sourceType": "开源 README 翻译",
+    "sourceName": "armgabrielyan GitHub",
+    "sourceUrl": "https://github.com/armgabrielyan/primer",
+    "author": "Armen Gabrielyan",
+    "license": "MIT",
+    "translationMode": "fullTranslation",
+    "collectedAt": "2026-06-21",
+    "audience": "零基础学习者",
+    "duration": "16 分钟",
+    "category": "工作流",
+    "tools": [
+      "Codex",
+      "Claude Code",
+      "Cursor"
+    ],
+    "tags": [
+      "里程碑",
+      "AI 编程",
+      "新手学习",
+      "验证流程"
+    ],
+    "href": "/learn/primer-ai-agent-milestone-workflow-translation",
+    "publishedAt": "2026-06-21",
+    "viewCount": 158,
+    "likeCount": 8,
+    "featured": true,
+    "external": true,
+    "keyTakeaways": [
+      "先初始化真实工作区，再让 AI 按当前里程碑构建",
+      "每一步都有验证，通过后才进入下一里程碑",
+      "适合新手从小项目开始理解 AI 编程流程"
+    ]
+  },
+  {
     "id": "solo-founder-made-190k-two-years",
     "title": "一名单人创始人两年赚到 19 万美元的复盘",
     "originalTitle": "Made $190k in 2 years as Solo Founder",
